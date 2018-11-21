@@ -1,0 +1,16 @@
+<?php
+    $header_title = 'Erro 404 - naslojas.com';
+    $top_simple = true;
+?>
+
+@extends('base')
+
+@section('content')
+    <div class="container page-error">
+        <div class="center">
+            <img src="{{ asset('images/icon-box.png') }}" />
+
+            <p>Erro 404 - Página não encontrada</p>
+        </div>
+    </div>
+@endsection

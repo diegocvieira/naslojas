@@ -1,0 +1,130 @@
+footer {
+    float: left;
+    width: 100%;
+    background-color: rgb(245, 245, 245);
+    margin-top: 100px;
+
+    .container {
+        padding: 60px 0;
+    }
+
+    a, p, .open-cities {
+        font-size: 14.5px;
+        color: rgb(150, 150, 150);
+        margin: 0;
+    }
+
+    .support img {
+        display: inline-block;
+        width: 180px;
+
+        &:first-child {
+            margin-right: 50px;
+        }
+    }
+
+    .links {
+        padding: 0;
+
+        a {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .col-xs-4:last-child {
+            padding: 0;
+        }
+
+        .cities {
+            position: relative;
+            text-align: left;
+            margin-left: 60px;
+
+            .open-cities {
+                background-image: url('../images/icon-arrow.png');
+                background-position: right;
+                background-repeat: no-repeat;
+                background-size: 30px;
+                padding-right: 30px;
+                cursor: pointer;
+            }
+
+            .drop-down {
+                position: absolute;
+                right: 0;
+                top: -300px;
+                border-radius: 5px;
+                background-color: #fff;
+                width: 200px;
+                max-height: 280px;
+                overflow: hidden;
+                box-shadow: 2.5px 4.33px 13.5px 1.5px rgba(100, 100, 100, 0.118);
+                display: none;
+
+                ul {
+                    float: left;
+                    width: 100%;
+                    max-height: 280px;
+                    overflow: auto;
+
+                    li {
+                        width: 100%;
+                        float: left;
+
+                        &:hover {
+                            background-color: rgb(240, 240, 240);
+                        }
+
+                        a {
+                            padding: 10px 5px 10px 15px;
+                            display: block;
+                            margin-top: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        .email {
+            margin-left: 60px;
+        }
+
+        .social {
+            text-align: right;
+            margin-top: 25px;
+
+            a {
+                width: 40px;
+                height: 40px;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                display: inline-block;
+
+                &.facebook {
+                    background-image: url('../images/icon-facebook.png');
+                }
+
+                &.instagram {
+                    background-image: url('../images/icon-instagram.png');
+                }
+
+                &.twitter {
+                    background-image: url('../images/icon-twitter.png');
+                }
+
+                &.youtube {
+                    background-image: url('../images/icon-youtube.png');
+                }
+            }
+        }
+    }
+
+    .copyright {
+        float: left;
+        width: 100%;
+        background-color: rgb(240, 240, 240);
+        text-align: center;
+        padding: 25px 0;
+    }
+}
