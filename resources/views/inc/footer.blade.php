@@ -107,6 +107,13 @@
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.8/jquery.mask.min.js"></script>
         @endif
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+
+        <script>
+        Dropzone.autoDiscover = false;
+        </script>
+
         <script src="{{ mix('js/global.js') }}"></script>
 
         @yield('script')

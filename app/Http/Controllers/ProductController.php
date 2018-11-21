@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Cookie;
 use App\Product;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -56,5 +57,45 @@ class ProductController extends Controller
         $products = $products->paginate(20);
 
         return view('home', compact('products', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));
+    }
+
+    public function register()
+    {
+        $products = Product::where('status', 2)->get();
+
+        $section = 'add';
+
+        if (count($products) > 0) {
+
+        } else {
+            return view('store.product-images', compact('section'));
+        }
+    }
+
+    public function uploadImages(Request $request)
+    {
+        $rules = ['file' => 'image|max:3000'];
+
+        $validation = \Validator::make($request->all(), $rules);
+
+        if ($validation->fails()) {
+            return \Response::make($validation->errors->first(), 400);
+        }
+
+        $destinationPath = 'uploads/' . Auth::guard('store')->user()->store_id . '/produtos'; // upload path
+        $extension = $request->file('file')->getClientOriginalExtension(); // getting file extension
+        $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
+        $upload_success = $request->file('file')->move($destinationPath, $fileName); // uploading file to given path
+
+        if ($upload_success) {
+            return \Response::json($fileName, 200);
+        } else {
+            return \Response::json('error', 400);
+        }
+    }
+
+    public function storeImages()
+    {
+
     }
 }

@@ -12,7 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.sass('resources/sass/global.scss', 'public/css')
-    .scripts([
+    .babel([
         'resources/js/geral.js',
         'resources/js/store-config.js'
     ], 'public/js/global.js')
@@ -21,5 +21,5 @@ mix.sass('resources/sass/global.scss', 'public/css')
     .copyDirectory('resources/fonts', 'public/fonts');
 
 if(mix.inProduction()) {
-    mix.version(['public/css/global.css']);
+    mix.version(['public/css/global.css', 'public/js/global.js']);
 }

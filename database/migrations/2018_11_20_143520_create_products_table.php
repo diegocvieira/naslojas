@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('store_id')->nullable();
             $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
-            $table->string('title', 300);
-            $table->string('slug', 300)->unique();
+            $table->string('title', 255);
+            $table->string('slug', 255)->unique();
             $table->decimal('price', 8, 2);
             $table->decimal('old_price', 8, 2)->nullable();
             $table->integer('pageviews')->default(1);

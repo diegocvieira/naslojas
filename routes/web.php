@@ -67,6 +67,11 @@ Route::group(['prefix' => 'loja'], function () {
 		Route::get('config', 'StoreController@getConfig')->name('get-store-config');
 		Route::post('config', 'StoreController@setConfig')->name('set-store-config');
 
+		Route::get('produtos/cadastro', 'ProductController@register');
+
+		Route::post('dropzone/upload-images', 'ProductController@uploadImages');
+		Route::post('dropzone/save-images', 'ProductController@saveImages')->name('save-images');
+
 		Route::post('delete-account', 'StoreController@deleteAccount')->name('delete-store-account');
 	});
 });

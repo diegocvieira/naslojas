@@ -8,6 +8,17 @@ header {
     height: 60px;
     z-index: 2;
 
+    &#top-nav-store {
+        li {
+            height: 56px;
+            line-height: 56px;
+        }
+
+        .active {
+            border-bottom: 4px solid rgb(255, 23, 68);
+        }
+    }
+
     &#top-simple {
         text-align: center;
 
