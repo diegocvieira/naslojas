@@ -14,7 +14,9 @@ const mix = require('laravel-mix');
 mix.sass('resources/sass/global.scss', 'public/css')
     .babel([
         'resources/js/geral.js',
-        'resources/js/store-config.js'
+        'resources/js/store-config.js',
+        'resources/js/product-images.js',
+        'resources/js/product-edit.js'
     ], 'public/js/global.js')
     .copyDirectory('resources/images', 'public/images')
     .copyDirectory('resources/offline-developer', 'public/offline-developer')

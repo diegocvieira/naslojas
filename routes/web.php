@@ -67,12 +67,25 @@ Route::group(['prefix' => 'loja'], function () {
 		Route::get('config', 'StoreController@getConfig')->name('get-store-config');
 		Route::post('config', 'StoreController@setConfig')->name('set-store-config');
 
-		Route::get('produtos/cadastro', 'ProductController@register');
-
-		Route::post('dropzone/upload-images', 'ProductController@uploadImages');
-		Route::post('dropzone/save-images', 'ProductController@saveImages')->name('save-images');
-
 		Route::post('delete-account', 'StoreController@deleteAccount')->name('delete-store-account');
+
+		Route::group(['prefix' => 'produtos'], function () {
+			Route::get('cadastro', 'ProductController@images')->name('product-images');
+			Route::post('dropzone', 'ProductController@uploadImages');
+
+			Route::get('/', 'ProductController@edit')->name('edit-products');
+
+			Route::get('admin/busca', 'ProductController@formSearchAdmin')->name('form-search-admin');
+			Route::get('admin/busca/{keyword?}', 'ProductController@edit');
+
+			Route::post('save/{id?}', 'ProductController@save')->name('save-products');
+
+			Route::post('enable-disable/{id}', 'ProductController@enableDisable');
+
+			Route::post('delete/{id}', 'ProductController@delete')->name('delete-product');
+
+			Route::post('delete-images', 'ProductController@deleteImages');
+		});
 	});
 });
 

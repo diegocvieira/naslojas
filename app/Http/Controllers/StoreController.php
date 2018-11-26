@@ -18,10 +18,10 @@ class StoreController extends Controller
         $store = Store::where('slug', $slug)->firstOrFail();
 
         // SEO
-        $header_title = $store->nome . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' - naslojas.com';
-		$header_desc = 'Clique para ver os produtos disponíveis na loja ' . $store->nome . ' em ' . $store->city->title . ' - ' . $store->city->state->letter;
+        $header_title = $store->name . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' - naslojas.com';
+		$header_desc = 'Clique para ver os produtos disponíveis na loja ' . $store->name . ' em ' . $store->city->title . ' - ' . $store->city->state->letter;
 
-        $products = Product::where('loja_id', $store->id)->paginate(20);
+        $products = Product::where('store_id', $store->id)->paginate(20);
 
         return view('store.show', compact('store', 'products', 'header_title', 'header_desc'));
     }
@@ -44,14 +44,14 @@ class StoreController extends Controller
     {
         $store = Store::where('slug', $store_slug)->firstOrFail();
 
-        $products = Product::where('loja_id', $store->id)->filterGender($search_gender)->filterOrder($search_order);
+        $products = Product::where('store_id', $store->id)->filterGender($search_gender)->filterOrder($search_order);
 
         if ($keyword) {
             $keyword = urldecode($keyword);
 
             // SEO
-            $header_title = $keyword . ' em ' . $store->nome . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' - naslojas.com';
-			$header_desc = 'Clique para ver ' . $keyword . ' na loja ' . $store->nome . ' em ' . $store->city->title . ' - ' . $store->city->state->letter;
+            $header_title = $keyword . ' em ' . $store->name . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' - naslojas.com';
+			$header_desc = 'Clique para ver ' . $keyword . ' na loja ' . $store->name . ' em ' . $store->city->title . ' - ' . $store->city->state->letter;
 
             $keyword = str_replace('-', ' ', $keyword);
 
@@ -65,7 +65,7 @@ class StoreController extends Controller
                 }
 
                 $products = $products->where(function ($query) use ($keyword_each) {
-                    $query->where('titulo', 'LIKE', '%' . $keyword_each . '%');
+                    $query->where('title', 'LIKE', '%' . $keyword_each . '%');
                 });
             }
         }
@@ -96,6 +96,12 @@ class StoreController extends Controller
             $user->store_id = $store->id;
 
             if($user->save()) {
+                // Create the folder if not exists (necessary to uploads images)
+                $path = public_path('uploads/' . $store->id . '/products');
+                if(!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+
                 session()->flash('session_flash_alert', 'Cadastro realizado com sucesso! <br> Acesse as configurações para ativar o perfil da loja e finalizar o cadastro.');
 
                 return $this->login($request);

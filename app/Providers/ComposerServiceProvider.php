@@ -17,6 +17,8 @@ class ComposerServiceProvider extends ServiceProvider
         //view()->composer(['inc/footer'], 'App\Http\ViewComposers\CitiesComposer');
 
         view()->composer(['home', 'store.show'], 'App\Http\ViewComposers\FiltersComposer');
+
+        view()->composer(['store.product-edit', 'store.show'], 'App\Http\ViewComposers\SelectsProductComposer');
     }
 
     /**

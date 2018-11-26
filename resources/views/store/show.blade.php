@@ -7,13 +7,13 @@
 @section('content')
     <div class="container page-show-store">
         <div class="store-infos">
-            <h1>{{ $store->nome }}</h1>
+            <h1>{{ $store->name }}</h1>
 
             <p>
-                {{ $store->logradouro }}, {{ $store->numero }} - {{ $store->bairro }} - {{ $store->city->title }}/{{ $store->city->state->letter }}
+                {{ $store->street }}, {{ $store->number }} - {{ $store->district }} - {{ $store->city->title }}/{{ $store->city->state->letter }}
             </p>
 
-            <a href="//maps.google.com/?q={{ $store->logradouro }}, {{ $store->numero }}, {{ $store->bairro }}, {{ $store->city->title }}, {{ $store->city->state->letter }}" target="_blank">
+            <a href="//maps.google.com/?q={{ $store->street }}, {{ $store->number }}, {{ $store->district }}, {{ $store->city->title }}, {{ $store->city->state->letter }}" target="_blank">
 				ver no mapa
 			</a>
         </div>
@@ -28,32 +28,32 @@
             @foreach($products as $product)
                 <div class="product">
                     <a href="#">
-                        <img src="{{ asset('uploads/' . $product->store->id . '/produtos/' . $product->images->first()->imagem) }}" class="image" />
+                        <img src="{{ asset('uploads/' . $product->store->id . '/products/' . $product->images->first()->image) }}" class="image" alt="{{ $product->title }}" />
                     </a>
 
                     <div class="infos">
                         <a href="#">
-                            @if($product->preco_antigo)
-                                <span class="old-price">R$ {{ number_format($product->preco_antigo, 2, ',', '.') }}</span>
+                            @if($product->old_price)
+                                <span class="old-price">R$ {{ number_format($product->old_price, 2, ',', '.') }}</span>
                             @endif
 
-                            <span class="price"><span>R$</span> {{ number_format($product->preco, 2, ',', '.') }}</span>
+                            <span class="price"><span>R$</span> {{ number_format($product->price, 2, ',', '.') }}</span>
 
-                            @if($product->preco_antigo)
-    							<span class="price-off">{{ _discount($product->preco, $product->preco_antigo) }}% OFF</span>
+                            @if($product->old_price)
+    							<span class="price-off">{{ _discount($product->price, $product->old_price) }}% OFF</span>
     						@endif
 
-                            @if($product->parcelamento && $product->parcel_price)
+                            @if($product->installment && $product->installment_price)
                                 <span class="parcels">
-                                    em até {{ $product->parcelamento }}x de R$ {{ number_format($product->parcel_price, 2, ',', '.') }}
-                                    {{ _taxes($product->parcelamento, $product->parcel_price, $product->preco) }}
+                                    em até {{ $product->installment }}x de R$ {{ number_format($product->installment_price, 2, ',', '.') }}
+                                    {{ _taxes($product->installment, $product->installment_price, $product->price) }}
                                 </span>
                             @endif
 
-                            <p class="title" title="{{ $product->titulo }}">{{ $product->titulo }}</p>
+                            <p class="title" title="{{ $product->title }}">{{ $product->title }}</p>
                         </a>
 
-                        <a href="{{ route('show-store', $product->store->slug) }}" class="store-name">{{ $product->store->nome }}</a>
+                        <a href="{{ route('show-store', $product->store->slug) }}" class="store-name">{{ $product->store->name }}</a>
                     </div>
                 </div>
             @endforeach

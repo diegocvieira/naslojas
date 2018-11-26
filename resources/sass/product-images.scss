@@ -1,0 +1,138 @@
+.page-product-images {
+    .top-images {
+        width: 100%;
+        float: left;
+        height: 140px;
+        padding-top: 80px;
+        display: none;
+
+        p {
+            font-size: 14.5px;
+            color: rgb(100, 100, 100);
+        }
+
+        button {
+            font-size: 14.5px;
+            color: rgb(50, 50, 50);
+            font-weight: 700;
+            background-color: rgb(230, 230, 230);
+            width: 200px;
+            height: 40px;
+            border: none;
+            border-radius: 25px;
+
+            &:first-child {
+                margin-right: 25px;
+            }
+        }
+    }
+
+	#form-images-dropzone {
+        min-height: 100%;
+        width: 100%;
+        background-color: transparent !important;
+        float: left;
+        border: none;
+
+        .dz-message {
+            margin: 0;
+            padding-top: 20%;
+
+            img {
+                width: 98px;
+            }
+
+            p {
+                font-size: 14.5px;
+                color: rgb(150, 150, 150);
+                margin-top: 20px;
+
+                span {
+                    font-size: 12.5px;
+                    padding: 0;
+                    margin-top: 5px;
+                    display: block;
+                }
+            }
+        }
+
+        .selected {
+            border: 5px solid rgb(255, 23, 68);
+
+            .dz-image {
+                border-radius: 0 !important;
+            }
+        }
+
+        .dz-preview {
+            display: inline-block;
+            width: calc(20% - 20px);
+            margin: 0 0 40px 20px;
+            vertical-align: top;
+            height: 248px;
+            background-color: transparent;
+            border-radius: 5px;
+
+            .dz-image {
+                width: 100%;
+                height: 100%;
+                border-radius: 5px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    filter: none !important;
+                    transform: none !important;
+                }
+            }
+
+            .dz-details {
+				display: none;
+			}
+
+            .dz-progress {
+                background: rgb(255, 23, 68);
+            }
+
+            .dz-error-message {
+                top: 166px;
+                left: 5%;
+                width: 90%;
+
+                span {
+                    left: 105px;
+                }
+            }
+
+            .dz-remove {
+                background-image: url('../images/icon-remove.png');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                width: 25px;
+                height: 25px;
+                position: absolute;
+                right: 3px;
+                top: 3px;
+                z-index: 10;
+            }
+
+            &.grouped {
+		    	.dz-success-mark {
+                    background-color: rgba(0, 0, 0, 0.5);
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    font-size: 25px;
+                    color: #fff;
+                    margin: 0;
+                    opacity: 1;
+                    line-height: 248px;
+                    text-align: center;
+				}
+            }
+        }
+	}
+}

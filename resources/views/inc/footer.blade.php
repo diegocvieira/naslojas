@@ -12,7 +12,7 @@
 
                 <div class="col-xs-6 links">
                     <div class="col-xs-4">
-                        <a href="{{ url('/') }}">Ínicio</a>
+                        <a href="{{ url('/') }}">Início</a>
                         <a href="#" class="open-how-works">Como funciona</a>
                         <a href="{{ route('client-register-get') }}">Cadastrar</a>
                         <a href="{{ route('client-login-get') }}">Entrar</a>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="copyright">
-                <p>Copyright 2019. Todos os direitos reservados.<br>XXXXX Atividades de Internet Ltda - CNPJ 00.000.000/0000-00</p>
+                <p>Copyright 2019. Todos os direitos reservados.<br>Dogs Are The Best Ltda - CNPJ 00.000.000/0000-00</p>
             </div>
         </footer>
 
@@ -107,11 +107,11 @@
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.8/jquery.mask.min.js"></script>
         @endif
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css">
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 
         <script>
-        Dropzone.autoDiscover = false;
+            Dropzone.autoDiscover = false;
         </script>
 
         <script src="{{ mix('js/global.js') }}"></script>

@@ -13,11 +13,11 @@
                 @endif
 
                 <li>
-                    <a href="#" class="{{ $section == 'add' ? 'active' : '' }}">Adicionar produtos</a>
+                    <a href="{{ route('product-images') }}" class="{{ $section == 'add' ? 'active' : '' }}">Adicionar produtos</a>
                 </li>
 
                 <li>
-                    <a href="#">Editar produtos</a>
+                    <a href="{{ route('edit-products') }}" class="{{ $section == 'edit' ? 'active' : '' }}">Editar produtos</a>
                 </li>
 
                 <li>

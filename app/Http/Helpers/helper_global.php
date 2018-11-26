@@ -31,3 +31,47 @@ function _taxes($parcel_qtd, $parcel_price, $product_price)
         return false;
     }
 }
+
+function _uploadImage($file, $old_file)
+{
+    $path = public_path('uploads/' . Auth::guard('store')->user()->store_id . '/products');
+    $microtime = microtime(true);
+
+    $images = [
+        '248' => $microtime . '_resize.jpg',
+        '600' => $microtime . '.jpg'
+    ];
+
+    // Remove old images
+    if($old_file) {
+        $old_image_resize = $path . '/' . $old_file;
+        $old_image = $path . '/' . str_replace('_resize', '', $old_file);
+
+        if(file_exists($old_image_resize)) {
+            unlink($old_image_resize);
+        }
+
+        if(file_exists($old_image)) {
+            unlink($old_image);
+        }
+    }
+
+    foreach($images as $size => $image_name) {
+        $image = new \Imagick($file->path());
+
+        $image->setColorspace(\Imagick::COLORSPACE_SRGB);
+        $image->setImageFormat('jpg');
+        $image->stripImage();
+        $image->setImageCompressionQuality(75);
+        $image->setSamplingFactors(array('2x2', '1x1', '1x1'));
+        $image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
+        $image->setImageAlphaChannel(\Imagick::ALPHACHANNEL_REMOVE);
+        $image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
+        $image->cropThumbnailImage($size, $size);
+        $image->writeImage($path . '/' . $image_name);
+
+        $image->destroy();
+    }
+
+    return $images[248];
+}

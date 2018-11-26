@@ -44,11 +44,11 @@
                             @endif
 
                             <li>
-                                <a href="#" class="icon-add">Adicionar produtos</a>
+                                <a href="{{ route('product-images') }}" class="icon-add">Adicionar produtos</a>
                             </li>
 
                             <li>
-                                <a href="#" class="icon-edit">Editar produtos</a>
+                                <a href="{{ route('edit-products') }}" class="icon-edit">Editar produtos</a>
                             </li>
 
                             <li>

@@ -55,8 +55,8 @@ class GlobalController extends Controller
             'slug.max' => 'A url deve ter menos de 200 caracteres.',
             'slug.required' => 'Informe uma url.',
             'slug.unique' => 'Esta url já está sendo utilizada por outro usuário.',
-            //'img.image' => 'Imagem inválida',
-            //'img.max' => 'A imagem tem que ter no máximo 5mb.',
+            'image.image' => 'Imagem inválida',
+            'image.max' => 'A imagem tem que ter no máximo 5mb.',
             'cep.required' => 'Informe o CEP.',
             'cep.max' => 'O CEP deve ter menos de 10 caracteres.',
             'street.required' => 'Informe o logradouro.',
@@ -72,7 +72,12 @@ class GlobalController extends Controller
             'email.email' => 'Seu endereço de e-mail é inválido.',
             'email.unique' => 'Este email já está sendo utilizado por outro usuário.',
             'password.confirmed' => 'As senhas não conferem.',
-            'password.min' => 'Sua senha deve ter no mínimo 8 caracteres.'
+            'password.min' => 'Sua senha deve ter no mínimo 8 caracteres.',
+            'title.required' => 'Informe o título do produto.',
+            'title.max' => 'O título deve ter no máximo 255 caracteres.',
+            'price.required' => 'Informe o preço do produto.',
+            'gender.required' => 'Informe o gênero do produto.',
+            'description.max' => 'A descrição deve ter no máximo 2000 caracteres.'
         ];
     }
 }
