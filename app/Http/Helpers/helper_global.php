@@ -65,7 +65,7 @@ function _uploadImage($file, $old_file)
         $image->setImageCompressionQuality(75);
         $image->setSamplingFactors(array('2x2', '1x1', '1x1'));
         $image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
-        $image->setImageAlphaChannel(\Imagick::ALPHACHANNEL_REMOVE);
+        //$image->setImageAlphaChannel(\Imagick::ALPHACHANNEL_REMOVE);
         $image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
         $image->cropThumbnailImage($size, $size);
         $image->writeImage($path . '/' . $image_name);
