@@ -194,6 +194,28 @@ $(function() {
         }
     });
 
+    // Preview images
+    $(document).on('change', '.container-add-image input[type=file]', function() {
+        var container = $(this).parents('.container-add-image'),
+            reader = new FileReader(),
+            position = (parseInt($(this).data('position')) + 1);
+
+        if($(this)[0].files[0].size > 5100000) {
+            modalAlert('A imagem tem que ter no máximo 5mb.');
+        } else {
+            reader.onload = function(e) {
+                container.before("<img src='" + e.target.result + "' />");
+                container.find('.btn-add-image').remove();
+
+                if(position < 7) {
+                    container.append("<input type='file' data-position='" + position + "' id='image_" + position + "' /><label class='btn-add-image' for='image_" + position + "'>+</label>");
+                }
+            }
+
+            reader.readAsDataURL($(this)[0].files[0]);
+        }
+    });
+
     // Submit forms
     $('.page-product-edit .btn-finish').on('click', function(e) {
         e.preventDefault();

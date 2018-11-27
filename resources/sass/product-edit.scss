@@ -140,9 +140,33 @@
                     margin-left: 1%;
                     object-fit: cover;
                     background-color: #fff;
+                    float: left;
 
                     &:first-child {
                         margin-left: 0;
+                    }
+                }
+
+                .container-add-image {
+                    float: left;
+                    margin-left: 1%;
+
+                    input[type=file] {
+                        display: none;
+                    }
+
+                    .btn-add-image {
+                        border-radius: 5px;
+                        background-color: rgb(240, 240, 240);
+                        width: 80px;
+                        height: 80px;
+                        border: none;
+                        font-size: 45px;
+                        font-weight: normal;
+                        text-align: center;
+                        line-height: 80px;
+                        cursor: pointer;
+                        color: #969696;
                     }
                 }
             }

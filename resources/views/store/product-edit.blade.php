@@ -45,6 +45,13 @@
                             @foreach($product->images as $image)
                                 <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $image->image) }}" />
                             @endforeach
+
+                            @if($product->images->count() < 6)
+                                <div class="container-add-image">
+                                    {!! Form::file('image[]', ['id' => 'image_' . ($product->images->count() + 1), 'data-position' => ($product->images->count() + 1)]) !!}
+                                    {!! Form::label('image_' . ($product->images->count() + 1), '+', ['class' => 'btn-add-image']) !!}
+                                </div>
+                            @endif
                         </div>
 
                         <div class="col-xs-6 options">
