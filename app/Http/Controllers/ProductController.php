@@ -173,14 +173,33 @@ class ProductController extends Controller
                 $product->description = $request->description;
                 $product->related = $request->related;
 
-                // check if slug already exists and add dash in the end
-               do {
-                   $slug_check = Product::withoutGlobalScopes(['active', 'active-store'])->where('slug', $product->slug)->where('id', '!=', $product->id)->first();
+               // check if slug already exists and add dash in the end
+                $NUM_OF_ATTEMPTS = 10;
+                $attempts = 0;
 
-                   if($slug_check) {
-                       $product->slug .= '-';
-                   }
-               } while ($slug_check);
+                do {
+                    try {
+                        $product->save();
+
+                        $return['status'] = true;
+                        $return['msg'] = 'Alterações salvas com sucesso!';
+                    } catch(\Exception $e) {
+                        $attempts++;
+
+                        if($attempts >= $NUM_OF_ATTEMPTS) {
+                            $return['status'] = false;
+                            $return['msg'] = 'Ocorreu um erro inesperado. Por favor, atualize a página e tente novamente.';
+                        }
+
+                        sleep(rand(0, 10) / 10);
+
+                        $product->slug = str_slug($product->title, '-') . '-' . RAND(111111, 999999);
+
+                        continue;
+                    }
+
+                    break;
+                } while ($attempts < $NUM_OF_ATTEMPTS);
 
                ProductSize::where('product_id', $product->id)->delete();
                if (isset($request->size)) {
@@ -189,14 +208,6 @@ class ProductController extends Controller
                    }
                } else {
                    $product->sizes()->create(['size' => 'Ú']);
-               }
-
-               if ($product->save()) {
-                   $return['status'] = true;
-                   $return['msg'] = 'Alterações salvas com sucesso!';
-               } else {
-                   $return['status'] = false;
-                   $return['msg'] = 'Ocorreu um erro inesperado. Por favor, atualize a página e tente novamente.';
                }
             }
 
