@@ -32,29 +32,14 @@ function _taxes($parcel_qtd, $parcel_price, $product_price)
     }
 }
 
-function _uploadImage($file, $old_file)
+function _uploadImage($file)
 {
-    $path = public_path('uploads/' . Auth::guard('store')->user()->store_id . '/products');
-    $microtime = microtime(true);
+    $microtime = microtime(true) . RAND(111111, 999999);
 
     $images = [
         '248' => $microtime . '_resize.jpg',
         '600' => $microtime . '.jpg'
     ];
-
-    // Remove old images
-    if($old_file) {
-        $old_image_resize = $path . '/' . $old_file;
-        $old_image = $path . '/' . str_replace('_resize', '', $old_file);
-
-        if(file_exists($old_image_resize)) {
-            unlink($old_image_resize);
-        }
-
-        if(file_exists($old_image)) {
-            unlink($old_image);
-        }
-    }
 
     foreach($images as $size => $image_name) {
         $image = new \Imagick($file->path());
@@ -68,7 +53,7 @@ function _uploadImage($file, $old_file)
         //$image->setImageAlphaChannel(\Imagick::ALPHACHANNEL_REMOVE);
         $image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
         $image->cropThumbnailImage($size, $size);
-        $image->writeImage($path . '/' . $image_name);
+        $image->writeImage(public_path('uploads/' . Auth::guard('store')->user()->store_id . '/products/' . $image_name));
 
         $image->destroy();
     }

@@ -43,7 +43,12 @@
                     <div class="row">
                         <div class="col-xs-6 images">
                             @foreach($product->images as $image)
-                                <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $image->image) }}" />
+                                <div class="image">
+                                    {!! Form::checkbox('image_remove[]', $image->image, null, ['id' => 'image_remove_' . $image->id]) !!}
+                                    {!! Form::label('image_remove_' . $image->id, ' ', ['class' => 'remove-image']) !!}
+
+                                    <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $image->image) }}" />
+                                </div>
                             @endforeach
 
                             @if($product->images->count() < 6)

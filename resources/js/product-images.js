@@ -49,7 +49,7 @@ $(function() {
             $('.dz-preview.product').attr('data-product', next_product);
             $('.dz-preview.product .dz-success-mark').text('Grupo ' + next_product);
 
-            actives.addClass('grouped').removeClass('product');
+            actives.addClass('grouped').removeClass('product').attr('title', 'Clique para remover esta imagem do grupo');
         }
     });
 
@@ -102,10 +102,10 @@ $(function() {
                         $('.dz-preview.ungroup.grouped').each(function() {
                             var nragrupamento = $(this).attr('data-product');
 
-                            $(this).removeClass('grouped ungroup').removeAttr('data-product');
+                            $(this).removeClass('grouped ungroup').removeAttr('data-product title');
 
                             if ($('.dz-preview[data-product="' + nragrupamento +'"]').length == 1) {
-                                $('.dz-preview[data-product="' + nragrupamento +'"]').removeClass('grouped ungroup').removeAttr('data-product');
+                                $('.dz-preview[data-product="' + nragrupamento +'"]').removeClass('grouped ungroup').removeAttr('data-product title');
                             }
                         });
                     } else {
@@ -129,10 +129,9 @@ $(function() {
 
                     if (!$(file.previewElement).hasClass('dz-error')) {
                         $.ajax({
-                            url: 'loja/produtos/delete-images',
+                            url: 'loja/produtos/delete-images/' + $(file.previewElement).find('img').attr('alt'),
                             method: 'POST',
                             dataType: 'json',
-                            data: 'image_name=' + $(file.previewElement).find('img').attr('alt'),
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },

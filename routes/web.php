@@ -84,7 +84,7 @@ Route::group(['prefix' => 'loja'], function () {
 
 			Route::post('delete/{id}', 'ProductController@delete')->name('delete-product');
 
-			Route::post('delete-images', 'ProductController@deleteImages');
+			Route::post('delete-images/{image}', 'ProductController@deleteImages');
 		});
 	});
 });

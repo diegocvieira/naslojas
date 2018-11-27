@@ -35,7 +35,7 @@ $(function() {
         var modal = $('#modal-alert'),
             $this = $(this);
 
-        modalAlert("Tem certeza que deseja deletar este produto?", 'DELETAR');
+        modalAlert("Tem certeza que deseja apagar este produto?", 'APAGAR');
 
         modal.find('.btn-default').addClass('btn-confirm invert-color');
 
@@ -194,6 +194,11 @@ $(function() {
         }
     });
 
+    // Remove images
+    $(document).on('click', '.remove-image', function() {
+        $(this).parents('.image').hide();
+    });
+
     // Preview images
     $(document).on('change', '.container-add-image input[type=file]', function() {
         var container = $(this).parents('.container-add-image'),
@@ -204,11 +209,12 @@ $(function() {
             modalAlert('A imagem tem que ter no máximo 5mb.');
         } else {
             reader.onload = function(e) {
-                container.before("<img src='" + e.target.result + "' />");
+                console.log(position);
+                container.before("<div class='image'><input type='hidden' name='image_position[]' value='" + (position - 1) + "' /><label class='remove-image'></label><img src='" + e.target.result + "' /></div>");
                 container.find('.btn-add-image').remove();
 
                 if(position < 7) {
-                    container.append("<input type='file' data-position='" + position + "' id='image_" + position + "' /><label class='btn-add-image' for='image_" + position + "'>+</label>");
+                    container.append("<input name='image[]' type='file' data-position='" + position + "' id='image_" + position + "' /><label class='btn-add-image' for='image_" + position + "'>+</label>");
                 }
             }
 

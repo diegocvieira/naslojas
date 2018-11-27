@@ -96,9 +96,11 @@ class ProductController extends Controller
             }
         }
 
-        $products = $products->paginate(20);
+        $products = $products->orderBy('id', 'DESC')->paginate(20);
 
         $section = 'edit';
+
+        $header_title = 'Editar produtos - naslojas.com';
 
         return view('store.product-edit', compact('products', 'section', 'keyword', 'header_title'));
     }
@@ -134,7 +136,7 @@ class ProductController extends Controller
         if ($validation->fails()) {
             return Response::make($validation->errors->first(), 400);
         } else {
-            $file_name = _uploadImage($request->file('image'), null);
+            $file_name = _uploadImage($request->file('image'));
 
             if ($file_name) {
                 return Response::json($file_name, 200);
@@ -203,11 +205,30 @@ class ProductController extends Controller
 
                ProductSize::where('product_id', $product->id)->delete();
                if (isset($request->size)) {
-                   foreach($request->size as $size) {
+                   foreach ($request->size as $size) {
                        $product->sizes()->create(['size' => $size]);
                    }
-               } else {
-                   $product->sizes()->create(['size' => 'Ú']);
+               }
+
+               if (isset($request->image_remove)) {
+                   foreach ($request->image_remove as $image_remove) {
+                       $this->deleteImages($image_remove);
+                   }
+               }
+
+               if (isset($request->image)) {
+                   foreach ($request->image as $key_image => $image) {
+                       foreach ($request->image_position as $key_position => $image_position) {
+                            if ($key_position == $key_image) {
+                                $position = $image_position;
+                            }
+                        }
+
+                       $product->images()->create([
+                           'image' => _uploadImage($image),
+                           'position' => $position ?? '0'
+                       ]);
+                   }
                }
             }
 
@@ -233,35 +254,30 @@ class ProductController extends Controller
         }
     }
 
-    public function deleteImages(Request $request)
+    public function deleteImages($image)
     {
-        // Remove image from folder
-        if($request->image_name) {
-            $path = public_path('uploads/' . Auth::guard('store')->user()->store_id . '/products/' . $request->image_name);
+        $path = public_path('uploads/' . Auth::guard('store')->user()->store_id . '/products/');
 
-            if(file_exists($path)) {
-                unlink($path);
-            }
+        $image_resize_path = $path . $image;
+        $image_path = $path . str_replace('_resize', '', $image);
+
+        if(file_exists($image_resize_path)) {
+            unlink($image_resize_path);
         }
+
+        if(file_exists($image_path)) {
+            unlink($image_path);
+        }
+
+        ProductImage::where('image', $image)->delete();
     }
 
     public function delete($id)
     {
         $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($id);
 
-        $path = public_path('uploads/' . Auth::guard('store')->user()->store_id . '/products');
-
         foreach($product->images as $image) {
-            $img_resize = $path . '/' . $image->image;
-            $img = $path . '/' . str_replace('_resize', '', $image->image);
-
-            if(file_exists($img_resize)) {
-                unlink($img_resize);
-            }
-
-            if(file_exists($img)) {
-                unlink($img);
-            }
+            $this->deleteImages($image->image);
         }
 
         $product->delete();
