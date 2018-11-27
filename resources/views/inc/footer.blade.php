@@ -53,7 +53,7 @@
             </div>
 
             <div class="copyright">
-                <p>Copyright 2019. Todos os direitos reservados.<br>Dogs Are The Best Ltda - CNPJ 00.000.000/0000-00</p>
+                <p>Copyright 2019. Todos os direitos reservados.<br>Dogs Are Awesome Ltda - CNPJ 00.000.000/0000-00</p>
             </div>
         </footer>
 
