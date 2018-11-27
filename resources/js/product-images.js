@@ -92,18 +92,27 @@ $(function() {
             $('.top-images').show();
 
             $('.dz-preview').unbind('click');
-            $('.dz-preview').on('click', function(e) {
-                if(!$(this).hasClass('dz-error')) {
-                    if($(this).hasClass('grouped')) {
-                        var data_product = $('.dz-preview[data-product=' + $(this).data('product') + ']'),
-                            group = data_product.length == 2 ? data_product : $(this);
+        	$('.dz-preview').on('click', function(e) {
+                if (!$(this).hasClass('dz-error')) {
+    	        	if ($(this).hasClass('selected')) {
+    	        		$(this).removeClass('selected');
+    	        	} else if ($(this).hasClass('grouped')) {
+            			$(this).addClass('ungroup');
 
-                        group.removeAttr('data-product').removeClass('grouped');
+                        $('.dz-preview.ungroup.grouped').each(function() {
+                            var nragrupamento = $(this).attr('data-product');
+
+                            $(this).removeClass('grouped ungroup').removeAttr('data-product');
+
+                            if ($('.dz-preview[data-product="' + nragrupamento +'"]').length == 1) {
+                                $('.dz-preview[data-product="' + nragrupamento +'"]').removeClass('grouped ungroup').removeAttr('data-product');
+                            }
+                        });
                     } else {
-                        $(this).hasClass('selected') ? $(this).removeClass('selected') : $(this).addClass('selected');
-                    }
+            			$(this).addClass('selected');
+            		}
                 }
-            });
+			});
         },
         removedfile: function(file) {
             var _ref;
