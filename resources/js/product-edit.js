@@ -292,10 +292,10 @@ $(function() {
                                             window.location.reload(true);
                                         }, 100);
                                     }
-                                } else {
-                                    window.location.reload(true);
                                 }
-                            } else {
+                            }
+
+                            if (!$('.page-add').length || !data.status) {
                                 modalAlert(data.msg);
                             }
                         }
