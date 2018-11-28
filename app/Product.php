@@ -18,7 +18,7 @@ class Product extends Model
 
     public function images()
     {
-        return $this->hasMany('App\ProductImage', 'product_id', 'id');
+        return $this->hasMany('App\ProductImage', 'product_id', 'id')->orderBy('position', 'ASC');
     }
 
     public function sizes()

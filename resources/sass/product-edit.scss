@@ -137,63 +137,78 @@
             }
 
             .images {
+                input[type=checkbox], input[type=file] {
+                    display: none;
+                }
+
                 .image {
                     float: left;
                     position: relative;
                     margin-left: 1%;
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 5px;
 
                     &:first-child {
                         margin-left: 0;
                     }
 
-                    img {
-                        border-radius: 5px;
-                        width: 80px;
-                        height: 80px;
-                        object-fit: cover;
-                        background-color: #fff;
+                    &.no-image {
+                        label {
+                            background-color: rgb(240, 240, 240);
+                            font-size: 45px;
+                            font-weight: normal;
+                            text-align: center;
+                            line-height: 80px;
+                            cursor: pointer;
+                            color: #969696;
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 5px;
+                        }
+
+                        img {
+                            display: none;
+                        }
                     }
 
-                    input[type=checkbox] {
-                        display: none;
-                    }
+                    &.loaded-image {
+                        .btn-add-image {
+                            display: none;
+                        }
 
-                    .remove-image {
-                        position: absolute;
-                        right: 0;
-                        top: 0;
-                        background-image: url('../images/icon-remove.png');
-                        background-size: contain;
-                        background-repeat: no-repeat;
-                        background-position: center;
-                        width: 16px;
-                        height: 16px;
-                        cursor: pointer;
-                        background-color: rgba(0, 0, 0, .5);
-                        border-radius: 0 5px;
-                    }
-                }
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 5px;
+                            object-fit: cover;
+                            background-color: #fff;
+                        }
 
-                .container-add-image {
-                    float: left;
-                    margin-left: 1%;
+                        .remove-image {
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                            width: 16px;
+                            height: 16px;
+                            cursor: pointer;
+                            background-color: rgba(0, 0, 0, .5);
+                            border-radius: 0 5px;
 
-                    input[type=file] {
-                        display: none;
-                    }
-
-                    .btn-add-image {
-                        border-radius: 5px;
-                        background-color: rgb(240, 240, 240);
-                        width: 80px;
-                        height: 80px;
-                        border: none;
-                        font-size: 45px;
-                        font-weight: normal;
-                        text-align: center;
-                        line-height: 80px;
-                        cursor: pointer;
-                        color: #969696;
+                            &:after {
+                                content: '';
+                                background-image: url('../images/icon-remove.png');
+                                background-size: contain;
+                                background-repeat: no-repeat;
+                                background-position: center;
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                width: 100%;
+                                height: 100%;
+                                filter: brightness(10%) invert(1);
+                            }
+                        }
                     }
                 }
             }

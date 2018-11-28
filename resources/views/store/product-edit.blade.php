@@ -42,21 +42,26 @@
 
                     <div class="row">
                         <div class="col-xs-6 images">
-                            @foreach($product->images as $image)
-                                <div class="image">
-                                    {!! Form::checkbox('image_remove[]', $image->image, null, ['id' => 'image_remove_' . $image->id]) !!}
-                                    {!! Form::label('image_remove_' . $image->id, ' ', ['class' => 'remove-image']) !!}
+                            @foreach($product->images as $key => $image)
+                                <div class="image loaded-image">
+                                    {!! Form::checkbox('image_remove[]', $image->image, false, ['id' => 'image_remove_' . $product->id . '_' . $key, 'autocomplete' => 'off']) !!}
+                                    {!! Form::label('image_remove_' . $product->id . '_' . $key, ' ', ['class' => 'remove-image']) !!}
+
+                                    {!! Form::file('image[]', ['id' => 'image_' . $product->id . '_' . $key, 'data-position' => $key, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
+                                    {!! Form::label('image_' . $product->id . '_' . $key, '+', ['class' => 'btn-add-image']) !!}
 
                                     <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $image->image) }}" />
                                 </div>
                             @endforeach
 
-                            @if($product->images->count() < 6)
-                                <div class="container-add-image">
-                                    {!! Form::file('image[]', ['id' => 'image_' . ($product->images->count() + 1), 'data-position' => ($product->images->count() + 1)]) !!}
-                                    {!! Form::label('image_' . ($product->images->count() + 1), '+', ['class' => 'btn-add-image']) !!}
+                            @for($i = ($product->images->count() + 1); $i <= 6; $i++)
+                                <div class="image no-image">
+                                    {!! Form::file('image[]', ['id' => 'image_' . $product->id . '_' . $i, 'data-position' => $i, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
+                                    {!! Form::label('image_' . $product->id . '_' . $i, '+', ['class' => 'btn-add-image']) !!}
+
+                                    <img src="#" />
                                 </div>
-                            @endif
+                            @endfor
                         </div>
 
                         <div class="col-xs-6 options">
@@ -82,23 +87,23 @@
                     </div>
 
                     <div class="row">
-                        {!! Form::text('title', null, ['placeholder' => 'Título do produto * (A busca é feita com base nas palavras escritas aqui)', 'class' => 'title']) !!}
+                        {!! Form::text('title', null, ['placeholder' => 'Título do produto * (A busca é feita com base nas palavras escritas aqui)', 'class' => 'title', 'title' => 'Título do produto']) !!}
 
                         {!! Form::select('gender', $genders, null, ['title' => 'Gênero*', 'class' => 'selectpicker']) !!}
 
-                        {!! Form::text('old_price', null, ['placeholder' => 'Preço antigo', 'class' => 'mask-money']) !!}
+                        {!! Form::text('old_price', null, ['placeholder' => 'Preço antigo', 'class' => 'mask-money', 'title' => 'Preço antigo']) !!}
                     </div>
 
                     <div class="row">
-                        {!! Form::textarea('description', null, ['placeholder' => 'Descrição do produto']) !!}
+                        {!! Form::textarea('description', null, ['placeholder' => 'Descrição do produto', 'title' => 'Descrição do produto']) !!}
 
                         {!! Form::select('installment', $installment, null, ['title' => 'Parcelamento', 'class' => 'selectpicker']) !!}
 
-                        {!! Form::text('price', null, ['placeholder' => 'Preço atual*', 'class' => 'mask-money']) !!}
+                        {!! Form::text('price', null, ['placeholder' => 'Preço atual*', 'class' => 'mask-money', 'title' => 'Preço atual']) !!}
 
-                        {!! Form::text('installment_price', null, ['placeholder' => 'Valor da parcela', 'class' => 'mask-money']) !!}
+                        {!! Form::text('installment_price', null, ['placeholder' => 'Valor da parcela', 'class' => 'mask-money', 'title' => 'Valor da parcela']) !!}
 
-                        {!! Form::text('discount', null, ['placeholder' => 'Desconto', 'class' => 'mask-number']) !!}
+                        {!! Form::text('discount', null, ['placeholder' => 'Desconto', 'class' => 'mask-number', 'title' => 'Desconto']) !!}
                     </div>
 
                     <div class="row sizes-container">

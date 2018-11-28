@@ -217,17 +217,23 @@ class ProductController extends Controller
                }
 
                if (isset($request->image)) {
-                   foreach ($request->image as $key_image => $image) {
-                       foreach ($request->image_position as $key_position => $image_position) {
-                            if ($key_position == $key_image) {
-                                $position = $image_position;
-                            }
-                        }
+                   $key_image = 0;
 
-                       $product->images()->create([
-                           'image' => _uploadImage($image),
-                           'position' => $position ?? '0'
-                       ]);
+                   foreach ($request->image as $image) {
+                       if(!empty($image)) {
+                           foreach ($request->image_position as $key_position => $image_position) {
+                                if ($key_position == $key_image) {
+                                    $position = $image_position;
+                                }
+                            }
+
+                           $product->images()->create([
+                               'image' => _uploadImage($image),
+                               'position' => $position ?? '0'
+                           ]);
+
+                           $key_image++;
+                       }
                    }
                }
             }

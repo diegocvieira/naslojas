@@ -36,20 +36,24 @@ $(function() {
             next_product = 1;
 
         if(actives.length > 1) {
-            actives.addClass('product').removeClass('selected');
+            if (actives.length <= 6) {
+                actives.addClass('product').removeClass('selected');
 
-            $.each($('.dz-preview.grouped'), function(index, val) {
-                var c = $(this).attr('data-product');
+                $.each($('.dz-preview.grouped'), function(index, val) {
+                    var c = $(this).attr('data-product');
 
-                if (c >= next_product) {
-                    next_product = (parseInt(c) + 1);
-                }
-            });
+                    if (c >= next_product) {
+                        next_product = (parseInt(c) + 1);
+                    }
+                });
 
-            $('.dz-preview.product').attr('data-product', next_product);
-            $('.dz-preview.product .dz-success-mark').text('Grupo ' + next_product);
+                $('.dz-preview.product').attr('data-product', next_product);
+                $('.dz-preview.product .dz-success-mark').text('Grupo ' + next_product);
 
-            actives.addClass('grouped').removeClass('product').attr('title', 'Clique para remover esta imagem do grupo');
+                actives.addClass('grouped').removeClass('product').attr('title', 'Clique para remover esta imagem do grupo');
+            } else {
+                modalAlert('Você só pode adicionar no máximo 6 imagens por produto.');
+            }
         }
     });
 

@@ -196,26 +196,26 @@ $(function() {
 
     // Remove images
     $(document).on('click', '.remove-image', function() {
-        $(this).parents('.image').hide();
+        var image_container = $(this).parent();
+
+        $('#' + $(this).attr('for')).attr('checked', true);
+
+        image_container.find('.remove-image').remove();
+        image_container.addClass('no-image').removeClass('loaded-image').find('input[type=file]').val('');
+        image_container.find('input[type=hidden]').remove();
     });
 
     // Preview images
-    $(document).on('change', '.container-add-image input[type=file]', function() {
-        var container = $(this).parents('.container-add-image'),
-            reader = new FileReader(),
-            position = (parseInt($(this).data('position')) + 1);
+    $(document).on('change', '.image input[type=file]', function() {
+        var reader = new FileReader(),
+            $this = $(this);
 
         if($(this)[0].files[0].size > 5100000) {
             modalAlert('A imagem tem que ter no máximo 5mb.');
         } else {
             reader.onload = function(e) {
-                console.log(position);
-                container.before("<div class='image'><input type='hidden' name='image_position[]' value='" + (position - 1) + "' /><label class='remove-image'></label><img src='" + e.target.result + "' /></div>");
-                container.find('.btn-add-image').remove();
-
-                if(position < 7) {
-                    container.append("<input name='image[]' type='file' data-position='" + position + "' id='image_" + position + "' /><label class='btn-add-image' for='image_" + position + "'>+</label>");
-                }
+                $this.parent().removeClass('no-image').addClass('loaded-image').append("<label class='remove-image'></label>").find('img').attr('src', e.target.result);
+                $this.parent().append("<input type='hidden' name='image_position[]' value='" + $this.data('position') + "' />");
             }
 
             reader.readAsDataURL($(this)[0].files[0]);
@@ -269,37 +269,40 @@ $(function() {
             errorPlacement: function(error, element) {
             },
             submitHandler: function(form) {
-                $('.btn-finish').text('SALVANDO').attr('disabled', true);
+                if ($(form).find('.image.loaded-image').length >= 1) {
+                    $('.btn-finish').text('SALVANDO').attr('disabled', true);
 
-                $.ajax({
-                    url: $(form).attr('action'),
-                    method: 'POST',
-                    dataType: 'json',
-                    data: new FormData($(form)[0]),
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    success: function (data) {
-                        $('.btn-finish').text('SALVAR ALTERAÇÕES').attr('disabled', false);
+                    $.ajax({
+                        url: $(form).attr('action'),
+                        method: 'POST',
+                        dataType: 'json',
+                        data: new FormData($(form)[0]),
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        success: function (data) {
+                            $('.btn-finish').text('SALVAR ALTERAÇÕES').attr('disabled', false);
 
-                        if(data.status) {
-                            if ($('.page-add').length) {
-                                $(form).remove();
+                            if(data.status) {
+                                if ($('.page-add').length) {
+                                    $(form).remove();
 
-                                if ($('.form-edit-product').length == 0) {
-
-                                    setTimeout(function() {
-                                        window.location.reload(true);
-                                    }, 100);
+                                    if ($('.form-edit-product').length == 0) {
+                                        setTimeout(function() {
+                                            window.location.reload(true);
+                                        }, 100);
+                                    }
+                                } else {
+                                    window.location.reload(true);
                                 }
+                            } else {
+                                modalAlert(data.msg);
                             }
                         }
-
-                        if (!$('.page-add').length || !data.status) {
-                            modalAlert(data.msg);
-                        }
-                    }
-                });
+                    });
+                } else {
+                    $(form).find('.btn-add-image:first').css('background-color', 'rgb(255, 221, 221)');
+                }
 
                 return false;
             }

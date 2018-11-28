@@ -24,6 +24,8 @@ header {
 
         #logo-naslojas {
             float: none;
+            margin-right: 0;
+            display: inline-block;
         }
     }
 
@@ -33,10 +35,10 @@ header {
 
     #logo-naslojas {
         float: left;
+        margin: 13px 40px 0 0;
 
         img {
             width: 150px;
-            margin: 13px 40px 0 0;
         }
     }
 

@@ -15,6 +15,7 @@ class SelectsProductComposer
             '3' => 'masculino'
         ];
 
+		$installment[''] = 'Parcelamento';
         for($i = 1; $i <= 12; $i++) {
             $installment[$i] = $i . 'x';
         }
