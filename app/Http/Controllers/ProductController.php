@@ -110,6 +110,7 @@ class ProductController extends Controller
         $products = Product::withoutGlobalScopes(['active', 'active-store'])
             ->where('store_id', Auth::guard('store')->user()->store_id)
             ->where('status', 2)
+            ->orderBy('id', 'DESC')
             ->paginate(999);
 
         $section = 'add';
