@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="container page-error">
-        <div class="center">
+        <div class="no-results">
             <img src="{{ asset('images/icon-box.png') }}" />
 
             <p>Erro 404 - Página não encontrada</p>
