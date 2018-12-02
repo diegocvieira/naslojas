@@ -381,7 +381,7 @@ $(function() {
         }
 
         if(!$(this).data('storemessage') && store_logged) {
-            modal.find('.modal-body').append("<div class='store'><h3>" + $(this).data('storename') + "</h3><textarea name='message' placeholder='Digite aqui a sua resposta'></textarea></div>");
+            modal.find('.modal-body').append("<div class='store'><h3>" + $(this).data('storename') + "</h3><textarea name='message' maxlength='300' placeholder='Digite aqui a sua resposta'></textarea></div>");
             modal.find('.modal-footer').append("<button type='button' data-dismiss='modal' class='inverse-color'>VOLTAR</button><button type='button' class='btn-confirm' data-id='" + $(this).data('id') + "'>ENVIAR</button>");
         } else {
             modal.find('.modal-footer').append("<button type='button' data-dismiss='modal'>OK</button>");
