@@ -27,7 +27,7 @@
         <div class="list-products">
             @foreach($products as $product)
                 <div class="product">
-                    <a href="#">
+                    <a href="{{ route('show-product', $product->slug) }}" class="show-product">
                         <img src="{{ asset('uploads/' . $product->store->id . '/products/' . $product->images->first()->image) }}" class="image" alt="{{ $product->title }}" />
                     </a>
 

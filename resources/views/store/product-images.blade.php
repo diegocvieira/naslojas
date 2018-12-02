@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        {!! Form::open(['route' => 'save-products', 'class' => 'dropzone', 'id' => 'form-images-dropzone']) !!}
+        {!! Form::open(['route' => 'save-products', 'class' => 'dropzone', 'id' => 'form-images-dropzone', 'files' => 'true']) !!}
             <div class="dz-message">
                 <img src="{{ asset('images/icon-box.png') }}" />
 

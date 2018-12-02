@@ -52,15 +52,15 @@
                             </li>
 
                             <li>
-                                <a href="#" class="icon-check">Confirmações</a>
+                                <a href="{{ route('list-store-confirms') }}" class="icon-check">Confirmações</a>
                             </li>
 
                             <li>
-                                <a href="#" class="icon-reserve">Reservas</a>
+                                <a href="{{ route('list-store-reserves') }}" class="icon-reserve">Reservas</a>
                             </li>
 
                             <li>
-                                <a href="#" class="icon-messages">Mensagens</a>
+                                <a href="{{ route('list-store-messages') }}" class="icon-messages">Mensagens</a>
                             </li>
 
                             <li>
@@ -86,11 +86,15 @@
                             </li>
 
                             <li>
-                                <a href="#" class="icon-reserve">Reservas</a>
+                                <a href="{{ route('list-client-confirms') }}" class="icon-check">Confirmações</a>
                             </li>
 
                             <li>
-                                <a href="#" class="icon-messages">Mensagens</a>
+                                <a href="{{ route('list-client-reserves') }}" class="icon-reserve">Reservas</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('list-client-messages') }}" class="icon-messages">Mensagens</a>
                             </li>
 
                             <li>

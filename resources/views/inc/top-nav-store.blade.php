@@ -21,15 +21,15 @@
                 </li>
 
                 <li>
-                    <a href="#">Confirmações</a>
+                    <a href="{{ route('list-store-confirms') }}" class="{{ $section == 'confirm' ? 'active' : '' }}">Confirmações</a>
                 </li>
 
                 <li>
-                    <a href="#">Reservas</a>
+                    <a href="{{ route('list-store-reserves') }}" class="{{ $section == 'reserve' ? 'active' : '' }}">Reservas</a>
                 </li>
 
                 <li>
-                    <a href="#">Mensagens</a>
+                    <a href="{{ route('list-store-messages') }}" class="{{ $section == 'message' ? 'active' : '' }}">Mensagens</a>
                 </li>
 
                 <li>

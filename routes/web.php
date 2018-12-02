@@ -47,6 +47,9 @@ Route::get('cidade/set/{id}', 'GlobalController@setCity')->name('set-city');
 // Store page
 Route::get('{slug}', 'StoreController@show')->name('show-store');
 
+// Product Page
+Route::get('produto/{slug}', 'ProductController@show')->name('show-product');
+
 // Search store products
 Route::get('loja/produtos/busca', 'StoreController@formSearch')->name('form-search-store');
 Route::get('{store}/busca/{gender}/{order?}/{keyword?}', 'StoreController@search');
@@ -63,7 +66,7 @@ Route::group(['prefix' => 'loja'], function () {
 	})->name('store-register-get');
 	Route::post('cadastro', 'StoreController@register')->name('store-register-post');
 
-	Route::group(['middleware' => 'auth:store'], function () {
+	Route::group(['prefix' => 'admin', 'middleware' => 'auth:store'], function () {
 		Route::get('config', 'StoreController@getConfig')->name('get-store-config');
 		Route::post('config', 'StoreController@setConfig')->name('set-store-config');
 
@@ -75,8 +78,8 @@ Route::group(['prefix' => 'loja'], function () {
 
 			Route::get('/', 'ProductController@edit')->name('edit-products');
 
-			Route::get('admin/busca', 'ProductController@formSearchAdmin')->name('form-search-admin');
-			Route::get('admin/busca/{keyword?}', 'ProductController@edit');
+			Route::get('busca', 'ProductController@formSearchAdmin')->name('form-search-admin');
+			Route::get('busca/{keyword?}', 'ProductController@edit');
 
 			Route::post('save/{id?}', 'ProductController@save')->name('save-products');
 
@@ -85,6 +88,36 @@ Route::group(['prefix' => 'loja'], function () {
 			Route::post('delete/{id}', 'ProductController@delete')->name('delete-product');
 
 			Route::post('delete-images/{image}', 'ProductController@deleteImages');
+		});
+
+		Route::group(['prefix' => 'mensagens'], function () {
+			// List messages
+			Route::get('/', 'MessageController@listStoreMessages')->name('list-store-messages');
+
+			// Create message
+			Route::post('create', 'MessageController@createStoreMessage');
+		});
+
+		Route::group(['prefix' => 'confirmacoes'], function () {
+			// List confirmations
+			Route::get('/', 'ProductConfirmController@listStoreConfirms')->name('list-store-confirms');
+
+			// Confirm product
+			Route::post('confirm/{id}', 'ProductConfirmController@confirm')->name('product-confirm-confirm');
+
+			// Refused product
+			Route::post('refuse/{id}', 'ProductConfirmController@refuse')->name('product-refuse-confirm');
+		});
+
+		Route::group(['prefix' => 'reservas'], function () {
+			// List reserves
+			Route::get('/', 'ProductReserveController@listStoreReserves')->name('list-store-reserves');
+
+			// Confirm product
+			Route::post('confirm/{id}', 'ProductReserveController@confirm')->name('product-confirm-reserve');
+
+			// Refused product
+			Route::post('refuse/{id}', 'ProductReserveController@refuse')->name('product-refuse-reserve');
 		});
 	});
 });
@@ -101,11 +134,36 @@ Route::group(['prefix' => 'cliente'], function () {
 	})->name('client-register-get');
 	Route::post('cadastro', 'ClientController@register')->name('client-register-post');
 
-	Route::group(['middleware' => 'auth:client'], function () {
+	Route::group(['prefix' => 'admin', 'middleware' => 'auth:client'], function () {
 		Route::get('config', 'ClientController@getConfig')->name('get-client-config');
 		Route::post('config', 'ClientController@setConfig')->name('set-client-config');
 
 		Route::post('delete-account', 'ClientController@deleteAccount')->name('delete-client-account');
+
+		Route::group(['prefix' => 'mensagens'], function () {
+			// List messages
+			Route::get('/', 'MessageController@listClientMessages')->name('list-client-messages');
+
+			// Create message
+			Route::post('create', 'MessageController@createClientMessage')->name('create-client-message');
+		});
+
+		Route::group(['prefix' => 'produto'], function () {
+			// Rate product
+			Route::post('rating', 'ProductController@rating')->name('rating-product');
+
+			// Request product confirmation
+			Route::post('create-confirmation', 'ProductConfirmController@create')->name('create-product-confirm');
+
+			// Request product reserve
+			Route::post('create-reserve', 'ProductReserveController@create')->name('create-product-reserve');
+
+			// List reserves
+			Route::get('reservas', 'ProductReserveController@listClientReserves')->name('list-client-reserves');
+
+			// List confirmations
+			Route::get('confirmacoes', 'ProductConfirmController@listClientConfirms')->name('list-client-confirms');
+		});
 	});
 });
 

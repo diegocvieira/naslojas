@@ -52,13 +52,13 @@ $(function() {
 
                 actives.addClass('grouped').removeClass('product').attr('title', 'Clique para remover esta imagem do grupo');
             } else {
-                modalAlert('Você só pode adicionar no máximo 6 imagens por produto.');
+                modalAlert('Você pode adicionar no máximo 6 imagens por produto.');
             }
         }
     });
 
     $("#form-images-dropzone").dropzone({
-        url: '/loja/produtos/dropzone',
+        url: '/loja/admin/produtos/dropzone',
         params: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -133,7 +133,7 @@ $(function() {
 
                     if (!$(file.previewElement).hasClass('dz-error')) {
                         $.ajax({
-                            url: 'loja/produtos/delete-images/' + $(file.previewElement).find('img').attr('alt'),
+                            url: '/loja/admin/produtos/delete-images/' + $(file.previewElement).find('img').attr('alt'),
                             method: 'POST',
                             dataType: 'json',
                             headers: {

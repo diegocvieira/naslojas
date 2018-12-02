@@ -1,4 +1,6 @@
 {
     "/css/global.css": "/css/global.css",
-    "/js/global.js": "/js/global.js"
+    "/css/global-store.css": "/css/global-store.css",
+    "/js/global.js": "/js/global.js",
+    "/js/global-store.js": "/js/global-store.js"
 }

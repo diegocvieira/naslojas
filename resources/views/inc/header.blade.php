@@ -53,12 +53,24 @@
         @if($app->environment('local'))
             <link rel="stylesheet" href="{{ asset('offline-developer/bootstrap.min.css') }}">
             <link rel="stylesheet" href="{{ asset('offline-developer/bootstrap-select.min.css') }}">
+
+            @if (Auth::guard('store')->check())
+                <link rel="stylesheet" href="{{ asset('offline-developer/dropzone.min.css') }}">
+            @endif
         @else
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
+
+            @if (Auth::guard('store')->check())
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css">
+            @endif
         @endif
 
         <link rel="stylesheet" type="text/css" href="{{ mix('css/global.css') }}">
+
+        @if (Auth::guard('store')->check())
+            <link rel="stylesheet" type="text/css" href="{{ mix('css/global-store.css') }}">
+        @endif
 
         @if($app->environment('production'))
             <script>

@@ -32,6 +32,42 @@ function _taxes($parcel_qtd, $parcel_price, $product_price)
     }
 }
 
+function _originalImage($image)
+{
+    return str_replace('_resize', '', $image);
+}
+
+function _dateFormat($date)
+{
+    setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+
+    $date = date('Y-m-d', strtotime($date));
+
+    if($date == date('Y-m-d')) {
+        $date_format = 'HOJE';
+    } else if($date == date('Y-m-d', strtotime('-1 day'))) {
+        $date_format = 'ONTEM';
+    } else {
+        if(date('Y-m-d', strtotime('-7 day')) > $date) {
+            $diff = date_diff(date_create_from_format('Y-m-d', $date), date_create());
+
+            if(date('Y-m-d', strtotime('-30 day')) > $date && date('Y-m-d', strtotime('-365 day')) < $date) {
+                $date_format = 'Há ' . $diff->m . ($diff->m > 1 ? ' meses' : ' mês');
+            } else {
+                $date_format = 'Há ' . $diff->y . ($diff->y > 1 ? ' anos' : ' ano');
+            }
+        } else {
+            $date_format = strftime('%A', strtotime($date));
+
+            if($date_format != 'sábado' && $date_format != 'domingo') {
+                $date_format = $date_format . '-feira';
+            }
+        }
+    }
+
+    return $date_format;
+}
+
 function _uploadImage($file)
 {
     $microtime = microtime(true) . RAND(111111, 999999);

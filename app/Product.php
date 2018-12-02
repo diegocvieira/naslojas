@@ -26,6 +26,11 @@ class Product extends Model
         return $this->hasMany('App\ProductSize', 'product_id', 'id');
     }
 
+    public function messages()
+    {
+        return $this->hasMany('App\Message', 'product_id', 'id')->orderBy('id', 'DESC');
+    }
+
     public function scopeFilterGender($query, $gender)
     {
         if ($gender && $gender != 'todos') {

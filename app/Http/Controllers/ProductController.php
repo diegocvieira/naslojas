@@ -10,9 +10,87 @@ use Response;
 use Validator;
 use App\ProductImage;
 use App\ProductSize;
+use App\ProductRating;
+use DB;
 
 class ProductController extends Controller
 {
+    public function show($slug)
+    {
+        $product = Product::where('slug', $slug)
+            ->leftJoin('product_ratings as pr', 'products.id', '=', 'pr.product_id')
+    		->select('products.*', DB::raw('ROUND((SUM(pr.rating) / COUNT(pr.id)), 1) as rating, COUNT(pr.id) as rating_number'))
+    		->groupBy('products.id')
+    		->firstOrFail();
+
+        $url = '/produto/' . $product->slug;
+
+        if(\Request::ajax()) {
+            $more_colors = Product::whereNotNull('related')->where('related', $product->related)->where('id', '!=', $product->id)->get();
+
+            $related_products = Product::where('id', '!=', $product->id)
+                ->whereHas('store', function ($query) use ($product) {
+    	            $query->where('city_id', $product->store->city->id);
+    	        });
+
+            $keyword = $product->title;
+            if ($keyword) {
+                $keyword = str_replace('-', ' ', $keyword);
+
+                // separa cada palavra
+                $keyword_array = explode(' ', $keyword);
+
+                // se houver mais de 2 palavras e a palavra tiver menos de 4 letras ignora na busca
+                foreach ($keyword_array as $keyword_each) {
+                    if (count($keyword_array) > 2 && strlen($keyword) < 4) {
+                        continue;
+                    }
+
+                    $related_products = $related_products->where('title', 'LIKE', '%' . $keyword_each . '%');
+                }
+            }
+            $related_products = $related_products->paginate(20);
+
+            if (Auth::guard('client')->check()) {
+                $client_rating = ProductRating::where('client_id', Auth::guard('client')->user()->id)->where('product_id', $product->id)->first();
+            }
+
+            $header_title = $product->title . ' - naslojas.com';
+
+            return response()->json([
+                'body' => view('show-product', compact('product', 'more_colors', 'related_products', 'client_rating'))->render(),
+                'header_title' => $header_title,
+                'url' => $url
+            ]);
+        } else {
+            session()->flash('session_flash_product_url', $url);
+
+            return redirect()->route('home');
+        }
+    }
+
+    public function rating(Request $request)
+    {
+        $client_id = Auth::guard('client')->user()->id;
+
+        ProductRating::where('client_id', $client_id)->where('product_id', $request->product_id)->delete();
+
+        $rating = ProductRating::create([
+            'product_id' => $request->product_id,
+            'client_id' => $client_id,
+            'rating' => $request->rating,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        if($rating) {
+            $return['msg'] = 'Avaliação realizada com sucesso!';
+        } else {
+            $return['msg'] = 'Ocorreu um erro inesperado. Por favor, atualize a página e tente novamente.';
+        }
+
+        return json_encode($return);
+    }
+
     public function formSearch(Request $request)
     {
         $city = Cookie::get('city_slug');
@@ -222,14 +300,19 @@ class ProductController extends Controller
 
                    foreach ($request->image as $image) {
                        if(!empty($image)) {
+                           $image_name = _uploadImage($image);
+
                            foreach ($request->image_position as $key_position => $image_position) {
                                 if ($key_position == $key_image) {
                                     $position = $image_position;
+
+                                    //$return['images']['name'] = $image_name;
+                                    //$return['images']['position'] = $position;
                                 }
                             }
 
                            $product->images()->create([
-                               'image' => _uploadImage($image),
+                               'image' => $image_name,
                                'position' => $position ?? '0'
                            ]);
 

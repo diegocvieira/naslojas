@@ -16,7 +16,7 @@ $(function() {
         $this.toggleClass('disabled');
 
         $.ajax({
-            url: '/loja/produtos/enable-disable/' + $this.data('productid'),
+            url: '/loja/admin/produtos/enable-disable/' + $this.data('productid'),
             method: 'POST',
             dataType: 'json',
             headers: {
@@ -284,6 +284,15 @@ $(function() {
                             $('.btn-finish').text('SALVAR ALTERAÇÕES').attr('disabled', false);
 
                             if(data.status) {
+                                //$(form).find('.image').find('input[type=file]').val('');
+
+                                /*$(data.images).each(function(index, val) {
+                                    var image_container = $(form).find('.images').find('input[value=' + val.position +']').parents('.image');
+
+                                    image_container.find('.remove-image').attr('for', val.name);
+                                    image_container.append("<input type='checkbox' name='image_remove[]' value='" + val.name + "' id='" + val.name + "' autocomplete='off' />");
+                                });*/
+
                                 if ($('.page-add').length) {
                                     $(form).remove();
 

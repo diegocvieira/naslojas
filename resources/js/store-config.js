@@ -7,7 +7,7 @@ $(function() {
             method: 'GET',
             dataType: 'json',
             success: function (data) {
-                $('#modal-default').addClass('page-store-config').find('.modal-content').html(data.body);
+                $('#modal-default').removeClass().addClass('modal fade page-store-config').find('.modal-content').html(data.body);
                 $('#modal-default').modal('show');
 
                 $('#cep').mask('00000-000', {reverse: false, clearIfNotMatch : true});

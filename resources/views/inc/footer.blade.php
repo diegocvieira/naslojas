@@ -99,22 +99,51 @@
             <script type="text/javascript" src="{{ asset('offline-developer/jquery.validate.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('offline-developer/bootstrap-select.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('offline-developer/jquery.mask.min.js') }}"></script>
+
+            @if (Auth::guard('store')->check())
+                <script type="text/javascript" src="{{ asset('offline-developer/dropzone.min.js') }}"></script>
+            @endif
         @else
             <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js'></script>
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.8/jquery.mask.min.js"></script>
+
+            @if (Auth::guard('store')->check())
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+            @endif
         @endif
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css">
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
-
         <script>
-            Dropzone.autoDiscover = false;
+            @if (Auth::guard('client')->check())
+                var client_logged = true;
+            @else
+                var client_logged = false;
+            @endif
+
+            @if (Auth::guard('store')->check())
+                Dropzone.autoDiscover = false;
+                var store_logged = true;
+            @else
+                var store_logged = false;
+            @endif
         </script>
 
         <script src="{{ mix('js/global.js') }}"></script>
+
+        @if (Auth::guard('store')->check())
+            <script src="{{ mix('js/global-store.js') }}"></script>
+        @endif
+
+        @if(session('session_flash_product_url'))
+            <script>
+                $(function() {
+                    $('body').append("<a href='{!! session('session_flash_product_url') !!}' class='show-product show-product-url' style='display:none;'></a>");
+                    $('.show-product-url').trigger('click');
+                });
+            </script>
+        @endif
 
         @yield('script')
     </body>

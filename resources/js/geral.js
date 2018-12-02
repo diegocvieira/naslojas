@@ -228,7 +228,7 @@ $(function() {
             method: 'GET',
             dataType: 'json',
             success: function (data) {
-                $('#modal-default').addClass('page-client-config').find('.modal-content').html(data.body);
+                $('#modal-default').removeClass().addClass('modal fade page-client-config').find('.modal-content').html(data.body);
                 $('#modal-default').modal('show');
 
                 $('#form-client-config').validate({
@@ -340,6 +340,173 @@ $(function() {
             return false;
         });
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $(document).on('click', '.page-messages .show-message', function(e) {
+        e.preventDefault();
+
+        var modal = $('#modal-default');
+
+        modal.removeClass().addClass('modal fade modal-show-messages');
+
+        modal.find('.modal-content').html("<div class='modal-body'><div class='client'><h3>" + $(this).data('clientname') + "</h3><p>" + $(this).data('clientmessage') + "</p></div></div><div class='modal-footer'></div>");
+
+        if ($(this).data('storemessage')) {
+            modal.find('.modal-body').append("<div class='store'><h3>" + $(this).data('storename') + "</h3><p>" + $(this).data('storemessage') + "</p></div>");
+        }
+
+        if(!$(this).data('storemessage') && store_logged) {
+            modal.find('.modal-body').append("<div class='store'><h3>" + $(this).data('storename') + "</h3><textarea name='message' placeholder='Digite aqui a sua resposta'></textarea></div>");
+            modal.find('.modal-footer').append("<button type='button' data-dismiss='modal' class='inverse-color'>VOLTAR</button><button type='button' class='btn-confirm' data-id='" + $(this).data('id') + "'>ENVIAR</button>");
+        } else {
+            modal.find('.modal-footer').append("<button type='button' data-dismiss='modal'>OK</button>");
+        }
+
+        modal.modal('show');
+    });
+
+    $(document).on('click', '.modal-show-messages .btn-confirm', function(e) {
+        e.preventDefault();
+
+        var message = $('.modal-show-messages').find('textarea').val(),
+            id = $(this).data('id');
+
+        if(message) {
+            $.ajax({
+                url: '/loja/admin/mensagens/create',
+                method: 'POST',
+                dataType: 'json',
+                data: { message : message, id : id },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    $('#modal-default').modal('hide');
+
+                     setTimeout(function() {
+                         modalAlert(data.msg);
+                     }, 1000);
+
+                    if(data.status) {
+                        var row = $('table').find('.show-message[data-id=' + id + ']').parents('tr');
+
+                        row.find('.show-message').data('storemessage', message).text('Visualizar resposta');
+                        row.find('.status').addClass('green').text('Respondido');
+                        row.find('.answered_date').text(data.date);
+                    }
+                }
+            });
+        }
+    });
+
+    $(document).on('click', '.page-admin .change-confirm-status', function(e) {
+        e.preventDefault();
+
+        var $this = $(this);
+
+        $.ajax({
+            url: $(this).attr('href'),
+            method: 'POST',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                 modalAlert(data.msg);
+
+                if(data.status) {
+                    var row = $this.parents('tr');
+
+                    row.find('.btn-status').text('-----');
+                    row.find('.confirmed_date').text(data.date);
+
+                    if (data.type == 1) {
+                        row.find('.status').addClass('green').text('Confirmado');
+                    } else {
+                        row.find('.status').addClass('red').text('Recusado');
+                    }
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '.page-admin .change-reserve-status', function(e) {
+        e.preventDefault();
+
+        var $this = $(this);
+
+        $.ajax({
+            url: $(this).attr('href'),
+            method: 'POST',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                 modalAlert(data.msg);
+
+                if(data.status) {
+                    var row = $this.parents('tr');
+
+                    row.find('.btn-status').text('-----');
+                    row.find('.confirmed_date').text(data.date_confirmed);
+
+                    if (data.type == 1) {
+                        row.find('.status').addClass('green').text('Confirmado');
+                        row.find('.reserved_until').text(data.date_reserved);
+                    } else {
+                        row.find('.status').addClass('red').text('Recusado');
+                    }
+                }
+            }
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
 
 function modalAlert(body, btn = 'OK') {

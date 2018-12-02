@@ -107,6 +107,7 @@ a, a:hover, a:active, a:focus {
 
 .modal {
     text-align: center;
+    overflow-y: auto;
 
     &:before {
         display: inline-block;
@@ -268,6 +269,5 @@ a, a:hover, a:active, a:focus {
 @import 'show-store';
 @import 'login-register.scss';
 @import 'client-config.scss';
-@import 'store-config.scss';
-@import 'product-images.scss';
-@import 'product-edit.scss';
+@import 'show-product.scss';
+@import 'admin.scss';
