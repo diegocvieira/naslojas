@@ -17,15 +17,15 @@ class ProductController extends Controller
 {
     public function show($slug)
     {
-        $product = Product::where('slug', $slug)
-            ->leftJoin('product_ratings as pr', 'products.id', '=', 'pr.product_id')
-    		->select('products.*', DB::raw('ROUND((SUM(pr.rating) / COUNT(pr.id)), 1) as rating, COUNT(pr.id) as rating_number'))
-    		->groupBy('products.id')
-    		->firstOrFail();
+        $product = Product::where('slug', $slug)->firstOrFail();
 
         $url = '/produto/' . $product->slug;
 
         if(\Request::ajax()) {
+            $product_rating = ProductRating::select(DB::raw('ROUND((SUM(rating) / COUNT(id)), 1) as rating, COUNT(id) as rating_number'))
+			->where('product_id', $product->id)
+            ->first();
+
             $more_colors = Product::whereNotNull('related')->where('related', $product->related)->where('id', '!=', $product->id)->get();
 
             $related_products = Product::where('id', '!=', $product->id)
@@ -58,7 +58,7 @@ class ProductController extends Controller
             $header_title = $product->title . ' - naslojas.com';
 
             return response()->json([
-                'body' => view('show-product', compact('product', 'more_colors', 'related_products', 'client_rating'))->render(),
+                'body' => view('show-product', compact('product', 'more_colors', 'related_products', 'product_rating', 'client_rating'))->render(),
                 'header_title' => $header_title,
                 'url' => $url
             ]);

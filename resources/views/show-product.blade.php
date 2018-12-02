@@ -103,11 +103,10 @@
     <h1 class="product-title">{{ $product->title }}</h1>
 
     <div class="rating-container">
-        @isset($client_rating)
+        @isset($product_rating->rating)
             <div class="rating-value-container">
-                <span class="rating-value">{{ $product->rating ?? '5.0' }}</span>
-
-                <span class="rating-number">({{ $product->rating_number > 1 ? $product->rating_number . ' avaliações' : 1 . ' avaliação' }})</span>
+                <span class="rating-value">{{ $product_rating->rating }}</span>
+                <span class="rating-number">({{ $product_rating->rating_number }} {{ $product_rating->rating_number > 1 ? ' avaliações' : ' avaliação' }})</span>
             </div>
         @endisset
 
