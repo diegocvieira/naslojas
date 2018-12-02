@@ -128,8 +128,8 @@
                 <button type="button" class="btn-product-reserve" data-url="{{ route('create-product-reserve') }}" data-productid="{{ $product->id }}"></button>
 
                 <span class="btn-tooltip">
-                    <p>A loja irá confirmar se o produto ainda está à venda. Assim você pode passar na loja para experimentar.
-                        <span>Você receberá a confirmação por e-mail.</span>
+                    <p>Clique aqui para reservar este produto por 24hs. Você só precisa ir até a loja e informar o seu nome.
+                        <span>Você não é obrigado(a) a finalizar a compra na loja!</span>
                     </p>
                 </span>
             </span>
@@ -139,8 +139,8 @@
             <button type="button" class="btn-product-confirm" data-url="{{ route('create-product-confirm') }}" data-productid="{{ $product->id }}">CONFIRMAR</button>
 
             <span class="btn-tooltip">
-                <p>Clique aqui para reservar este produto por 24hs. Você só precisa ir até a loja e informar o seu nome.
-                    <span>Você não é obrigado(a) a finalizar a compra na loja!</span>
+                <p>A loja irá confirmar se o produto ainda está à venda. Assim você pode passar na loja para experimentar.
+                    <span>Você receberá a confirmação por e-mail.</span>
                 </p>
             </span>
         </span>
