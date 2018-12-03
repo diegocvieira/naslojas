@@ -12,26 +12,61 @@ class ProductReserveController extends Controller
     {
         if (isset($request->sizes)) {
             foreach ($request->sizes as $size) {
-                $confirm = ProductReserve::create([
+                $reserve = ProductReserve::create([
                     'product_id' => $request->product_id,
                     'client_id' => Auth::guard('client')->user()->id,
-                    'size' => $size
+                    'size' => $size,
+                    'token' => md5(uniqid(rand(), true))
                 ]);
+
+                $this->emailCreate($reserve);
             }
         } else {
-            $confirm = ProductReserve::create([
+            $reserve = ProductReserve::create([
                 'product_id' => $request->product_id,
-                'client_id' => Auth::guard('client')->user()->id
+                'client_id' => Auth::guard('client')->user()->id,
+                'token' => md5(uniqid(rand(), true))
             ]);
+
+            $this->emailCreate($reserve);
         }
 
-        if($confirm) {
+        if($reserve) {
             $return['msg'] = 'Pedido de reserva enviado!<br>Em breve você receberá a confirmação da loja por e-mail.';
         } else {
             $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
         }
 
         return json_encode($return);
+    }
+
+    public function emailUrl($type, $token)
+    {
+        $reserve = ProductReserve::where('token', $token)->first();
+
+        if($reserve) {
+            $reserve->status = $type;
+            $reserve->confirmed_at = date('Y-m-d H:i:s');
+            $reserve->token = null;
+
+            if($reserve->save()) {
+                if ($type == '1') {
+                    $message = 'O cliente foi notificado que o produto está reservado para ele na loja por 24hs.';
+                    $this->emailResponse($reserve, 1);
+                } else {
+                    $message = 'O produto foi removido do site e o cliente foi notificado que o produto não está mais disponível na loja.';
+                    $this->emailResponse($reserve, 0);
+                }
+            } else {
+                $message = 'Ocorreu um erro inesperado. Acesse sua conta e realize a confirmação pelo painel de confirmações';
+            }
+        } else {
+            $message = 'Você já respondeu a solicitação deste cliente.';
+        }
+
+        session()->flash('session_flash_alert', $message);
+
+        return redirect()->route('home');
     }
 
     public function listClientReserves()
@@ -79,6 +114,8 @@ class ProductReserveController extends Controller
             $return['date_reserved'] = date('d/m/y - H:i', strtotime($date . '+1 day'));
             $return['type'] = 1;
             $return['msg'] = 'Reserva realizada com sucesso! <br> O cliente já foi notificado de que o produto que ele deseja estará aguardando por ele na loja por 24hs.';
+
+            $this->emailResponse($reserve, 1);
         } else {
             $return['status'] = false;
             $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
@@ -105,11 +142,31 @@ class ProductReserveController extends Controller
             $return['date_confirmed'] = date('d/m/y - H:i', strtotime($date));
             $return['type'] = 0;
             $return['msg'] = 'Mantenha seus produtos atualizados. <br> Isso evita que sua loja perca pontos de relevância e seus produtos caiam de posição nas buscas.';
+
+            $this->emailResponse($reserve, 0);
         } else {
             $return['status'] = false;
             $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
         }
 
         return json_encode($return);
+    }
+
+    public function emailCreate($reserve)
+    {
+        Mail::send('emails.store-product-reserve', ['reserve' => $reserve], function($q) use($reserve) {
+            $q->from('no-reply@infochat.com.br', 'Infochat');
+            $q->to($reserve->product->store->user->email);
+            $q->subject('Nova reserva de produto');
+        });
+    }
+
+    public function emailResponse($reserve, $type)
+    {
+        Mail::send('emails.client-product-reserve', ['reserve' => $reserve, 'type' => $type], function($q) use($reserve) {
+            $q->from('no-reply@infochat.com.br', 'Infochat');
+            $q->to($reserve->client->email);
+            $q->subject('Reserva de produto');
+        });
     }
 }

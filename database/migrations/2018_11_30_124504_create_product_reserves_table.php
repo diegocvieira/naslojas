@@ -23,6 +23,7 @@ class CreateProductReservesTable extends Migration
             $table->dateTime('reserved_until')->nullable();
             $table->integer('status')->default(2);
             $table->string('size', 5)->nullable();
+            $table->string('token', 200);
             $table->timestamps();
         });
     }

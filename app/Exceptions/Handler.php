@@ -37,15 +37,15 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-        /*if(!($exception instanceof HttpException) && !($exception instanceof AuthenticationException)) {
+        if(!($exception instanceof HttpException) && !($exception instanceof AuthenticationException)) {
             $error['message'] = $exception->getMessage();
             $error['file'] = $exception->getFile();
             $error['line'] = $exception->getLine();
 
             Mail::send('emails.phperror', ['error' => $error], function($message) {
-                $message->to('contato@infochat.com.br')->subject('GENERAL ERROR: - ' . date('d/m/Y').' ' . date('H:i').'h');
+                $message->to('dvdiegovieiradv@gmail.com')->subject('GENERAL ERROR: - ' . date('d/m/Y').' ' . date('H:i').'h');
             });
-        }*/
+        }
 
         parent::report($exception);
     }

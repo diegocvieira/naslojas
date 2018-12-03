@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Message;
 use Auth;
+use Mail;
 
 class MessageController extends Controller
 {
@@ -21,6 +22,12 @@ class MessageController extends Controller
                 $return['msg'] = 'Mensagem enviada com sucesso! <br> Aguarde a loja entrar em contato.';
                 $return['status'] = true;
                 $return['user_name'] = Auth::guard('client')->user()->name;
+
+                Mail::send('emails.store-message', ['message' => $message], function($q) use($message) {
+                    $q->from('no-reply@infochat.com.br', 'Infochat');
+                    $q->to($message->product->store->user->email);
+                    $q->subject('Nova mensagem');
+                });
             } else {
                 $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
                 $return['status'] = false;
@@ -45,6 +52,12 @@ class MessageController extends Controller
                 $return['msg'] = 'Mensagem enviada com sucesso!';
                 $return['status'] = true;
                 $return['date'] = date('d/m/y - H:i', strtotime($date));
+
+                Mail::send('emails.client-message', ['message' => $message], function($q) use($message) {
+                    $q->from('no-reply@infochat.com.br', 'Infochat');
+                    $q->to($message->client->email);
+                    $q->subject('Nova mensagem');
+                });
             } else {
                 $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
                 $return['status'] = false;

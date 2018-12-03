@@ -22,6 +22,7 @@ class CreateProductConfirmsTable extends Migration
             $table->dateTime('confirmed_at')->nullable();
             $table->integer('status')->default(2);
             $table->string('size', 5)->nullable();
+            $table->string('token', 200);
             $table->timestamps();
         });
     }

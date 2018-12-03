@@ -66,6 +66,11 @@ Route::group(['prefix' => 'loja'], function () {
 	})->name('store-register-get');
 	Route::post('cadastro', 'StoreController@register')->name('store-register-post');
 
+	// Confirm/refuse product confirmations from email
+	Route::get('confirmacoes/{type}/{token}', 'ProductConfirmController@emailUrl')->name('product-confirm-email-url');
+	// Confirm/refuse product reserves from email
+	Route::get('reservas/{type}/{token}', 'ProductReserveController@emailUrl')->name('product-reserve-email-url');
+
 	Route::group(['prefix' => 'admin', 'middleware' => 'auth:store'], function () {
 		Route::get('config', 'StoreController@getConfig')->name('get-store-config');
 		Route::post('config', 'StoreController@setConfig')->name('set-store-config');
