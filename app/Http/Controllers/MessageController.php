@@ -25,7 +25,7 @@ class MessageController extends Controller
 
                 Mail::send('emails.store-message', ['message' => $message], function($q) use($message) {
                     $q->from('no-reply@infochat.com.br', 'Infochat');
-                    $q->to($message->product->store->user->email);
+                    $q->to($message->product->store->user->first()->email);
                     $q->subject('Nova mensagem');
                 });
             } else {

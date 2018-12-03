@@ -19,4 +19,9 @@ class Store extends Model
     {
         return $this->belongsTo('App\City', 'city_id', 'id');
     }
+
+    public function user()
+    {
+        return $this->hasMany('App\User', 'store_id', 'id');
+    }
 }

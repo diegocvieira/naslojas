@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ProductConfirm;
 use Auth;
+use Mail;
 
 class ProductConfirmController extends Controller
 {
@@ -156,7 +157,7 @@ class ProductConfirmController extends Controller
     {
         Mail::send('emails.store-product-confirm', ['confirm' => $confirm], function($q) use($confirm) {
             $q->from('no-reply@infochat.com.br', 'Infochat');
-            $q->to($confirm->product->store->user->email);
+            $q->to($confirm->product->store->user->first()->email);
             $q->subject('Nova confirmação de produto');
         });
     }

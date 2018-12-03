@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ProductReserve;
 use Auth;
+use Mail;
 
 class ProductReserveController extends Controller
 {
@@ -156,7 +157,7 @@ class ProductReserveController extends Controller
     {
         Mail::send('emails.store-product-reserve', ['reserve' => $reserve], function($q) use($reserve) {
             $q->from('no-reply@infochat.com.br', 'Infochat');
-            $q->to($reserve->product->store->user->email);
+            $q->to($reserve->product->store->user->first()->email);
             $q->subject('Nova reserva de produto');
         });
     }
