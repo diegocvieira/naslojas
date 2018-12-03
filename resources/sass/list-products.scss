@@ -59,9 +59,24 @@
         width: calc(20% - 20px);
         margin: 0 0 40px 20px;
         vertical-align: top;
+        position: relative;
 
         &:nth-child(5n+1) {
             margin-left: 0;
+        }
+
+        .icon-reserve {
+            background-color: rgba(0, 0, 0, .5);
+            width: 24px;
+            height: 24px;
+            border-radius: 0 5px 0 5px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 20px;
+            background-image: url('../images/icon-reserve.png');
         }
 
         .image {
