@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container page-product-edit {{ $section == 'add' ? 'page-add' : '' }}">
-        @if ($products->count())
+        @if ($products->count() > 0 || $products->count() == 0 && isset($keyword))
             <div class="top-images">
                 <div class="col-xs-6">
                     <p>Preencha os dados dos produtos e clique em "{{ $section == 'add' ? 'adicionar ao site' : 'salvar alterações' }}"</p>
@@ -28,7 +28,9 @@
                     {!! Form::submit('') !!}
                 {!! Form::close() !!}
             @endif
+        @endif
 
+        @if ($products->count())
             <div class="forms">
                 <?php $variation = 1; ?>
                 @foreach($products as $product)
@@ -133,7 +135,11 @@
             <div class="no-results">
                 <img src="{{ asset('images/icon-box.png') }}" />
 
-                <p>Adicione produtos para poder editá-los aqui</p>
+                @if ($products->count() == 0 && isset($keyword))
+                    <p>Não encontramos resultados. <br> Tente palavras-chave diferentes</p>
+                @else
+                    <p>Adicione produtos para poder editá-los aqui</p>
+                @endif
             </div>
         @endif
     </div>
