@@ -108,6 +108,7 @@ class ProductReserveController extends Controller
         $reserve->status = 1;
         $reserve->confirmed_at = $date;
         $reserve->reserved_until = date('Y-m-d H:i:s', strtotime($date . '+1 day'));
+        $reserve->token = null;
 
         if ($reserve->save()) {
             $return['status'] = true;
@@ -137,6 +138,7 @@ class ProductReserveController extends Controller
 
         $reserve->status = 0;
         $reserve->confirmed_at = $date;
+        $reserve->token = null;
 
         if ($reserve->save()) {
             $return['status'] = true;

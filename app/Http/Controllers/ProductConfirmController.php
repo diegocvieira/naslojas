@@ -109,6 +109,7 @@ class ProductConfirmController extends Controller
 
         $confirm->status = 1;
         $confirm->confirmed_at = $date;
+        $confirm->token = null;
 
         if ($confirm->save()) {
             $return['status'] = true;
@@ -137,6 +138,7 @@ class ProductConfirmController extends Controller
 
         $confirm->status = 0;
         $confirm->confirmed_at = $date;
+        $confirm->token = null;
 
         if ($confirm->save()) {
             $return['status'] = true;
