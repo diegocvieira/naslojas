@@ -163,7 +163,7 @@ class ProductReserveController extends Controller
     public function emailCreate($reserve)
     {
         Mail::send('emails.store-product-reserve', ['reserve' => $reserve], function($q) use($reserve) {
-            $q->from('no-reply@infochat.com.br', 'Infochat');
+            $q->from('no-reply@naslojas.com', 'naslojas');
             $q->to($reserve->product->store->user->first()->email);
             $q->subject('Nova reserva de produto');
         });
@@ -172,7 +172,7 @@ class ProductReserveController extends Controller
     public function emailResponse($reserve, $type)
     {
         Mail::send('emails.client-product-reserve', ['reserve' => $reserve, 'type' => $type], function($q) use($reserve) {
-            $q->from('no-reply@infochat.com.br', 'Infochat');
+            $q->from('no-reply@naslojas.com', 'naslojas');
             $q->to($reserve->client->email);
             $q->subject('Reserva de produto');
         });

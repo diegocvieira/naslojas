@@ -43,7 +43,7 @@ class Handler extends ExceptionHandler
             $error['line'] = $exception->getLine();
 
             Mail::send('emails.phperror', ['error' => $error], function($message) {
-                $message->to('dvdiegovieiradv@gmail.com')->subject('GENERAL ERROR: - ' . date('d/m/Y').' ' . date('H:i').'h');
+                $message->to('contato@naslojas.com')->subject('GENERAL ERROR: - ' . date('d/m/Y').' ' . date('H:i').'h');
             });
         }*/
 

@@ -25,7 +25,7 @@ class MessageController extends Controller
                 $return['user_name'] = Auth::guard('client')->user()->name;
 
                 Mail::send('emails.store-message', ['message' => $message], function($q) use($message) {
-                    $q->from('no-reply@infochat.com.br', 'Infochat');
+                    $q->from('no-reply@naslojas.com', 'naslojas');
                     $q->to($message->product->store->user->first()->email);
                     $q->subject('Nova mensagem');
                 });
@@ -55,7 +55,7 @@ class MessageController extends Controller
                 $return['date'] = date('d/m/y - H:i', strtotime($date));
 
                 Mail::send('emails.client-message', ['message' => $message], function($q) use($message) {
-                    $q->from('no-reply@infochat.com.br', 'Infochat');
+                    $q->from('no-reply@naslojas.com', 'naslojas');
                     $q->to($message->client->email);
                     $q->subject('Nova mensagem');
                 });

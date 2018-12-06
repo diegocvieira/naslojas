@@ -163,7 +163,7 @@ class ProductConfirmController extends Controller
     public function emailCreate($confirm)
     {
         Mail::send('emails.store-product-confirm', ['confirm' => $confirm], function($q) use($confirm) {
-            $q->from('no-reply@infochat.com.br', 'Infochat');
+            $q->from('no-reply@naslojas.com', 'naslojas');
             $q->to($confirm->product->store->user->first()->email);
             $q->subject('Nova confirmação de produto');
         });
@@ -172,7 +172,7 @@ class ProductConfirmController extends Controller
     public function emailResponse($confirm, $type)
     {
         Mail::send('emails.client-product-confirm', ['confirm' => $confirm, 'type' => $type], function($q) use($confirm) {
-            $q->from('no-reply@infochat.com.br', 'Infochat');
+            $q->from('no-reply@naslojas.com', 'naslojas');
             $q->to($confirm->client->email);
             $q->subject('Confirmação de produto');
         });

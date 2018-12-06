@@ -121,11 +121,13 @@ class StoreController extends Controller
             }
         }*/
 
-        $email = Mail::send('emails.store-register', ['request' => $request], function($m) {
-            $m->to('dvdiegovieiradv@gmail.com')->subject('Solicitação de cadastro');
+        Mail::send('emails.store-register', ['request' => $request], function($m) {
+            $m->from('no-reply@naslojas.com', 'naslojas');
+            $m->to('contato@naslojas.com');
+            $m->subject('Solicitação de cadastro');
         });
 
-        if($email) {
+        if(!Mail::failures()) {
             $return['msg'] = 'Solicitação de cadastro enviada com sucesso!';
         } else {
             $return['msg'] = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
