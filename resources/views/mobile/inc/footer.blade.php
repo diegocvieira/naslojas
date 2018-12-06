@@ -1,23 +1,18 @@
         <footer>
             <div class="links">
-                <div class="column">
-                    <a href="{{ url('/') }}">Início</a>
-                    <a href="#" class="open-how-works">Como funciona</a>
-                    <a href="#" class="show-app">Baixe nosso app</a>
-                    <a href="{{ route('client-register-get') }}">Cadastrar</a>
-                    <a href="{{ route('client-login-get') }}">Entrar</a>
-                    <span>53 9 9169 1716</span>
-                    <a href="mailto:naslojas.com" class="email">contato@naslojas.com</a>
-                </div>
-
-                <div class="column">
-                    <a href="{{ route('rules') }}" target="_blank">Regras</a>
-                    <a href="{{ route('terms-use') }}" target="_blank">Termos de uso</a>
-                    <a href="{{ route('privacy-policy') }}" target="_blank">Privacidade</a>
-                    <a href="{{ route('store-advertise') }}">Divulgar produtos</a>
-                    <a href="{{ route('store-login-get') }}">Admin da loja</a>
-                    <span>{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</span>
-                </div>
+                <a href="{{ url('/') }}">Início</a>
+                <a href="#" class="open-how-works">Como funciona</a>
+                <a href="#" class="show-app">Baixe nosso app</a>
+                <a href="{{ route('client-register-get') }}">Cadastrar</a>
+                <a href="{{ route('client-login-get') }}">Entrar</a>
+                <span>{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</span>
+                <a href="{{ route('rules') }}" target="_blank">Regras</a>
+                <a href="{{ route('terms-use') }}" target="_blank">Termos de uso</a>
+                <a href="{{ route('privacy-policy') }}" target="_blank">Privacidade</a>
+                <a href="{{ route('store-advertise') }}">Divulgar ofertas</a>
+                <a href="{{ route('store-login-get') }}">Admin da loja</a>
+                <a href="mailto:naslojas.com" class="email">contato@naslojas.com</a>
+                <span>53 9 9169 1716</span>
             </div>
 
             <div class="social">

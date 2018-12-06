@@ -4,28 +4,18 @@ footer {
     margin-top: 50px;
     width: 100%;
     float: left;
+    text-align: center;
 
     .links {
         width: 100%;
         float: left;
+        padding: 0 10px;
 
-        .column {
-            float: left;
-
-            &:first-child {
-                width: 55%;
-            }
-
-            &:last-child {
-                width: 45%;
-            }
-
-            a, span {
-                font-size: 14.5px;
-                color: rgb(150, 150, 150);
-                display: block;
-                padding: 5px 15px;
-            }
+        a, span {
+            font-size: 14.5px;
+            color: rgb(150, 150, 150);
+            display: inline-block;
+            padding: 5px 15px;
         }
     }
 
@@ -66,7 +56,6 @@ footer {
     .copyright {
         background-color: #f0f0f0;
         padding: 20px 15px;
-        text-align: center;
         float: left;
         width: 100%;
 
