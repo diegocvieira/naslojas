@@ -14,7 +14,7 @@
                     <a href="{{ route('rules') }}" target="_blank">Regras</a>
                     <a href="{{ route('terms-use') }}" target="_blank">Termos de uso</a>
                     <a href="{{ route('privacy-policy') }}" target="_blank">Privacidade</a>
-                    <a href="{{ route('store-register-get') }}">Divulgar produtos</a>
+                    <a href="{{ route('store-advertise') }}">Divulgar produtos</a>
                     <a href="{{ route('store-login-get') }}">Admin da loja</a>
                     <span>{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</span>
                 </div>
