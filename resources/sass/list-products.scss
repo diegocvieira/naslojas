@@ -4,24 +4,28 @@
 
     .bootstrap-select {
         margin-left: 20px !important;
-        width: 200px !important;
+        width: 178px !important;
 
         &.open .dropdown-toggle {
             border-radius: 15px 15px 0 0;
-            background-color: rgb(240, 240, 240);
+            background-color: #fff;
             color: rgb(100, 100, 100);
+            box-shadow: 2.5px 4.33px 4.75px 0.25px rgba(98, 98, 98, 0.118);
+            border: 1px solid rgb(230, 230, 230);
+            border-bottom: none;
         }
 
         .dropdown-toggle {
-            background-color: rgb(240, 240, 240);
-            height: 36px;
-            border: none;
+            background-color: transparent;
+            height: 28px;
+            border: 1px solid rgb(230, 230, 230);
             border-radius: 30px;
             padding-left: 20px;
             box-shadow: none;
             color: rgb(100, 100, 100);
             font-size: 14.5px;
             outline: none !important;
+            line-height: 1;
 
             &:hover {
                 color: rgb(100, 100, 100);
@@ -29,12 +33,14 @@
         }
 
         .dropdown-menu {
-            background-color: rgb(240, 240, 240) !important;
+            background-color: #fff !important;
             border-radius: 0 0 15px 15px;
-            top: 34px;
+            top: 26px;
             box-shadow: none;
-            border: none;
+            border: 1px solid rgb(230, 230, 230);
+            border-top: none;
             padding: 0;
+            box-shadow: 2.5px 4.33px 4.75px 0.25px rgba(98, 98, 98, 0.118);
 
             a {
                 padding: 8px 20px;
@@ -42,7 +48,7 @@
                 font-size: 14.5px;
 
                 &:hover {
-                    background-color: rgb(230, 230, 230);
+                    background-color: rgb(245, 245, 245);
                 }
             }
         }

@@ -5,7 +5,24 @@
 @extends('base')
 
 @section('content')
-    <div class="container">
+    <div class="container page-home">
+        <div class="know">
+            <div class="col-xs-4">
+                <img src="{{ asset('images/know/shirt.png') }}" class="img-shirt" />
+                <p>Confira as ofertas <br> das lojas de Pelotas</p>
+            </div>
+
+            <div class="col-xs-4">
+                <img src="{{ asset('images/know/calendar.png') }}" />
+                <p>Reserve o produto que <br> você gostou por 24hs</p>
+            </div>
+
+            <div class="col-xs-4">
+                <img src="{{ asset('images/know/store.png') }}" class="img-store" />
+                <p>Passe na loja para <br> finalizar a compra</p>
+            </div>
+        </div>
+
         <div class="product-filter">
             {!! Form::select('gender', $genders, $search_gender ?? null, ['class' => 'selectpicker', 'title' => 'Gênero']) !!}
 

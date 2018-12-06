@@ -23,24 +23,16 @@
                         <a href="{{ route('rules') }}" target="_blank">Regras</a>
                         <a href="{{ route('terms-use') }}" target="_blank">Termos de uso</a>
                         <a href="{{ route('privacy-policy') }}" target="_blank">Privacidade</a>
-                        <a href="{{ route('store-register-get') }}">Divulgar produtos</a>
+                        <a href="{{ route('store-advertise') }}">Divulgar ofertas</a>
                         <a href="{{ route('store-login-get') }}">Admin da loja</a>
                     </div>
 
                     <div class="col-xs-4">
-                        <div class="cities">
-                            <span class="open-cities">{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</span>
-
-                            <?php /*<div class="drop-down">
-                                <ul>
-                                    @foreach ($cities as $key => $city)
-                                        <li><a href="{{ route('set-city', $key) }}">{{ $city }}</a></li>
-                                    @endforeach
-                                </ul>
-                            </div>*/ ?>
-                        </div>
+                        <span class="city">{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</span>
 
                         <a href="mailto:naslojas.com" class="email">contato@naslojas.com</a>
+
+                        <span class="phone">53 9 9169 1716</span>
 
                         <div class="social">
                             <a href="https://www.facebook.com/naslojas" target="_blank" class="facebook"></a>

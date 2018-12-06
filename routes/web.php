@@ -76,7 +76,7 @@ Route::get('{store}/busca/{gender}/{order?}/{keyword?}', 'StoreController@search
 Route::group(['prefix' => 'loja'], function () {
 	Route::get('divulgar', function() {
 		if (Agent::isDesktop()) {
-
+			return view('store.register-advertise');
 		} else {
 			return view('mobile.store.register-advertise');
 		}

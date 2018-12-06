@@ -9,8 +9,13 @@
 }
 
 @font-face {
-    font-family: 'AgencyFbBold';
+    font-family: 'AgencyFb-Bold';
     src: url('../../fonts/AgencyFb-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSans-Light';
+    src: url('../../fonts/OpenSans-Light.ttf') format('truetype');
 }
 
 body {

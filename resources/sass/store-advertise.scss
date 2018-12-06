@@ -1,5 +1,6 @@
 .page-store-advertise {
     padding: 50px 0 0 0;
+    width: 100%;
     text-align: center;
     font-family: 'OpenSans-Light';
 
@@ -10,10 +11,10 @@
     .btn-advertise {
         font-size: 14.5px;
         color: #fff;
-        font-family: 'Roboto';
+        font-family: 'OpenSans-Regular';
         font-weight: 700;
         background-color: rgb(255, 23, 68);
-        width: 70%;
+        width: 220px;
         padding: 13px 0;
         display: inline-block;
         border-radius: 25px;
@@ -25,6 +26,7 @@
         font-weight: 700;
         display: block;
         font-family: 'AgencyFb-Bold';
+        margin-top: 50px;
 
         span {
             bottom: 10px;
@@ -41,6 +43,9 @@
 
     .img-race {
         margin: 50px 0;
+        width: 500px;
+        display: block;
+        margin: 50px auto 100px auto;
     }
 
     .cards {
@@ -49,14 +54,14 @@
         margin: 50px 0;
 
         .card {
-            width: 100%;
-            padding: 0 10%;
-            float: left;
+            width: 256px;
+            display: inline-block;
             text-align: center;
-            margin-bottom: 15px;
+            margin-right: 10px;
+            background-color: rgb(247, 248, 247);
 
             &:last-child {
-                margin-bottom: 0;
+                margin-right: 0;
             }
 
             p {
@@ -73,25 +78,33 @@
     .steps {
         width: 100%;
         float: left;
+        margin: 50px 0;
 
         .step {
-            width: 100%;
-            float: left;
-            margin-top: 50px;
+            display: inline-block;
+            margin-left: 200px;
 
-            img {
-                width: 150px;
+            &:first-child {
+                margin-left: 0;
+            }
 
-                &.img-camera {
-                    width: 130px;
-                }
+            .img-shirt {
+                width: 148px;
+            }
+
+            .img-camera {
+                width: 138px;
+            }
+
+            .img-truck {
+                width: 177px;
             }
 
             p {
                 font-size: 20.8px;
                 color: rgb(62, 60, 71);
                 line-height: 1.4;
-                margin: 15px 0 0 0;
+                margin: 25px 0 0;
                 display: block;
             }
         }
@@ -101,7 +114,6 @@
         float: left;
         width: 100%;
         padding: 0 10px;
-        margin-top: 50px;
 
         h3 {
             font-size: 41.6px;
@@ -114,14 +126,14 @@
             line-height: 1.4;
 
             &.bg {
-                background-image: url('../../images/bg-highlight.png');
+                background-image: url('../images/bg-highlight2.png');
                 background-repeat: no-repeat;
                 background-position: center;
                 background-size: contain;
                 width: 100%;
                 float: left;
-                height: 100px;
-                padding-top: 20px;
+                height: 60px;
+                padding-top: 13px;
             }
         }
     }
@@ -151,7 +163,7 @@
             span {
                 font-size: 50px;
                 font-weight: 700;
-                font-family: 'Roboto';
+                font-family: 'OpenSans-Regular';
             }
         }
     }
@@ -160,7 +172,7 @@
         width: 100%;
         float: left;
         padding: 70px 10px;
-        background-image: linear-gradient(#77cddc, #67eed6);
+        background-image: linear-gradient(to right, #5effd3, 60%, #909ae5);
 
         p {
             font-size: 18.7px;

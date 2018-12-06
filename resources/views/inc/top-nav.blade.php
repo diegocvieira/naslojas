@@ -108,6 +108,10 @@
                     </li>
 
                     <li>
+                        <a href="#" class="show-app">Baixe nosso app</a>
+                    </li>
+
+                    <li>
                         <a href="{{ route('client-register-get') }}">Cadastrar</a>
                     </li>
 

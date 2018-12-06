@@ -9,11 +9,11 @@ $(function() {
     });
 
     // Open cities
-    $(document).on('click', '.open-cities', function() {
+    /*$(document).on('click', '.open-cities', function() {
         modalAlert('Em breve os usuários de outras cidades também poderão utilizar o naslojas.com.');
 
         //$(this).next().show();
-    });
+    });*/
 
     // Close cities
     /*$(document).click(function(e) {

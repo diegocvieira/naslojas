@@ -20,7 +20,7 @@ class StoreController extends Controller
         $store = Store::where('slug', $slug)->firstOrFail();
 
         // SEO
-        $header_title = $store->name . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' - naslojas.com';
+        $header_title = $store->name . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' | naslojas.com';
 		$header_desc = 'Clique para ver os produtos disponíveis na loja ' . $store->name . ' em ' . $store->city->title . ' - ' . $store->city->state->letter;
 
         $products = Product::where('store_id', $store->id)->paginate(20);

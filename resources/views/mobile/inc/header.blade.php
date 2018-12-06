@@ -48,8 +48,6 @@
             body { opacity: 0; }
         </style>
 
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
-
         @if($app->environment('local'))
             <link rel="stylesheet" href="{{ asset('offline-developer/bootstrap.min.css') }}">
             <link rel="stylesheet" href="{{ asset('offline-developer/bootstrap-select.min.css') }}">
