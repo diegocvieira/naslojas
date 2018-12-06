@@ -341,32 +341,6 @@ $(function() {
         });
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     $(document).on('click', '.page-messages .show-message', function(e) {
         e.preventDefault();
 
@@ -486,27 +460,6 @@ $(function() {
             }
         });
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
 
 function modalAlert(body, btn = 'OK') {

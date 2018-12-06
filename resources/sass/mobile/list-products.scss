@@ -1,0 +1,75 @@
+.list-products {
+    width: 100%;
+    float: left;
+    margin-top: 25px;
+
+    .product {
+		display: inline-block;
+        width: calc(50% - 5px);
+        margin: 0 0 40px 5px;
+        vertical-align: top;
+
+        &:nth-child(2n+1) {
+            margin-left: 0;
+        }
+
+        .image {
+            width: 100%;
+            float: left;
+            border-radius: 5px;
+            background-color: rgb(245, 245, 245);
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .infos {
+            float: left;
+            width: 100%;
+            padding: 10px;
+        }
+
+        .title {
+            float: left;
+            color: rgb(150, 150, 150);
+            font-size: 14.5px;
+            line-height: 14.5px;
+            height: 29px;
+            overflow: hidden;
+            width: 100%;
+            margin: 5px 0 0 0;
+        }
+
+        .store-name {
+            font-size: 14.5px;
+            color: rgb(122, 184, 236);
+            float: left;
+        }
+
+        .price {
+            font-family: "KeepCalm";
+            color: rgb(50, 50, 50);
+            font-size: 14.5px;
+
+            span {
+                font-size: 12.5px;
+            }
+        }
+
+        .old-price, .parcels {
+            font-size: 12.5px;
+            color: rgb(50, 50, 50);
+            float: left;
+            width: 100%;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+        }
+
+        .price-off {
+            font-size: 14.5px;
+            color: #ff1744;
+            margin-left: 5px;
+        }
+    }
+}

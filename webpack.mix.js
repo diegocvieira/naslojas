@@ -13,6 +13,11 @@ const mix = require('laravel-mix');
 
 mix.sass('resources/sass/global.scss', 'public/css')
     .sass('resources/sass/global-store.scss', 'public/css')
+    .sass('resources/sass/mobile/global-mobile.scss', 'public/css')
+    .babel([
+        'resources/js/mobile/geral.js',
+        'resources/js/mobile/show-product.js'
+    ], 'public/js/global-mobile.js')
     .babel([
         'resources/js/geral.js',
         'resources/js/show-product.js'
@@ -30,7 +35,9 @@ if(mix.inProduction()) {
     mix.version([
         'public/css/global.css',
         'public/css/global-store.css',
+        'public/css/global-mobile.csss',
         'public/js/global.js',
-        'public/js/global-store.js'
+        'public/js/global-store.js',
+        'public/js/global-mobile.js'
     ]);
 }

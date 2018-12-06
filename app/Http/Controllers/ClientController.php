@@ -8,6 +8,7 @@ use App\Client;
 use Auth;
 use Hash;
 use Session;
+use Agent;
 
 class ClientController extends Controller
 {
@@ -57,9 +58,13 @@ class ClientController extends Controller
     {
         $client = Client::find(Auth::guard('client')->user()->id);
 
-        return response()->json([
-            'body' => view('client.config', compact('client'))->render()
-        ]);
+        if (Agent::isDesktop()) {
+            return response()->json([
+                'body' => view('client.config', compact('client'))->render()
+            ]);
+        } else {
+            return view('mobile.client.config', compact('client'));
+        }
     }
 
     public function setConfig(Request $request)

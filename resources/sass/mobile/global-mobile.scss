@@ -1,0 +1,236 @@
+@font-face {
+    font-family: 'KeepCalm';
+    src: url('../../fonts/KeepCalm.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../../fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'AgencyFbBold';
+    src: url('../../fonts/AgencyFb-Bold.ttf') format('truetype');
+}
+
+body {
+    background-color: #fafafa;
+    font-family: 'Roboto';
+    transition: opacity 0.5s ease-out;
+}
+
+html, body {
+    height: 100%;
+}
+
+.bg-white {
+    background-color: #fff;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    border: none;
+    background: none;
+    background-color: rgb(200, 200, 200);
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgb(200, 200, 200);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a6a6a6;
+    cursor: pointer;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a, a:hover, a:active, a:focus {
+    text-decoration: none;
+    outline: none;
+}
+
+* {
+    outline: none;
+}
+
+.error {
+    background-color: #fdd !important;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    padding: 50px 10px 0 10px;
+}
+
+.page-error {
+    &+ footer {
+        display: none;
+    }
+}
+
+.no-results {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+    p {
+        font-size: 14.5px;
+        color: rgb(150, 150, 150);
+        margin-top: 30px;
+    }
+
+    img {
+        width: 98px;
+    }
+}
+
+.page-terms {
+    section {
+        float: left;
+        width: 100%;
+        margin-top: 20px;
+
+        h1, span {
+            font-size: 14.5px;
+            color: rgb(100, 100, 100);
+            display: block;
+        }
+
+        .inline {
+            display: inline;
+        }
+
+        p {
+            font-size: 14.5px;
+            color: rgb(150, 150, 150);
+            margin-top: 25px;
+            line-height: 1.429;
+        }
+    }
+}
+
+.modal {
+    text-align: center;
+    overflow-y: auto;
+
+    &:before {
+        display: inline-block;
+        vertical-align: middle;
+        content: '';
+        height: 100%;
+    }
+
+    .modal-dialog {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0;
+        width: 95%;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 2.5px 4.33px 19px 1px rgba(100, 100, 100, 0.078);
+        border-radius: 5px;
+    }
+
+    .modal-content {
+        width: 100%;
+        height: 100%;
+        padding-bottom: 10px;
+        text-align: left;
+        box-shadow: none;
+        border: none;
+    }
+}
+
+#modal-alert {
+    z-index: 9999;
+
+	.modal-body {
+		color: #7f7f7f;
+		font-size: 14.5px;
+		line-height: 20px;
+        margin-top: 10px;
+
+        input {
+            margin: 10px 0;
+            font-size: 14.5px;
+            color: #000;
+            border-radius: 5px;
+            background-color: rgb(245, 245, 245);
+            width: 100%;
+            height: 40px;
+            border: none;
+            padding-left: 20px;
+        }
+	}
+
+	.modal-footer {
+		border-top: 0;
+		padding-bottom: 10px;
+
+        .btn {
+			min-width: 100px;
+			height: 40px;
+			border: 0;
+            font-size: 14.5px;
+			color: #FFF;
+            border-radius: 25px;
+            font-weight: 700;
+            background-color: rgb(255, 23, 68);
+
+            &.invert-color {
+                border: 1px solid rgb(255, 23, 68);
+                color: rgb(255, 23, 68);
+                background-color: transparent;
+            }
+		}
+	}
+
+    .invalid-field {
+        font-size: 14.5px;
+        color: rgb(255, 23, 68);
+        margin-right: 25px;
+    }
+}
+
+.page-know {
+    .item {
+        width: 100%;
+        float: left;
+        text-align: center;
+        margin-top: 50px;
+
+        &:last-child p {
+            margin-top: 0;
+        }
+
+        img {
+            width: 100px;
+        }
+
+        p {
+            margin-top: 10px;
+            font-size: 18.7px;
+            color: rgb(62, 60, 71);
+            line-height: 1.3;
+        }
+    }
+}
+
+@import 'top-nav.scss';
+@import 'footer.scss';
+@import 'list-products.scss';
+@import 'pagination.scss';
+@import 'show-product.scss';
+@import 'show-store.scss';
+@import 'admin.scss';
+@import 'client-config.scss';
+@import 'login-register.scss';
+@import 'how-works.scss';
+@import 'store-advertise.scss';

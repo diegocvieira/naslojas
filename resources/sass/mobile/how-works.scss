@@ -1,0 +1,129 @@
+.page-how-works {
+    padding: 0;
+
+    &+ footer {
+        display: none;
+    }
+
+    .animate {
+        transition: transform 0.3s ease-out;
+    }
+
+    .slider {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .ms-touch.slider {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -ms-overflow-style: none;
+        /* Hides the scrollbar. */
+        -ms-scroll-chaining: none;
+        /* Prevents Metro from swiping to the next tab or app. */
+        -ms-scroll-snap-type: mandatory;
+        /* Forces a snap scroll behavior on your images. */
+        -ms-scroll-snap-points-x: snapInterval(0%, 100%);
+        /* Defines the y and x intervals to snap to when scrolling. */
+    }
+
+    .holder {
+        width: 600%;
+        max-height: 100%;
+        height: 100%;
+        overflow-y: hidden;
+    }
+
+    .slide-wrapper {
+        width: 16.66%;
+        height: 100%;
+        float: left;
+        position: relative;
+        overflow: hidden;
+        background-image: linear-gradient(#f61949, #b02973);
+        text-align: center;
+        padding: 80px 50px 50px 50px;
+
+        &.padding {
+             padding-top: 130px;
+        }
+
+        p {
+            font-size: 37.5px;
+            color: #fff;
+            line-height: 1.3;
+        }
+
+        .swipe {
+            background-color: #fff;
+            position: absolute;
+            left: 50%;
+            bottom: 8%;
+            transform: translateX(-50%);
+            height: 30px;
+            border-radius: 30px;
+            text-align: center;
+            z-index: 2;
+            padding: 0 10px;
+
+            .text {
+                font-size: 12.5px;
+                color: #000;
+                display: inline-block;
+                position: relative;
+                top: -5px;
+
+                &.padding-left {
+                    padding-left: 10px;
+                }
+
+                &.padding-right {
+                    padding-right: 10px;
+                }
+            }
+
+            .arrow {
+                width: 25px;
+                height: 25px;
+                position: relative;
+                display: inline-block;
+
+                &:after {
+                    content: '';
+                    display: inline-block;
+                    position: relative;
+                    top: 3px;
+                    background-repeat: no-repeat;
+                    background-image: url('../../images/icon-arrow.png');
+                    background-size: contain;
+                    width: 100%;
+                    height: 100%;
+                    filter: brightness(0);
+                }
+
+                &.left {
+                    &:after {
+                        -webkit-transform: rotate(90deg);
+                        -moz-transform: rotate(90deg);
+                        -ms-transform: rotate(90deg);
+                        -o-transform: rotate(90deg);
+                        transform: rotate(90deg);
+                        background-position: center;
+                    }
+                }
+
+                &.right {
+                    &:after {
+                        -webkit-transform: rotate(270deg);
+                        -moz-transform: rotate(270deg);
+                        -ms-transform: rotate(270deg);
+                        -o-transform: rotate(270deg);
+                        transform: rotate(270deg);
+                        background-position: center;
+                    }
+                }
+            }
+        }
+    }
+}

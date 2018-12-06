@@ -1,0 +1,170 @@
+.page-admin {
+    .page-title {
+        font-size: 20.8px;
+        color: rgb(66, 66, 66);
+        font-weight: 700;
+        display: block;
+    }
+
+    .page-description {
+        font-size: 14.5px;
+        color: rgb(100, 100, 100);
+        display: block;
+    }
+
+    .results {
+        width: 100%;
+        float: left;
+        margin-top: 20px;
+
+        .result {
+            width: 100%;
+            float: left;
+            border-bottom: 1px solid rgb(240, 240, 240);
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+
+            .images {
+                float: left;
+                width: calc(100% - 65px);
+                height: 50px;
+                overflow: hidden;
+
+                img {
+                    border-radius: 5px;
+                    background-color: rgb(245, 245, 245);
+                    width: 50px;
+                    height: 50px;
+                    display: inline-block;
+                    margin-right: 5px;
+                    object-fit: cover;
+                }
+            }
+
+            .link-product {
+                width: 25px;
+                height: 25px;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-image: url('../../images/icon-show-product.png');
+                float: left;
+                margin: 15px 20px 0 20px;
+            }
+
+            .more-details {
+                display: none;
+                float: left;
+                width: 100%;
+
+                .info {
+                    width: 100%;
+                    float: left;
+                    margin-top: 15px;
+
+                    .info-title {
+                        font-size: 12.5px;
+                        color: rgb(50, 50, 50);
+                        display: block;
+                    }
+
+                    .info-detail {
+                        font-size: 12.5px;
+                        color: rgb(150, 150, 150);
+                        line-height: 1.3;
+                        display: block;
+
+                        &.green {
+                            color: rgb(112, 202, 124);
+                        }
+
+                        &.red {
+                            color: rgb(255, 23, 68);
+                        }
+
+                        a {
+                            color: rgb(122, 184, 236);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.modal-show-messages {
+    .modal-body {
+        textarea {
+            font-size: 14.5px;
+            color: rgb(50, 50, 50);
+            resize: none;
+            border-radius: 5px;
+            background-color: rgb(245, 245, 245);
+            width: 100%;
+            height: 150px;
+            border: none;
+            padding: 15px;
+        }
+
+        h3 {
+            font-size: 14.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 0 0 10px 0;
+        }
+
+        p {
+            font-size: 14.5px;
+            color: rgb(150, 150, 150);
+            line-height: 1.429;
+            margin: 0;
+        }
+
+        .client {
+            text-align: left;
+            float: left;
+            width: 100%;
+
+            h3 {
+                color: rgb(50, 50, 50);
+            }
+        }
+
+        .store {
+            text-align: right;
+            float: right;
+            width: 100%;
+
+            h3 {
+                color: rgb(255, 23, 68);
+            }
+        }
+    }
+
+    .modal-footer {
+        border-top: 0;
+        padding: 0 0 0 10px 0;
+        float: left;
+        width: 100%;
+        margin-top: 20px;
+
+        button {
+            font-size: 14.5px;
+            color: #fff;
+            font-weight: 700;
+            background-color: rgb(255, 23, 68);
+            width: 100px;
+            height: 40px;
+            display: inline-block;
+            margin-left: 10px;
+            border-radius: 25px;
+            border: none;
+
+            &.inverse-color {
+                background-color: transparent;
+                border: 1px solid rgb(255, 23, 68);
+                color: rgb(255, 23, 68);
+            }
+        }
+    }
+}

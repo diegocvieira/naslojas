@@ -13,29 +13,47 @@
 
 Route::get('/', 'GlobalController@home')->name('home');
 
-Route::get('site/regras', function() {
-	if (Agent::isDesktop()) {
-		return view('rules');
-	} else {
-		//return view('mobile.pagina-regras');
-	}
-})->name('rules');
+Route::group(['prefix' => 'site'], function () {
+	Route::get('regras', function() {
+		if (Agent::isDesktop()) {
+			return view('rules');
+		} else {
+			return view('mobile.rules');
+		}
+	})->name('rules');
 
-Route::get('site/termos-de-uso', function () {
-	if (Agent::isDesktop()) {
-		return view('terms-use');
-	} else {
-		//return view('mobile.pagina-termos');
-	}
-})->name('terms-use');
+	Route::get('termos-de-uso', function () {
+		if (Agent::isDesktop()) {
+			return view('terms-use');
+		} else {
+			return view('mobile.terms-use');
+		}
+	})->name('terms-use');
 
-Route::get('site/politica-de-privacidade', function () {
-	if (Agent::isDesktop()) {
-		return view('privacy-policy');
-	} else {
-		//return view('mobile.pagina-privacidade');
-	}
-})->name('privacy-policy');
+	Route::get('politica-de-privacidade', function () {
+		if (Agent::isDesktop()) {
+			return view('privacy-policy');
+		} else {
+			return view('mobile.privacy-policy');
+		}
+	})->name('privacy-policy');
+
+	Route::get('entenda', function () {
+		if (Agent::isDesktop()) {
+			return view('know');
+		} else {
+			return view('mobile.know');
+		}
+	})->name('know');
+
+	Route::get('como-funciona', function () {
+		if (Agent::isDesktop()) {
+			//return view('know');
+		} else {
+			return view('mobile.how-works');
+		}
+	})->name('how-works');
+});
 
 // Search
 Route::get('produtos/busca', 'ProductController@formSearch')->name('form-search');
@@ -56,13 +74,29 @@ Route::get('{store}/busca/{gender}/{order?}/{keyword?}', 'StoreController@search
 
 // Store
 Route::group(['prefix' => 'loja'], function () {
+	Route::get('divulgar', function() {
+		if (Agent::isDesktop()) {
+
+		} else {
+			return view('mobile.store.register-advertise');
+		}
+	})->name('store-advertise');
+
 	Route::get('login', function () {
-	    return view('store.login');
+		if (Agent::isDesktop()) {
+			return view('store.login');
+		} else {
+			return view('mobile.store.login');
+		}
 	})->name('store-login-get');
 	Route::post('login', 'StoreController@login')->name('store-login-post');
 
 	Route::get('cadastro', function () {
-	    return view('store.register');
+		if (Agent::isDesktop()) {
+			return view('store.register');
+		} else {
+			return view('mobile.store.register');
+		}
 	})->name('store-register-get');
 	Route::post('cadastro', 'StoreController@register')->name('store-register-post');
 
@@ -130,12 +164,20 @@ Route::group(['prefix' => 'loja'], function () {
 // Client
 Route::group(['prefix' => 'cliente'], function () {
 	Route::get('login', function () {
-	    return view('client.login');
+		if (Agent::isDesktop()) {
+			return view('client.login');
+		} else {
+			return view('mobile.client.login');
+		}
 	})->name('client-login-get');
 	Route::post('login', 'ClientController@login')->name('client-login-post');
 
 	Route::get('cadastro', function () {
-	    return view('client.register');
+		if (Agent::isDesktop()) {
+			return view('client.register');
+		} else {
+			return view('mobile.client.register');
+		}
 	})->name('client-register-get');
 	Route::post('cadastro', 'ClientController@register')->name('client-register-post');
 

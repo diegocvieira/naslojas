@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ProductReserve;
 use Auth;
 use Mail;
+use Agent;
 
 class ProductReserveController extends Controller
 {
@@ -78,7 +79,11 @@ class ProductReserveController extends Controller
         ->orderBy('id', 'DESC')
         ->paginate(20);
 
-        return view('client.product-reserves', compact('header_title', 'reserves'));
+        if (Agent::isDesktop()) {
+            return view('client.product-reserves', compact('header_title', 'reserves'));
+        } else {
+            return view('mobile.client.product-reserves', compact('header_title', 'reserves'));
+        }
     }
 
     public function listStoreReserves()

@@ -13,7 +13,7 @@
 
     	<link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
 
-    	<meta name="theme-color" content="#3f51b5">
+    	<meta name="theme-color" content="#ff1744">
 
     	<!-- SEO META TAGS -->
     	<meta name="csrf-token" content="{!! csrf_token() !!}">
@@ -29,18 +29,18 @@
     	<meta name="description" content="{{ $header_desc ?? 'Confira as maiores ofertas e promoções da sua cidade.' }}" />
     	<meta itemprop="name" content="{{ $header_title ?? 'naslojas.com' }}" />
     	<meta itemprop="description" content="{{ $header_desc ?? 'naslojas.com - confira as maiores ofertas e promoções da sua cidade' }}" />
-    	<meta itemprop="image" content="{{ $header_image ?? asset('img/banner.png') }}" />
+    	<meta itemprop="image" content="{{ $header_image ?? asset('images/banner.png') }}" />
 
     	<meta name="twitter:card" content="summary_large_image" />
     	<meta name="twitter:title" content="{{ $header_title ?? 'naslojas.com' }}" />
     	<meta name="twitter:description" content="{{ $header_desc ?? 'naslojas.com - confira as maiores ofertas e promoções da sua cidade' }}" />
     	<!-- imagens largas para o Twitter Summary Card precisam ter pelo menos 280x150px  -->
-    	<meta name="twitter:image" content="{{ $header_image ?? asset('img/banner.png') }}" />
+    	<meta name="twitter:image" content="{{ $header_image ?? asset('images/banner.png') }}" />
 
     	<meta property="og:title" content="{{ $header_title ?? 'naslojas.com' }}" />
     	<meta property="og:type" content="website" />
     	<meta property="og:url" content="{{ url()->current() }}" />
-    	<meta property="og:image" content="{{ $header_image ?? asset('img/banner.png') }}" />
+    	<meta property="og:image" content="{{ $header_image ?? asset('images/banner.png') }}" />
     	<meta property="og:description" content="{{ $header_desc ?? 'naslojas.com - confira as maiores ofertas e promoções da sua cidade' }}" />
     	<meta property="og:site_name" content="naslojas.com" />
 

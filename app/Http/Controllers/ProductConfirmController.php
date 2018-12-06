@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ProductConfirm;
 use Auth;
 use Mail;
+use Agent;
 
 class ProductConfirmController extends Controller
 {
@@ -49,7 +50,11 @@ class ProductConfirmController extends Controller
         ->orderBy('id', 'DESC')
         ->paginate(20);
 
-        return view('client.product-confirms', compact('header_title', 'confirms'));
+        if (Agent::isDesktop()) {
+            return view('client.product-confirms', compact('header_title', 'confirms'));
+        } else {
+            return view('mobile.client.product-confirms', compact('header_title', 'confirms'));
+        }
     }
 
     public function listStoreConfirms()

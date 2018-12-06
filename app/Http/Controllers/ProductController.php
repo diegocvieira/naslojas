@@ -12,6 +12,7 @@ use App\ProductImage;
 use App\ProductSize;
 use App\ProductRating;
 use DB;
+use Agent;
 
 class ProductController extends Controller
 {
@@ -21,51 +22,58 @@ class ProductController extends Controller
 
         $url = '/produto/' . $product->slug;
 
-        if(\Request::ajax()) {
-            $product_rating = ProductRating::select(DB::raw('ROUND((SUM(rating) / COUNT(id)), 1) as rating, COUNT(id) as rating_number'))
-			->where('product_id', $product->id)
-            ->first();
+        $product_rating = ProductRating::select(DB::raw('ROUND((SUM(rating) / COUNT(id)), 1) as rating, COUNT(id) as rating_number'))
+        ->where('product_id', $product->id)
+        ->first();
 
-            $more_colors = Product::whereNotNull('related')->where('related', $product->related)->where('id', '!=', $product->id)->get();
+        $more_colors = Product::whereNotNull('related')->where('related', $product->related)->where('id', '!=', $product->id)->get();
 
-            $related_products = Product::where('id', '!=', $product->id)
-                ->whereHas('store', function ($query) use ($product) {
-    	            $query->where('city_id', $product->store->city->id);
-    	        });
+        $related_products = Product::where('id', '!=', $product->id)
+            ->whereHas('store', function ($query) use ($product) {
+                $query->where('city_id', $product->store->city->id);
+            });
 
-            $keyword = $product->title;
-            if ($keyword) {
-                $keyword = str_replace('-', ' ', $keyword);
+        $keyword = $product->title;
+        if ($keyword) {
+            $keyword = str_replace('-', ' ', $keyword);
 
-                // separa cada palavra
-                $keyword_array = explode(' ', $keyword);
+            // separa cada palavra
+            $keyword_array = explode(' ', $keyword);
 
-                // se houver mais de 2 palavras e a palavra tiver menos de 4 letras ignora na busca
-                foreach ($keyword_array as $keyword_each) {
-                    if (count($keyword_array) > 2 && strlen($keyword) < 4) {
-                        continue;
-                    }
-
-                    $related_products = $related_products->where('title', 'LIKE', '%' . $keyword_each . '%');
+            // se houver mais de 2 palavras e a palavra tiver menos de 4 letras ignora na busca
+            foreach ($keyword_array as $keyword_each) {
+                if (count($keyword_array) > 2 && strlen($keyword) < 4) {
+                    continue;
                 }
+
+                $related_products = $related_products->where('title', 'LIKE', '%' . $keyword_each . '%');
             }
-            $related_products = $related_products->paginate(20);
+        }
+        $related_products = $related_products->paginate(20);
 
-            if (Auth::guard('client')->check()) {
-                $client_rating = ProductRating::where('client_id', Auth::guard('client')->user()->id)->where('product_id', $product->id)->first();
+        if (Auth::guard('client')->check()) {
+            $client_rating = ProductRating::where('client_id', Auth::guard('client')->user()->id)->where('product_id', $product->id)->first();
+        }
+
+        $header_title = $product->title . ' - ' . $product->store->name . ' - ' . $product->store->city->title . ' - ' . $product->store->city->state->letter . ' | naslojas.com';
+        $header_desc = 'Clique para ver os detalhes do produto na loja ' . $product->store->name . ' em ' . $product->store->city->title . ' - ' . $product->store->city->state->letter;
+        $header_canonical = route(\Request::route()->getName(), $product->slug);
+        $header_image = url('/uploads/' . $product->store->id . '/products/' . $product->images->first()->image);
+
+        if (Agent::isDesktop()) {
+            if(\Request::ajax()) {
+                return response()->json([
+                    'body' => view('show-product', compact('product', 'more_colors', 'related_products', 'product_rating', 'client_rating'))->render(),
+                    'header_title' => $header_title,
+                    'url' => $url
+                ]);
+            } else {
+                session()->flash('session_flash_product_url', $url);
+
+                return redirect()->route('home');
             }
-
-            $header_title = $product->title . ' - naslojas.com';
-
-            return response()->json([
-                'body' => view('show-product', compact('product', 'more_colors', 'related_products', 'product_rating', 'client_rating'))->render(),
-                'header_title' => $header_title,
-                'url' => $url
-            ]);
         } else {
-            session()->flash('session_flash_product_url', $url);
-
-            return redirect()->route('home');
+            return view('mobile.show-product', compact('product', 'more_colors', 'related_products', 'product_rating', 'client_rating', 'header_title', 'header_desc', 'header_canonical', 'header_image'));
         }
     }
 
@@ -138,7 +146,11 @@ class ProductController extends Controller
 
         $products = $products->paginate(20);
 
-        return view('home', compact('products', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));
+        if (Agent::isDesktop()) {
+            return view('search', compact('products', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));
+        } else {
+            return view('mobile.search', compact('products', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));
+        }
     }
 
     public function formSearchAdmin(Request $request)

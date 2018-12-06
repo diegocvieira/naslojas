@@ -2,7 +2,7 @@
 function _setCity($city, $force = false)
 {
     if ($city != null && ($force == true || !Cookie::get('city_slug'))) {
-        //Cookie::queue('city_id', $city->id, '525600');
+        Cookie::queue('city_id', $city->id, '525600');
         Cookie::queue('city_title', $city->title, '525600');
         Cookie::queue('city_slug', $city->slug, '525600');
 

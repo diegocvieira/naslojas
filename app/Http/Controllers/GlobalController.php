@@ -7,6 +7,8 @@ use App\City;
 use Cookie;
 use Auth;
 use Session;
+use App\Product;
+use Agent;
 
 class GlobalController extends Controller
 {
@@ -14,15 +16,15 @@ class GlobalController extends Controller
     {
         if (!Cookie::get('city_slug') || Cookie::get('city_slug') != 'pelotas') {
             $this->setCity(4913);
-
-            $city = 'pelotas';
-            $state = 'rs';
-        } else {
-            $city = Cookie::get('city_slug');
-            $state = Cookie::get('state_letter_lc');
         }
 
-        return app('App\Http\Controllers\ProductController')->search($city, $state, 'todos');
+        $products = Product::inRandomOrder()->paginate(20);
+
+        if (Agent::isDesktop()) {
+            return view('home', compact('products'));
+        } else {
+            return view('mobile.home', compact('products'));
+        }
     }
 
     public function setCity($id)

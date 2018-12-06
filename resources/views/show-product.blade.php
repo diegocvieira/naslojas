@@ -174,10 +174,6 @@
         <div class="list-products">
             @foreach ($related_products as $rp)
                 <div class="product">
-                    @if ($product->store->reserve)
-                        <span class="icon-reserve" title="Pode ser reservado!"></span>
-                    @endif
-
                     <a href="{{ route('show-product', $rp->slug) }}" class="show-product">
                         <img src="{{ asset('uploads/' . $rp->store->id . '/products/' . $rp->images->first()->image) }}" class="image" alt="{{ $rp->title }}" />
                     </a>

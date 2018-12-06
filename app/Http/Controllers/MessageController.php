@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Message;
 use Auth;
 use Mail;
+use Agent;
 
 class MessageController extends Controller
 {
@@ -75,7 +76,11 @@ class MessageController extends Controller
         ->orderBy('id', 'DESC')
         ->paginate(20);
 
-        return view('client.messages', compact('header_title', 'messages'));
+        if (Agent::isDesktop()) {
+            return view('client.messages', compact('header_title', 'messages'));
+        } else {
+            return view('mobile.client.messages', compact('header_title', 'messages'));
+        }
     }
 
     public function listStoreMessages()

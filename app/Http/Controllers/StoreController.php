@@ -10,6 +10,8 @@ use App\User;
 use Validator;
 use Hash;
 use App\City;
+use Agent;
+use Mail;
 
 class StoreController extends Controller
 {
@@ -23,7 +25,11 @@ class StoreController extends Controller
 
         $products = Product::where('store_id', $store->id)->paginate(20);
 
-        return view('store.show', compact('store', 'products', 'header_title', 'header_desc'));
+        if (Agent::isDesktop()) {
+            return view('store.show', compact('store', 'products', 'header_title', 'header_desc'));
+        } else {
+            return view('mobile.store.show', compact('store', 'products', 'header_title', 'header_desc'));
+        }
     }
 
     public function formSearch(Request $request)
@@ -72,12 +78,16 @@ class StoreController extends Controller
 
         $products = $products->paginate(20);
 
-        return view('store.show', compact('products', 'store', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));
+        if (Agent::isDesktop()) {
+            return view('store.show', compact('products', 'store', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));
+        } else {
+            return view('mobile.store.show', compact('products', 'store', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));
+        }
     }
 
     public function register(Request $request)
     {
-        $validator = Validator::make(
+        /*$validator = Validator::make(
             $request->all(),
             ['email' => 'required|email|max:100|unique:users', 'password' => 'confirmed|min:8'],
             app('App\Http\Controllers\GlobalController')->customMessages()
@@ -109,6 +119,16 @@ class StoreController extends Controller
                 $return['msg'] = 'Ocorreu um erro inesperado. Tente novamente.';
                 $return['status'] = false;
             }
+        }*/
+
+        $email = Mail::send('emails.store-register', ['request' => $request], function($m) {
+            $m->to('dvdiegovieiradv@gmail.com')->subject('Solicitação de cadastro');
+        });
+
+        if($email) {
+            $return['msg'] = 'Solicitação de cadastro enviada com sucesso!';
+        } else {
+            $return['msg'] = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
         }
 
         return json_encode($return);
