@@ -35,7 +35,7 @@ if(mix.inProduction()) {
     mix.version([
         'public/css/global.css',
         'public/css/global-store.css',
-        'public/css/global-mobile.csss',
+        'public/css/global-mobile.css',
         'public/js/global.js',
         'public/js/global-store.js',
         'public/js/global-mobile.js'
