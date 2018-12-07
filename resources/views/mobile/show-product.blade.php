@@ -87,11 +87,13 @@
         </div>
 
         <div class="btn-container">
-            @if($product->store->reserve)
-                <button type="button" class="btn-product-reserve" data-url="{{ route('create-product-reserve') }}" data-productid="{{ $product->id }}"></button>
-            @endif
-
             <button type="button" class="btn-product-confirm" data-url="{{ route('create-product-confirm') }}" data-productid="{{ $product->id }}">CONFIRMAR</button>
+
+            @if($product->store->reserve)
+                <button type="button" class="btn-product-reserve" data-url="{{ route('create-product-reserve') }}" data-productid="{{ $product->id }}">RESERVAR</button>
+            @else
+                <button type="button" class="btn-disabled">RESERVA DESABILITADA</button>
+            @endif
         </div>
 
         @if ($more_colors->count() > 0)

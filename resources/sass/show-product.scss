@@ -391,50 +391,38 @@
         margin: 10px 0 30px 0;
         position: relative;
 
-        .span-container {
-            &:hover > .btn-tooltip {
-                display: block;
-            }
-
-            &+ .span-container > .btn-product-confirm {
-                width: calc(100% - 38px);
-                border-radius: 25px 0 0 25px;
-            }
-        }
-
         button {
             background-color: rgb(255, 23, 68);
-            float: right;
+            float: left;
             border: none;
             height: 40px;
+            font-size: 14.5px;
+            width: 100%;
+            font-weight: 700;
+            border-radius: 25px;
+            color: #fff;
 
             &.btn-product-confirm {
-                width: 100%;
-                font-size: 14.5px;
-                color: #fff;
-                font-weight: 700;
-                border-radius: 25px;
+                background-color: rgb(245, 245, 245);
+                margin-bottom: 5px;
+                color: rgb(255, 23, 68);
+
+                &:hover + .btn-tooltip {
+                    bottom: 95px;
+                }
             }
 
-            &.btn-product-reserve {
-                border-radius: 0 25px 25px 0;
-                position: relative;
-                width: 38px;
+            &.btn-disabled {
+                opacity: .3;
+                cursor: default;
 
-                &:after {
-                    content: '';
-                    border-radius: 50%;
-                    background-color: #fff;
-                    width: 100%;
-                    height: 38px;
-                    position: absolute;
-                    right: 1px;
-                    top: 1px;
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-size: 25px;
-                    background-image: url('../images/icon-reserve2.png');
+                &:hover + .btn-tooltip {
+                    bottom: -50px;
                 }
+            }
+
+            &:hover + .btn-tooltip {
+                display: block;
             }
         }
 
@@ -444,23 +432,13 @@
             background-color: rgb(255, 255, 255);
             box-shadow: 1px 1.732px 1.96px 0.04px rgba(100, 100, 100, 0.118);
             position: absolute;
-            left: 130px;
+            right: 195px;
             bottom: 50px;
-            width: 328px;
             padding: 10px;
             display: none;
-
-            p {
-                font-size: 12.5px;
-                color: rgb(100, 100, 100);
-                line-height: 1.5;
-                margin: 0;
-
-                span {
-                    display: block;
-                    margin-top: 5px;
-                }
-            }
+            font-size: 12.5px;
+            color: rgb(100, 100, 100);
+            white-space: nowrap;
         }
     }
 
