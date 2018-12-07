@@ -227,6 +227,7 @@ $(function() {
             url: $(this).attr('href'),
             method: 'GET',
             dataType: 'json',
+            cache: false,
             success: function (data) {
                 $('#modal-default').removeClass().addClass('modal fade page-client-config').find('.modal-content').html(data.body);
                 $('#modal-default').modal('show');

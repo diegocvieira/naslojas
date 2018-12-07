@@ -1,4 +1,5 @@
 $(function() {
+
     $(document).on('click', '.show-product', function(e) {
         e.preventDefault();
 
@@ -6,6 +7,7 @@ $(function() {
             url: $(this).attr('href'),
             method: 'GET',
             dataType: 'json',
+            cache: false,
             success: function (data) {
                 document.title = data.header_title;
                 window.history.pushState('', data.header_title, data.url);
