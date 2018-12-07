@@ -1,5 +1,4 @@
 $(function() {
-
     $(document).on('click', '.show-product', function(e) {
         e.preventDefault();
 
