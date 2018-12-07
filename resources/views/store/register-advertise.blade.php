@@ -12,13 +12,13 @@
 
         <h1>Ano para inovar o comércio de Pelotas</h1>
 
-        <img src="{{ asset('images/advise/race.png') }}" class="img-responsive img-race" />
+        <img src="{{ asset('images/advise/people.png') }}" class="img-responsive img-people" />
 
         <a href="{{ route('store-register-get') }}" class="btn-advertise">DIVULGAR OFERTAS</a>
 
         <div class="cards">
             <div class="card">
-                <p>Uma vitrine virtual <br> da sua loja</p>
+                <p>Atraia mais clientes <br> para dentro da loja</p>
             </div>
 
             <div class="card">
@@ -26,7 +26,7 @@
             </div>
 
             <div class="card">
-                <p>Atraia mais clientes <br> para dentro da loja</p>
+                <p>Tenha uma vitrine <br> virtual da sua loja</p>
             </div>
 
             <div class="card">
@@ -56,19 +56,27 @@
         </div>
 
         <div class="ready">
-            <h3>PRONTO</h3>
+            <h3>PRONTO!</h3>
 
-            <p>Todos em Pelotas poderão conferir suas ofertas 24hs por dia</p>
+            <p>Todos em Pelotas poderão visitar sua loja 24hs por dia</p>
 
-            <p class="bg">E para finalizar a compra é só passar na loja</p>
+            <p class="bg">Nunca foi tão fácil divulgar suas ofertas online</p>
         </div>
 
         <div class="price">
             <p>SEM MENSALIDADE</p>
 
-            <h3>Apenas <span>1 real</span> por produto</h3>
+            <h3>Apenas <span><span>R$</span>0,30</span> por produto</h3>
 
             <p class="taxe">+ taxa única de R$ 5,00 de transporte</p>
+        </div>
+
+        <div class="race">
+            <span class="vertical-line"></span>
+
+            <p>O que está esperando? <br> Saia na frente da concorrência este ano</p>
+
+            <img src="{{ asset('images/advise/race.png') }}" />
         </div>
 
         <div class="test">
