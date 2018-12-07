@@ -165,20 +165,27 @@ class StoreController extends Controller
             app('App\Http\Controllers\GlobalController')->customMessages()
         );
 
-         if($validator->fails()) {
+         if ($validator->fails()) {
              $return['msg'] = $validator->errors()->first();
              $return['status'] = 0;
         } else {
-            if(Hash::check($request->current_password, Auth::guard('store')->user()->password)) {
+            if (Hash::check($request->current_password, Auth::guard('store')->user()->password)) {
                 // Search the city
                 $city = City::whereHas('state', function ($query) use ($request) {
                     $query->where('letter', $request->state);
                 })->where('title', 'LIKE', '%' . $request->city . '%')->select('id')->first();
 
-                if ($city) {
+                if (!$city) {
+                    $return['msg'] = 'Não identificamos a sua cidade, confira o nome e tente novamente. Se o problema persistir, entre em contato conosco.';
+                    $return['status'] = 0;
+                } else if ($city->id != 4913) {
+                    $return['msg'] = 'Em breve estaremos trabalhando na sua cidade.';
+                    $return['status'] = 0;
+                } else {
                     $user = User::find(Auth::guard('store')->user()->id);
                     $user->email = $request->email;
-                    if($request->password) {
+
+                    if ($request->password) {
                         $user->password = bcrypt($request->password);
                     }
 
@@ -194,16 +201,13 @@ class StoreController extends Controller
                     $store->status = isset($request->status) ? 1 : 0;
                     $store->reserve = isset($request->reserve) ? 1 : 0;
 
-                    if($store->save() && $user->save()) {
+                    if ($store->save() && $user->save()) {
                         $return['msg'] = 'Informações atualizadas.';
                         $return['status'] = 1;
                     } else {
-                        $return['msg'] = 'Ocorreu um erro inesperado. Tente novamente.';
+                        $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
                         $return['status'] = 0;
                     }
-                } else {
-                    $return['msg'] = 'Não identificamos a sua cidade, confira o nome e tente novamente. Se o problema persistir, entre em contato conosco.';
-                    $return['status'] = 0;
                 }
             } else {
                 $return['msg'] = 'A sua senha atual não confere.';
