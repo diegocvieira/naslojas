@@ -33,14 +33,8 @@ class Product extends Model
 
     public function scopeFilterGender($query, $gender)
     {
-        if ($gender && $gender != 'todos') {
-            if ($gender == 'masculino') {
-                $gender = 3;
-            } else if ($gender == 'feminino') {
-                $gender = 2;
-            } else {
-                $gender = 1;
-            }
+        if ($gender && $gender != 'todos' && $gender != 'unissex') {
+            $gender = $gender == 'masculino' ? 3 : 2;
 
             return $query->where('gender', $gender);
         }
