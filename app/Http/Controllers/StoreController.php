@@ -176,7 +176,7 @@ class StoreController extends Controller
                 })->where('title', 'LIKE', '%' . $request->city . '%')->select('id')->first();
 
                 if (!$city) {
-                    $return['msg'] = 'Não identificamos a sua cidade, confira o nome e tente novamente. Se o problema persistir, entre em contato conosco.';
+                    $return['msg'] = 'Não identificamos a cidade informada.';
                     $return['status'] = 0;
                 } else if ($city->id != 4913) {
                     $return['msg'] = 'Em breve estaremos trabalhando na sua cidade.';
