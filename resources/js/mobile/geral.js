@@ -349,9 +349,9 @@ $(function() {
                      this.movex = this.index*this.slideWidth + (this.touchstartx - this.touchmovex);
                      // Defines the speed the images should move at.
                      //var panx = 100-this.movex/10;
-                     if(this.movex < 1440) { // Makes the holder stop moving when there is no more content.
-                         this.el.holder.css('transform','translate3d(-' + this.movex + 'px,0,0)');
-                     }
+                     //if(this.movex < 1040) { // Makes the holder stop moving when there is no more content.
+                        // this.el.holder.css('transform','translate3d(-' + this.movex + 'px,0,0)');
+                     //}
                  },
 
                  end: function(event) {
@@ -359,7 +359,7 @@ $(function() {
                      var absMove = Math.abs(this.index*this.slideWidth - this.movex);
                      // Calculate the index. All other calculations are based on the index.
                      if(absMove > this.slideWidth/2 || this.longTouch === false) {
-                         if(this.movex > this.index*this.slideWidth && this.index < 5) {
+                         if(this.movex > this.index*this.slideWidth && this.index < 4) {
                              this.index++;
                          } else if (this.movex < this.index*this.slideWidth && this.index > 0) {
                              this.index--;
