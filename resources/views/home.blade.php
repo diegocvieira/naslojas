@@ -73,7 +73,7 @@
                 <div class="col-xs-4 text text-right">
                     <span>app</span>
                     <img src="{{ asset('images/logo-naslojas.png') }}" />
-                    <p>feito para os humanos <br> de Pelotas</p>
+                    <p>feito para os humanos<br>de Pelotas</p>
                 </div>
 
                 <div class="col-xs-4 img">
