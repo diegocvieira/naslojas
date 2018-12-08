@@ -51,16 +51,16 @@
                                         {!! Form::label('image_remove_' . $product->id . '_' . $key, ' ', ['class' => 'remove-image']) !!}
 
                                         {!! Form::file('image[]', ['id' => 'image_' . $product->id . '_' . $key, 'data-position' => $key, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
-                                        {!! Form::label('image_' . $product->id . '_' . $key, '+', ['class' => 'btn-add-image']) !!}
+                                        {!! Form::label('image_' . $product->id . '_' . $key, ' ', ['class' => 'btn-add-image']) !!}
 
                                         <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $image->image) }}" />
                                     </div>
                                 @endforeach
 
-                                @for($i = ($product->images->count() + 1); $i <= 6; $i++)
+                                @for($i = ($product->images->count() + 1); $i <= 5; $i++)
                                     <div class="image no-image">
                                         {!! Form::file('image[]', ['id' => 'image_' . $product->id . '_' . $i, 'data-position' => $i, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
-                                        {!! Form::label('image_' . $product->id . '_' . $i, '+', ['class' => 'btn-add-image']) !!}
+                                        {!! Form::label('image_' . $product->id . '_' . $i, ' ', ['class' => 'btn-add-image']) !!}
 
                                         <img src="#" />
                                     </div>

@@ -33,11 +33,7 @@ $(function() {
         $(this).children('#photo-zoom').css('transform-origin', ((e.pageX - $(this).offset().left) / $(this).width()) * 100 + '% ' + ((e.pageY - $(this).offset().top) / $(this).height()) * 100 + '%');
     });
     $(document).on('click', '.image-thumb', function() {
-        var destaque_src = $('#image-destaque').find('#photo-zoom').attr('src'),
-            thumb_src = $(this).attr('src').replace('_resize', '');
-
-        $('#image-destaque').find('#photo-zoom').attr('src', thumb_src),
-        $(this).attr('src', destaque_src);
+        $('#image-destaque').find('#photo-zoom').attr('src', $(this).attr('src').replace('_resize', ''));
     });
 
     // Rating

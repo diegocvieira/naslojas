@@ -1,11 +1,7 @@
 $(function() {
     // Image alternate
     $(document).on('click', '.image-thumb', function() {
-        var destaque_src = $('#image-destaque').find('#photo-zoom').attr('src'),
-            thumb_src = $(this).attr('src').replace('_resize', '');
-
-        $('#image-destaque').find('#photo-zoom').attr('src', thumb_src),
-        $(this).attr('src', destaque_src);
+        $('#image-destaque').find('#photo-zoom').attr('src', $(this).attr('src').replace('_resize', ''));
     });
 
     // Rating

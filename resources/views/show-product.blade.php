@@ -5,7 +5,7 @@
         </div>
 
         <div id="image-thumbs">
-            @foreach ($product->images->forget(0) as $image)
+            @foreach ($product->images as $image)
                 <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $image->image) }}" class="image-thumb" />
             @endforeach
         </div>

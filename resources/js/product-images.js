@@ -36,7 +36,7 @@ $(function() {
             next_product = 1;
 
         if(actives.length > 1) {
-            if (actives.length <= 6) {
+            if (actives.length <= 5) {
                 actives.addClass('product').removeClass('selected');
 
                 $.each($('.dz-preview.grouped'), function(index, val) {
@@ -52,7 +52,7 @@ $(function() {
 
                 actives.addClass('grouped').removeClass('product').attr('title', 'Clique para remover esta imagem do grupo');
             } else {
-                modalAlert('Você pode adicionar no máximo 6 imagens por produto.');
+                modalAlert('Você pode adicionar no máximo 5 imagens por produto.');
             }
         }
     });
