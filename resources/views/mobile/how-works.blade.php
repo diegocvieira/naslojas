@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="slide-wrapper padding">
-                    <p>Tire dúvidas sobre as ofertas diretamente com as lojas</p>
+                    <p>Tire dúvidas sobre os produtos diretamente com as lojas</p>
 
                     <span class="swipe"><span class="arrow left"></span><span class="text">DESLIZE</span><span class="arrow right"></span></span>
                 </div>
@@ -36,13 +36,7 @@
                 <div class="slide-wrapper">
                     <p>Economize tempo e dinheiro conferindo o <i>naslojas</i> antes de ir às compras</p>
 
-                    <span class="swipe"><span class="arrow left"></span><span class="text">DESLIZE</span><span class="arrow right"></span></span>
-                </div>
-
-                <div class="slide-wrapper padding">
-                    <p>Baixe o app do <i>naslojas</i> e confira no seu celular</p>
-
-                    <span class="swipe"><span class="arrow left"></span><span class="text padding-right">DESLIZE</span></span>
+                    <span class="swipe"><span class="arrow left"></span><span class="text">DESLIZE</span></span>
                 </div>
             </div>
         </div>
