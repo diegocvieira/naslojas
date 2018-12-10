@@ -281,112 +281,6 @@ a, a:hover, a:active, a:focus {
     }
 }
 
-.page-home {
-    padding: 60px 0 0 0;
-    width: 100%;
-
-    &+ footer {
-        margin-top: 0;
-    }
-
-    .know {
-        width: 100%;
-        float: left;
-        text-align: center;
-
-        img {
-              width: 72px;
-
-              &.img-store + p {
-                  margin-top: 0;
-              }
-
-              &.img-shirt {
-                  width: 83px;
-              }
-        }
-
-        p {
-            display: block;
-            font-size: 16.6px;
-            color: rgb(62, 60, 71);
-            line-height: 1.3;
-            margin-top: 10px;
-        }
-    }
-
-    .app-mobile {
-        background: radial-gradient(#b12872 1%, #ff1744);
-        background-attachment: fixed;
-        padding: 90px 0;
-        margin-top: 150px;
-
-        .container {
-            padding: 0;
-        }
-
-        .text {
-            padding-right: 100px;
-
-            img {
-                filter: brightness(0) invert(1);
-                width: 213px;
-            }
-
-            span {
-                display: block;
-                font-size: 25px;
-                color: #fff;
-            }
-
-            p {
-                margin: 0;
-                display: block;
-                font-size: 16.6px;
-                color: #fff;
-                line-height: 1.25;
-            }
-        }
-
-        .img {
-            position: relative;
-
-            img {
-                width: 460px;
-                position: absolute;
-                bottom: -214px;
-                left: 0;
-            }
-        }
-
-        .links {
-            padding-left: 70px;
-
-            a {
-                font-size: 14.5px;
-                color: #fff;
-                background-position: 25px center;
-                background-repeat: no-repeat;
-                background-size: 21px;
-                padding: 10px 30px 10px 65px;
-                border: 1px solid rgb(255, 255, 255);
-                width: 248px;
-                display: inline-block;
-                border-radius: 25px;
-                margin-top: 20px;
-
-                &.android {
-                    background-image: url('../images/icon-android.png');
-                }
-
-                &.ios {
-                    background-image: url('../images/icon-ios.png');
-                }
-            }
-        }
-    }
-}
-
 @import 'top-nav.scss';
 @import 'list-products.scss';
 @import 'footer.scss';
@@ -397,3 +291,4 @@ a, a:hover, a:active, a:focus {
 @import 'show-product.scss';
 @import 'admin.scss';
 @import 'store-advertise.scss';
+@import 'home.scss';
