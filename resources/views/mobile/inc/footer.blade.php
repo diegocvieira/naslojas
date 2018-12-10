@@ -93,6 +93,10 @@
 
         <script src="{{ mix('js/global-mobile.js') }}"></script>
 
+        @if (Auth::guard('store')->check())
+            <script src="{{ mix('js/global-store-mobile.js') }}"></script>
+        @endif
+
         @yield('script')
     </body>
 </html>

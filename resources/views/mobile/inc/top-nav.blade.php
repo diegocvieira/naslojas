@@ -24,50 +24,64 @@
     <nav class="nav navbar-nav nav-menu">
         <ul>
             <li>
-                @if (Auth::guard('client')->check())
-                    <a href="#" class="open-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('images/icon-profile.png') }}" alt="Menu" />
-                    </a>
+                <a href="#" class="open-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ asset(Auth::check() ? 'images/icon-profile.png' : 'images/icon-menu.png') }}" alt="Menu" />
+                </a>
 
-                    <ul class="dropdown-menu">
-                        @isset($show_filter_products)
+                <ul class="dropdown-menu">
+                    @isset ($show_filter_products)
+                        <li>
+                            <a href="#" class="open-filter-products">Filtrar produtos</a>
+                        </li>
+                    @endisset
+
+                    @if (Auth::check())
+                        @if (Auth::guard('client')->check())
                             <li>
-                                <a href="#" class="open-filter-products">Filtrar produtos</a>
+                                <a href="{{ route('get-client-config') }}">Minha conta</a>
                             </li>
-                        @endisset
 
-                        <li>
-                            <a href="{{ route('get-client-config') }}" class="icon-account show-client-config">Minha conta</a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('list-client-confirms') }}" class="icon-check">Confirmações</a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('list-client-reserves') }}" class="icon-reserve">Reservas</a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('list-client-messages') }}" class="icon-messages">Mensagens</a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('logout') }}" class="icon-logout">Sair</a>
-                        </li>
-                    </ul>
-                @else
-                    <a href="#" class="open-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('images/icon-menu.png') }}" alt="Menu" />
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        @isset($show_filter_products)
                             <li>
-                                <a href="#" class="open-filter-products">Filtrar produtos</a>
+                                <a href="{{ route('list-client-confirms') }}">Confirmações</a>
                             </li>
-                        @endisset
 
+                            <li>
+                                <a href="{{ route('list-client-reserves') }}">Reservas</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('list-client-messages') }}">Mensagens</a>
+                            </li>
+                        @elseif (Auth::guard('store')->check())
+                            <li>
+                                <a href="{{ route('product-images') }}">Adicionar produtos</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('edit-products') }}">Editar produtos</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('list-store-confirms') }}">Confirmações</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('list-store-reserves') }}">Reservas</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('list-store-messages') }}">Mensagens</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('get-store-config') }}">Configurações</a>
+                            </li>
+                        @endif
+
+                        <li>
+                            <a href="{{ route('logout') }}">Sair</a>
+                        </li>
+                    @else
                         <li>
                             <a href="{{ route('know') }}">Entenda</a>
                         </li>
@@ -87,8 +101,8 @@
                         <li>
                             <a href="{{ route('client-login-get') }}">Entrar</a>
                         </li>
-                    </ul>
-                @endif
+                    @endif
+                </ul>
             </li>
         </ul>
     </nav>

@@ -145,7 +145,11 @@ class ProductReserveController extends Controller
             ->orderBy('id', 'DESC')
             ->paginate(20);
 
-        return view('store.product-reserves', compact('header_title', 'reserves', 'section'));
+        if (Agent::isDesktop()) {
+            return view('store.product-reserves', compact('header_title', 'reserves', 'section'));
+        } else {
+            return view('mobile.store.product-reserves', compact('header_title', 'reserves'));
+        }
     }
 
     public function confirm($id)

@@ -2,7 +2,9 @@
     "/css/global.css": "/css/global.css",
     "/css/global-store.css": "/css/global-store.css",
     "/css/global-mobile.css": "/css/global-mobile.css",
+    "/css/global-store-mobile.css": "/css/global-store-mobile.css",
     "/js/global-mobile.js": "/js/global-mobile.js",
+    "/js/global-store-mobile.js": "/js/global-store-mobile.js",
     "/js/global.js": "/js/global.js",
     "/js/global-store.js": "/js/global-store.js"
 }

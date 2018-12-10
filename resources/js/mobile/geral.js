@@ -54,6 +54,103 @@ $(function() {
         modal.modal('show');
     });
 
+    $(document).on('click', '.modal-show-messages .btn-confirm', function(e) {
+        e.preventDefault();
+
+        var message = $('.modal-show-messages').find('textarea').val(),
+            id = $(this).data('id');
+
+        if(message) {
+            $.ajax({
+                url: '/loja/admin/mensagens/create',
+                method: 'POST',
+                dataType: 'json',
+                data: { message : message, id : id },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    $('#modal-default').modal('hide');
+
+                     setTimeout(function() {
+                         modalAlert(data.msg);
+                     }, 1000);
+
+                    if(data.status) {
+                        var row = $('.page-messages').find('.show-message[data-id=' + id + ']').parents('.more-details');
+
+                        row.find('.show-message').data('storemessage', message).text('Visualizar resposta');
+                        row.find('.status').addClass('green').text('Respondido');
+                        row.find('.answered_date').text(data.date);
+                    }
+                }
+            });
+        }
+    });
+
+    $(document).on('click', '.page-admin .change-reserve-status', function(e) {
+        e.preventDefault();
+
+        var $this = $(this);
+
+        $.ajax({
+            url: $(this).attr('href'),
+            method: 'POST',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                 modalAlert(data.msg);
+
+                if(data.status) {
+                    var row = $this.parents('.more-details');
+
+                    row.find('.btn-status').text('-----');
+                    row.find('.confirmed_date').text(data.date_confirmed);
+
+                    if (data.type == 1) {
+                        row.find('.status').addClass('green').text('Confirmado');
+                        row.find('.reserved_until').text(data.date_reserved);
+                    } else {
+                        row.find('.status').addClass('red').text('Recusado');
+                    }
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '.page-admin .change-confirm-status', function(e) {
+        e.preventDefault();
+
+        var $this = $(this);
+
+        $.ajax({
+            url: $(this).attr('href'),
+            method: 'POST',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                 modalAlert(data.msg);
+
+                if(data.status) {
+                    var row = $this.parents('.more-details');
+
+                    row.find('.btn-status').text('-----');
+                    row.find('.confirmed_date').text(data.date);
+
+                    if (data.type == 1) {
+                        row.find('.status').addClass('green').text('Confirmado');
+                    } else {
+                        row.find('.status').addClass('red').text('Recusado');
+                    }
+                }
+            }
+        });
+    });
+
     $('#form-client-config').validate({
         rules: {
             name: {

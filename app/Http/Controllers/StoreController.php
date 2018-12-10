@@ -152,9 +152,13 @@ class StoreController extends Controller
     {
         $user = User::find(Auth::guard('store')->user()->id);
 
-        return response()->json([
-            'body' => view('store.config', compact('user'))->render()
-        ]);
+        if (Agent::isDesktop()) {
+            return response()->json([
+                'body' => view('store.config', compact('user'))->render()
+            ]);
+        } else {
+            return view('mobile.store.config', compact('user'));
+        }
     }
 
     public function setConfig(Request $request)

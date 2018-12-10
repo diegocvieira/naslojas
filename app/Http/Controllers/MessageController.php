@@ -73,8 +73,8 @@ class MessageController extends Controller
         $header_title = 'Mensagens - naslojas.com';
 
         $messages = Message::where('client_id', Auth::guard('client')->user()->id)
-        ->orderBy('id', 'DESC')
-        ->paginate(20);
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
 
         if (Agent::isDesktop()) {
             return view('client.messages', compact('header_title', 'messages'));
@@ -89,11 +89,15 @@ class MessageController extends Controller
         $section = 'message';
 
         $messages = Message::whereHas('product', function ($query) {
-            $query->where('store_id', Auth::guard('store')->user()->store_id);
-        })
-        ->orderBy('id', 'DESC')
-        ->paginate(20);
+                $query->where('store_id', Auth::guard('store')->user()->store_id);
+            })
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
 
-        return view('store.messages', compact('header_title', 'messages', 'section'));
+        if (Agent::isDesktop()) {
+            return view('store.messages', compact('header_title', 'messages', 'section'));
+        } else {
+            return view('mobile.store.messages', compact('header_title', 'messages'));
+        }
     }
 }

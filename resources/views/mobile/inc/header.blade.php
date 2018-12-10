@@ -58,6 +58,10 @@
 
         <link rel="stylesheet" type="text/css" href="{{ mix('css/global-mobile.css') }}">
 
+        @if (Auth::guard('store')->check())
+            <link rel="stylesheet" type="text/css" href="{{ mix('css/global-store-mobile.css') }}">
+        @endif
+
         @if($app->environment('production'))
             <script>
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

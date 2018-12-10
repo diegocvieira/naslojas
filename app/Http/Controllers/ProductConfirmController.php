@@ -80,7 +80,11 @@ class ProductConfirmController extends Controller
             ->orderBy('id', 'DESC')
             ->paginate(20);
 
-        return view('store.product-confirms', compact('header_title', 'confirms', 'section'));
+        if (Agent::isDesktop()) {
+            return view('store.product-confirms', compact('header_title', 'confirms', 'section'));
+        } else {
+            return view('mobile.store.product-confirms', compact('header_title', 'confirms'));
+        }
     }
 
     public function emailUrl($type, $token)
