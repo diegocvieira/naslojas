@@ -7,6 +7,8 @@ use App\ProductReserve;
 use Auth;
 use Mail;
 use Agent;
+use App\Product;
+use App\ProductSize;
 
 class ProductReserveController extends Controller
 {
@@ -44,7 +46,11 @@ class ProductReserveController extends Controller
 
     public function emailUrl($type, $token)
     {
-        $reserve = ProductReserve::where('token', $token)->first();
+        $reserve = ProductReserve::whereHas('product', function ($query) {
+                $query->withoutGlobalScopes(['active', 'active-store']);
+            })
+            ->where('token', $token)
+            ->first();
 
         if($reserve) {
             $reserve->status = $type;
@@ -56,6 +62,38 @@ class ProductReserveController extends Controller
                     $message = 'O cliente foi notificado que o produto está reservado para ele na loja por 24hs.';
                     $this->emailResponse($reserve, 1);
                 } else {
+                    // Desactive product or size
+                    if ($reserve->size) {
+                        $size = ProductSize::whereHas('product', function ($query) {
+                            $query->withoutGlobalScopes(['active', 'active-store']);
+                        })
+                        ->where('product_id', $reserve->product_id)
+                        ->where('size', $reserve->size)
+                        ->first()
+                        ->delete();
+
+                        $sizes = ProductSize::whereHas('product', function ($query) {
+                            $query->withoutGlobalScopes(['active', 'active-store']);
+                        })
+                        ->where('product_id', $reserve->product_id)->get();
+
+                        if ($sizes->count() == 0) {
+                            $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                                ->where('id', $reserve->product_id)
+                                ->first();
+
+                            $p->status = 0;
+                            $p->save();
+                        }
+                    } else {
+                        $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                            ->where('id', $reserve->product_id)
+                            ->first();
+
+                        $p->status = 0;
+                        $p->save();
+                    }
+
                     $message = 'O produto foi removido do site e o cliente foi notificado que o produto não está mais disponível na loja.';
                     $this->emailResponse($reserve, 0);
                 }
@@ -76,8 +114,14 @@ class ProductReserveController extends Controller
         $header_title = 'Reservas - naslojas.com';
 
         $reserves = ProductReserve::where('client_id', Auth::guard('client')->user()->id)
-        ->orderBy('id', 'DESC')
-        ->paginate(20);
+            ->whereHas('product', function ($query) {
+                $query->withoutGlobalScopes(['active', 'active-store']);
+            })
+            ->with(['product' => function($query) {
+                $query->withoutGlobalScopes(['active', 'active-store']);
+            }])
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
 
         if (Agent::isDesktop()) {
             return view('client.product-reserves', compact('header_title', 'reserves'));
@@ -92,10 +136,14 @@ class ProductReserveController extends Controller
         $section = 'reserve';
 
         $reserves = ProductReserve::whereHas('product', function ($query) {
-            $query->where('store_id', Auth::guard('store')->user()->store_id);
-        })
-        ->orderBy('id', 'DESC')
-        ->paginate(20);
+                $query->withoutGlobalScopes(['active', 'active-store'])
+                    ->where('store_id', Auth::guard('store')->user()->store_id);
+            })
+            ->with(['product' => function($query) {
+                $query->withoutGlobalScopes(['active', 'active-store']);
+            }])
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
 
         return view('store.product-reserves', compact('header_title', 'reserves', 'section'));
     }
@@ -103,10 +151,11 @@ class ProductReserveController extends Controller
     public function confirm($id)
     {
         $reserve = ProductReserve::whereHas('product', function ($query) {
-            $query->where('store_id', Auth::guard('store')->user()->store_id);
-        })
-        ->where('id', $id)
-        ->first();
+                $query->withoutGlobalScopes(['active', 'active-store'])
+                    ->where('store_id', Auth::guard('store')->user()->store_id);
+            })
+            ->where('id', $id)
+            ->first();
 
         $date = date('Y-m-d H:i:s');
 
@@ -134,10 +183,11 @@ class ProductReserveController extends Controller
     public function refuse($id)
     {
         $reserve = ProductReserve::whereHas('product', function ($query) {
-            $query->where('store_id', Auth::guard('store')->user()->store_id);
-        })
-        ->where('id', $id)
-        ->first();
+                $query->withoutGlobalScopes(['active', 'active-store'])
+                    ->where('store_id', Auth::guard('store')->user()->store_id);
+            })
+            ->where('id', $id)
+            ->first();
 
         $date = date('Y-m-d H:i:s');
 

@@ -7,6 +7,8 @@ use App\ProductConfirm;
 use Auth;
 use Mail;
 use Agent;
+use App\Product;
+use App\ProductSize;
 
 class ProductConfirmController extends Controller
 {
@@ -47,8 +49,14 @@ class ProductConfirmController extends Controller
         $header_title = 'Confirmações - naslojas.com';
 
         $confirms = ProductConfirm::where('client_id', Auth::guard('client')->user()->id)
-        ->orderBy('id', 'DESC')
-        ->paginate(20);
+            ->whereHas('product', function ($query) {
+                $query->withoutGlobalScopes(['active', 'active-store']);
+            })
+            ->with(['product' => function($query) {
+                $query->withoutGlobalScopes(['active', 'active-store']);
+            }])
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
 
         if (Agent::isDesktop()) {
             return view('client.product-confirms', compact('header_title', 'confirms'));
@@ -63,29 +71,69 @@ class ProductConfirmController extends Controller
         $section = 'confirm';
 
         $confirms = ProductConfirm::whereHas('product', function ($query) {
-            $query->where('store_id', Auth::guard('store')->user()->store_id);
-        })
-        ->orderBy('id', 'DESC')
-        ->paginate(20);
+                $query->withoutGlobalScopes(['active', 'active-store'])
+                    ->where('store_id', Auth::guard('store')->user()->store_id);
+            })
+            ->with(['product' => function($query) {
+                $query->withoutGlobalScopes(['active', 'active-store']);
+            }])
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
 
         return view('store.product-confirms', compact('header_title', 'confirms', 'section'));
     }
 
     public function emailUrl($type, $token)
     {
-        $confirm = ProductConfirm::where('token', $token)->first();
+        $confirm = ProductConfirm::whereHas('product', function ($query) {
+                $query->withoutGlobalScopes(['active', 'active-store']);
+            })
+            ->where('token', $token)->first();
 
-        if($confirm) {
+        if ($confirm) {
             $confirm->status = $type;
             $confirm->confirmed_at = date('Y-m-d H:i:s');
             $confirm->token = null;
 
-            if($confirm->save()) {
+            if ($confirm->save()) {
                 if ($type == '1') {
                     $message = 'O cliente foi notificado que o produto ainda está disponível na loja.';
 
                     $this->emailResponse($confirm, 1);
                 } else {
+                    // Desactive product or size
+                    if ($confirm->size) {
+                        $size = ProductSize::whereHas('product', function ($query) {
+                                $query->withoutGlobalScopes(['active', 'active-store']);
+                            })
+                            ->where('product_id', $confirm->product_id)
+                            ->where('size', $confirm->size)
+                            ->first()
+                            ->delete();
+
+                        $sizes = ProductSize::whereHas('product', function ($query) {
+                                $query->withoutGlobalScopes(['active', 'active-store']);
+                            })
+                            ->where('product_id', $confirm->product_id)
+                            ->get();
+
+                        if ($sizes->count() == 0) {
+                            $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                                ->where('id', $confirm->product_id)
+                                ->first();
+
+                            $p->status = 0;
+                            $p->save();
+                        }
+                    } else {
+                        $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                            ->where('id', $confirm->product_id)
+                            ->first();
+
+                        $p->status = 0;
+                        $p->save();
+                    }
+
                     $message = 'O produto foi removido do site e o cliente foi notificado que o produto não está mais disponível na loja.';
 
                     $this->emailResponse($confirm, 0);
@@ -105,7 +153,8 @@ class ProductConfirmController extends Controller
     public function confirm($id)
     {
         $confirm = ProductConfirm::whereHas('product', function ($query) {
-            $query->where('store_id', Auth::guard('store')->user()->store_id);
+            $query->withoutGlobalScopes(['active', 'active-store'])
+                ->where('store_id', Auth::guard('store')->user()->store_id);
         })
         ->where('id', $id)
         ->first();
@@ -134,7 +183,8 @@ class ProductConfirmController extends Controller
     public function refuse($id)
     {
         $confirm = ProductConfirm::whereHas('product', function ($query) {
-            $query->where('store_id', Auth::guard('store')->user()->store_id);
+            $query->withoutGlobalScopes(['active', 'active-store'])
+                ->where('store_id', Auth::guard('store')->user()->store_id);
         })
         ->where('id', $id)
         ->first();
@@ -150,6 +200,38 @@ class ProductConfirmController extends Controller
             $return['date'] = date('d/m/y - H:i', strtotime($date));
             $return['type'] = 0;
             $return['msg'] = 'Mantenha seus produtos atualizados. <br> Isso evita que sua loja perca pontos de relevância e seus produtos caiam de posição nas buscas.';
+
+            // Desactive product or size
+            if ($confirm->size) {
+                $size = ProductSize::whereHas('product', function ($query) {
+                    $query->withoutGlobalScopes(['active', 'active-store']);
+                })
+                ->where('product_id', $confirm->product_id)
+                ->where('size', $confirm->size)
+                ->first()
+                ->delete();
+
+                $sizes = ProductSize::whereHas('product', function ($query) {
+                    $query->withoutGlobalScopes(['active', 'active-store']);
+                })
+                ->where('product_id', $confirm->product_id)->get();
+
+                if ($sizes->count() == 0) {
+                    $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                        ->where('id', $confirm->product_id)
+                        ->first();
+
+                    $p->status = 0;
+                    $p->save();
+                }
+            } else {
+                $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                    ->where('id', $confirm->product_id)
+                    ->first();
+
+                $p->status = 0;
+                $p->save();
+            }
 
             $this->emailResponse($confirm, 0);
         } else {
