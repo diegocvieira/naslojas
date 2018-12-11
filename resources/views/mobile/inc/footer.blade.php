@@ -94,6 +94,7 @@
         <script src="{{ mix('js/global-mobile.js') }}"></script>
 
         @if (Auth::guard('store')->check())
+            <script src="//rawgit.com/ngryman/jquery.finger/v0.1.2/dist/jquery.finger.js"></script>
             <script src="{{ mix('js/global-store-mobile.js') }}"></script>
         @endif
 

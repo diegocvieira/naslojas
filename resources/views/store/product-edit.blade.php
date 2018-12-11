@@ -57,7 +57,7 @@
                                     </div>
                                 @endforeach
 
-                                @for($i = ($product->images->count() + 1); $i <= 5; $i++)
+                                @for ($i = ($product->images->count() + 1); $i <= 5; $i++)
                                     <div class="image no-image">
                                         {!! Form::file('image[]', ['id' => 'image_' . $product->id . '_' . $i, 'data-position' => $i, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
                                         {!! Form::label('image_' . $product->id . '_' . $i, ' ', ['class' => 'btn-add-image']) !!}
@@ -68,7 +68,7 @@
                             </div>
 
                             <div class="col-xs-6 options">
-                                @if($product->related)
+                                @if ($product->related)
                                     <button type="button" class="select-color color-variation" data-variation="{{ $variation }}" title="Clique para remover esta cor da variação">Variação {{ $variation }}</button>
                                 @else
                                     <button type="button" class="select-color">selecionar</button>
@@ -77,15 +77,12 @@
                                 <button type="button" class="copy-data">copiar dados</button>
                                 <button type="button" class="paste-data">colar dados</button>
 
-                                @if($product->status != 2)
-                                    @if($product->status == 0)
-                                        <button type="button" class="disable-product disabled" data-productid="{{ $product->id }}">ocultado</button>
-                                    @else
-                                        <button type="button" class="disable-product" data-productid="{{ $product->id }}">ocultar</button>
-                                    @endif
+                                @if ($product->status != 2)
+                                    <button type="button" class="disable-product disabled {{ $product->status == 1 ? 'hidden' : '' }}" data-productid="{{ $product->id }}" data-url="{{ route('product-enable') }}">ocultado</button>
+                                    <button type="button" class="enable-product {{ $product->status == 0 ? 'hidden' : '' }}" data-productid="{{ $product->id }}" data-url="{{ route('product-disable') }}">ocultar</button>
                                 @endif
 
-                                <button type="button" class="delete-product" data-url="{{ route('delete-product', $product->id) }}">apagar</button>
+                                <button type="button" class="delete-product" data-productid="{{ $product->id }}" data-url="{{ route('product-delete') }}">apagar</button>
                             </div>
                         </div>
 

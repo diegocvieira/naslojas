@@ -7,23 +7,25 @@ $(function() {
         }
     });
 
-    $(document).on('click', '.disable-product', function(e) {
+    $(document).on('click', '.disable-product, .enable-product', function(e) {
         e.preventDefault();
 
         var $this = $(this);
 
-        $this.val($this.hasClass('disabled') ? 'ocultar' : 'ocultado');
-        $this.toggleClass('disabled');
-
         $.ajax({
-            url: '/loja/admin/produtos/enable-disable/' + $this.data('productid'),
+            url: $this.data('url'),
             method: 'POST',
             dataType: 'json',
+            data: { id : $this.data('productid') },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-
+                if (data.status) {
+                    $this.parent().find('.enable-product, .disable-product').toggleClass('hidden');
+                } else {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
             }
         });
     });
@@ -46,6 +48,7 @@ $(function() {
                 url: $this.data('url'),
                 method: 'POST',
                 dataType: 'json',
+                data: { id : $this.data('productid') },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },

@@ -122,9 +122,12 @@ Route::group(['prefix' => 'loja'], function () {
 
 			Route::post('save/{id?}', 'ProductController@save')->name('save-products');
 
-			Route::post('enable-disable/{id}', 'ProductController@enableDisable');
+			//Route::post('enable-disable/{id}/{status?}', 'ProductController@enableDisable');
+			Route::post('disable', 'ProductController@disable')->name('product-disable');
+			Route::post('enable', 'ProductController@enable')->name('product-enable');
 
-			Route::post('delete/{id}', 'ProductController@delete')->name('delete-product');
+			//Route::post('delete/{id}', 'ProductController@delete')->name('delete-product');
+			Route::post('delete', 'ProductController@delete')->name('product-delete');
 
 			Route::post('delete-images/{image}', 'ProductController@deleteImages');
 		});

@@ -130,6 +130,10 @@
                         margin-right: 0;
                     }
 
+                    &.hidden {
+                        display: none;
+                    }
+
                     &.disabled, &.copied, &.selected, &.color-variation {
                         color: rgb(255, 23, 68);
                     }

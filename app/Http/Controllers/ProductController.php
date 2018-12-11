@@ -188,11 +188,17 @@ class ProductController extends Controller
 
         $products = $products->orderBy('id', 'DESC')->paginate(20);
 
-        $section = 'edit';
+        if (Agent::isDesktop()) {
+            $section = 'edit';
 
-        $header_title = 'Editar produtos - naslojas.com';
+            $header_title = 'Editar produtos - naslojas.com';
 
-        return view('store.product-edit', compact('products', 'section', 'keyword', 'header_title'));
+            return view('store.product-edit', compact('products', 'section', 'keyword', 'header_title'));
+        } else {
+            $header_title = 'Produtos - naslojas.com';
+
+            return view('mobile.store.admin-products', compact('products', 'keyword', 'header_title'));
+        }
     }
 
     public function images()
@@ -374,25 +380,110 @@ class ProductController extends Controller
         ProductImage::where('image', $image)->delete();
     }
 
-    public function delete($id)
+    public function delete(Request $request)
     {
-        $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($id);
+        $store_id = Auth::guard('store')->user()->store_id;
 
-        foreach($product->images as $image) {
-            $this->deleteImages($image->image);
+        if (is_array($request->id)) {
+            foreach ($request->id as $i) {
+                $product = Product::withoutGlobalScopes(['active', 'active-store'])
+                    ->where('store_id', $store_id)
+                    ->where('id', $i)
+                    ->first();
+
+                foreach($product->images as $image) {
+                    $this->deleteImages($image->image);
+                }
+
+                $delete = $product->delete();
+            }
+        } else {
+            $product = Product::withoutGlobalScopes(['active', 'active-store'])
+                ->where('store_id', $store_id)
+                ->where('id', $request->id)
+                ->first();
+
+            foreach($product->images as $image) {
+                $this->deleteImages($image->image);
+            }
+
+            $delete = $product->delete();
         }
 
-        $product->delete();
+        if ($delete) {
+            $return['status'] = true;
+        } else {
+            $return['status'] = false;
+        }
 
-        return json_encode(true);
+        return json_encode($return);
     }
 
-    public function enableDisable($id)
+    public function enable(Request $request)
     {
-        $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($id);
-        $product->status = $product->status == 0 ? 1 : 0;
-        $product->save();
+        $store_id = Auth::guard('store')->user()->store_id;
 
-        return json_encode(true);
+        if (is_array($request->id)) {
+            foreach ($request->id as $i) {
+                $product = Product::withoutGlobalScopes(['active', 'active-store'])
+                    ->where('store_id', $store_id)
+                    ->where('id', $i)
+                    ->first();
+
+                $product->status = 1;
+                $save = $product->save();
+            }
+        } else {
+            $product = Product::withoutGlobalScopes(['active', 'active-store'])
+                ->where('store_id', $store_id)
+                ->where('id', $request->id)
+                ->first();
+
+            $product->status = 1;
+            $save = $product->save();
+        }
+
+        if ($save) {
+            $return['status'] = true;
+            $return['type'] = 'enable';
+        } else {
+            $return['status'] = false;
+        }
+
+        return json_encode($return);
+    }
+
+    public function disable(Request $request)
+    {
+        $store_id = Auth::guard('store')->user()->store_id;
+
+        if (is_array($request->id)) {
+            foreach ($request->id as $i) {
+                $product = Product::withoutGlobalScopes(['active', 'active-store'])
+                    ->where('store_id', $store_id)
+                    ->where('id', $i)
+                    ->first();
+
+                $product->status = 0;
+                $save = $product->save();
+            }
+        } else {
+            $product = Product::withoutGlobalScopes(['active', 'active-store'])
+                ->where('store_id', $store_id)
+                ->where('id', $request->id)
+                ->first();
+
+            $product->status = 0;
+            $save = $product->save();
+        }
+
+        if ($save) {
+            $return['status'] = true;
+            $return['type'] = 'disable';
+        } else {
+            $return['status'] = false;
+        }
+
+        return json_encode($return);
     }
 }

@@ -1,16 +1,24 @@
 <header>
-    <a href="{{ url('/') }}" id="logo-naslojas">
-        <img src="{{ asset('images/icon-logo-naslojas.png') }}" />
-    </a>
+    @if(isset($admin_search) && isset($keyword))
+        <a href="{{ route('edit-products') }}" class="btn-back-search"></a>
+    @else
+        <a href="{{ url('/') }}" id="logo-naslojas">
+            <img src="{{ asset('images/icon-logo-naslojas.png') }}" />
+        </a>
+    @endif
 
-    @if(isset($store))
+    @if (isset($store))
         {!! Form::open(['method' => 'GET', 'route' => 'form-search-store', 'id' => 'form-search']) !!}
-            {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Pesquise na loja ' . $store->name]) !!}
+            {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Pesquise dentro da sua loja']) !!}
 
             {!! Form::hidden('store_slug', $store->slug) !!}
 
             {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
             {!! Form::hidden('gender', $search_gender ?? 'todos', ['id' => 'search-gender']) !!}
+        {!! Form::close() !!}
+    @elseif (isset($admin_search))
+        {!! Form::open(['method' => 'GET', 'route' => 'form-search-admin', 'id' => 'form-search']) !!}
+            {!! Form::text('keyword', $keyword ?? null, ['placeholder' => 'Pesquise dentro da sua loja', 'required']) !!}
         {!! Form::close() !!}
     @else
         {!! Form::open(['method' => 'GET', 'route' => 'form-search', 'id' => 'form-search']) !!}
@@ -54,11 +62,7 @@
                             </li>
                         @elseif (Auth::guard('store')->check())
                             <li>
-                                <a href="{{ route('product-images') }}">Adicionar produtos</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('edit-products') }}">Editar produtos</a>
+                                <a href="{{ route('edit-products') }}">Produtos</a>
                             </li>
 
                             <li>
