@@ -22,6 +22,21 @@
         }
     }
 
+    .btn-create-edit-product {
+        position: fixed;
+        right: 30px;
+        bottom: 30px;
+        width: 83px;
+        height: 83px;
+        background-color: #ff1744;
+        color: #fff;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 83px;
+        font-size: 4rem;
+        box-shadow: rgba(0, 0, 0, .2) 0px 0px 0px 0px, rgba(0, 0, 0, .2) 0px 2px 20px 0px;
+    }
+
     #form-product-manager {
         width: 100%;
         float: left;

@@ -212,11 +212,11 @@ class ProductController extends Controller
         $section = 'add';
 
         if (count($products) > 0) {
-            $header_title = 'Finalizar cadastro de produtos - naslojas.com';
+            $header_title = 'Finalizar cadastro de produtos | naslojas.com';
 
             return view('store.product-edit', compact('products', 'section', 'header_title'));
         } else {
-            $header_title = 'Cadastrar produtos - naslojas.com';
+            $header_title = 'Cadastrar produtos | naslojas.com';
 
             return view('store.product-images', compact('section', 'header_title'));
         }
@@ -248,7 +248,7 @@ class ProductController extends Controller
         if ($id) {
             $validation = Validator::make(
                 $request->all(),
-                ['title' => 'required|max:255', 'price' => 'required', 'gender' => 'required', 'description' => 'max:2000'],
+                $this->rules(),
                 app('App\Http\Controllers\GlobalController')->customMessages()
             );
 
@@ -292,7 +292,7 @@ class ProductController extends Controller
 
                         sleep(rand(0, 10) / 10);
 
-                        $product->slug = str_slug($product->title, '-') . '-' . RAND(111111, 999999);
+                        $product->slug .= '-' . uniqid();
 
                         continue;
                     }
@@ -362,6 +362,122 @@ class ProductController extends Controller
         }
     }
 
+    public function getCreateEdit($id = null)
+    {
+        if ($id) {
+            $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($id);
+
+            $header_title = 'Editar ' . $product->title . ' | naslojas.com';
+        } else {
+            $header_title = 'Cadastrar produto | naslojas.com';
+        }
+
+        return view('mobile.store.create-edit-product', compact('header_title', 'product'));
+    }
+
+    public function saveIndividual(Request $request, $id = null)
+    {
+        foreach ($request->products as $data) {
+            $request = (object)$data;
+
+            $validation = Validator::make(
+                $data,
+                $this->rules(),
+                app('App\Http\Controllers\GlobalController')->customMessages()
+            );
+
+            if ($validation->fails()) {
+                $return['status'] = false;
+                $return['msg'] = $validation->errors()->first();
+            } else {
+                if ($id) {
+                    $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($id);
+                } else {
+                    $product = new Product;
+
+                    $product->store_id = Auth::guard('store')->user()->store_id;
+                    $product->status = 1;
+                }
+
+                $product->title = $request->title;
+                $product->price = number_format(str_replace(['.', ','], ['', '.'], $request->price), 2, '.', '');
+                $product->installment = $request->installment;
+                $product->gender = $request->gender;
+                $product->old_price = $request->old_price ? number_format(str_replace(['.', ','], ['', '.'], $request->old_price), 2, '.', '') : null;
+                $product->installment_price = $request->installment_price ? number_format(str_replace(['.', ','], ['', '.'], $request->installment_price), 2, '.', '') : null;
+                $product->slug = str_slug($product->title, '-');
+                $product->description = $request->description;
+                $product->related = $request->related;
+
+               // check if slug already exists and add dash in the end
+                $NUM_OF_ATTEMPTS = 10;
+                $attempts = 0;
+
+                do {
+                    try {
+                        $product->save();
+
+                        $return['status'] = true;
+                        $return['msg'] = 'Alterações salvas com sucesso!';
+                    } catch(\Exception $e) {
+                        $attempts++;
+
+                        if($attempts >= $NUM_OF_ATTEMPTS) {
+                            $return['status'] = false;
+                            $return['msg'] = 'Ocorreu um erro inesperado. Por favor, atualize a página e tente novamente.';
+                        }
+
+                        sleep(rand(0, 10) / 10);
+
+                        $product->slug .= '-' . uniqid();
+
+                        continue;
+                    }
+
+                    break;
+                } while ($attempts < $NUM_OF_ATTEMPTS);
+
+               ProductSize::where('product_id', $product->id)->delete();
+               if (isset($request->sizes)) {
+                   foreach ($request->sizes as $size) {
+                       $product->sizes()->create(['size' => $size]);
+                   }
+               }
+
+               if (isset($request->images_remove)) {
+                   foreach ($request->images_remove as $image_remove) {
+                       $this->deleteImages($image_remove);
+                   }
+               }
+
+               if (isset($request->images)) {
+                   $key_image = 0;
+
+                   foreach ($request->images as $image) {
+                       if (!empty($image)) {
+                           $image_name = _uploadImage($image);
+
+                           foreach ($request->images_position as $key_position => $image_position) {
+                                if ($key_position == $key_image) {
+                                    $position = $image_position;
+                                }
+                            }
+
+                           $product->images()->create([
+                               'image' => $image_name,
+                               'position' => $position ?? '0'
+                           ]);
+
+                           $key_image++;
+                       }
+                   }
+               }
+            }
+        }
+
+       return json_encode($return);
+    }
+
     public function deleteImages($image)
     {
         $path = public_path('uploads/' . Auth::guard('store')->user()->store_id . '/products/');
@@ -412,6 +528,7 @@ class ProductController extends Controller
 
         if ($delete) {
             $return['status'] = true;
+            $return['type'] = 'delete';
         } else {
             $return['status'] = false;
         }
@@ -485,5 +602,15 @@ class ProductController extends Controller
         }
 
         return json_encode($return);
+    }
+
+    private function rules()
+    {
+        return [
+            'title' => 'required|max:255',
+            'price' => 'required',
+            'gender' => 'required',
+            'description' => 'max:2000'
+        ];
     }
 }

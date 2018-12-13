@@ -14,7 +14,7 @@
                     {!! Form::checkbox('id[]', $product->id, null, ['id' => 'product_' . $product->id, 'autocomplete' => 'off']) !!}
                     {!! Form::label('product_' . $product->id, ' ') !!}
 
-                    <a href="{{ route('show-product', $product->slug) }}">
+                    <a href="{{ route('get-create-edit-product', $product->id) }}">
                         <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $product->images->first()->image) }}" class="image" alt="{{ $product->title }}" />
                     </a>
                 </div>
@@ -22,5 +22,7 @@
         {!! Form::close() !!}
 
         @include('mobile.pagination', ['paginator' => $products])
+
+        <a href="{{ route('get-create-edit-product') }}" class="btn-create-edit-product">+</a>
     </div>
 @endsection

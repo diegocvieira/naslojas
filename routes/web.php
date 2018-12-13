@@ -114,19 +114,18 @@ Route::group(['prefix' => 'loja'], function () {
 		Route::group(['prefix' => 'produtos'], function () {
 			Route::get('cadastro', 'ProductController@images')->name('product-images');
 			Route::post('dropzone', 'ProductController@uploadImages');
+			Route::get('cadastrar-editar/{id?}', 'ProductController@getCreateEdit')->name('get-create-edit-product');
+			Route::post('save/{id?}', 'ProductController@save')->name('save-products');
+			Route::post('save-individual/{id?}', 'ProductController@saveIndividual')->name('save-product-individual');
 
 			Route::get('/', 'ProductController@edit')->name('edit-products');
 
 			Route::get('busca', 'ProductController@formSearchAdmin')->name('form-search-admin');
 			Route::get('busca/{keyword?}', 'ProductController@edit');
 
-			Route::post('save/{id?}', 'ProductController@save')->name('save-products');
-
-			//Route::post('enable-disable/{id}/{status?}', 'ProductController@enableDisable');
 			Route::post('disable', 'ProductController@disable')->name('product-disable');
 			Route::post('enable', 'ProductController@enable')->name('product-enable');
 
-			//Route::post('delete/{id}', 'ProductController@delete')->name('delete-product');
 			Route::post('delete', 'ProductController@delete')->name('product-delete');
 
 			Route::post('delete-images/{image}', 'ProductController@deleteImages');

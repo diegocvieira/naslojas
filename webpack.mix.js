@@ -21,7 +21,8 @@ mix.sass('resources/sass/global.scss', 'public/css')
     ], 'public/js/global-mobile.js')
     .babel([
         'resources/js/mobile/store-config.js',
-        'resources/js/mobile/admin-products.js'
+        'resources/js/mobile/admin-products.js',
+        'resources/js/mobile/create-edit-product.js'
     ], 'public/js/global-store-mobile.js')
     .babel([
         'resources/js/geral.js',

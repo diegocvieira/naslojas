@@ -87,7 +87,7 @@
                         </div>
 
                         <div class="row">
-                            {!! Form::text('title', null, ['placeholder' => 'Título do produto * (A busca é feita com base nas palavras escritas aqui)', 'class' => 'title', 'title' => 'Título do produto']) !!}
+                            {!! Form::text('title', null, ['placeholder' => 'Título do produto* (A busca é feita com base nas palavras escritas aqui)', 'class' => 'title', 'title' => 'Título do produto']) !!}
 
                             {!! Form::select('gender', $genders, null, ['title' => 'Gênero*', 'class' => 'selectpicker']) !!}
 
