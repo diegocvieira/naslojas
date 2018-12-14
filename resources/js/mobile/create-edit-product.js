@@ -188,6 +188,8 @@ $(function() {
                     }
                 });
             } else {
+                $(form).find('input[type=submit]').val('SALVAR').attr('disabled', false);
+
                 modalAlert('Cada variação de cor precisa ter no mínimo uma imagem.');
             }
 
