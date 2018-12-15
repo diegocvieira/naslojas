@@ -76,9 +76,9 @@ $(function() {
                     errorPlacement: function(error, element) {
                     },
                     submitHandler: function(form) {
-                        var modal = $('#modal-alert');
-
                         modalAlert("Confirme sua senha atual.<input type='password' name='current_password' placeholder='digite aqui' />", 'ENVIAR');
+
+                        var modal = $('#modal-alert');
 
                         modal.find('.btn').addClass('btn-confirm');
 
@@ -185,9 +185,9 @@ $(function() {
     $(document).on('click', '#delete-store-account', function(e) {
         e.preventDefault();
 
-        var modal = $('#modal-alert');
-
         modalAlert("Tem certeza que deseja deletar sua conta? <br> Você perderá todos os dados do perfil da sua loja e este processo não poderá ser desfeito.<input type='password' name='current_password' placeholder='confirme aqui a sua senha atual' />", 'DELETAR');
+
+        var modal = $('#modal-alert');
 
         modal.find('.btn-default').addClass('btn-confirm invert-color');
 

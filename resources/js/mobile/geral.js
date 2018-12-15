@@ -181,9 +181,9 @@ $(function() {
         errorPlacement: function(error, element) {
         },
         submitHandler: function(form) {
-            var modal = $('#modal-alert');
-
             modalAlert("Confirme sua senha atual.<input type='password' name='current_password' placeholder='digite aqui' />", 'ENVIAR');
+
+            var modal = $('#modal-alert');
 
             modal.find('.btn').addClass('btn-confirm');
 
@@ -226,12 +226,11 @@ $(function() {
     $(document).on('click', '#delete-client-account', function(e) {
         e.preventDefault();
 
-        var modal = $('#modal-alert');
-
         modalAlert("Tem certeza que deseja deletar sua conta? <br> Você perderá todos os dados do seu perfil e este processo não poderá ser desfeito.<input type='password' name='current_password' placeholder='confirme aqui a sua senha atual' />", 'DELETAR');
 
-        modal.find('.btn-default').addClass('btn-confirm invert-color');
+        var modal = $('#modal-alert');
 
+        modal.find('.btn-default').addClass('btn-confirm invert-color');
         modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back' data-dismiss='modal'>VOLTAR</button>");
         modal.find('.modal-footer .invalid-field').remove();
 
@@ -473,14 +472,20 @@ $(function() {
 });
 
 function modalAlert(body, btn = 'OK') {
-    var modal = $('#modal-alert');
+    /*var modal = $('#modal-alert');
 
     modal.find('.modal-footer .btn-back').remove();
 
     modal.find('.modal-body').html(body);
     modal.find('.modal-footer .btn').removeClass('btn-confirm').text(btn);
     modal.find('.modal-footer .btn').text(btn);
-    modal.modal('show');
+    modal.modal('show');*/
+
+    $('#modal-alert').remove();
+
+    $('body').append("<div class='modal fade' id='modal-alert' tabindex='-1' role='dialog'><div class='modal-dialog' role='document'><div class='modal-content'><div class='modal-body'>" + body + "</div><div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>" + btn + "</button></div></div></div></div>");
+
+    $('#modal-alert').modal('show');
 
     $('.modal-backdrop:last').css('z-index', '1080');
 }

@@ -34,10 +34,10 @@ $(function() {
     $(document).on('click', '.delete-product', function(e) {
         e.preventDefault();
 
+        modalAlert("Tem certeza que deseja apagar este produto?", 'APAGAR');
+
         var modal = $('#modal-alert'),
             $this = $(this);
-
-        modalAlert("Tem certeza que deseja apagar este produto?", 'APAGAR');
 
         modal.find('.btn-default').addClass('btn-confirm invert-color');
 

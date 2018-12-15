@@ -41,13 +41,13 @@ $(function() {
                     modalAlert('Selecione pelo menos um tamanho para reservar.');
                 }
             } else {
-                var modal = $('#modal-alert');
-
                 if(btn_confirm) {
-                    modalAlert("Você deseja que este produto seja reservado para você conferir na loja em até 24hs após a confirmação? <br> Você não é obrigado(a) a finalizar a compra na loja!", 'RESERVAR');
-                } else {
                     modalAlert("Você deseja que a loja confirme se o produto ainda está à venda? Assim você pode passar na loja para experimentar. <br> Você receberá a confirmação por e-mail.", 'CONFIRMAR');
+                } else {
+                    modalAlert("Você deseja que este produto seja reservado para você conferir na loja em até 24hs após a confirmação? <br> Você não é obrigado(a) a finalizar a compra na loja!", 'RESERVAR');
                 }
+
+                var modal = $('#modal-alert');
 
                 modal.find('.btn-default').addClass('btn-confirm');
                 modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back invert-color' data-dismiss='modal'>VOLTAR</button>");
@@ -69,11 +69,11 @@ $(function() {
                         success: function (data) {
                             modalAlert(data.msg);
 
-                            $('#modal-alert').find('.modal-footer .btn').unbind();
+                            //$('#modal-alert').find('.modal-footer .btn').unbind();
                         }
                     });
 
-                    return false;
+                    //return false;
                 });
             }
         } else {

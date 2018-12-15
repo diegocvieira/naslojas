@@ -57,9 +57,6 @@ $(function() {
     $(document).on('click', '.product-manager .btn-option', function(e) {
         e.preventDefault();
 
-        var modal = $('#modal-alert'),
-            url = $(this).data('url');
-
         if ($(this).hasClass('enable')) {
             var msg = 'Tem certeza que deseja <b>mostrar</b> todos os produtos selecionados?';
         } else if ($(this).hasClass('disable')) {
@@ -69,6 +66,9 @@ $(function() {
         }
 
         modalAlert(msg, 'CONFIRMAR');
+
+        var modal = $('#modal-alert'),
+            url = $(this).data('url');
 
         modal.find('.btn-default').addClass('btn-confirm invert-color');
         modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back' data-dismiss='modal'>VOLTAR</button>");

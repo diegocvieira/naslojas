@@ -57,10 +57,6 @@ $(function() {
     $(document).on('click', '.page-create-edit-product .header .btn-option', function(e) {
         e.preventDefault();
 
-        var modal = $('#modal-alert'),
-            url = $(this).data('url'),
-            product_id = $(this).data('productid');
-
         if ($(this).hasClass('enable')) {
             var msg = 'Tem certeza que deseja <b>mostrar</b> este produto?';
         } else if ($(this).hasClass('disable')) {
@@ -70,6 +66,10 @@ $(function() {
         }
 
         modalAlert(msg, 'CONFIRMAR');
+
+        var modal = $('#modal-alert'),
+            url = $(this).data('url'),
+            product_id = $(this).data('productid');
 
         modal.find('.btn-default').addClass('btn-confirm invert-color');
         modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back' data-dismiss='modal'>VOLTAR</button>");

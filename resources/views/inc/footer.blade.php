@@ -67,7 +67,7 @@
             </div>
         </div><!-- /.modal -->
 
-        <div class="modal fade" id="modal-alert" tabindex="-1" role="dialog">
+        <?php /*<div class="modal fade" id="modal-alert" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body"></div>
@@ -77,7 +77,7 @@
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+        </div><!-- /.modal -->*/ ?>
 
         <div class="modal fade" id="modal-default" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
