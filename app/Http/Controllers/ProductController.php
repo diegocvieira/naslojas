@@ -377,7 +377,7 @@ class ProductController extends Controller
 
     public function saveIndividual(Request $request, $id = null)
     {
-        foreach ($request->products as $data) {
+        foreach ($request->products as $key => $data) {
             $request = (object)$data;
 
             $validation = Validator::make(
@@ -390,7 +390,7 @@ class ProductController extends Controller
                 $return['status'] = false;
                 $return['msg'] = $validation->errors()->first();
             } else {
-                if ($id) {
+                if ($id && $key == 0) {
                     $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($id);
                 } else {
                     $product = new Product;
