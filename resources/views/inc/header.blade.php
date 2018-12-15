@@ -83,10 +83,20 @@
         @endif
     </head>
     <body class="{{ $body_class ?? '' }}">
-        @if(session('session_flash_alert'))
+        @if (session('session_flash_alert'))
             @section('script')
                 <script>
                     modalAlert("{!! session('session_flash_alert') !!}");
+                </script>
+            @endsection
+        @endif
+
+        @if (session('session_flash_how_works'))
+            @section('script')
+                <script>
+                    $(function() {
+                        $('.open-how-works').trigger('click');
+                    });
                 </script>
             @endsection
         @endif

@@ -48,7 +48,9 @@ Route::group(['prefix' => 'site'], function () {
 
 	Route::get('como-funciona', function () {
 		if (Agent::isDesktop()) {
-			//return view('know');
+			session()->flash('session_flash_how_works', 'true');
+
+        	return redirect()->route('home');
 		} else {
 			return view('mobile.how-works');
 		}
