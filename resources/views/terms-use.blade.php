@@ -11,8 +11,8 @@
             <h1>Termos e condições gerais de uso</h1>
 
             <p>
-                <span>Estes termos e condições gerais aplicam-se ao uso dos serviços oferecidos pela XXXXXXXXXX ATIVIDADES DE INTERNET LTDA, empresa devidamente inscrita no
-                CNPJ/MF sob o n° 00.000.000/0000-0, situada na cidade de Pelotas/RS, doravante nominada naslojas.com, por meio dos sites www.naslojas.com e www.naslojas.com.br.</span>
+                <span>Estes termos e condições gerais aplicam-se ao uso dos serviços oferecidos pela DOGS ARE AWESOME ATIVIDADES DE INTERNET LTDA, empresa devidamente inscrita no
+                CNPJ/MF sob o n° 32.194.554/0001-63, situada na cidade de Pelotas/RS, doravante nominada naslojas.com, por meio dos sites www.naslojas.com e www.naslojas.com.br.</span>
             </p>
 
             <p>

@@ -23,7 +23,7 @@
             </div>
 
             <div class="copyright">
-                <p>Copyright 2019. Todos os direitos reservados.<br>Dogs Are Awesome Ltda - CNPJ 00.000.000/0000-00</p>
+                <p>Copyright {{ date('Y') }}. Todos os direitos reservados.<br>Dogs Are Awesome Atividades de Internet Ltda<br>CNPJ 32.194.554/0001-63</p>
             </div>
         </footer>
 

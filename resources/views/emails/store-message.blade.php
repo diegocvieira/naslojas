@@ -92,7 +92,7 @@
 
                 <tr>
                     <td style="padding: 5px 50px 40px 50px;">
-                        <span style="text-align: center; display: block; font-size: 12.5; color: rgb(150, 150, 150);">Dogs Are Awesome Ltda - CNPJ 00.000.000/0000-00</span>
+                        <span style="text-align: center; display: block; font-size: 12.5; color: rgb(150, 150, 150);">Dogs Are Awesome Atividades de Internet Ltda - CNPJ 32.194.554/0001-63</span>
                     </td>
                 </tr>
             </table>
