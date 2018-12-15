@@ -43,7 +43,7 @@
                         </li>
                     @endisset
 
-                    @if (Auth::check())
+                    @if (Auth::guard('client')->check() || Auth::guard('store')->check())
                         @if (Auth::guard('client')->check())
                             <li>
                                 <a href="{{ route('get-client-config') }}">Minha conta</a>
