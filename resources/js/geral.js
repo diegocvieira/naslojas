@@ -180,6 +180,8 @@ $(function() {
         modal.find('.advance').removeClass('active');
         modal.find('.advance[data-position=1]').addClass('active');
 
+        modal.find('img').attr('src', '/images/how-works-desktop/1.png');
+
         modal.modal('show');
     });
     // Passar imagens do modal nas flechas do teclado
