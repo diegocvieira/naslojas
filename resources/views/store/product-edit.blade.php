@@ -5,7 +5,7 @@
 @extends('base')
 
 @section('content')
-    <div class="container page-product-edit {{ $section == 'add' ? 'page-add' : '' }}">
+    <div class="container page-product-edit {{ $section == 'add' ? 'page-add' : 'page-edit' }}">
         @if ($products->count() > 0 || $products->count() == 0 && isset($keyword))
             <div class="top-images">
                 <div class="col-xs-6">
@@ -32,13 +32,14 @@
 
         @if ($products->count())
             <div class="forms">
-                <?php $variation = 1; ?>
-                @foreach ($products as $product)
-                    <?php $variations[] = $product->related; ?>
+                <?php $variations = []; ?>
 
-                    @if (!in_array($product->related, $variations))
-                        <?php $variation += 1; ?>
+                @foreach ($products as $product)
+                    @if ($product->related && !in_array($product->related, $variations))
+                        <?php array_push($variations, $product->related); ?>
                     @endif
+
+                    <?php $variation = (array_search($product->related, $variations) + 1); ?>
 
                     {!! Form::model($product, ['method' => 'POST', 'route' => ['save-products', $product->id], 'class' => 'form-edit-product', 'files' => true]) !!}
                         {!! Form::hidden('related', null, ['class' => 'json']) !!}
