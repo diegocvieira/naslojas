@@ -218,5 +218,16 @@ Route::group(['prefix' => 'cliente'], function () {
 	});
 });
 
+// Superadmin
+Route::group(['prefix' => 'superadmin'], function () {
+	Route::get('login', function () {
+		return view('superadmin.login');
+	})->name('superadmin-login');
+	Route::post('login', 'SuperadminController@login')->name('superadmin-login');
+
+	Route::get('loja/cadastro', 'SuperadminController@getStoreRegister')->name('superadmin-store-register');
+	Route::post('loja/cadastro', 'SuperadminController@postStoreRegister')->name('superadmin-store-register');
+});
+
 // Store/Client logout
 Route::get('user/logout', 'GlobalController@logout')->name('logout');
