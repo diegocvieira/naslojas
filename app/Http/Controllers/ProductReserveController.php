@@ -205,6 +205,38 @@ class ProductReserveController extends Controller
             $return['type'] = 0;
             $return['msg'] = 'Mantenha seus produtos atualizados. <br> Isso evita que sua loja perca pontos de relevância e seus produtos caiam de posição nas buscas.';
 
+            // Desactive product or size
+            if ($reserve->size) {
+                $size = ProductSize::whereHas('product', function ($query) {
+                    $query->withoutGlobalScopes(['active', 'active-store']);
+                })
+                ->where('product_id', $reserve->product_id)
+                ->where('size', $reserve->size)
+                ->first()
+                ->delete();
+
+                $sizes = ProductSize::whereHas('product', function ($query) {
+                    $query->withoutGlobalScopes(['active', 'active-store']);
+                })
+                ->where('product_id', $reserve->product_id)->get();
+
+                if ($sizes->count() == 0) {
+                    $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                        ->where('id', $reserve->product_id)
+                        ->first();
+
+                    $p->status = 0;
+                    $p->save();
+                }
+            } else {
+                $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                    ->where('id', $reserve->product_id)
+                    ->first();
+
+                $p->status = 0;
+                $p->save();
+            }
+
             $this->emailResponse($reserve, 0);
         } else {
             $return['status'] = false;
