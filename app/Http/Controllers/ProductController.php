@@ -284,7 +284,8 @@ class ProductController extends Controller
                             $product->save();
 
                             $return['status'] = true;
-                            $return['msg'] = 'Alterações salvas com sucesso!';
+                            //$return['msg'] = 'Alterações salvas com sucesso!';
+                            session()->flash('session_flash_alert', 'Produtos salvos com sucesso!');
                         } catch(\Exception $e) {
                             $attempts++;
 
