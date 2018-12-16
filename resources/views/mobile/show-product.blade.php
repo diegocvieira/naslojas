@@ -21,7 +21,7 @@
         <span class="identifier">Produto #{{ $product->id }}</span>
 
         <div class="store-container">
-            <span>Vocẽ encontra este produto na loja</span>
+            <span>Você encontra este produto na loja</span>
 
             <a href="{{ route('show-store', $product->store->slug) }}" class="store-show">{{ $product->store->name }}</a>
 
