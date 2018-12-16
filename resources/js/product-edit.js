@@ -229,7 +229,70 @@ $(function() {
     $('.page-product-edit .btn-finish').on('click', function(e) {
         e.preventDefault();
 
-        $('.form-edit-product').submit();
+        var data = new FormData(),
+            errors = false,
+            images = true;
+
+        $('.form-edit-product').each(function() {
+            if (!$(this).valid()) {
+                errors = true;
+            }
+
+            if ($(this).find('.image.loaded-image').length == 0) {
+                images = false;
+            }
+        });
+
+        if (errors == false) {
+            if (images == true) {
+                $('.btn-finish').text('SALVANDO').attr('disabled', true);
+
+                $('.form-edit-product').each(function(index) {
+                    $(this).find('.json').each(function() {
+                        data.append('products[' + index + '][' + $(this).attr('name') + ']', $(this).val());
+                    });
+
+                    $(this).find("input[name='size[]']:checked").each(function() {
+                        data.append('products[' + index + '][sizes][]', $(this).val());
+                    });
+
+                    $(this).find("input[name='image_remove[]']:checked").each(function() {
+                        data.append('products[' + index + '][images_remove][]', $(this).val());
+                    });
+
+                    $(this).find('input:file').each(function(index2, element) {
+                        if (element.files[0]) {
+                            data.append('products[' + index + '][images][]', element.files[0]);
+                            data.append('products[' + index + '][images_position][]', $(this).data('position'));
+                        }
+                    });
+                });
+
+                $.ajax({
+                    url: $('.form-edit-product:first').attr('action'),
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        $('.btn-finish').text('SALVAR ALTERAÇÕES').attr('disabled', false);
+
+                        if(data.status) {
+                            window.location.reload(true);
+                        } else {
+                            modalAlert(data.msg);
+                        }
+                    }
+                });
+            } else {
+                modalAlert('Cada produto deve ter no mínimo uma imagem.');
+            }
+        }
     });
 
     $.each($('.form-edit-product'), function(index, val) {
@@ -272,50 +335,6 @@ $(function() {
             errorPlacement: function(error, element) {
             },
             submitHandler: function(form) {
-                if ($(form).find('.image.loaded-image').length >= 1) {
-                    $('.btn-finish').text('SALVANDO').attr('disabled', true);
-
-                    $.ajax({
-                        url: $(form).attr('action'),
-                        method: 'POST',
-                        dataType: 'json',
-                        data: new FormData($(form)[0]),
-                        processData: false,
-                        contentType: false,
-                        cache: false,
-                        success: function (data) {
-                            $('.btn-finish').text('SALVAR ALTERAÇÕES').attr('disabled', false);
-
-                            if(data.status) {
-                                //$(form).find('.image').find('input[type=file]').val('');
-
-                                /*$(data.images).each(function(index, val) {
-                                    var image_container = $(form).find('.images').find('input[value=' + val.position +']').parents('.image');
-
-                                    image_container.find('.remove-image').attr('for', val.name);
-                                    image_container.append("<input type='checkbox' name='image_remove[]' value='" + val.name + "' id='" + val.name + "' autocomplete='off' />");
-                                });*/
-
-                                if ($('.page-add').length) {
-                                    $(form).remove();
-
-                                    if ($('.form-edit-product').length == 0) {
-                                        setTimeout(function() {
-                                            window.location.reload(true);
-                                        }, 100);
-                                    }
-                                }
-                            }
-
-                            if (!$('.page-add').length || !data.status) {
-                                modalAlert(data.msg);
-                            }
-                        }
-                    });
-                } else {
-                    $(form).find('.btn-add-image:first').css('background-color', 'rgb(255, 221, 221)');
-                }
-
                 return false;
             }
         });
