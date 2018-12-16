@@ -73,7 +73,7 @@
 
                 {!! Form::text('price', null, ['placeholder' => 'Preço atual *', 'class' => 'mask-money json', 'title' => 'Preço atual']) !!}
 
-                {!! Form::text('discount', null, ['placeholder' => 'Desconto', 'class' => 'mask-number json', 'title' => 'Desconto']) !!}
+                {!! Form::text('discount', $product->old_price ? str_replace('-', '', round(($product->price / $product->old_price - 1) * 100)) : null, ['placeholder' => 'Desconto', 'class' => 'mask-number json', 'title' => 'Desconto']) !!}
             </div>
 
             <div class="section sizes">

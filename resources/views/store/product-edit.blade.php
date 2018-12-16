@@ -105,7 +105,7 @@
 
                             {!! Form::text('installment_price', null, ['placeholder' => 'Valor da parcela', 'class' => 'mask-money json', 'title' => 'Valor da parcela']) !!}
 
-                            {!! Form::text('discount', null, ['placeholder' => 'Desconto', 'class' => 'mask-number json', 'title' => 'Desconto']) !!}
+                            {!! Form::text('discount', $product->old_price ? str_replace('-', '', round(($product->price / $product->old_price - 1) * 100)) : null, ['placeholder' => 'Desconto', 'class' => 'mask-number json', 'title' => 'Desconto']) !!}
                         </div>
 
                         <div class="row sizes-container">
