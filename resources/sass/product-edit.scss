@@ -138,6 +138,18 @@
                         color: rgb(255, 23, 68);
                     }
                 }
+
+                a {
+                    width: 18px;
+                    height: 18px;
+                    display: inline-block;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+                    background-image: url('../images/icon-show-product.png');
+                    position: relative;
+                    top: 5px;
+                }
             }
 
             .images {

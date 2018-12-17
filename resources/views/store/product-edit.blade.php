@@ -85,6 +85,10 @@
                                 @endif
 
                                 <button type="button" class="delete-product" data-productid="{{ $product->id }}" data-url="{{ route('product-delete') }}">apagar</button>
+
+                                @if ($product->status == 1)
+                                    <a href="{{ route('show-product', $product->slug) }}" target="_blank"></a>
+                                @endif
                             </div>
                         </div>
 
