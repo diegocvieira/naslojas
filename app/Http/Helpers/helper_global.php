@@ -81,14 +81,13 @@ function _uploadImage($file)
         $image = new \Imagick($file->path());
 
         $image->setImageBackgroundColor('#ffffff');
-        //$image->setImageAlphaChannel(11);
+        $image->setImageAlphaChannel(11);
         $image->setColorspace(\Imagick::COLORSPACE_SRGB);
         $image->setImageFormat('jpg');
         $image->stripImage();
         $image->setImageCompressionQuality(75);
         $image->setSamplingFactors(array('2x2', '1x1', '1x1'));
         $image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
-        //$image->setImageAlphaChannel(\Imagick::ALPHACHANNEL_REMOVE);
         $image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
         $image->cropThumbnailImage($size, $size);
         $image->writeImage(public_path('uploads/' . Auth::guard('store')->user()->store_id . '/products/' . $image_name));
