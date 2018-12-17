@@ -13,6 +13,7 @@
 
             <div class="col-xs-6 text-right">
                 <button type="button" class="btn-agroup">AGRUPAR IMAGENS</button>
+                <span class="agroup-tooltip">Selecione as diferentes cores de um mesmo produto e clique em “agrupar imagens” para indicar no site que o produto está à venda em outras cores.</span>
 
                 <button type="button" class="btn-finish">PRÓXIMO</button>
             </div>
