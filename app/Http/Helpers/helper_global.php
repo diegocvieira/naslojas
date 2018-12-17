@@ -81,7 +81,7 @@ function _uploadImage($file)
         $image = new \Imagick($file->path());
 
         $image->setImageBackgroundColor('#ffffff');
-        $image->setImageAlphaChannel(11);
+        //$image->setImageAlphaChannel(11);
         $image->setColorspace(\Imagick::COLORSPACE_SRGB);
         $image->setImageFormat('jpg');
         $image->stripImage();
