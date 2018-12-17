@@ -14,7 +14,7 @@
 
                 <div class="col-xs-6 text-right">
                     <button type="button" class="btn-color-variation">VARIAÇÃO DE COR</button>
-                    <span class="color-variation-tooltip">Selecione as diferentes cores de um mesmo produto e clique em “varaiação de cor” para indicar no site que o produto está à venda em outras cores.</span>
+                    <span class="color-variation-tooltip">Selecione as diferentes cores de um mesmo produto e clique em "variação de cor" para indicar no site que o produto está à venda em outras cores.</span>
 
                     <button type="button" class="btn-finish">{{ $section == 'add' ? 'ADICIONAR AO SITE' : 'SALVAR ALTERAÇÕES' }}</button>
                 </div>
