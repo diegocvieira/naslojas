@@ -92,7 +92,11 @@ a, a:hover, a:active, a:focus {
 }
 
 .page-error {
-    &+ footer {
+    .container {
+        width: 100%;
+    }
+
+    footer {
         display: none;
     }
 }
