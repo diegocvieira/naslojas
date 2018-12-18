@@ -40,7 +40,7 @@ $(function() {
             dataType: 'json',
             success: function(data) {
                 if(data.status) {
-                    window.location = '/';
+                    window.location = data.url;
                 } else {
                     modalAlert(data.msg);
                 }
