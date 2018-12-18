@@ -41,7 +41,7 @@
                     <span class="slider"></span>
                 </label>
 
-                <span class="title-switch">Perfil</span>
+                <span class="title-switch">Perfil da loja</span>
             </div>
 
             <div class="switch-container" title="Mostra ou oculta o botão que permite aos usuários reservar um produto da sua loja por 24 horas.">
@@ -50,7 +50,7 @@
                     <span class="slider"></span>
                 </label>
 
-                <span class="title-switch">Reserva</span>
+                <span class="title-switch">Reserva de produtos</span>
             </div>
 
             {!! Form::submit('SALVAR') !!}
