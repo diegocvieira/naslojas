@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use DB;
 
 class CreateProductsTable extends Migration
 {
@@ -30,6 +31,9 @@ class CreateProductsTable extends Migration
             $table->string('related', 200)->nullable();
             $table->timestamps();
         });
+
+        // Full Text Index
+        DB::statement('ALTER TABLE products ADD FULLTEXT fulltext_index (title)');
     }
 
     /**

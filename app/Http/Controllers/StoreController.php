@@ -23,7 +23,7 @@ class StoreController extends Controller
         $header_title = $store->name . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' | naslojas.com';
 		$header_desc = 'Clique para ver os produtos disponíveis na loja ' . $store->name . ' em ' . $store->city->title . ' - ' . $store->city->state->letter;
 
-        $products = Product::where('store_id', $store->id)->paginate(20);
+        $products = Product::where('store_id', $store->id)->paginate(30);
 
         if (Agent::isDesktop()) {
             return view('store.show', compact('store', 'products', 'header_title', 'header_desc'));
@@ -59,24 +59,20 @@ class StoreController extends Controller
             $header_title = $keyword . ' em ' . $store->name . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' - naslojas.com';
 			$header_desc = 'Clique para ver ' . $keyword . ' na loja ' . $store->name . ' em ' . $store->city->title . ' - ' . $store->city->state->letter;
 
-            $keyword = str_replace('-', ' ', $keyword);
-
-            // separa cada palavra
-            $keyword_array = explode(' ', $keyword);
-
-            // se houver mais de 2 palavras e a palavra tiver menos de 4 letras ignora na busca
-            foreach ($keyword_array as $keyword_each) {
-                if (count($keyword_array) > 2 && strlen($keyword) < 4) {
-                    continue;
-                }
-
-                $products = $products->where(function ($query) use ($keyword_each) {
-                    $query->where('title', 'LIKE', '%' . $keyword_each . '%');
-                });
-            }
+            $products = $products->where(function ($query) use ($keyword) {
+                $query->search($keyword);
+            });
         }
 
-        $products = $products->paginate(20);
+        $products = $products->paginate(30);
+
+        if ($keyword && $products->count() == 0) {
+            $products = Product::where('store_id', $store->id)->filterGender($search_gender)->filterOrder($search_order)
+                ->where(function ($query) use ($keyword) {
+                    $query->search(preg_replace('{(.)\1+}','$1', $keyword));
+                })
+                ->paginate(30);
+        }
 
         if (Agent::isDesktop()) {
             return view('store.show', compact('products', 'store', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));

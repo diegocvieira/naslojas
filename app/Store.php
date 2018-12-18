@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
+    use FullTextSearch;
+
     protected $table = 'stores';
     protected $fillable = ['city_id', 'name', 'cep', 'district', 'street', 'number', 'complement', 'slug', 'status', 'reserve'];
     protected $dates = ['created_at', 'updated_at'];
+    protected $searchable = ['name'];
 
     public function products()
     {

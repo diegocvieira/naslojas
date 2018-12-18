@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use DB;
 
 class CreateStoresTable extends Migration
 {
@@ -28,6 +29,9 @@ class CreateStoresTable extends Migration
             $table->boolean('reserve')->default(0);
             $table->timestamps();
         });
+
+        // Full Text Index
+        DB::statement('ALTER TABLE stores ADD FULLTEXT fulltext_index (name)');
     }
 
     /**

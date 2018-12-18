@@ -31,25 +31,11 @@ class ProductController extends Controller
         $related_products = Product::where('id', '!=', $product->id)
             ->whereHas('store', function ($query) use ($product) {
                 $query->where('city_id', $product->store->city->id);
-            });
-
-        $keyword = $product->title;
-        if ($keyword) {
-            $keyword = str_replace('-', ' ', $keyword);
-
-            // separa cada palavra
-            $keyword_array = explode(' ', $keyword);
-
-            // se houver mais de 2 palavras e a palavra tiver menos de 4 letras ignora na busca
-            foreach ($keyword_array as $keyword_each) {
-                if (count($keyword_array) > 2 && strlen($keyword) < 4) {
-                    continue;
-                }
-
-                $related_products = $related_products->where('title', 'LIKE', '%' . $keyword_each . '%');
-            }
-        }
-        $related_products = $related_products->paginate(20);
+            })
+            ->where(function ($query) use ($product) {
+                $query->search($product->title);
+            })
+            ->paginate(30);
 
         if (Auth::guard('client')->check()) {
             $client_rating = ProductRating::where('client_id', Auth::guard('client')->user()->id)->where('product_id', $product->id)->first();
@@ -125,26 +111,24 @@ class ProductController extends Controller
             $header_title = $keyword .' em ' . Cookie::get('city_title') . ' - ' . Cookie::get('state_letter') . ' | naslojas.com';
             $header_desc = 'Clique para ver ' . $keyword . ' em ' . Cookie::get('city_title') . ' - ' . Cookie::get('state_letter');
 
-            $keyword = str_replace('-', ' ', $keyword);
-
-            // separa cada palavra
-            $keyword_array = explode(' ', $keyword);
-
-            // se houver mais de 2 palavras e a palavra tiver menos de 4 letras ignora na busca
-            foreach ($keyword_array as $keyword_each) {
-                if (count($keyword_array) > 2 && strlen($keyword) < 4) {
-                    continue;
-                }
-
-                $products = $products->where(function ($query) use ($keyword_each) {
-                    $query->where('title', 'LIKE', '%' . $keyword_each . '%')->orWhereHas('store', function ($query) use ($keyword_each) {
-                        $query->where('name', 'LIKE', '%' . $keyword_each . '%');
-                    });
+            $products = $products->where(function ($query) use ($keyword) {
+                $query->search($keyword)->orWhereHas('store', function ($query) use ($keyword) {
+                    $query->search($keyword);
                 });
-            }
+            });
         }
 
-        $products = $products->paginate(20);
+        $products = $products->paginate(30);
+
+        if ($keyword && $products->count() == 0) {
+            $products = Product::filterGender($search_gender)->filterOrder($search_order)
+                ->where(function ($query) use ($keyword) {
+                    $query->search(preg_replace('{(.)\1+}','$1', $keyword))->orWhereHas('store', function ($query) use ($keyword) {
+                        $query->search(preg_replace('{(.)\1+}','$1', $keyword));
+                    });
+                })
+                ->paginate(30);
+        }
 
         if (Agent::isDesktop()) {
             return view('search', compact('products', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));
@@ -166,27 +150,13 @@ class ProductController extends Controller
 
         if ($keyword) {
             $keyword = urldecode($keyword);
-            $keyword = str_replace('-', ' ', $keyword);
 
-            // separa cada palavra
-            $keyword_array = explode(' ', $keyword);
-
-            // se houver mais de 2 palavras e a palavra tiver menos de 4 letras ignora na busca
-            foreach ($keyword_array as $keyword_each) {
-                if (count($keyword_array) > 2 && strlen($keyword) < 4) {
-                    continue;
-                }
-
-                $products = $products->where(function ($query) use ($keyword_each) {
-                    $query->where('title', 'LIKE', '%' . $keyword_each . '%')
-                        ->orWhereHas('store', function ($query) use ($keyword_each) {
-                            $query->where('name', 'LIKE', '%' . $keyword_each . '%');
-                        });
-                });
-            }
+            $products = $products->where(function ($query) use ($keyword) {
+                $query->search($keyword);
+            });
         }
 
-        $products = $products->orderBy('id', 'DESC')->paginate(20);
+        $products = $products->orderBy('id', 'DESC')->paginate(30);
 
         if (Agent::isDesktop()) {
             $section = 'edit';
