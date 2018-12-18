@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Session;
 use App\Store;
 use App\User;
+use Auth;
 
 class SuperadminController extends Controller
 {
@@ -36,14 +37,16 @@ class SuperadminController extends Controller
                     mkdir($path, 0777, true);
                 }
 
-                $alert = 'Cadastro realizado com sucesso!';
+                Auth::guard('store')->attempt(['email' => $request->email, 'password' => $request->password], true);
+
+                session()->flash('session_flash_alert', 'Cadastro realizado com sucesso!');
+
+                return redirect()->route('product-images');
             } else {
-                $alert = 'Ocorreu um erro inesperado. Tente novamente.';
+                session()->flash('session_flash_alert', 'Ocorreu um erro inesperado. Tente novamente.');
+
+                return redirect()->route('superadmin-store-register');
             }
-
-            session()->flash('session_flash_alert', $alert);
-
-            return redirect()->route('superadmin-store-register');
         } else {
             return redirect()->route('superadmin-login');
         }
