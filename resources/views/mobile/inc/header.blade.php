@@ -11,7 +11,7 @@
 
     	<title>{{ $header_title ?? 'naslojas.com - confira as maiores ofertas e promoções da sua cidade' }}</title>
 
-    	<link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
+    	<link rel="shortcut icon" href="{{ asset('images/favicon-mobile.png') }}">
 
     	<meta name="theme-color" content="#ff1744">
 
@@ -29,18 +29,18 @@
     	<meta name="description" content="{{ $header_desc ?? 'Confira as ofertas e promoções das lojas físicas de Pelotas. Reserve online o produto que deseja por 24hs. Passe na loja para finalizar a compra e fazer a retirada.' }}" />
     	<meta itemprop="name" content="{{ $header_title ?? 'naslojas.com' }}" />
     	<meta itemprop="description" content="{{ $header_desc ?? 'Confira as ofertas e promoções das lojas físicas de Pelotas. Reserve online o produto que deseja por 24hs. Passe na loja para finalizar a compra e fazer a retirada.' }}" />
-    	<meta itemprop="image" content="{{ $header_image ?? asset('images/banner.png') }}" />
+    	<meta itemprop="image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
 
     	<meta name="twitter:card" content="summary_large_image" />
     	<meta name="twitter:title" content="{{ $header_title ?? 'naslojas.com' }}" />
     	<meta name="twitter:description" content="{{ $header_desc ?? 'Confira as ofertas e promoções das lojas físicas de Pelotas. Reserve online o produto que deseja por 24hs. Passe na loja para finalizar a compra e fazer a retirada.' }}" />
     	<!-- imagens largas para o Twitter Summary Card precisam ter pelo menos 280x150px  -->
-    	<meta name="twitter:image" content="{{ $header_image ?? asset('images/banner.png') }}" />
+    	<meta name="twitter:image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
 
     	<meta property="og:title" content="{{ $header_title ?? 'naslojas.com' }}" />
     	<meta property="og:type" content="website" />
     	<meta property="og:url" content="{{ url()->current() }}" />
-    	<meta property="og:image" content="{{ $header_image ?? asset('images/banner.png') }}" />
+    	<meta property="og:image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
     	<meta property="og:description" content="{{ $header_desc ?? 'Confira as ofertas e promoções das lojas físicas de Pelotas. Reserve online o produto que deseja por 24hs. Passe na loja para finalizar a compra e fazer a retirada.' }}" />
     	<meta property="og:site_name" content="naslojas.com" />
 
