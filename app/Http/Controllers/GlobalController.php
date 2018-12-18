@@ -18,7 +18,7 @@ class GlobalController extends Controller
             $this->setCity(4913);
         }
 
-        $products = Product::inRandomOrder()->paginate(20);
+        $products = Product::inRandomOrder()->paginate(30);
 
         if (Agent::isDesktop()) {
             return view('home', compact('products'));
