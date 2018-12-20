@@ -35,6 +35,8 @@ $(function() {
         modal.find('.modal-footer .btn').addClass('btn-confirm');
 
         modal.find('.modal-footer .btn-confirm').off().on('click', function() {
+            modal.find('.modal-footer .btn-confirm').text('ENVIANDO');
+
             $.ajax({
                 url: '/recuperar-senha/request',
                 method: 'POST',
@@ -52,6 +54,7 @@ $(function() {
 
                         modal.find('.modal-footer .btn').off();
                     } else {
+                        modal.find('.modal-footer .btn-confirm').text('ENVIAR');
                         modal.find('.modal-footer').prepend("<span class='invalid-field'>E-mail não cadastrado</span>");
                     }
                 }
