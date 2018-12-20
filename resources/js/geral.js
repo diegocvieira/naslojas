@@ -8,20 +8,6 @@ $(function() {
         modalAlert('Em breve você poderá baixar o nosso aplicativo para android e ios.');
     });
 
-    // Open cities
-    /*$(document).on('click', '.open-cities', function() {
-        modalAlert('Em breve os usuários de outras cidades também poderão utilizar o naslojas.com.');
-
-        //$(this).next().show();
-    });*/
-
-    // Close cities
-    /*$(document).click(function(e) {
-        if(!$(e.target).closest('.cities').length) {
-            $('.cities').find('.drop-down').hide();
-        }
-    });*/
-
     // Filters product
     $(document).on('change', '.product-filter select', function() {
         var val = $(this).val();
@@ -29,6 +15,39 @@ $(function() {
         $(this).attr('name') == 'order' ? $('#search-order').val(val) : $('#search-gender').val(val);
 
         $('#form-search').submit();
+    });
+
+    $(document).on('click', '.password-recover', function(e) {
+        e.preventDefault();
+
+        modalAlert("Informe o e-mail cadastrado.<input type='email' name='email' placeholder='digite aqui' />", 'Enviar');
+
+        var modal = $('#modal-alert'),
+            type = $(this).data('type');
+
+        modal.find('.modal-footer .btn').on('click', function() {
+            $.ajax({
+                url: '/recuperar-senha/request',
+                method: 'POST',
+                dataType: 'json',
+                data: { email : modal.find('input[name=email]').val(), type : type },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    modal.find('.modal-footer .invalid-field').remove();
+                    modal.find('.modal-footer .btn').off();
+
+                    if(data.status) {
+                        modal.find('.modal-body').html('Clique no link que enviamos para o seu e-mail para recuperar a sua conta.');
+                    } else {
+                        modal.find('.modal-footer').prepend("<span class='invalid-field'>E-mail não cadastrado</span>");
+                    }
+                }
+            });
+
+            return false;
+        });
     });
 
     // Login store

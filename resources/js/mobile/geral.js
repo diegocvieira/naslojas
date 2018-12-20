@@ -24,6 +24,39 @@ $(function() {
         $('#form-search').submit();
     });
 
+    $(document).on('click', '.password-recover', function(e) {
+        e.preventDefault();
+
+        modalAlert("Informe o e-mail cadastrado.<input type='email' name='email' placeholder='digite aqui' />", 'Enviar');
+
+        var modal = $('#modal-alert'),
+            type = $(this).data('type');
+
+        modal.find('.modal-footer .btn').on('click', function() {
+            $.ajax({
+                url: '/recuperar-senha/request',
+                method: 'POST',
+                dataType: 'json',
+                data: { email : modal.find('input[name=email]').val(), type : type },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    modal.find('.modal-footer .invalid-field').remove();
+                    modal.find('.modal-footer .btn').off();
+
+                    if(data.status) {
+                        modal.find('.modal-body').html('Clique no link que enviamos para o seu e-mail para recuperar a sua conta.');
+                    } else {
+                        modal.find('.modal-footer').prepend("<span class='invalid-field'>E-mail não cadastrado</span>");
+                    }
+                }
+            });
+
+            return false;
+        });
+    });
+
     // Show details confirm/reserve
     $('.page-confirm, .page-reserve, .page-messages').on('click', '.result', function() {
         $('.result').find('.more-details').hide();

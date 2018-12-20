@@ -74,6 +74,14 @@ Route::get('produto/{slug}', 'ProductController@show')->name('show-product');
 Route::get('loja/produtos/busca', 'StoreController@formSearch')->name('form-search-store');
 Route::get('{store}/busca/{gender}/{order?}/{keyword?}', 'StoreController@search');
 
+Route::group(['prefix' => 'recuperar-senha'], function () {
+	Route::post('request', 'PasswordResetController@request');
+
+	Route::get('check/{token}', 'PasswordResetController@check')->name('password-check');
+
+	Route::post('change', 'PasswordResetController@change')->name('password-change');
+});
+
 // Store
 Route::group(['prefix' => 'loja'], function () {
 	Route::get('divulgar', function() {

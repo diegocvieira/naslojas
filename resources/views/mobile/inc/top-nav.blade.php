@@ -33,7 +33,7 @@
         <ul>
             <li>
                 <a href="#" class="open-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{ asset(Auth::check() ? 'images/icon-profile.png' : 'images/icon-menu.png') }}" alt="Menu" />
+                    <img src="{{ asset((Auth::guard('client')->check() || Auth::guard('store')->check()) ? 'images/icon-profile.png' : 'images/icon-menu.png') }}" alt="Menu" />
                 </a>
 
                 <ul class="dropdown-menu">

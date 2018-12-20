@@ -18,7 +18,7 @@
 
             {!! Form::submit('ENTRAR') !!}
 
-            <?php /*<a href="#" class="recover-password">Recuperar senha</a>*/ ?>
+            <a href="#" class="password-recover" data-type="2">Recuperar senha</a>
         {!! Form::close() !!}
     </div>
 @endsection
