@@ -35,7 +35,7 @@ $(function() {
         modal.find('.modal-footer .btn').addClass('btn-confirm');
 
         modal.find('.modal-footer .btn-confirm').off().on('click', function() {
-            modal.find('.modal-footer .btn-confirm').text('ENVIANDO');
+            modal.find('.modal-footer .btn-confirm').text('ENVIANDO').attr('disabled', true);
 
             $.ajax({
                 url: '/recuperar-senha/request',
@@ -47,6 +47,7 @@ $(function() {
                 },
                 success: function (data) {
                     modal.find('.modal-footer .invalid-field').remove();
+                    modal.find('.modal-footer .btn-confirm').removeAttr('disabled');
 
                     if(data.status) {
                         modal.find('.modal-body').html('Clique no link que enviamos para o seu e-mail para recuperar a sua conta.');
