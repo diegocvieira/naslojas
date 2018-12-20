@@ -38,10 +38,10 @@ class PasswordResetController extends Controller
 
             $url = route('password-check', $token);
 
-            Mail::send('emails.password-recover', ['url' => $url], function($q) use($email) {
+            /*Mail::send('emails.password-recover', ['url' => $url], function($q) use($email) {
                 $q->from('no-reply@naslojas.com', 'naslojas');
                 $q->to($email)->subject('Recuperar senha');
-            });
+            });*/
         } else {
             $return['status'] = false;
         }

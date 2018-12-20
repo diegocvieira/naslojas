@@ -27,12 +27,14 @@ $(function() {
     $(document).on('click', '.password-recover', function(e) {
         e.preventDefault();
 
-        modalAlert("Informe o e-mail cadastrado.<input type='email' name='email' placeholder='digite aqui' />", 'Enviar');
+        modalAlert("Informe o e-mail cadastrado.<input type='text' name='email' placeholder='digite aqui' />", 'Enviar');
 
         var modal = $('#modal-alert'),
             type = $(this).data('type');
 
-        modal.find('.modal-footer .btn').on('click', function() {
+        modal.find('.modal-footer .btn').addClass('btn-confirm');
+
+        modal.find('.modal-footer .btn-confirm').off().on('click', function() {
             $.ajax({
                 url: '/recuperar-senha/request',
                 method: 'POST',
@@ -43,10 +45,12 @@ $(function() {
                 },
                 success: function (data) {
                     modal.find('.modal-footer .invalid-field').remove();
-                    modal.find('.modal-footer .btn').off();
 
                     if(data.status) {
                         modal.find('.modal-body').html('Clique no link que enviamos para o seu e-mail para recuperar a sua conta.');
+                        modal.find('.modal-footer .btn-confirm').text('OK').removeClass('btn-confirm');
+
+                        modal.find('.modal-footer .btn').off();
                     } else {
                         modal.find('.modal-footer').prepend("<span class='invalid-field'>E-mail não cadastrado</span>");
                     }
