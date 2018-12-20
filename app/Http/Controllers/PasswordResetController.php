@@ -92,7 +92,7 @@ class PasswordResetController extends Controller
             $user->save();
 
             // Faz login
-            $type == 1 ? app('App\Http\Controllers\UserController')->login($request) : app('App\Http\Controllers\ClientController')->login($request);
+            $type == 1 ? app('App\Http\Controllers\StoreController')->login($request) : app('App\Http\Controllers\ClientController')->login($request);
 
             return redirect()->route('home');
         }
