@@ -73,6 +73,14 @@ class MessageController extends Controller
         $header_title = 'Mensagens - naslojas.com';
 
         $messages = Message::where('client_id', Auth::guard('client')->user()->id)
+            ->whereHas('product', function ($query) {
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
+            })
+            ->with(['product' => function($query) {
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
+            }])
             ->orderBy('id', 'DESC')
             ->paginate(20);
 
@@ -89,8 +97,14 @@ class MessageController extends Controller
         $section = 'message';
 
         $messages = Message::whereHas('product', function ($query) {
-                $query->where('store_id', Auth::guard('store')->user()->store_id);
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store'])
+                    ->where('store_id', Auth::guard('store')->user()->store_id);
             })
+            ->with(['product' => function($query) {
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
+            }])
             ->orderBy('id', 'DESC')
             ->paginate(20);
 

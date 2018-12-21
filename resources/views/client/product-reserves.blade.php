@@ -51,7 +51,11 @@
                                 @endif
                             </td>
 
-                            <td><a href="{{ route('show-product', $reserve->product->slug) }}" target="_blank" class="link-product"></a></td>
+                            <td>
+                                @if (!$reserve->product->deleted_at && $reserve->product->status == 1)
+                                    <a href="{{ route('show-product', $reserve->product->slug) }}" target="_blank" class="link-product"></a>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

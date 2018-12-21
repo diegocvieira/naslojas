@@ -50,10 +50,12 @@ class ProductConfirmController extends Controller
 
         $confirms = ProductConfirm::where('client_id', Auth::guard('client')->user()->id)
             ->whereHas('product', function ($query) {
-                $query->withoutGlobalScopes(['active', 'active-store']);
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
             })
             ->with(['product' => function($query) {
-                $query->withoutGlobalScopes(['active', 'active-store']);
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
             }])
             ->orderBy('id', 'DESC')
             ->paginate(20);
@@ -71,11 +73,13 @@ class ProductConfirmController extends Controller
         $section = 'confirm';
 
         $confirms = ProductConfirm::whereHas('product', function ($query) {
-                $query->withoutGlobalScopes(['active', 'active-store'])
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store'])
                     ->where('store_id', Auth::guard('store')->user()->store_id);
             })
             ->with(['product' => function($query) {
-                $query->withoutGlobalScopes(['active', 'active-store']);
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
             }])
             ->orderBy('id', 'DESC')
             ->paginate(20);

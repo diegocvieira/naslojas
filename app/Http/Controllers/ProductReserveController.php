@@ -115,10 +115,12 @@ class ProductReserveController extends Controller
 
         $reserves = ProductReserve::where('client_id', Auth::guard('client')->user()->id)
             ->whereHas('product', function ($query) {
-                $query->withoutGlobalScopes(['active', 'active-store']);
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
             })
             ->with(['product' => function($query) {
-                $query->withoutGlobalScopes(['active', 'active-store']);
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
             }])
             ->orderBy('id', 'DESC')
             ->paginate(20);
@@ -136,11 +138,13 @@ class ProductReserveController extends Controller
         $section = 'reserve';
 
         $reserves = ProductReserve::whereHas('product', function ($query) {
-                $query->withoutGlobalScopes(['active', 'active-store'])
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store'])
                     ->where('store_id', Auth::guard('store')->user()->store_id);
             })
             ->with(['product' => function($query) {
-                $query->withoutGlobalScopes(['active', 'active-store']);
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
             }])
             ->orderBy('id', 'DESC')
             ->paginate(20);

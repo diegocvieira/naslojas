@@ -4,14 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     use FullTextSearch;
+    use SoftDeletes;
 
     protected $table = 'products';
     protected $fillable = ['store_id', 'title', 'slug', 'description', 'price', 'old_price', 'status', 'installment', 'gender', 'installment_price', 'related'];
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     protected $searchable = ['title'];
 
     public function store()

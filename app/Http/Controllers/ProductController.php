@@ -472,34 +472,23 @@ class ProductController extends Controller
     public function delete(Request $request)
     {
         $store_id = Auth::guard('store')->user()->store_id;
+        $id = $request->id;
 
-        if (is_array($request->id)) {
-            foreach ($request->id as $i) {
+        if (is_array($id)) {
+            foreach ($id as $i) {
                 $product = Product::withoutGlobalScopes(['active', 'active-store'])
                     ->where('store_id', $store_id)
                     ->where('id', $i)
-                    ->first();
-
-                foreach($product->images as $image) {
-                    $this->deleteImages($image->image);
-                }
-
-                $delete = $product->delete();
+                    ->delete();
             }
         } else {
             $product = Product::withoutGlobalScopes(['active', 'active-store'])
                 ->where('store_id', $store_id)
-                ->where('id', $request->id)
-                ->first();
-
-            foreach($product->images as $image) {
-                $this->deleteImages($image->image);
-            }
-
-            $delete = $product->delete();
+                ->where('id', $id)
+                ->delete();
         }
 
-        if ($delete) {
+        if ($product) {
             $return['status'] = true;
             $return['type'] = 'delete';
         } else {

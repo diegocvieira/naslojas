@@ -19,7 +19,9 @@
                             @endforeach
                         </div>
 
-                        <a href="{{ route('show-product', $reserve->product->slug) }}" target="_blank" class="link-product"></a>
+                        @if (!$reserve->product->deleted_at && $reserve->product->status == 1)
+                            <a href="{{ route('show-product', $reserve->product->slug) }}" target="_blank" class="link-product"></a>
+                        @endif
 
                         <div class="more-details">
                             <div class="info">

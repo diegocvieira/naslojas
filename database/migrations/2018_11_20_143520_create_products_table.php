@@ -30,6 +30,7 @@ class CreateProductsTable extends Migration
             $table->decimal('installment_price', 8, 2)->nullable();
             $table->string('related', 200)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         // Full Text Index

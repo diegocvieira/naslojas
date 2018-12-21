@@ -1,5 +1,5 @@
 <?php
-    $top_nav = true;
+    $top_simple = true;
 ?>
 
 @extends('base')

@@ -19,7 +19,9 @@
                             @endforeach
                         </div>
 
-                        <a href="{{ route('show-product', $message->product->slug) }}" target="_blank" class="link-product"></a>
+                        @if (!$message->product->deleted_at && $message->product->status == 1)
+                            <a href="{{ route('show-product', $message->product->slug) }}" target="_blank" class="link-product"></a>
+                        @endif
 
                         <div class="more-details">
                             <div class="info">

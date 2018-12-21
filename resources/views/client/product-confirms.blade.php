@@ -49,7 +49,11 @@
                                 @endif
                             </td>
 
-                            <td><a href="{{ route('show-product', $confirm->product->slug) }}" target="_blank" class="link-product"></a></td>
+                            <td>
+                                @if (!$confirm->product->deleted_at && $confirm->product->status == 1)
+                                    <a href="{{ route('show-product', $confirm->product->slug) }}" target="_blank" class="link-product"></a>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
