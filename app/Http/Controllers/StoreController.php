@@ -136,7 +136,6 @@ class StoreController extends Controller
     {
         if (Auth::guard('store')->attempt(['email' => $request->email, 'password' => $request->password], true)) {
             $return['status'] = true;
-            $return['url'] = Auth::guard('store')->user()->store->status ? route('show-store', Auth::guard('store')->user()->store->slug) : route('product-images');
         } else {
             $return['status'] = false;
             $return['msg'] = 'Não identificamos o e-mail e/ou a senha que você informou.';
