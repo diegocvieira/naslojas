@@ -11,7 +11,11 @@ $(function() {
     $(document).on('click', '.open-filter-products', function(e) {
         e.preventDefault();
 
-        $('.filter-products').toggle();
+        var filter = $('.filter-products');
+
+        filter.toggle();
+
+        filter.is(':visible') ? $('body').css('overflow', 'hidden') : $('body').css('overflow', 'auto');
     });
 
     $(document).on('click', '.filter-products a', function(e) {
