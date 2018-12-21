@@ -178,12 +178,13 @@ $(function() {
     });
 
     // Generate old price or discount automatic
-    $('.form-edit-product').on('blur', 'input[name=old_price]', function(e) {
+    $('.form-edit-product').on('blur', 'input[name=old_price], input[name=price]', function(e) {
         var form = $(this).parents('.form-edit-product'),
-            price = form.find('input[name=price]').val();
+            price = form.find('input[name=price]').val(),
+            old_price = form.find('input[name=old_price]').val();
 
-        if (price) {
-            var off = (Math.round((price.replace('.', '').replace(',', '.') / form.find('input[name=old_price]').val().replace('.', '').replace(',', '.') - 1) * 100)).toString().replace('-', '');
+        if (price && old_price) {
+            var off = (Math.round((price.replace('.', '').replace(',', '.') / old_price.replace('.', '').replace(',', '.') - 1) * 100)).toString().replace('-', '');
 
             form.find('input[name=discount]').val($.isNumeric(off) ? off + '%' : '');
         }
