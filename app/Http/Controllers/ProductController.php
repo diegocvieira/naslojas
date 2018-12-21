@@ -237,7 +237,7 @@ class ProductController extends Controller
 
                     $product->title = $request->title;
                     $product->price = number_format(str_replace(['.', ','], ['', '.'], $request->price), 2, '.', '');
-                    $product->installment = $request->installment;
+                    $product->installment = $request->installment ? str_replace('x', '', $request->installment) : null;
                     $product->gender = $request->gender;
                     $product->old_price = $request->old_price ? number_format(str_replace(['.', ','], ['', '.'], $request->old_price), 2, '.', '') : null;
                     $product->installment_price = $request->installment_price ? number_format(str_replace(['.', ','], ['', '.'], $request->installment_price), 2, '.', '') : null;
@@ -373,7 +373,7 @@ class ProductController extends Controller
 
                 $product->title = $request->title;
                 $product->price = number_format(str_replace(['.', ','], ['', '.'], $request->price), 2, '.', '');
-                $product->installment = $request->installment;
+                $product->installment = $request->installment ? str_replace('x', '', $request->installment) : null;
                 $product->gender = $request->gender;
                 $product->old_price = $request->old_price ? number_format(str_replace(['.', ','], ['', '.'], $request->old_price), 2, '.', '') : null;
                 $product->installment_price = $request->installment_price ? number_format(str_replace(['.', ','], ['', '.'], $request->installment_price), 2, '.', '') : null;
@@ -390,7 +390,8 @@ class ProductController extends Controller
                         $product->save();
 
                         $return['status'] = true;
-                        $return['msg'] = 'Alterações salvas com sucesso!';
+                        //$return['msg'] = 'Alterações salvas com sucesso!';
+                        session()->flash('session_flash_alert', 'Produtos salvos com sucesso!');
                     } catch(\Exception $e) {
                         $attempts++;
 

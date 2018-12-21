@@ -103,7 +103,7 @@
                         <div class="row">
                             {!! Form::textarea('description', null, ['placeholder' => 'Descrição do produto', 'title' => 'Descrição do produto', 'class' => 'json']) !!}
 
-                            {!! Form::text('installment', null, ['placeholder' => 'Parcelamento', 'class' => 'mask-x']) !!}
+                            {!! Form::text('installment', null, ['placeholder' => 'Parcelamento', 'class' => 'mask-x json']) !!}
 
                             {!! Form::text('price', null, ['placeholder' => 'Preço atual*', 'class' => 'mask-money json', 'title' => 'Preço atual']) !!}
 

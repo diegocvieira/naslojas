@@ -63,7 +63,7 @@
             <div class="section">
                 {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker json']) !!}
 
-                {!! Form::text('installment', null, ['placeholder' => 'Parcelamento', 'class' => 'mask-x']) !!}
+                {!! Form::text('installment', null, ['placeholder' => 'Parcelamento', 'class' => 'mask-x json']) !!}
 
                 {!! Form::text('installment_price', null, ['placeholder' => 'Valor da parcela', 'class' => 'mask-money json', 'title' => 'Valor da parcela']) !!}
             </div>
