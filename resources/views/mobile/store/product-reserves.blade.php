@@ -79,7 +79,7 @@
             <div class="no-results">
                 <img src="{{ asset('images/icon-box.png') }}" />
 
-                <p>Você ainda não possui nenhuma <br> confirmação de produto</p>
+                <p>Você ainda não possui nenhuma <br> reserva de produto</p>
             </div>
         @endif
     </div>
