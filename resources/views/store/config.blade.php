@@ -9,7 +9,9 @@
 
     {!! Form::text('name', null, ['placeholder' => 'Nome da loja', 'id' => 'name']) !!}
 
-    {!! Form::text('slug', null, ['placeholder' => 'www.naslojas.com/', 'id' => 'slug']) !!}
+    <span class="slug">
+        {!! Form::text('slug', null, ['id' => 'slug']) !!}
+    </span>
 
     {!! Form::text('cep', null, ['placeholder' => 'Cep', 'id' => 'cep']) !!}
 
