@@ -10,17 +10,17 @@
             <div class="know">
                 <div class="col-xs-4">
                     <img src="{{ asset('images/know/shirt.png') }}" class="img-shirt" />
-                    <p>Confira as ofertas <br> das lojas de Pelotas</p>
+                    <p>Confira as ofertas<br>das lojas de Pelotas</p>
                 </div>
 
                 <div class="col-xs-4">
                     <img src="{{ asset('images/know/calendar.png') }}" />
-                    <p>Reserve o produto que <br> você gostou por 24hs</p>
+                    <p>Reserve o produto<br>que gostou por 24hs</p>
                 </div>
 
                 <div class="col-xs-4">
                     <img src="{{ asset('images/know/store.png') }}" class="img-store" />
-                    <p>Passe na loja para <br> finalizar a compra</p>
+                    <p>Passe na loja para<br>finalizar a compra</p>
                 </div>
             </div>
 
