@@ -15,6 +15,10 @@ $(function() {
 
                 if(!modal.hasClass('page-show-product')) {
                     modal.removeClass().addClass('modal fade page-show-product');
+                } else {
+                    modal.animate({
+                        'scrollTop' : 0
+                    }, 500);
                 }
 
                 modal.find('.modal-content').html(data.body);
