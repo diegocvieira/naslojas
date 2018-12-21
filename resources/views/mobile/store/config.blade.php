@@ -35,7 +35,7 @@
 
             {!! Form::text('state', $user->store->city_id ? $user->store->city->state->letter : null, ['placeholder' => 'Estado', 'class' => 'half', 'id' => 'state']) !!}
 
-            <div class="switch-container" title="Mostra ou oculta o perfil da sua loja para os usuários.">
+            <div class="switch-container" title="Mostra ou oculta a sua loja no site">
                 <label class="switch">
                     {!! Form::checkbox('status') !!}
                     <span class="slider"></span>
@@ -44,7 +44,7 @@
                 <span class="title-switch">Perfil da loja</span>
             </div>
 
-            <div class="switch-container" title="Mostra ou oculta o botão que permite aos usuários reservar um produto da sua loja por 24 horas.">
+            <div class="switch-container" title="Habilita ou desabilita o recurso de reserva dos produtos da sua loja">
                 <label class="switch">
                     {!! Form::checkbox('reserve') !!}
                     <span class="slider"></span>
