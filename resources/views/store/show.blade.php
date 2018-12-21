@@ -8,13 +8,15 @@
     <div class="container page-show-store">
         @if ($products->count())
             <div class="store-infos">
-                <h1>{{ $store->name }}</h1>
+                <a href="{{ route('show-store', $store->slug) }}">
+                    <h1>{{ $store->name }}</h1>
 
-                <p>
-                    {{ $store->street }}, {{ $store->number }} - {{ $store->district }} - {{ $store->city->title }}/{{ $store->city->state->letter }}
-                </p>
+                    <p>
+                        {{ $store->street }}, {{ $store->number }} - {{ $store->district }} - {{ $store->city->title }}/{{ $store->city->state->letter }}
+                    </p>
+                </a>
 
-                <a href="//maps.google.com/?q={{ $store->street }}, {{ $store->number }}, {{ $store->district }}, {{ $store->city->title }}, {{ $store->city->state->letter }}" target="_blank">
+                <a href="//maps.google.com/?q={{ $store->street }}, {{ $store->number }}, {{ $store->district }}, {{ $store->city->title }}, {{ $store->city->state->letter }}" target="_blank" class="map">
     				ver no mapa
     			</a>
             </div>
