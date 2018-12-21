@@ -73,6 +73,10 @@
             }
         }
 
+        .dz-error-mark svg g g {
+            fill: #ff1744 !important;
+        }
+
         .dz-preview {
             display: inline-block;
             width: calc(20% - 20px);
@@ -109,6 +113,12 @@
                 top: 166px;
                 left: 5%;
                 width: 90%;
+                background: #ff1744 !important;
+
+                &:after {
+                    left: 104px;
+                    border-bottom-color: #ff1744 !important;
+                }
 
                 span {
                     left: 105px;

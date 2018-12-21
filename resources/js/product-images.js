@@ -64,11 +64,11 @@ $(function() {
         },
         paramName: 'image',
         maxFilesize: 5, // MB
-        maxFiles: 50,
+        maxFiles: 30,
         parallelUploads: 25,
         addRemoveLinks: true,
         dictFileTooBig: "A imagem não pode ter mais de 5mb",
-        dictMaxFilesExceeded: "Máximo de 50 imagens por vez",
+        dictMaxFilesExceeded: "Máximo de 30 imagens por vez",
         dictRemoveFile: "",
         dictCancelUploadConfirmation: "Quer cancelar o upload?",
         clickable: true,
