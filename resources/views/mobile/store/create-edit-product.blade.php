@@ -63,7 +63,7 @@
             <div class="section">
                 {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker json']) !!}
 
-                {!! Form::select('installment', $installment, null, ['title' => 'Parcelamento', 'class' => 'selectpicker json']) !!}
+                {!! Form::text('installment', null, ['placeholder' => 'Parcelamento', 'class' => 'mask-x']) !!}
 
                 {!! Form::text('installment_price', null, ['placeholder' => 'Valor da parcela', 'class' => 'mask-money json', 'title' => 'Valor da parcela']) !!}
             </div>
@@ -73,7 +73,7 @@
 
                 {!! Form::text('price', null, ['placeholder' => 'Preço atual *', 'class' => 'mask-money json', 'title' => 'Preço atual']) !!}
 
-                {!! Form::text('discount', $product->old_price ? str_replace('-', '', round(($product->price / $product->old_price - 1) * 100)) : null, ['placeholder' => 'Desconto', 'class' => 'mask-number json', 'title' => 'Desconto']) !!}
+                {!! Form::text('discount', $product->old_price ? str_replace('-', '', round(($product->price / $product->old_price - 1) * 100)) : null, ['placeholder' => 'Desconto', 'class' => 'mask-percent json', 'title' => 'Desconto']) !!}
             </div>
 
             <div class="section sizes">

@@ -1,11 +1,7 @@
 $(function() {
-    $('.mask-money').mask('000.000.000.000.000,00', {reverse: true});
-
-    $(document).on('keypress', '.mask-number', function(e) {
-        if(e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-            return false;
-        }
-    });
+    $('.mask-money').mask('000.000.000.000.000,00', { reverse: true });
+    $('.mask-percent').mask('00%', { reverse: true, clearIfNotMatch : true });
+    $('.mask-x').mask('00x', { reverse: true, clearIfNotMatch : true });
 
     $(document).on('click', '.disable-product, .enable-product', function(e) {
         e.preventDefault();
@@ -182,18 +178,14 @@ $(function() {
     });
 
     // Generate old price or discount automatic
-    $('.form-edit-product').on('blur', 'input[name=discount], input[name=old_price]', function(e) {
+    $('.form-edit-product').on('blur', 'input[name=old_price]', function(e) {
         var form = $(this).parents('.form-edit-product'),
-            price = form.find('input[name=price]').val(),
-            old_price = form.find('input[name=old_price]'),
-            discount = form.find('input[name=discount]');
+            price = form.find('input[name=price]').val();
 
-        if(price) {
-            if($(this).attr('name') == 'discount') {
-                old_price.val(number_format(parseFloat((price.replace('.', '').replace(',', '.') * 100) / (100 - discount.val())), 2, ',', '.'));
-            } else {
-                discount.val((Math.round((price.replace('.', '').replace(',', '.') / old_price.val().replace('.', '').replace(',', '.') - 1) * 100)).toString().replace('-', ''));
-            }
+        if (price) {
+            var off = (Math.round((price.replace('.', '').replace(',', '.') / form.find('input[name=old_price]').val().replace('.', '').replace(',', '.') - 1) * 100)).toString().replace('-', '');
+
+            form.find('input[name=discount]').val($.isNumeric(off) ? off + '%' : '');
         }
     });
 
