@@ -56,7 +56,7 @@
                             </div>
 
                             <div class="info">
-                                <span class="info-title">Informação relevante</span>
+                                <span class="info-title">Informação</span>
                                 <span class="info-detail">
                                     @if ($confirm->status == 1)
                                         O produto que você deseja ainda está disponível. <br> Passe na loja para conferir.

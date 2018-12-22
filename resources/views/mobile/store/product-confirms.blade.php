@@ -56,7 +56,7 @@
                             </div>
 
                             <div class="info">
-                                <span class="info-title">Informação relevante</span>
+                                <span class="info-title">Opções</span>
                                 <span class="info-detail btn-status">
                                     @if ($confirm->status == 2)
                                         <a href="{{ route('product-confirm-confirm', $confirm->id) }}" class="change-confirm-status">Produto disponível</a>

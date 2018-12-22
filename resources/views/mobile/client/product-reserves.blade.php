@@ -61,7 +61,7 @@
                             </div>
 
                             <div class="info">
-                                <span class="info-title">Informação relevante</span>
+                                <span class="info-title">Informação</span>
                                 <span class="info-detail">
                                     @if ($reserve->status == 1)
                                         O produto ficará reservado para você até a data indicada. <br> Passe na loja e informe o seu nome para realizar a compra.

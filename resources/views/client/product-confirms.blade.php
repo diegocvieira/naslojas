@@ -17,7 +17,7 @@
                         <th>Confirmação da loja</th>
                         <th>Status</th>
                         <th>Tamanho</th>
-                        <th>Opções</th>
+                        <th>Informação</th>
                         <th>Ver produto</th>
                     </tr>
                 </thead>

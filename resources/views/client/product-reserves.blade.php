@@ -18,7 +18,7 @@
                         <th>Reservar até</th>
                         <th>Status</th>
                         <th>Tamanho</th>
-                        <th>Informação relevante</th>
+                        <th>Informação</th>
                         <th>Ver produto</th>
                     </tr>
                 </thead>

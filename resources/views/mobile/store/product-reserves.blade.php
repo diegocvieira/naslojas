@@ -61,7 +61,7 @@
                             </div>
 
                             <div class="info">
-                                <span class="info-title">Informação relevante</span>
+                                <span class="info-title">Opções</span>
                                 <span class="info-detail btn-status">
                                     @if ($reserve->status == 2)
                                         <a href="{{ route('product-confirm-reserve', $reserve->id) }}" class="change-reserve-status">Confirmar reserva</a>
