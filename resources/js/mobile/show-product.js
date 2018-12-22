@@ -9,6 +9,8 @@ $(function() {
         if(client_logged) {
             $('#form-rating-product').submit();
         } else {
+            $(this).prop('checked', false);
+
             modalAlert('É necessário estar logado para poder avaliar.');
         }
     });
