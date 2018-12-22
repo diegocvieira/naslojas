@@ -131,6 +131,10 @@ $(function() {
                         }
                     }
 
+                    if ($('.dz-preview').length <= 1) {
+                        $('.top-images').hide();
+                    }
+
                     if (!$(file.previewElement).hasClass('dz-error')) {
                         $.ajax({
                             url: '/loja/admin/produtos/delete-images/' + $(file.previewElement).find('img').attr('alt'),
