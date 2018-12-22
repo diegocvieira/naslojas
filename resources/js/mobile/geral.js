@@ -2,7 +2,7 @@ $(function() {
     $('body').css('opacity', '1');
 
     // Alert app
-    $(document).on('click', '.show-app', function (e) {
+    $(document).on('click', '.show-app', function(e) {
         e.preventDefault();
 
         modalAlert('Em breve você poderá baixar o nosso aplicativo para android e ios.');
@@ -13,6 +13,14 @@ $(function() {
         e.preventDefault();
 
         modalAlert('Em breve você poderá ver os produtos das lojas de outras cidades.');
+    });
+
+    // Add overlay and close menu
+    $(document).on('click', 'nav .open-menu', function() {
+        $('body, header').append("<div class='close-menu' style='width: 100%; height: 100%; position: fixed; top: 0; left: 0;'></div>");
+    });
+    $(document).on('click', '.close-menu', function() {
+        $('.close-menu').remove();
     });
 
     $(document).on('click', '.open-filter-products', function(e) {

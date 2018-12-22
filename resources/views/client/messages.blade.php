@@ -24,7 +24,7 @@
                 <tbody>
                     @foreach ($messages as $message)
                         <tr>
-                            <td>#{{ $message->product_id }}</td>
+                            <td>#{{ $message->product->identifier }}</td>
                             <td>{{ date('d/m/y - H:i', strtotime($message->created_at)) }}</td>
                             <td>{{ $message->answered_at ? date('d/m/y - H:i', strtotime($message->answered_at)) : '-----' }}</td>
                             <td class="{{ $message->status ? 'green' : '' }}">{{ $message->status ? 'Respondido' : 'Pendente' }}</td>

@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <span class="identifier">Produto #{{ $product->id }}</span>
+        <span class="identifier">Produto #{{ $product->identifier }}</span>
 
         <div class="store-container">
             <span>Você encontra este produto na loja</span>

@@ -25,7 +25,7 @@
                 <tbody>
                     @foreach ($confirms as $confirm)
                         <tr>
-                            <td>#{{ $confirm->product_id }}</td>
+                            <td>#{{ $confirm->product->identifier }}</td>
                             <td>{{ date('d/m/y - H:i', strtotime($confirm->created_at)) }}</td>
                             <td>{{ $confirm->confirmed_at ? date('d/m/y - H:i', strtotime($confirm->confirmed_at)) : '-----' }}</td>
 

@@ -245,7 +245,7 @@ class ProductController extends Controller
                     $product->description = $request->description;
                     $product->related = $request->related;
 
-                   // check if slug already exists and add dash in the end
+                    // check if slug already exists and add dash in the end
                     $NUM_OF_ATTEMPTS = 10;
                     $attempts = 0;
 
@@ -259,7 +259,7 @@ class ProductController extends Controller
                         } catch(\Exception $e) {
                             $attempts++;
 
-                            if($attempts >= $NUM_OF_ATTEMPTS) {
+                            if ($attempts >= $NUM_OF_ATTEMPTS) {
                                 $return['status'] = false;
                                 $return['msg'] = 'Ocorreu um erro inesperado. Por favor, atualize a página e tente novamente.';
                             }
@@ -316,10 +316,30 @@ class ProductController extends Controller
         } else {
             foreach ($request->images as $index) {
                 $product = new Product;
-                $product->store_id = Auth::guard('store')->user()->store_id;
 
+                $product->store_id = Auth::guard('store')->user()->store_id;
                 $product->status = 2;
-                $product->save();
+                $product->identifier = mt_rand(1000000000, 9999990000);
+
+                // Checks if identifier arent in use
+                $NUM_OF_ATTEMPTS = 10;
+                $attempts = 0;
+
+                do {
+                    try {
+                        $product->save();
+                    } catch(\Exception $e) {
+                        $attempts++;
+
+                        sleep(rand(0, 10) / 10);
+
+                        $product->identifier = mt_rand(1000000000, 9999990000);
+
+                        continue;
+                    }
+
+                    break;
+                } while ($attempts < $NUM_OF_ATTEMPTS);
 
                  foreach ($index as $key => $img) {
                     $image = new ProductImage;
@@ -369,6 +389,7 @@ class ProductController extends Controller
 
                     $product->store_id = Auth::guard('store')->user()->store_id;
                     $product->status = 1;
+                    $product->identifier = mt_rand(1000000000, 9999990000);
                 }
 
                 $product->title = $request->title;
@@ -395,7 +416,7 @@ class ProductController extends Controller
                     } catch(\Exception $e) {
                         $attempts++;
 
-                        if($attempts >= $NUM_OF_ATTEMPTS) {
+                        if ($attempts >= $NUM_OF_ATTEMPTS) {
                             $return['status'] = false;
                             $return['msg'] = 'Ocorreu um erro inesperado. Por favor, atualize a página e tente novamente.';
                         }
@@ -403,6 +424,10 @@ class ProductController extends Controller
                         sleep(rand(0, 10) / 10);
 
                         $product->slug .= '-' . uniqid();
+
+                        if (!$product->id) {
+                            $product->identifier = mt_rand(1000000000, 9999990000);
+                        }
 
                         continue;
                     }

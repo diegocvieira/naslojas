@@ -26,7 +26,7 @@
                         <div class="more-details">
                             <div class="info">
                                 <span class="info-title">Produto</span>
-                                <span class="info-detail">#{{ $message->product_id }}</span>
+                                <span class="info-detail">#{{ $message->product->identifier }}</span>
                             </div>
 
                             <div class="info">

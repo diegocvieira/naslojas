@@ -26,7 +26,7 @@
                 <tbody>
                     @foreach ($reserves as $reserve)
                         <tr>
-                            <td>#{{ $reserve->product_id }}</td>
+                            <td>#{{ $reserve->product->identifier }}</td>
                             <td>{{ date('d/m/y - H:i', strtotime($reserve->created_at)) }}</td>
                             <td class="confirmed_date">{{ $reserve->confirmed_at ? date('d/m/y - H:i', strtotime($reserve->confirmed_at)) : '-----' }}</td>
                             <td class="reserved_until">{{ $reserve->reserved_until ? date('d/m/y - H:i', strtotime($reserve->reserved_until)) : '-----' }}</td>

@@ -54,7 +54,7 @@
 </div>
 
 <div class="col-xs-5">
-    <span class="identifier">#{{ $product->id }}</span>
+    <span class="identifier">#{{ $product->identifier }}</span>
 
     <div class="store-container">
         <span>Você encontra este produto na loja</span>
