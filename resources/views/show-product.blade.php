@@ -20,7 +20,7 @@
 
             {!! Form::hidden('product_id', $product->id) !!}
 
-            {!! Form::textarea('message', null, ['placeholder' => 'Tem tamanho médio? Qual é o tecido? Tem na cor verde?', 'maxlength' => '300']) !!}
+            {!! Form::textarea('message', null, ['placeholder' => 'Digite sua mensagem aqui', 'maxlength' => '300']) !!}
 
             {!! Form::submit('ENVIAR MENSAGEM') !!}
         {!! Form::close() !!}
