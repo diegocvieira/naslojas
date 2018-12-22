@@ -64,26 +64,47 @@ $(function() {
         return false;
     });
 
-    $(document).on('click', '.btn-product-confirm, .btn-product-reserve', function(e) {
+    $(document).on('click', '.btn-product-confirm', function(e) {
         e.preventDefault();
 
-        var btn_confirm = $(this).hasClass('btn-product-confirm') ? true : false,
-            url = $(this).data('url'),
+        if (client_logged) {
+            if($('.size-container').length && !$('.size-container input[type=checkbox]').is(':checked')) {
+                modalAlert('Selecione pelo menos um tamanho para confirmar.');
+            } else {
+                var sizes = [];
+                $('.size-container').find('input[type=checkbox]:checked').each(function() {
+                    sizes.push($(this).val());
+                });
+
+                $.ajax({
+                    url: $(this).data('url'),
+                    data: { sizes : sizes, product_id : $(this).data('productid') },
+                    method: 'POST',
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        modalAlert(data.msg);
+                    }
+                });
+            }
+        } else {
+            modalAlert('É necessário acessar sua conta para fazer a confirmação de um produto.');
+        }
+    });
+
+    $(document).on('click', '.btn-product-reserve', function(e) {
+        e.preventDefault();
+
+        var url = $(this).data('url'),
             product_id = $(this).data('productid');
 
-        if(client_logged) {
+        if (client_logged) {
             if($('.size-container').length && !$('.size-container input[type=checkbox]').is(':checked')) {
-                if(btn_confirm) {
-                    modalAlert('Selecione pelo menos um tamanho para confirmar.');
-                } else {
-                    modalAlert('Selecione pelo menos um tamanho para reservar.');
-                }
+                modalAlert('Selecione pelo menos um tamanho para reservar.');
             } else {
-                if(btn_confirm) {
-                    modalAlert("Você deseja que a loja confirme se o produto ainda está à venda? Assim você pode passar na loja para experimentar. <br> Você receberá a confirmação por e-mail.", 'CONFIRMAR');
-                } else {
-                    modalAlert("Você deseja que este produto seja reservado para você conferir na loja em até 24hs após a confirmação? <br> Você não é obrigado(a) a finalizar a compra na loja!", 'RESERVAR');
-                }
+                modalAlert("Você deseja que este produto seja reservado para você conferir na loja em até 24hs após a confirmação? <br> Você não é obrigado(a) a finalizar a compra na loja!", 'RESERVAR');
 
                 var modal = $('#modal-alert');
 
@@ -105,21 +126,17 @@ $(function() {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function (data) {
-                            modalAlert(data.msg);
-
-                            //$('#modal-alert').find('.modal-footer .btn').unbind();
+                            modal.find('.modal-body').html(data.msg);
+                            modal.find('.modal-footer .btn-confirm').remove();
+                            modal.find('.modal-footer .btn-back').text('OK').off();
                         }
                     });
 
-                    //return false;
+                    return false;
                 });
             }
         } else {
-            if(btn_confirm) {
-                modalAlert('É necessário acessar sua conta para fazer a confirmação de um produto.');
-            } else {
-                modalAlert('É necessário acessar sua conta para fazer a reserva de um produto.');
-            }
+            modalAlert('É necessário acessar sua conta para fazer a reserva de um produto.');
         }
     });
 
