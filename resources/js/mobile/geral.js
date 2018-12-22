@@ -8,6 +8,13 @@ $(function() {
         modalAlert('Em breve você poderá baixar o nosso aplicativo para android e ios.');
     });
 
+    // City
+    $(document).on('click', '.show-city-modal', function(e) {
+        e.preventDefault();
+
+        modalAlert('Em breve você poderá ver os produtos das lojas de outras cidades.');
+    });
+
     $(document).on('click', '.open-filter-products', function(e) {
         e.preventDefault();
 

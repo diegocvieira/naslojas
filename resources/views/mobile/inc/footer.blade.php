@@ -5,7 +5,7 @@
                 <a href="#" class="show-app">Baixe nosso app</a>
                 <a href="{{ route('client-register-get') }}">Cadastrar</a>
                 <a href="{{ route('client-login-get') }}">Entrar</a>
-                <span>{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</span>
+                <a href="#" class="show-city-modal">{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</a>
                 <a href="{{ route('rules') }}" target="_blank">Regras</a>
                 <a href="{{ route('terms-use') }}" target="_blank">Termos de uso</a>
                 <a href="{{ route('privacy-policy') }}" target="_blank">Privacidade</a>

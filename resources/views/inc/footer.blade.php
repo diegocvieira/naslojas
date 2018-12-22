@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="col-xs-4">
-                        <span class="city">{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</span>
+                        <a href="#" class="city show-city-modal">{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</a>
 
                         <a href="mailto:naslojas.com" class="email">contato@naslojas.com</a>
 
