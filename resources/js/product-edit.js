@@ -125,7 +125,7 @@ $(function() {
 
         var form = $(this).parents('.form-edit-product');
 
-        $('.copy-data').removeClass('copied');
+        $('.copy-data').removeClass('copied').text('copiar');
         $(this).addClass('copied').text('copiado');
 
         localStorage.setItem('title', form.find('input[name=title]').val());

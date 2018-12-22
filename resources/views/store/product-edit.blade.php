@@ -76,8 +76,8 @@
                                     <button type="button" class="select-color">selecionar</button>
                                 @endif
 
-                                <button type="button" class="copy-data">copiar dados</button>
-                                <button type="button" class="paste-data">colar dados</button>
+                                <button type="button" class="copy-data">copiar</button>
+                                <button type="button" class="paste-data">colar</button>
 
                                 @if ($product->status != 2)
                                     <button type="button" class="disable-product disabled {{ $product->status == 1 ? 'hidden' : '' }}" data-productid="{{ $product->id }}" data-url="{{ route('product-enable') }}">ocultado</button>
