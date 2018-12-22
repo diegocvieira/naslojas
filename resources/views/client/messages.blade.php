@@ -31,7 +31,7 @@
                             <td><a href="#" class="show-message" data-clientmessage="{{ $message->question }}" data-clientname="{{ $message->client->name }}" data-storemessage="{{ $message->response }}" data-storename="{{ $message->product->store->name }}">{{ $message->status ? 'Visualizar resposta' : 'Visualizar mensagem' }}</a></td>
                             <td>
                                 @if (!$message->product->deleted_at && $message->product->status == 1)
-                                    <a href="{{ route('show-product', $message->product->slug) }}" target="_blank" class="link-product"></a>
+                                    <a href="{{ route('show-product', $message->product->slug) }}" target="_blank" class="link-product" title="Ver produto"></a>
                                 @else
                                     -----
                                 @endif

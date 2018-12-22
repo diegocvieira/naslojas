@@ -52,7 +52,7 @@
 
                             <td>
                                 @if (!$reserve->product->deleted_at && $reserve->product->status == 1)
-                                    <a href="{{ route('show-product', $reserve->product->slug) }}" target="_blank" class="link-product"></a>
+                                    <a href="{{ route('show-product', $reserve->product->slug) }}" target="_blank" class="link-product" title="Ver produto"></a>
                                 @else
                                     -----
                                 @endif

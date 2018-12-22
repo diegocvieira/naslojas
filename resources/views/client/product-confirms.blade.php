@@ -51,7 +51,7 @@
 
                             <td>
                                 @if (!$confirm->product->deleted_at && $confirm->product->status == 1)
-                                    <a href="{{ route('show-product', $confirm->product->slug) }}" target="_blank" class="link-product"></a>
+                                    <a href="{{ route('show-product', $confirm->product->slug) }}" target="_blank" class="link-product" title="Ver produto"></a>
                                 @endif
                             </td>
                         </tr>
