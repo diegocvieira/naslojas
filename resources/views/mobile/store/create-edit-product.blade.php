@@ -69,7 +69,7 @@
             </div>
 
             <div class="section">
-                {!! Form::text('old_price', null, ['placeholder' => 'Preço antigo', 'class' => 'mask-money json', 'title' => 'Preço antigo']) !!}
+                {!! Form::text('old_price', null, ['placeholder' => 'Preço anterior', 'class' => 'mask-money json', 'title' => 'Preço anterior']) !!}
 
                 {!! Form::text('price', null, ['placeholder' => 'Preço atual *', 'class' => 'mask-money json', 'title' => 'Preço atual']) !!}
 

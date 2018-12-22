@@ -97,7 +97,7 @@
 
                             {!! Form::select('gender', $genders, null, ['title' => 'Gênero*', 'class' => 'selectpicker json']) !!}
 
-                            {!! Form::text('old_price', null, ['placeholder' => 'Preço antigo', 'class' => 'mask-money json', 'title' => 'Preço antigo']) !!}
+                            {!! Form::text('old_price', null, ['placeholder' => 'Preço anterior', 'class' => 'mask-money json', 'title' => 'Preço anterior']) !!}
                         </div>
 
                         <div class="row">
