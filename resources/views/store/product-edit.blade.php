@@ -9,7 +9,7 @@
         @if ($products->count() > 0 || $products->count() == 0 && isset($keyword))
             <div class="top-images">
                 <div class="col-xs-6">
-                    <p>Preencha os dados dos produtos e clique em "{{ $section == 'add' ? 'adicionar ao site' : 'salvar alterações' }}"</p>
+                    <p>Altere os dados dos produtos e clique em "{{ $section == 'add' ? 'adicionar ao site' : 'salvar alterações' }}"</p>
                 </div>
 
                 <div class="col-xs-6 text-right">
