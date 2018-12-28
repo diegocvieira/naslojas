@@ -396,7 +396,7 @@ $(function() {
             dataType: 'json',
             success: function(data) {
                 if(data.status) {
-                    window.location = '/loja/admin/produtos';
+                    window.location = data.url;
                 } else {
                     modalAlert(data.msg);
                 }
