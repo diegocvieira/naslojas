@@ -3,16 +3,8 @@ $(function() {
     $('.mask-percent').mask('00%', { reverse: true, clearIfNotMatch : true });
     $('.mask-x').mask('00x', { reverse: true, clearIfNotMatch : true });
 
-    $('#form-create-edit-product').on('blur', 'input[name=old_price], input[name=price]', function(e) {
-        var form = $(this).parents('#form-create-edit-product'),
-            price = form.find('input[name=price]').val(),
-            old_price = form.find('input[name=old_price]').val();
-
-        if (price && old_price) {
-            var off = (Math.round((price.replace('.', '').replace(',', '.') / old_price.replace('.', '').replace(',', '.') - 1) * 100)).toString().replace('-', '');
-
-            form.find('input[name=discount]').val($.isNumeric(off) ? off + '%' : '');
-        }
+    $(document).on('change', '.page-create-edit-product select', function() {
+        $(this).parent().next().show();
     });
 
     $(document).on('click', '.page-create-edit-product .btn-add-image, .page-create-edit-product .remove-image', function(e) {
@@ -62,48 +54,86 @@ $(function() {
         }
     });
 
-    $(document).on('click', '.page-create-edit-product .header .btn-option', function(e) {
+    $(document).on('click', '.page-create-edit-product header .option', function(e) {
         e.preventDefault();
 
-        if ($(this).hasClass('enable')) {
-            var msg = 'Tem certeza que deseja <b>mostrar</b> este produto?';
-        } else if ($(this).hasClass('disable')) {
-            var msg = 'Tem certeza que deseja <b>ocultar</b> este produto?';
-        } else {
-            var msg = 'Tem certeza que deseja <b>apagar</b> este produto?';
-        }
+        var type = $(this).data('type');
 
-        modalAlert(msg, 'CONFIRMAR');
+        if (type == 'copy-data') {
+            var form = $('#form-create-edit-product');
 
-        var modal = $('#modal-alert'),
-            url = $(this).data('url'),
-            product_id = $(this).data('productid');
+            form.find('.field').each(function() {
+                localStorage.setItem($(this).attr('name'), $(this).val());
+            });
 
-        modal.find('.btn-default').addClass('btn-confirm invert-color');
-        modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back' data-dismiss='modal'>VOLTAR</button>");
+            var sizes = [];
+            $(form.find('.sizes').find('input[type=checkbox]:checked')).each(function() {
+                 sizes.push($(this).val());
+            });
+            localStorage.setItem('sizes', JSON.stringify(sizes));
+        } else if (type == 'paste-data') {
+            var form = $('#form-create-edit-product');
 
-        modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
-            $.ajax({
-                url: url,
-                method: 'POST',
-                dataType: 'json',
-                data: { id : product_id },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (data) {
-                    if (data.status) {
-                        if (data.type == 'delete') {
-                            window.location = '/loja/admin/produtos';
-                        } else {
-                            $('.page-create-edit-product .header').find('.btn-option.enable, .btn-option.disable').toggleClass('hidden');
-                        }
-                    } else {
-                        modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
-                    }
+            form.find('.field').each(function() {
+                $(this).val(localStorage.getItem($(this).attr('name')));
+
+                if ($(this).attr('name') == 'gender') {
+                    $(this).selectpicker('refresh');
                 }
             });
-        });
+
+            $(form.find('.sizes').find('input[type=checkbox]')).each(function() {
+                if (JSON.parse(localStorage.getItem('sizes')).includes($(this).val())) {
+                     $(this).attr('checked', true);
+                 } else {
+                     $(this).attr('checked', false);
+                 }
+            });
+        } else {
+            if (type == 'product-enable') {
+                var msg = 'Tem certeza que deseja <b>mostrar</b> este produto?';
+            } else if (type == 'product-disable') {
+                var msg = 'Tem certeza que deseja <b>ocultar</b> este produto?';
+            } else if (type == 'delete') {
+                var msg = 'Tem certeza que deseja <b>apagar</b> este produto?';
+            } else if (type == 'reserve-enable') {
+                var msg = 'Tem certeza que deseja <b>habilitar</b> a reserva deste produto?';
+            } else if (type == 'reserve-disable') {
+                var msg = 'Tem certeza que deseja <b>desabilitar</b> a reserva deste produto?';
+            }
+
+            modalAlert(msg, 'CONFIRMAR');
+
+            var modal = $('#modal-alert'),
+                url = $(this).attr('href'),
+                product_id = $(this).data('productid');
+
+            modal.find('.btn-default').addClass('btn-confirm invert-color');
+            modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back' data-dismiss='modal'>VOLTAR</button>");
+
+            modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    dataType: 'json',
+                    data: { id : product_id },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if (data.status) {
+                            if (data.type == 'delete') {
+                                window.location = '/loja/admin/produtos';
+                            } else {
+                                $('.page-create-edit-product .header').find('.btn-option.enable, .btn-option.disable').toggleClass('hidden');
+                            }
+                        } else {
+                            modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                        }
+                    }
+                });
+            });
+        }
     });
 
     $('#form-create-edit-product').validate({
@@ -150,7 +180,7 @@ $(function() {
 
             $('.color-variation').each(function(index) {
                 if ($(this).find('.image.loaded-image').length >= 1) {
-                    $(form).find('.json').each(function() {
+                    $(form).find('.field').each(function() {
                         data.append('products[' + index + '][' + $(this).attr('name') + ']', $(this).val());
                     });
 

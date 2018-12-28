@@ -1,5 +1,11 @@
 .page-admin-products {
     .product-manager {
+        display: none;
+
+        nav {
+            float: right !important;
+        }
+
         .btn-back {
             border: none;
             background-color: transparent;
@@ -10,15 +16,6 @@
             background-repeat: no-repeat;
             background-size: 25px;
             background-image: url('../../images/icon-arrow2.png');
-        }
-
-        .btn-option {
-            font-size: 12.5px;
-            color: #000;
-            float: right;
-            background-color: transparent;
-            border: none;
-            padding: 15px 20px;
         }
     }
 

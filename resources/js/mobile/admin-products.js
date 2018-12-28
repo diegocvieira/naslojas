@@ -16,8 +16,7 @@ $(function() {
         products.removeClass('selected prepare-select').find('input[type=checkbox]').attr('checked', false);
         products.find('label').hide();
 
-        $('header').find('.product-manager').remove();
-        $('header').find('#logo-naslojas, .btn-back-search, nav, #form-search').show();
+        $('header').toggle();
     });
 
     $(document).on('press', '.page-admin-products .product', function(e) {
@@ -32,13 +31,12 @@ $(function() {
 
         $('.page-admin-products').find('.product').addClass('prepare-select').find('label').show();
 
-        $('header').find('#logo-naslojas, .btn-back-search, nav, #form-search').hide();
-        $('header').append("<div class='product-manager'><button type='button' class='btn-back'></button><button type='button' class='btn-option' data-url='/loja/admin/produtos/delete'>APAGAR</button></div>");
+        $('header').toggle();
 
         if ($(this).hasClass('disabled')) {
-            $('header').find('.btn-option').after("<button type='button' class='btn-option enable' data-url='/loja/admin/produtos/enable'>MOSTRAR</button>");
-        } else {
-            $('header').find('.btn-option').after("<button type='button' class='btn-option disable' data-url='/loja/admin/produtos/disable'>OCULTAR</button>");
+            $('.product-manager').find('a[data-type=show-product]').hide();
+
+            $('.product-manager nav').find('a[data-type=show-product]').attr('href', '/produto/' + $(this).data('slug'));
         }
     });
 
@@ -52,30 +50,50 @@ $(function() {
         }
 
         $(this).toggleClass('selected');
+
+        var links = $('.product-manager nav').find('a[data-type=show-product], a[data-type=copy-data]');
+
+        if ($('.product.selected').length == 1 && !$('.product.selected').hasClass('disabled')) {
+            links.show();
+
+            $('.product-manager nav').find('a[data-type=show-product]').attr('href', '/produto/' + $(this).data('slug'));
+        } else {
+            links.hide();
+        }
     });
 
-    $(document).on('click', '.product-manager .btn-option', function(e) {
+    $(document).on('click', '.product-manager .dropdown-menu a', function(e) {
         e.preventDefault();
 
-        if ($(this).hasClass('enable')) {
-            var msg = 'Tem certeza que deseja <b>mostrar</b> todos os produtos selecionados?';
-        } else if ($(this).hasClass('disable')) {
-            var msg = 'Tem certeza que deseja <b>ocultar</b> todos os produtos selecionados?';
+        var type = $(this).data('type'),
+            url = $(this).attr('href');
+
+        if (type == 'show-product') {
+            window.open(url, '_blank');
         } else {
-            var msg = 'Tem certeza que deseja <b>apagar</b> todos os produtos selecionados?';
+            if (type == 'product-enable') {
+                var msg = 'Tem certeza que deseja <b>mostrar</b> todos os produtos selecionados?';
+            } else if (type == 'product-disable') {
+                var msg = 'Tem certeza que deseja <b>ocultar</b> todos os produtos selecionados?';
+            } else if (type == 'delete') {
+                var msg = 'Tem certeza que deseja <b>apagar</b> todos os produtos selecionados?';
+            } else if (type == 'reserve-enable') {
+                var msg = 'Tem certeza que deseja <b>habilitar</b> a reserva de todos os produtos selecionados?';
+            } else if (type == 'reserve-disable') {
+                var msg = 'Tem certeza que deseja <b>desabilitar</b> a reserva de todos os produtos selecionados?';
+            }
+
+            modalAlert(msg, 'CONFIRMAR');
+
+            var modal = $('#modal-alert');
+
+            modal.find('.btn-default').addClass('btn-confirm invert-color');
+            modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back' data-dismiss='modal'>VOLTAR</button>");
+
+            modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
+                $('#form-product-manager').attr('action', url).submit();
+            });
         }
-
-        modalAlert(msg, 'CONFIRMAR');
-
-        var modal = $('#modal-alert'),
-            url = $(this).data('url');
-
-        modal.find('.btn-default').addClass('btn-confirm invert-color');
-        modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back' data-dismiss='modal'>VOLTAR</button>");
-
-        modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
-            $('#form-product-manager').attr('action', url).submit();
-        });
     });
 
     $(document).on('submit', '#form-product-manager', function() {
@@ -94,7 +112,7 @@ $(function() {
                         selected.removeClass('disabled');
                     } else if (data.type == 'disable') {
                         selected.addClass('disabled');
-                    } else {
+                    } else if (data.type == 'delete') {
                         selected.remove();
 
                         if (form.find('.product').length == 0) {
@@ -107,8 +125,7 @@ $(function() {
                     selected.removeClass('selected').find('input[type=checkbox]').attr('checked', false);
                     form.find('.product').removeClass('prepare-select').find('label').hide();
 
-                    $('header').find('.product-manager').remove();
-                    $('header').find('#logo-naslojas, .btn-back-search, nav, #form-search').show();
+                    $('header').toggle();
                 } else {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }

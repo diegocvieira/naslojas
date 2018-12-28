@@ -129,47 +129,60 @@ header {
                 a {
                     font-size: 14.5px;
                     padding: 10px 0 10px 40px;
-                    background-position: 15px center;
-                    background-repeat: no-repeat;
-                    background-size: 17px;
+                    position: relative;
 
                     &:hover {
                         background-color: rgb(245, 245, 245);
                     }
 
-                    &.icon-messages {
+                    &:after {
+                        content: '';
+                        width: 100%;
+                        height: 100%;
+                        left: 0;
+                        top: 0;
+                        position: absolute;
+                        background-position: 15px center;
+                        background-repeat: no-repeat;
+                        background-size: 17px;
+                    }
+
+                    &.icon-messages:after {
                         background-image: url('../images/icon-message.png');
                     }
 
-                    &.icon-logout {
+                    &.icon-logout:after {
                         background-image: url('../images/icon-logout.png');
                     }
 
-                    &.icon-account {
+                    &.icon-account:after {
                         background-image: url('../images/icon-account.png');
                     }
 
-                    &.icon-reserve {
+                    &.icon-reserve:after {
                         background-image: url('../images/icon-reserve.png');
+                        -webkit-filter: grayscale(100%);
+                        filter: grayscale(100%);
+                        opacity: .6;
                     }
 
-                    &.icon-add {
+                    &.icon-add:after {
                         background-image: url('../images/icon-add.png');
                     }
 
-                    &.icon-edit {
+                    &.icon-edit:after {
                         background-image: url('../images/icon-edit.png');
                     }
 
-                    &.icon-config {
+                    &.icon-config:after {
                         background-image: url('../images/icon-config.png');
                     }
 
-                    &.icon-store {
+                    &.icon-store:after {
                         background-image: url('../images/icon-store.png');
                     }
 
-                    &.icon-check {
+                    &.icon-check:after {
                         background-image: url('../images/icon-check.png');
                     }
                 }

@@ -26,7 +26,6 @@ class CreateStoresTable extends Migration
             $table->string('complement', 100)->nullable();
             $table->string('slug', 200)->unique()->nullable();
             $table->boolean('status')->default(0);
-            $table->boolean('reserve')->default(1);
             $table->timestamps();
         });
 

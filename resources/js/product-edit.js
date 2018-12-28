@@ -3,6 +3,10 @@ $(function() {
     $('.mask-percent').mask('00%', { reverse: true, clearIfNotMatch : true });
     $('.mask-x').mask('00x', { reverse: true, clearIfNotMatch : true });
 
+    $(document).on('change', '.form-edit-product select', function() {
+        $(this).parent().next().show();
+    });
+
     $(document).on('click', '.disable-product, .enable-product', function(e) {
         e.preventDefault();
 
@@ -19,6 +23,30 @@ $(function() {
             success: function (data) {
                 if (data.status) {
                     $this.parent().find('.enable-product, .disable-product').toggleClass('hidden');
+                    $this.parents('.form-edit-product').toggleClass('product-disabled');
+                } else {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '.disable-reserve, .enable-reserve', function(e) {
+        e.preventDefault();
+
+        var $this = $(this);
+
+        $.ajax({
+            url: $this.data('url'),
+            method: 'POST',
+            dataType: 'json',
+            data: { id : $this.data('productid') },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                if (data.status) {
+                    $this.parent().find('.enable-reserve, .disable-reserve').toggleClass('hidden');
                 } else {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
@@ -66,24 +94,40 @@ $(function() {
         e.preventDefault();
 
         if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected').text('selecionar');
+            $(this).removeClass('selected');
         } else if ($(this).hasClass('color-variation')) {
             var data_variation = $('.color-variation[data-variation=' + $(this).data('variation') + ']');
 
-            if(data_variation.length == 2) {
+            if (data_variation.length == 2) {
                 data_variation.parents('.form-edit-product').find('input[name=related]').val('');
-                data_variation.removeClass('color-variation').text('selecionar').removeAttr('title');
+                data_variation.removeClass('color-variation').removeAttr('title').text('');
+
+                if ($('.generate-color-variation').is(':visible')) {
+                    data_variation.show();
+                }
             } else {
                 $(this).parents('.form-edit-product').find('input[name=related]').val('');
-                $(this).removeClass('color-variation').text('selecionar').removeAttr('title');
+                $(this).removeClass('color-variation').removeAttr('title').text('');
+
+                if ($('.generate-color-variation').is(':visible')) {
+                    $(this).show();
+                }
             }
         } else {
-            $(this).addClass('selected').text('selecionado');
+            $(this).addClass('selected');
         }
     });
 
+    // Open color variations buttons
+    $(document).on('click', '.open-color-variation', function(e) {
+        e.preventDefault();
+
+        $('button.select-color').show();
+        $('.btns-color-variation').find('button').toggle();
+    });
+
     // Generate color variation
-    $(document).on('click', '.btn-color-variation', function(e) {
+    $(document).on('click', '.generate-color-variation', function(e) {
         e.preventDefault();
 
         var random = Math.round((new Date()).getTime()),
@@ -104,9 +148,14 @@ $(function() {
             });
 
             actives.addClass('color-variation')
-                .text('Variação ' + next_product)
+                .text(next_product)
                 .attr('data-variation', next_product)
                 .attr('title', 'Clique para remover esta cor da variação');
+
+            $('button.select-color').not('.color-variation').hide();
+            $('.btns-color-variation').find('button').toggle();
+        } else {
+            modalAlert('Selecione dois ou mais produtos para agrupar.');
         }
     });
 
@@ -125,17 +174,12 @@ $(function() {
 
         var form = $(this).parents('.form-edit-product');
 
-        $('.copy-data').removeClass('copied').text('copiar');
-        $(this).addClass('copied').text('copiado');
+        $('.copy-data').removeClass('copied');
+        $(this).addClass('copied');
 
-        localStorage.setItem('title', form.find('input[name=title]').val());
-        localStorage.setItem('description', form.find('textarea[name=description]').val());
-        localStorage.setItem('price', form.find('input[name=price]').val());
-        localStorage.setItem('old_price', form.find('input[name=old_price]').val());
-        localStorage.setItem('installment_price', form.find('input[name=installment_price]').val());
-        localStorage.setItem('discount', form.find('input[name=discount]').val());
-        localStorage.setItem('installment', form.find('select[name=installment]').val());
-        localStorage.setItem('gender', form.find('select[name=gender]').val());
+        form.find('.field').each(function() {
+            localStorage.setItem($(this).attr('name'), $(this).val());
+        });
 
         var sizes = [];
         $(form.find('.sizes').find('input[type=checkbox]:checked')).each(function() {
@@ -150,17 +194,16 @@ $(function() {
 
         var form = $(this).parents('.form-edit-product');
 
-        form.find('input[name=title]').val(localStorage.getItem('title'));
-        form.find('textarea[name=description]').val(localStorage.getItem('description'));
-        form.find('input[name=price]').val(localStorage.getItem('price'));
-        form.find('input[name=old_price]').val(localStorage.getItem('old_price'));
-        form.find('input[name=installment_price]').val(localStorage.getItem('installment_price'));
-        form.find('input[name=discount]').val(localStorage.getItem('discount'));
-        form.find('select[name=installment]').val(localStorage.getItem('installment')).selectpicker('refresh');
-        form.find('select[name=gender]').val(localStorage.getItem('gender')).selectpicker('refresh');
+        form.find('.field').each(function() {
+            $(this).val(localStorage.getItem($(this).attr('name')));
+
+            if ($(this).attr('name') == 'gender') {
+                $(this).selectpicker('refresh');
+            }
+        });
 
         $(form.find('.sizes').find('input[type=checkbox]')).each(function() {
-            if(JSON.parse(localStorage.getItem('sizes')).includes($(this).val())) {
+            if (JSON.parse(localStorage.getItem('sizes')).includes($(this).val())) {
                  $(this).attr('checked', true);
              } else {
                  $(this).attr('checked', false);
@@ -175,19 +218,6 @@ $(function() {
         div.animate({
             'scrollLeft': $(this).data('direction') == 'right' ? div.scrollLeft() + 450 : div.scrollLeft() - 450
         }, 200);
-    });
-
-    // Generate old price or discount automatic
-    $('.form-edit-product').on('blur', 'input[name=old_price], input[name=price]', function(e) {
-        var form = $(this).parents('.form-edit-product'),
-            price = form.find('input[name=price]').val(),
-            old_price = form.find('input[name=old_price]').val();
-
-        if (price && old_price) {
-            var off = (Math.round((price.replace('.', '').replace(',', '.') / old_price.replace('.', '').replace(',', '.') - 1) * 100)).toString().replace('-', '');
-
-            form.find('input[name=discount]').val($.isNumeric(off) ? off + '%' : '');
-        }
     });
 
     // Remove images
@@ -241,7 +271,7 @@ $(function() {
                 $('.btn-finish').text('SALVANDO').attr('disabled', true);
 
                 $('.form-edit-product').each(function(index) {
-                    $(this).find('.json').each(function() {
+                    $(this).find('.field').each(function() {
                         data.append('products[' + index + '][' + $(this).attr('name') + ']', $(this).val());
                     });
 

@@ -244,6 +244,7 @@ class ProductController extends Controller
                     $product->slug = str_slug($product->title, '-');
                     $product->description = $request->description;
                     $product->related = $request->related;
+                    $product->reserve_discount = $request->reserve_discount ? str_replace('%', '', $request->reserve_discount) : null;
 
                     // check if slug already exists and add dash in the end
                     $NUM_OF_ATTEMPTS = 10;
@@ -401,6 +402,7 @@ class ProductController extends Controller
                 $product->slug = str_slug($product->title, '-');
                 $product->description = $request->description;
                 $product->related = $request->related;
+                $product->reserve_discount = $request->reserve_discount ? str_replace('%', '', $request->reserve_discount) : null;
 
                // check if slug already exists and add dash in the end
                 $NUM_OF_ATTEMPTS = 10;
@@ -584,6 +586,72 @@ class ProductController extends Controller
         if ($save) {
             $return['status'] = true;
             $return['type'] = 'disable';
+        } else {
+            $return['status'] = false;
+        }
+
+        return json_encode($return);
+    }
+
+    public function reserveEnable(Request $request)
+    {
+        $store_id = Auth::guard('store')->user()->store_id;
+
+        if (is_array($request->id)) {
+            foreach ($request->id as $i) {
+                $product = Product::withoutGlobalScopes(['active', 'active-store'])
+                    ->where('store_id', $store_id)
+                    ->where('id', $i)
+                    ->first();
+
+                $product->reserve = 1;
+                $save = $product->save();
+            }
+        } else {
+            $product = Product::withoutGlobalScopes(['active', 'active-store'])
+                ->where('store_id', $store_id)
+                ->where('id', $request->id)
+                ->first();
+
+            $product->reserve = 1;
+            $save = $product->save();
+        }
+
+        if ($save) {
+            $return['status'] = true;
+        } else {
+            $return['status'] = false;
+        }
+
+        return json_encode($return);
+    }
+
+    public function reserveDisable(Request $request)
+    {
+        $store_id = Auth::guard('store')->user()->store_id;
+
+        if (is_array($request->id)) {
+            foreach ($request->id as $i) {
+                $product = Product::withoutGlobalScopes(['active', 'active-store'])
+                    ->where('store_id', $store_id)
+                    ->where('id', $i)
+                    ->first();
+
+                $product->reserve = 0;
+                $save = $product->save();
+            }
+        } else {
+            $product = Product::withoutGlobalScopes(['active', 'active-store'])
+                ->where('store_id', $store_id)
+                ->where('id', $request->id)
+                ->first();
+
+            $product->reserve = 0;
+            $save = $product->save();
+        }
+
+        if ($save) {
+            $return['status'] = true;
         } else {
             $return['status'] = false;
         }

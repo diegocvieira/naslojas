@@ -29,6 +29,8 @@ class CreateProductsTable extends Migration
             $table->integer('gender')->nullable();
             $table->integer('installment')->nullable();
             $table->decimal('installment_price', 8, 2)->nullable();
+            $table->boolean('reserve')->default(0);
+            $table->integer('reserve_discount')->nullable();
             $table->string('related', 200)->nullable();
             $table->timestamps();
             $table->softDeletes();

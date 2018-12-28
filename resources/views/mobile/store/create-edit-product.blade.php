@@ -8,20 +8,63 @@
             {!! Form::open(['method' => 'POST', 'route' => 'save-product-individual', 'id' => 'form-create-edit-product', 'files' => true]) !!}
         @endif
 
-            {!! Form::hidden('related', null, ['class' => 'json']) !!}
+            {!! Form::hidden('related', null, ['class' => 'field']) !!}
 
-            <div class='header'>
+            <header>
                 <a href="javascript: history.go(-1);" class="btn-back"></a>
 
+                <nav class="nav navbar-nav nav-menu">
+                    <ul>
+                        <li>
+                            <a href="#" class="open-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ asset('images/icon-menu.png') }}" alt="Menu" />
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                @isset ($product)
+                                    @if ($product->status == 1)
+                                        <li>
+                                            <a href="{{ route('show-product', $product->slug) }}" target="_blank">Ver produto</a>
+                                        </li>
+                                    @endif
+
+                                    <li @if ($product->reserve == 1) style="display: none;" @endif>
+                                        <a href="{{ route('reserve-enable') }}" data-type="reserve-enable" class="option">Habilitar reserva</a>
+                                    </li>
+
+                                    <li @if ($product->reserve == 0) style="display: none;" @endif>
+                                        <a href="{{ route('reserve-disable') }}" data-type="reserve-disable" class="option">Desabilitar reserva</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" data-type="copy-data" class="option">Copiar dados</a>
+                                    </li>
+                                @endisset
+
+                                <li>
+                                    <a href="#" data-type="paste-data" class="option">Colar dados</a>
+                                </li>
+
+                                @isset ($product)
+                                    <li @if ($product->status == 1) style="display: none;" @endif>
+                                        <a href="{{ route('product-enable') }}" data-type="product-enable" class="option">Ativar</a>
+                                    </li>
+
+                                    <li @if ($product->status == 0) style="display: none;" @endif>
+                                        <a href="{{ route('product-disable') }}" data-type="product-disable" class="option">Desativar</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('product-delete') }}" data-type="delete" class="option">Excluir</a>
+                                    </li>
+                                @endisset
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+
                 {!! Form::submit('SALVAR') !!}
-
-                @isset ($product)
-                    <button type="button" class="btn-option" data-url="{{ route('product-delete') }}" data-productid="{{ $product->id }}">APAGAR</button>
-
-                    <button type="button" class="btn-option enable {{ $product->status == 1 ? 'hidden' : '' }}" data-url="{{ route('product-enable') }}" data-productid="{{ $product->id }}">MOSTRAR</button>
-                    <button type="button" class="btn-option disable {{ $product->status == 0 ? 'hidden' : '' }}" data-url="{{ route('product-disable') }}" data-productid="{{ $product->id }}">OCULTAR</button>
-                @endisset
-            </div>
+            </header>
 
             <span class="advice">* indica item obrigatório</span>
 
@@ -55,25 +98,49 @@
             </div>
 
             <div class="section">
-                {!! Form::text('title', null, ['placeholder' => 'Título do produto *', 'class' => 'json', 'title' => 'Título do produto']) !!}
+                <div class="form-group">
+                    {!! Form::text('title', null, ['placeholder' => ' ', 'class' => 'field']) !!}
+                    {!! Form::label('', 'Título do produto *') !!}
+                </div>
 
-                {!! Form::textarea('description', null, ['placeholder' => 'Descrição do produto', 'title' => 'Descrição do produto', 'class' => 'json']) !!}
+                <div class="form-group description">
+                    {!! Form::textarea('description', null, ['placeholder' => ' ', 'class' => 'field']) !!}
+                    {!! Form::label('', 'Descrição do produto') !!}
+                </div>
             </div>
 
             <div class="section">
-                {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker json']) !!}
+                <div class="form-group">
+                    {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
+                    {!! Form::label('', 'Preço atual *') !!}
+                </div>
 
-                {!! Form::text('installment', null, ['placeholder' => 'Parcelamento', 'class' => 'mask-x json']) !!}
+                <div class="form-group">
+                    {!! Form::text('old_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
+                    {!! Form::label('', 'Preço anterior') !!}
+                </div>
 
-                {!! Form::text('installment_price', null, ['placeholder' => 'Valor da parcela', 'class' => 'mask-money json', 'title' => 'Valor da parcela']) !!}
+                <div class="form-group">
+                    {!! Form::text('reserve_discount', null, ['placeholder' => ' ', 'class' => 'mask-percent field']) !!}
+                    {!! Form::label('', 'Desconto na reserva') !!}
+                </div>
             </div>
 
             <div class="section">
-                {!! Form::text('old_price', null, ['placeholder' => 'Preço anterior', 'class' => 'mask-money json', 'title' => 'Preço anterior']) !!}
+                <div class="form-group gender">
+                    {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker field']) !!}
+                    {!! Form::label('', 'Gênero *', ['style' => (isset($product) && $product->gender) ? 'display: block;' : '']) !!}
+                </div>
 
-                {!! Form::text('price', null, ['placeholder' => 'Preço atual *', 'class' => 'mask-money json', 'title' => 'Preço atual']) !!}
+                <div class="form-group">
+                    {!! Form::text('installment', null, ['placeholder' => ' ', 'class' => 'mask-x field']) !!}
+                    {!! Form::label('', 'Parcelamento') !!}
+                </div>
 
-                {!! Form::text('discount', (isset($product) && $product->old_price) ? str_replace('-', '', round(($product->price / $product->old_price - 1) * 100)) : null, ['placeholder' => 'Desconto', 'class' => 'mask-percent json', 'title' => 'Desconto']) !!}
+                <div class="form-group">
+                    {!! Form::text('installment_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
+                    {!! Form::label('', 'Valor da parcela') !!}
+                </div>
             </div>
 
             <div class="section sizes">
@@ -87,10 +154,6 @@
                     {!! Form::label('size_' . $number, $number) !!}
                 @endforeach
             </div>
-
-            @isset ($product)
-                <a href="{{ route('show-product', $product->slug) }}" class="btn-show-product">VER PRODUTO NO SITE</a>
-            @endisset
         {!! Form::close() !!}
     </div>
 @endsection

@@ -7,20 +7,29 @@
 @section('content')
     <div class="container page-product-edit {{ $section == 'add' ? 'page-add' : 'page-edit' }}">
         @if ($products->count() > 0 || $products->count() == 0 && isset($keyword))
-            <div class="top-images">
-                <div class="col-xs-6">
-                    <p>Altere os dados dos produtos e clique em "{{ $section == 'add' ? 'adicionar ao site' : 'salvar alterações' }}"</p>
-                </div>
+            @if ($products->count())
+                <div class="top-images">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <p>Altere os dados dos produtos e clique em "{{ $section == 'add' ? 'adicionar ao site' : 'salvar alterações' }}"</p>
+                            </div>
 
-                <div class="col-xs-6 text-right">
-                    <button type="button" class="btn-color-variation">VARIAÇÃO DE COR</button>
-                    <span class="color-variation-tooltip">Selecione as diferentes cores de um mesmo produto e clique em "variação de cor" para indicar no site que o produto está à venda em outras cores.</span>
+                            <div class="col-xs-6 text-right">
+                                <span class="btns-color-variation">
+                                    <button type="button" class="open-color-variation">VARIAÇÃO DE COR</button>
+                                    <button type="button" class="generate-color-variation">AGRUPAR VARIAÇÃO</button>
+                                </span>
+                                <span class="color-variation-tooltip">Clique para selecionar as diferentes cores de um mesmo produto e assim indicar no site que o produto está à venda em mais de uma cor.</span>
 
-                    <button type="button" class="btn-finish">{{ $section == 'add' ? 'ADICIONAR AO SITE' : 'SALVAR ALTERAÇÕES' }}</button>
+                                <button type="button" class="btn-finish">{{ $section == 'add' ? 'ADICIONAR AO SITE' : 'SALVAR ALTERAÇÕES' }}</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <span class="advice">* indica item obrigatorio</span>
-            </div>
+            @endif
 
             @if ($section == 'edit')
                 {!! Form::open(['method' => 'GET', 'route' => 'form-search-admin', 'id' => 'form-search']) !!}
@@ -41,9 +50,9 @@
 
                     <?php $variation = (array_search($product->related, $variations) + 1); ?>
 
-                    {!! Form::model($product, ['method' => 'POST', 'route' => ['save-products', $product->id], 'class' => 'form-edit-product', 'files' => true]) !!}
-                        {!! Form::hidden('related', null, ['class' => 'json']) !!}
-                        {!! Form::hidden('product_id', $product->id, ['class' => 'json']) !!}
+                    {!! Form::model($product, ['method' => 'POST', 'route' => ['save-products', $product->id], 'class' => "form-edit-product " . ($product->status == '0' ? 'product-disabled' : ''), 'files' => true]) !!}
+                        {!! Form::hidden('related', null, ['class' => 'field']) !!}
+                        {!! Form::hidden('product_id', $product->id, ['class' => 'field']) !!}
 
                         <div class="row">
                             <div class="col-xs-6 images">
@@ -70,46 +79,73 @@
                             </div>
 
                             <div class="col-xs-6 options">
-                                @if ($product->related)
-                                    <button type="button" class="select-color color-variation" data-variation="{{ $variation }}" title="Clique para remover esta cor da variação">Variação {{ $variation }}</button>
-                                @else
-                                    <button type="button" class="select-color">selecionar</button>
-                                @endif
-
-                                <button type="button" class="copy-data">copiar</button>
-                                <button type="button" class="paste-data">colar</button>
+                                <button type="button" class="delete-product" data-productid="{{ $product->id }}" data-url="{{ route('product-delete') }}" title="Excluir produto"></button>
 
                                 @if ($product->status != 2)
-                                    <button type="button" class="disable-product disabled {{ $product->status == 1 ? 'hidden' : '' }}" data-productid="{{ $product->id }}" data-url="{{ route('product-enable') }}">ocultado</button>
-                                    <button type="button" class="enable-product {{ $product->status == 0 ? 'hidden' : '' }}" data-productid="{{ $product->id }}" data-url="{{ route('product-disable') }}">ocultar</button>
+                                    <button type="button" class="disable-product disabled {{ $product->status == 1 ? 'hidden' : '' }}" data-productid="{{ $product->id }}" data-url="{{ route('product-enable') }}" title="Ativar produto"></button>
+                                    <button type="button" class="enable-product {{ $product->status == 0 ? 'hidden' : '' }}" data-productid="{{ $product->id }}" data-url="{{ route('product-disable') }}" title="Desativar produto"></button>
                                 @endif
 
-                                <button type="button" class="delete-product" data-productid="{{ $product->id }}" data-url="{{ route('product-delete') }}">apagar</button>
+                                <button type="button" class="paste-data" title="Colar dados"></button>
+                                <button type="button" class="copy-data" title="Copiar dados"></button>
+
+                                <button type="button" class="disable-reserve {{ $product->reserve == 1 ? 'hidden' : '' }}" data-productid="{{ $product->id }}" data-url="{{ route('reserve-enable') }}" title="Habilitar reserva"></button>
+                                <button type="button" class="enable-reserve disabled {{ $product->reserve == 0 ? 'hidden' : '' }}" data-productid="{{ $product->id }}" data-url="{{ route('reserve-disable') }}" title="Desabilitar reserva"></button>
 
                                 @if ($product->status == 1)
                                     <a href="{{ route('show-product', $product->slug) }}" target="_blank" title="Ver produto"></a>
+                                @endif
+
+                                @if ($product->related)
+                                    <button type="button" class="select-color color-variation" data-variation="{{ $variation }}" title="Clique para remover esta cor da variação">{{ $variation }}</button>
+                                @else
+                                    <button type="button" class="select-color" title="Variação de cor"></button>
                                 @endif
                             </div>
                         </div>
 
                         <div class="row">
-                            {!! Form::text('title', null, ['placeholder' => 'Título do produto* (A busca é feita com base nas palavras escritas aqui)', 'class' => 'title json', 'title' => 'Título do produto']) !!}
+                            <div class="form-group title">
+                                {!! Form::text('title', null, ['class' => 'field', 'placeholder' => ' ']) !!}
+                                {!! Form::label('', 'Título do produto * (A busca é feita com base nas palavras escritas aqui)') !!}
+                            </div>
 
-                            {!! Form::select('gender', $genders, null, ['title' => 'Gênero*', 'class' => 'selectpicker json']) !!}
+                            <div class="form-group">
+                                {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
+                                {!! Form::label('', 'Preço atual *') !!}
+                            </div>
 
-                            {!! Form::text('old_price', null, ['placeholder' => 'Preço anterior', 'class' => 'mask-money json', 'title' => 'Preço anterior']) !!}
+                            <div class="form-group gender">
+                                {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker field']) !!}
+                                {!! Form::label('', 'Gênero *', ['style' => (isset($product) && $product->gender) ? 'display: block;' : '']) !!}
+                            </div>
                         </div>
 
                         <div class="row">
-                            {!! Form::textarea('description', null, ['placeholder' => 'Descrição do produto', 'title' => 'Descrição do produto', 'class' => 'json']) !!}
+                            <div class="form-group description">
+                                {!! Form::textarea('description', null, ['placeholder' => ' ', 'class' => 'field']) !!}
+                                {!! Form::label('', 'Descrição do produto') !!}
+                            </div>
 
-                            {!! Form::text('installment', null, ['placeholder' => 'Parcelamento', 'class' => 'mask-x json']) !!}
+                            <div class="form-group">
+                                {!! Form::text('old_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
+                                {!! Form::label('', 'Preço anterior') !!}
+                            </div>
 
-                            {!! Form::text('price', null, ['placeholder' => 'Preço atual*', 'class' => 'mask-money json', 'title' => 'Preço atual']) !!}
+                            <div class="form-group">
+                                {!! Form::text('installment', null, ['placeholder' => ' ', 'class' => 'mask-x field']) !!}
+                                {!! Form::label('', 'Parcelamento') !!}
+                            </div>
 
-                            {!! Form::text('installment_price', null, ['placeholder' => 'Valor da parcela', 'class' => 'mask-money json', 'title' => 'Valor da parcela']) !!}
+                            <div class="form-group">
+                                {!! Form::text('reserve_discount', null, ['placeholder' => ' ', 'class' => 'mask-percent field']) !!}
+                                {!! Form::label('', 'Desconto na reserva') !!}
+                            </div>
 
-                            {!! Form::text('discount', $product->old_price ? str_replace('-', '', round(($product->price / $product->old_price - 1) * 100)) : null, ['placeholder' => 'Desconto', 'class' => 'mask-percent json', 'title' => 'Desconto']) !!}
+                            <div class="form-group">
+                                {!! Form::text('installment_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
+                                {!! Form::label('', 'Valor da parcela') !!}
+                            </div>
                         </div>
 
                         <div class="row sizes-container">
