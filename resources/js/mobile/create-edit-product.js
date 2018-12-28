@@ -1,7 +1,25 @@
 $(function() {
     $('.mask-money').mask('000.000.000.000.000,00', {reverse: true});
-    $('.mask-percent').mask('00%', { reverse: true, clearIfNotMatch : true });
-    $('.mask-x').mask('00x', { reverse: true, clearIfNotMatch : true });
+    $('.mask-percent').mask('00%', { reverse: true }).blur(function() {
+        if ($(this).val() == '%') {
+            $(this).val('');
+        }
+    });
+    $('.mask-x').mask('00x', { reverse: true }).blur(function() {
+        if ($(this).val() == 'x') {
+            $(this).val('');
+        }
+    });
+
+    $(document).on('blur', 'input[name=installment], input[name=price]', function() {
+        var form = $(this).parents('#form-create-edit-product'),
+            price = form.find('input[name=price]').val(),
+            installment = form.find('input[name=installment]').val();
+
+        if (price && installment) {
+            form.find('input[name=installment_price]').val(number_format(parseFloat(price.replace('.', '').replace(',', '.') / installment.replace('x', '')), 2, ',', '.'));
+        }
+    });
 
     $(document).on('change', '.page-create-edit-product select', function() {
         $(this).parent().next().show();
@@ -235,3 +253,29 @@ $(function() {
         }
     });
 });
+
+// Format dollar to real
+function number_format(numero, decimal, decimal_separador, milhar_separador) {
+    numero = (numero + '').replace(/[^0-9+\-Ee.]/g, '');
+    var n = !isFinite(+numero) ? 0 : +numero,
+        prec = !isFinite(+decimal) ? 0 : Math.abs(decimal),
+        sep = (typeof milhar_separador === 'undefined') ? ',' : milhar_separador,
+        dec = (typeof decimal_separador === 'undefined') ? '.' : decimal_separador,
+        s = '',
+        toFixedFix = function (n, prec) {
+            var k = Math.pow(10, prec);
+            return '' + Math.round(n * k) / k;
+        };
+
+    // Fix para IE: parseFloat(0.55).toFixed(0) = 0;
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    if(s[0].length > 3) {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if((s[1] || '').length < prec) {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+
+    return s.join(dec);
+}

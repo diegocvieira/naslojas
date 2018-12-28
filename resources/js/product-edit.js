@@ -1,7 +1,25 @@
 $(function() {
     $('.mask-money').mask('000.000.000.000.000,00', { reverse: true });
-    $('.mask-percent').mask('00%', { reverse: true, clearIfNotMatch : true });
-    $('.mask-x').mask('00x', { reverse: true, clearIfNotMatch : true });
+    $('.mask-percent').mask('00%', { reverse: true }).blur(function() {
+        if ($(this).val() == '%') {
+            $(this).val('');
+        }
+    });
+    $('.mask-x').mask('00x', { reverse: true }).blur(function() {
+        if ($(this).val() == 'x') {
+            $(this).val('');
+        }
+    });
+
+    $(document).on('blur', 'input[name=installment], input[name=price]', function() {
+        var form = $(this).parents('.form-edit-product'),
+            price = form.find('input[name=price]').val(),
+            installment = form.find('input[name=installment]').val();
+
+        if (price && installment) {
+            form.find('input[name=installment_price]').val(number_format(parseFloat(price.replace('.', '').replace(',', '.') / installment.replace('x', '')), 2, ',', '.'));
+        }
+    });
 
     $(document).on('change', '.form-edit-product select', function() {
         $(this).parent().next().show();
