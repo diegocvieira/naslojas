@@ -228,6 +228,13 @@ class ProductController extends Controller
                 if ($validation->fails()) {
                     $return['status'] = false;
                     $return['msg'] = $validation->errors()->first();
+
+                    return json_encode($return);
+                } else if (!isset($request->sizes)) {
+                    $return['status'] = false;
+                    $return['msg'] = 'Informe pelo menos um tamanho';
+
+                    return json_encode($return);
                 } else {
                     $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($request->product_id);
 
@@ -310,10 +317,10 @@ class ProductController extends Controller
                            }
                        }
                    }
+
+                   return json_encode($return);
                 }
             }
-
-            return json_encode($return);
         } else {
             foreach ($request->images as $index) {
                 $product = new Product;
@@ -383,6 +390,13 @@ class ProductController extends Controller
             if ($validation->fails()) {
                 $return['status'] = false;
                 $return['msg'] = $validation->errors()->first();
+
+                return json_encode($return);
+            } else if (!isset($request->sizes)) {
+                $return['status'] = false;
+                $return['msg'] = 'Informe pelo menos um tamanho';
+
+                return json_encode($return);
             } else {
                 if ($id && $key == 0) {
                     $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($id);
@@ -474,10 +488,10 @@ class ProductController extends Controller
                        }
                    }
                }
+
+               return json_encode($return);
             }
         }
-
-       return json_encode($return);
     }
 
     public function deleteImages($image)

@@ -11,6 +11,10 @@ $(function() {
         }
     });
 
+    $(document).on('change', '.sizes input', function() {
+        $(this).parents('.sizes').find('input').removeClass('error');
+    });
+
     $(document).on('blur', 'input[name=installment], input[name=price]', function() {
         var form = $(this).parents('#form-create-edit-product'),
             price = form.find('input[name=price]').val(),
@@ -191,6 +195,12 @@ $(function() {
         errorPlacement: function(error, element) {
         },
         submitHandler: function(form) {
+            if (!$(form).find('.sizes input').is(':checked')) {
+                $(form).find('.sizes input').addClass('error');
+
+                return false;
+            }
+
             $(form).find('input[type=submit]').val('SALVANDO').attr('disabled', true);
 
             var data = new FormData(),

@@ -288,6 +288,10 @@
                 color: #fff;
                 background-color: rgb(255, 23, 68);
             }
+
+            &.error + label {
+                background-color: rgb(255, 221, 221);
+            }
         }
 
         label {

@@ -9,7 +9,7 @@
         width: 100%;
         top: 60px;
         position: fixed;
-        z-index: 2;
+        z-index: 3;
         left: 0;
         padding-bottom: 10px;
         background-color: #fafafa;
@@ -506,6 +506,10 @@
                         &:checked + label {
                             color: #fff;
                             background-color: rgb(255, 23, 68);
+                        }
+
+                        &.error + label {
+                            background-color: rgb(255, 221, 221);
                         }
                     }
 

@@ -11,6 +11,10 @@ $(function() {
         }
     });
 
+    $(document).on('change', '.sizes input', function() {
+        $(this).parents('.sizes').find('input').removeClass('error');
+    });
+
     $(document).on('blur', 'input[name=installment], input[name=price]', function() {
         var form = $(this).parents('.form-edit-product'),
             price = form.find('input[name=price]').val(),
@@ -281,6 +285,12 @@ $(function() {
 
             if ($(this).find('.image.loaded-image').length == 0) {
                 images = false;
+            }
+
+            if (!$(this).find('.sizes input').is(':checked')) {
+                errors = true;
+
+                $(this).find('.sizes input').addClass('error');
             }
         });
 
