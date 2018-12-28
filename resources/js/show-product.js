@@ -36,7 +36,7 @@ $(function() {
     $(document).on('mousemove', '#image-destaque', function(e) {
         $(this).children('#photo-zoom').css('transform-origin', ((e.pageX - $(this).offset().left) / $(this).width()) * 100 + '% ' + ((e.pageY - $(this).offset().top) / $(this).height()) * 100 + '%');
     });
-    $(document).on('click', '.image-thumb', function() {
+    $(document).on('mouseover', '.image-thumb', function() {
         $('#image-destaque').find('#photo-zoom').attr('src', $(this).attr('src').replace('_resize', ''));
     });
 
