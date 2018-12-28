@@ -321,6 +321,7 @@ class ProductController extends Controller
                 $product->store_id = Auth::guard('store')->user()->store_id;
                 $product->status = 2;
                 $product->identifier = mt_rand(1000000000, 9999990000);
+                $product->reserve = Auth::guard('store')->user()->store->reserve;
 
                 // Checks if identifier arent in use
                 $NUM_OF_ATTEMPTS = 10;
