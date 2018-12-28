@@ -16,7 +16,7 @@
         <div class="item">
             <img src="{{ asset('images/know/calendar.png') }}" />
 
-            <p>Reserve o produto<br>que gostou por 24hs</p>
+            <p>Reserve por 24hs o<br>produto que gostou</p>
         </div>
 
         <div class="item">
