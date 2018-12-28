@@ -33,7 +33,7 @@
 
             @if ($section == 'edit')
                 {!! Form::open(['method' => 'GET', 'route' => 'form-search-admin', 'id' => 'form-search']) !!}
-                    {!! Form::text('keyword', $keyword ?? null, ['placeholder' => 'Digite aqui o produto que você deseja editar']) !!}
+                    {!! Form::text('keyword', $keyword ?? null, ['placeholder' => 'Pesquise aqui o produto que você deseja editar']) !!}
                     {!! Form::submit('') !!}
                 {!! Form::close() !!}
             @endif
