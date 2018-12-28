@@ -14,7 +14,7 @@ class Product extends Model
     protected $table = 'products';
     protected $fillable = ['store_id', 'title', 'slug', 'description', 'price', 'old_price', 'status', 'installment', 'gender', 'installment_price', 'related'];
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
-    protected $searchable = ['title'];
+    protected $searchable = ['title', 'identifier'];
 
     public function store()
     {
