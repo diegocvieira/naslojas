@@ -61,8 +61,18 @@
                                 <a href="{{ route('list-client-messages') }}">Mensagens</a>
                             </li>
                         @elseif (Auth::guard('store')->check())
+                            @if(Auth::guard('store')->user()->store->status)
+                                <li>
+                                    <a href="{{ route('show-store', Auth::guard('store')->user()->store->slug) }}">Minha loja</a>
+                                </li>
+                            @endif
+
                             <li>
-                                <a href="{{ route('edit-products') }}">Produtos</a>
+                                <a href="{{ route('get-create-edit-product') }}">Adicionar produtos</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('edit-products') }}">Editar produtos</a>
                             </li>
 
                             <li>
