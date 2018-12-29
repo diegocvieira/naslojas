@@ -60,7 +60,8 @@ class StoreController extends Controller
 			$header_desc = 'Clique para ver ' . $keyword . ' na loja ' . $store->name . ' em ' . $store->city->title . ' - ' . $store->city->state->letter;
 
             $products = $products->where(function ($query) use ($keyword) {
-                $query->search($keyword);
+                //$query->search($keyword);
+                $query->where('title', 'like', '%' . $keyword . '%');
             });
         }
 
@@ -69,7 +70,8 @@ class StoreController extends Controller
         if ($keyword && $products->count() == 0) {
             $products = Product::where('store_id', $store->id)->filterGender($search_gender)->filterOrder($search_order)
                 ->where(function ($query) use ($keyword) {
-                    $query->search(preg_replace('{(.)\1+}','$1', $keyword));
+                    //$query->search(preg_replace('{(.)\1+}','$1', $keyword));
+                    $query->where('title', 'like', '%' . preg_replace('{(.)\1+}','$1', $keyword) . '%');
                 })
                 ->paginate(30);
         }
