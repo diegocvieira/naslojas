@@ -333,7 +333,7 @@ $(function() {
                     success: function (data) {
                         $('.btn-finish').text('SALVAR ALTERAÇÕES').attr('disabled', false);
 
-                        if(data.status) {
+                        if (data.status) {
                             window.location.reload(true);
                         } else {
                             modalAlert(data.msg);

@@ -48,6 +48,10 @@
                                     </span>
                                 @endif
 
+                                @if ($product->reserve && $product->reserve_discount)
+                                    <span class="reserve"><span>R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span> NA RESERVA</span>
+                                @endif
+
                                 <p class="title" title="{{ $product->title }}">{{ $product->title }}</p>
                             </a>
 

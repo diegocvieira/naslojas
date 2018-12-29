@@ -49,6 +49,10 @@
                     {{ _taxes($product->installment, $product->installment_price, $product->price) }}
                 </span>
             @endif
+
+            @if ($product->reserve && $product->reserve_discount)
+                <span class="reserve" title="Preço com desconto reservado pelo naslojas"><span>R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span> na reserva pelo <i>naslojas</i></span>
+            @endif
         </div>
 
         @if ($product->sizes->count() > 0)
@@ -183,6 +187,10 @@
                                             em até {{ $rp->installment }}x de R$ {{ number_format($rp->installment_price, 2, ',', '.') }}
                                             {{ _taxes($rp->installment, $rp->installment_price, $rp->price) }}
                                         </span>
+                                    @endif
+
+                                    @if ($product->reserve && $product->reserve_discount)
+                                        <span class="reserve"><span>R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span> NA RESERVA</span>
                                     @endif
 
                                     <p class="title" title="{{ $rp->title }}">{{ $rp->title }}</p>

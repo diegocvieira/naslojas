@@ -317,10 +317,10 @@ class ProductController extends Controller
                            }
                        }
                    }
-
-                   return json_encode($return);
                 }
             }
+
+            return json_encode($return);
         } else {
             foreach ($request->images as $index) {
                 $product = new Product;

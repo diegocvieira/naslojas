@@ -73,7 +73,7 @@
             <span class="old-price">de R$ {{ number_format($product->old_price, 2, ',', '.') }}</span>
         @endif
 
-        <span class="price"><span>R$</span> {{ number_format($product->price, 2, ',', '.') }}</span>
+        <span class="price" title="{{ ($product->reserve && $product->reserve_discount) ? 'Preço normal cobrado pela loja' : '' }}"><span>R$</span> {{ number_format($product->price, 2, ',', '.') }}</span>
 
         @if ($product->old_price)
             <span class="price-off">{{ _discount($product->price, $product->old_price) }}% OFF</span>
@@ -84,6 +84,10 @@
                 em até {{ $product->installment }}x de R$ {{ number_format($product->installment_price, 2, ',', '.') }}
                 {{ _taxes($product->installment, $product->installment_price, $product->price) }}
             </span>
+        @endif
+
+        @if ($product->reserve && $product->reserve_discount)
+            <span class="reserve" title="Preço com desconto reservado pelo naslojas"><span>R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span> na reserva pelo <i>naslojas</i></span>
         @endif
     </div>
 
@@ -126,8 +130,14 @@
         <button type="button" class="btn-product-confirm" data-url="{{ route('create-product-confirm') }}" data-productid="{{ $product->id }}">CONFIRMAR</button>
         <span class="btn-tooltip">Confirmar se o produto ainda está disponível.</span>
 
-        @if($product->store->reserve)
-            <button type="button" class="btn-product-reserve" data-url="{{ route('create-product-reserve') }}" data-productid="{{ $product->id }}">RESERVAR</button>
+        @if($product->reserve)
+            <button type="button" class="btn-product-reserve" data-url="{{ route('create-product-reserve') }}" data-productid="{{ $product->id }}">
+                @if($product->reserve_discount)
+                    RESERVAR POR R$ <span>{{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span>
+                @else
+                    RESERVAR
+                @endif
+            </button>
             <span class="btn-tooltip">Você só precisa ir até a loja e informar o seu nome.</span>
         @else
             <button type="button" class="btn-disabled">RESERVA DESABILITADA</button>
@@ -173,17 +183,21 @@
                                 <span class="old-price">de R$ {{ number_format($rp->old_price, 2, ',', '.') }}</span>
                             @endif
 
-                            <span class="price"><span>R$</span> {{ number_format($rp->price, 2, ',', '.') }}</span>
+                            <span class="price" title="{{ ($product->reserve && $product->reserve_discount) ? 'Preço normal cobrado pela loja' : '' }}"><span>R$</span> {{ number_format($product->price, 2, ',', '.') }}</span>
 
-                            @if ($rp->old_price)
-    							<span class="price-off">{{ _discount($rp->price, $rp->old_price) }}% OFF</span>
-    						@endif
+                            @if ($product->old_price)
+                                <span class="price-off">{{ _discount($product->price, $product->old_price) }}% OFF</span>
+                            @endif
 
-                            @if ($rp->installment && $rp->installment_price)
+                            @if ($product->installment && $product->installment_price)
                                 <span class="parcels">
-                                    em até {{ $rp->installment }}x de R$ {{ number_format($rp->installment_price, 2, ',', '.') }}
-                                    {{ _taxes($rp->installment, $rp->installment_price, $rp->price) }}
+                                    em até {{ $product->installment }}x de R$ {{ number_format($product->installment_price, 2, ',', '.') }}
+                                    {{ _taxes($product->installment, $product->installment_price, $product->price) }}
                                 </span>
+                            @endif
+
+                            @if ($product->reserve && $product->reserve_discount)
+                                <span class="reserve" title="Preço com desconto reservado pelo naslojas"><span>R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span> NA RESERVA</span>
                             @endif
 
                             <p class="title" title="{{ $rp->title }}">{{ $rp->title }}</p>

@@ -23,6 +23,11 @@ function _discount($price, $old_price)
 	}
 }
 
+function _reservePrice($price, $discount)
+{
+    return $price - ($price * ($discount / 100));
+}
+
 function _taxes($parcel_qtd, $parcel_price, $product_price)
 {
     if (round($parcel_qtd * $parcel_price) == round($product_price)) {
