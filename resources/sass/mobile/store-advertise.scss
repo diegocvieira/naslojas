@@ -144,22 +144,21 @@
             color: #000;
             margin: 0;
 
+            &:first-child {
+                margin-bottom: 20px;
+            }
+
             &.taxe {
                 font-size: 16.6px;
             }
         }
 
         h3 {
-            font-size: 33.3px;
+            font-size: 28.3px;
             color: #000;
             line-height: 1.1;
-            margin: 5px 0 10px 0;
-
-            span {
-                font-size: 50px;
-                font-weight: 700;
-                font-family: 'Roboto';
-            }
+            margin: 15px 0 20px 0;
+            font-family: 'KeepCalm';
         }
     }
 
