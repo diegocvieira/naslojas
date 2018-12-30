@@ -199,7 +199,7 @@ $(function() {
         $('.copy-data').removeClass('copied');
         $(this).addClass('copied');
 
-        form.find('.field').each(function() {
+        form.find('.field').not('.field[name=product_id], .field[name=related]').each(function() {
             localStorage.setItem($(this).attr('name'), $(this).val());
         });
 
@@ -216,7 +216,7 @@ $(function() {
 
         var form = $(this).parents('.form-edit-product');
 
-        form.find('.field').each(function() {
+        form.find('.field').not('.field[name=product_id], .field[name=related]').each(function() {
             $(this).val(localStorage.getItem($(this).attr('name')));
 
             if ($(this).attr('name') == 'gender') {

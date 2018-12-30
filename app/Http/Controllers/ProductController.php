@@ -160,7 +160,8 @@ class ProductController extends Controller
 
             $products = $products->where(function ($query) use ($keyword) {
                 //$query->search($keyword);
-                $query->where('title', 'like', '%' . $keyword . '%');
+                $query->where('title', 'like', '%' . $keyword . '%')
+                    ->orWhere('identifier', $keyword);
             });
         }
 

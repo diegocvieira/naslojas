@@ -84,7 +84,7 @@ $(function() {
         if (type == 'copy-data') {
             var form = $('#form-create-edit-product');
 
-            form.find('.field').each(function() {
+            form.find('.field').not('.field[name=product_id], .field[name=related]').each(function() {
                 localStorage.setItem($(this).attr('name'), $(this).val());
             });
 
@@ -96,7 +96,7 @@ $(function() {
         } else if (type == 'paste-data') {
             var form = $('#form-create-edit-product');
 
-            form.find('.field').each(function() {
+            form.find('.field').not('.field[name=product_id], .field[name=related]').each(function() {
                 $(this).val(localStorage.getItem($(this).attr('name')));
 
                 if ($(this).attr('name') == 'gender') {
