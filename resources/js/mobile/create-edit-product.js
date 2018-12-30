@@ -20,7 +20,7 @@ $(function() {
             price = form.find('input[name=price]').val(),
             installment = form.find('input[name=installment]').val();
 
-        if (price && installment) {
+        if (price && installment && !$('input[name=installment_price]').val()) {
             form.find('input[name=installment_price]').val(number_format(parseFloat(price.replace('.', '').replace(',', '.') / installment.replace('x', '')), 2, ',', '.'));
         }
     });
