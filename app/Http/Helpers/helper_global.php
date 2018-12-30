@@ -25,7 +25,7 @@ function _discount($price, $old_price)
 
 function _reservePrice($price, $discount)
 {
-    return $price - ($price * ($discount / 100));
+    return round($price - ($price * ($discount / 100)), 2);
 }
 
 function _taxes($parcel_qtd, $parcel_price, $product_price)
