@@ -75,8 +75,8 @@ class Product extends Model
 	    });
 
         static::addGlobalScope('orderby-reserve', function(Builder $builder) {
-            $builder->orderBy('reserve_discount', 'DESC')
-                ->orderBy('reserve', 'DESC');
+            $builder->orderBy('reserve', 'DESC')
+                ->orderBy('reserve_discount', 'DESC');
 	    });
 	}
 }
