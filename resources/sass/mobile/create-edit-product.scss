@@ -183,20 +183,6 @@
     }
 
     .images {
-        .color-variation {
-            float: left;
-            width: 100%;
-            margin-bottom: 15px;
-        }
-
-        .add-color-variation {
-            float: left;
-            font-size: 12.5px;
-            color: rgb(122, 184, 236);
-            border: none;
-            background-color: transparent;
-        }
-
         input[type=checkbox], input[type=file] {
             display: none;
         }

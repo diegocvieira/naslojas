@@ -35,22 +35,6 @@ $(function() {
         $(this).next().trigger('click');
     });
 
-    $(document).on('click', '.page-create-edit-product .add-color-variation', function(e) {
-        e.preventDefault();
-
-        $('.images').find('.color-variation:last').after($('.color-variation:last').clone());
-
-        var last = $('.images').find('.color-variation:last'),
-            related = $('#form-create-edit-product').find('input[name=related]');
-
-        last.find('.image').removeClass('loaded-image').addClass('no-image').find('input:file').val('');
-        last.find('input[name=image_position], input[name=image_remove]').remove();
-
-        if (!related.val()) {
-            related.val(Math.round((new Date()).getTime()));
-        }
-    });
-
     // Remove images
     $(document).on('click', '.page-create-edit-product .remove-image', function() {
         var image_container = $(this).parent();

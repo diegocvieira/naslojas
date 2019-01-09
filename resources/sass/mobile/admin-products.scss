@@ -39,6 +39,19 @@
         float: left;
         margin-top: 25px;
 
+        .pagination a {
+            background-color: transparent;
+            border: 1px solid rgb(255, 23, 68);
+            color: rgb(255, 23, 68);
+            font-weight: 700;
+            border-radius: 25px;
+            padding: 10px 20px;
+
+            &:after {
+                background-image: url('');
+            }
+        }
+
         .product {
     		display: inline-block;
             width: calc(50% - 10px);
@@ -61,6 +74,40 @@
 
             &.disabled .image {
                 opacity: .3;
+            }
+
+            &.product-variation {
+                .variation-horizontal {
+                    position: absolute;
+                    right: -20px;
+                    top: 75px;
+                    width: 15px;
+                    height: 3px;
+                    background-color: rgb(255, 23, 68);
+                }
+
+                .variation-vertical {
+                    position: absolute;
+                    width: 3px;
+                    height: 15px;
+                    bottom: -20px;
+                    left: 75px;
+                    background-color: rgb(255, 23, 68);
+                }
+
+                .variation-diagonal {
+                    position: absolute;
+                    width: 3px;
+                    height: 15px;
+                    bottom: -18px;
+                    left: -12px;
+                    background-color: rgb(255, 23, 68);
+                    transform: rotate(40deg);
+                }
+            }
+
+            &.hide-horizontal .variation-horizontal {
+                display: none;
             }
 
             input[type=checkbox] {

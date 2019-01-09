@@ -165,18 +165,30 @@ class ProductController extends Controller
             });
         }
 
-        $products = $products->orderBy('id', 'DESC')->paginate(30);
+        $products = $products->leftJoin(DB::raw("(SELECT RELATED, MAX(ID) MAX_ID FROM products WHERE RELATED IS NOT NULL GROUP BY RELATED) AS P2"), 'P2.related', 'products.related')
+            ->orderByRaw('CASE WHEN P2.related IS NULL THEN products.id ELSE max_id END DESC')
+            ->orderBy('products.id', 'DESC')
+            ->paginate(30);
 
-        if (Agent::isDesktop()) {
-            $section = 'edit';
+        $section = 'edit';
+        $header_title = 'Editar produtos - naslojas.com';
 
-            $header_title = 'Editar produtos - naslojas.com';
-
-            return view('store.product-edit', compact('products', 'section', 'keyword', 'header_title'));
+        if (!\Request::ajax()) {
+            if (Agent::isDesktop()) {
+                return view('store.product-edit', compact('products', 'section', 'keyword', 'header_title'));
+            } else {
+                return view('mobile.store.admin-products', compact('products', 'keyword', 'header_title'));
+            }
         } else {
-            $header_title = 'Produtos - naslojas.com';
-
-            return view('mobile.store.admin-products', compact('products', 'keyword', 'header_title'));
+            if (Agent::isDesktop()) {
+                return response()->json([
+                    'products' => view('store.list-product-edit', compact('products'))->render()
+                ]);
+            } else {
+                return response()->json([
+                    'products' => view('mobile.store.list-admin-products', compact('products'))->render()
+                ]);
+            }
         }
     }
 
@@ -224,6 +236,8 @@ class ProductController extends Controller
 
     public function save(Request $request, $id = null)
     {
+        $store_id = Auth::guard('store')->user()->store_id;
+
         if ($id) {
             foreach ($request->products as $data) {
                 $request = (object)$data;
@@ -245,7 +259,9 @@ class ProductController extends Controller
 
                     return json_encode($return);
                 } else {
-                    $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($request->product_id);
+                    $product = Product::withoutGlobalScopes(['active', 'active-store'])
+                        ->where('store_id', $store_id)
+                        ->find($request->product_id);
 
                     if ($product->status == 2) {
                         $product->status = 1;
@@ -259,7 +275,6 @@ class ProductController extends Controller
                     $product->installment_price = $request->installment_price ? number_format(str_replace(['.', ','], ['', '.'], $request->installment_price), 2, '.', '') : null;
                     $product->slug = str_slug($product->title, '-');
                     $product->description = $request->description;
-                    $product->related = $request->related;
                     $product->reserve_discount = $request->reserve_discount ? str_replace('%', '', $request->reserve_discount) : null;
 
                     // check if slug already exists and add dash in the end
@@ -334,7 +349,7 @@ class ProductController extends Controller
             foreach ($request->images as $index) {
                 $product = new Product;
 
-                $product->store_id = Auth::guard('store')->user()->store_id;
+                $product->store_id = $store_id;
                 $product->status = 2;
                 $product->identifier = mt_rand(1000000000, 9999990000);
                 $product->reserve = Auth::guard('store')->user()->store->reserve;
@@ -543,6 +558,9 @@ class ProductController extends Controller
         if ($product) {
             $return['status'] = true;
             $return['type'] = 'delete';
+
+            // Verify and set to null if exists a unique related product
+            $this->verifyVariation();
         } else {
             $return['status'] = false;
         }
@@ -682,6 +700,41 @@ class ProductController extends Controller
         }
 
         return json_encode($return);
+    }
+
+    public function colorVariation(Request $request)
+    {
+        foreach ($request->ids as $id) {
+            $save = Product::withoutGlobalScopes(['active', 'active-store'])->find($id)->update(['related' => $request->variation]);
+        }
+
+        $return['status'] = $save ? true : false;
+
+        // Verify and set to null if exists a unique related product
+        $this->verifyVariation();
+
+        return json_encode($return);
+    }
+
+    public function verifyVariation()
+    {
+        $store_id = Auth::guard('store')->user()->store_id;
+
+        $relateds = Product::withoutGlobalScopes(['orderby-reserve', 'active', 'active-store'])
+            ->select('related')
+            ->groupBy('related')
+            ->havingRaw('count(*) = 1')
+            ->where('store_id', $store_id)
+            ->get();
+
+        foreach ($relateds as $related) {
+            Product::withoutGlobalScopes(['active', 'active-store'])
+                ->select('id')
+                ->where('related', $related->related)
+                ->where('store_id', $store_id)
+                ->first()
+                ->update(['related' => null]);
+        }
     }
 
     private function rules()

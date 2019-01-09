@@ -46,7 +46,7 @@
                 background-color: rgb(230, 230, 230);
             }
 
-            &.generate-color-variation {
+            &.generate-color-variation, &.remove-color-variation {
                 display: none;
                 color: rgb(255, 23, 68);
             }
@@ -126,16 +126,51 @@
         width: 100%;
         margin-top: 65px;
 
+        .pagination a {
+            background-color: transparent;
+            border: 1px solid rgb(255, 23, 68);
+            color: rgb(255, 23, 68);
+            font-weight: 700;
+            border-radius: 25px;
+            padding: 10px 20px;
+
+            &:after {
+                background-image: url('');
+            }
+        }
+
         form {
             float: left;
             width: 100%;
             border-top: 1px solid rgb(230, 230, 230);
             margin-top: 50px;
             padding-top: 50px;
+            position: relative;
 
             &:first-child {
                 margin-top: 0;
                 border-top: none;
+            }
+
+            &.product-variation {
+                .variation {
+                    position: absolute;
+                    left: -30px;
+                    top: 220px;
+                    height: 385px;
+                    width: 1px;
+                    background-color: rgb(255, 23, 68);
+
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 15px;
+                        height: 1px;
+                        background-color: rgb(255, 23, 68);
+                    }
+                }
             }
 
             &.product-disabled {
@@ -185,7 +220,7 @@
                         margin-right: 15px;
                         display: none;
 
-                        &.selected, &.color-variation {
+                        &.selected {
                             border-color: rgb(255, 23, 68);
                         }
 
@@ -194,10 +229,6 @@
                             background-position: center;
                             background-repeat: no-repeat;
                             background-size: contain;
-                        }
-
-                        &.color-variation {
-                            display: block;
                         }
                     }
 

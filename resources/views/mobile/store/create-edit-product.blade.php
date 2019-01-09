@@ -8,8 +8,6 @@
             {!! Form::open(['method' => 'POST', 'route' => 'save-product-individual', 'id' => 'form-create-edit-product', 'files' => true]) !!}
         @endif
 
-            {!! Form::hidden('related', null, ['class' => 'field']) !!}
-
             <header>
                 <a href="javascript: history.go(-1);" class="btn-back"></a>
 
@@ -69,32 +67,28 @@
             <span class="advice">* indica item obrigatório</span>
 
             <div class="section images">
-                <div class="color-variation">
-                    @isset ($product)
-                        @foreach ($product->images as $key => $image)
-                            <div class="image loaded-image">
-                                <span class="remove-image"></span>
-                                {!! Form::checkbox('image_remove[]', $image->image, false, ['autocomplete' => 'off']) !!}
+                @isset ($product)
+                    @foreach ($product->images as $key => $image)
+                        <div class="image loaded-image">
+                            <span class="remove-image"></span>
+                            {!! Form::checkbox('image_remove[]', $image->image, false, ['autocomplete' => 'off']) !!}
 
-                                <span class="btn-add-image"></span>
-                                {!! Form::file('image[]', ['data-position' => $key, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
-
-                                <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $image->image) }}" />
-                            </div>
-                        @endforeach
-                    @endisset
-
-                    @for ($i = isset($product) ? ($product->images->count() + 1) : 1; $i <= 5; $i++)
-                        <div class="image no-image">
                             <span class="btn-add-image"></span>
-                            {!! Form::file('image[]', ['data-position' => $i, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
+                            {!! Form::file('image[]', ['data-position' => $key, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
 
-                            <img src="#" />
+                            <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $image->image) }}" />
                         </div>
-                    @endfor
-                </div>
+                    @endforeach
+                @endisset
 
-                <button type="button" class="add-color-variation">ADICIONAR VARIAÇÃO DE COR</button>
+                @for ($i = isset($product) ? ($product->images->count() + 1) : 1; $i <= 5; $i++)
+                    <div class="image no-image">
+                        <span class="btn-add-image"></span>
+                        {!! Form::file('image[]', ['data-position' => $i, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
+
+                        <img src="#" />
+                    </div>
+                @endfor
             </div>
 
             <div class="section">

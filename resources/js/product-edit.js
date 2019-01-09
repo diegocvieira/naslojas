@@ -111,73 +111,105 @@ $(function() {
         });
     });
 
+    // Load more results
+    $(document).on('click', '.page-product-edit .pagination a', function(e) {
+        e.preventDefault();
+
+        $(this).css('pointer-events', 'none');
+
+        $.ajax({
+            url: $(this).attr('href'),
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                $('.page-product-edit').find('.pagination').remove();
+                $('.page-product-edit').find('.forms').append(data.products);
+
+                variation();
+            }
+        });
+    });
+
+    if ($('.page-product-edit').length) {
+        variation();
+    }
+
     // Select or remove products to color variation
     $(document).on('click', '.select-color', function(e) {
         e.preventDefault();
 
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        } else if ($(this).hasClass('color-variation')) {
-            var data_variation = $('.color-variation[data-variation=' + $(this).data('variation') + ']');
+        $(this).toggleClass('selected');
 
-            if (data_variation.length == 2) {
-                data_variation.parents('.form-edit-product').find('input[name=related]').val('');
-                data_variation.removeClass('color-variation').removeAttr('title').text('');
+        if ($('.open-color-variation').is(':visible')) {
+            $('.open-color-variation').hide();
 
-                if ($('.generate-color-variation').is(':visible')) {
-                    data_variation.show();
-                }
-            } else {
-                $(this).parents('.form-edit-product').find('input[name=related]').val('');
-                $(this).removeClass('color-variation').removeAttr('title').text('');
-
-                if ($('.generate-color-variation').is(':visible')) {
-                    $(this).show();
-                }
-            }
-        } else {
-            $(this).addClass('selected');
+            $(this).hasClass('color-variation') ? $('.remove-color-variation').show() : $('.generate-color-variation').show();
         }
     });
 
-    // Open color variations buttons
+    // Show checkbox variation
     $(document).on('click', '.open-color-variation', function(e) {
         e.preventDefault();
 
-        $('button.select-color').show();
-        $('.btns-color-variation').find('button').toggle();
+        $('button.select-color').toggle();
     });
 
-    // Generate color variation
-    $(document).on('click', '.generate-color-variation', function(e) {
+    // Generate/Remove color variation
+    $(document).on('click', '.generate-color-variation, .remove-color-variation', function(e) {
         e.preventDefault();
 
-        var random = Math.round((new Date()).getTime()),
-            actives = $('.select-color.selected'),
-            next_product = 1;
+        var btn_generate = $(this).hasClass('generate-color-variation') ? true : false,
+            variation_value = btn_generate ? Math.round((new Date()).getTime()) : null,
+            selected = $('.select-color.selected'),
+            ids = [];
 
-        actives.parents('.form-edit-product').find('input[name=related]').val(random);
+        if (selected.length < 2 && btn_generate) {
+            modalAlert('Selecione dois ou mais produtos para agrupar.');
+        } else if (selected.length < 1 && !btn_generate) {
+            modalAlert('Selecione pelo menos um produto para desagrupar.');
+        } else {
+            $(this).hide();
+            $('.select-color').removeClass('selected').hide();
+            $('.open-color-variation').show();
 
-        if(actives.length > 1) {
-            actives.removeClass('selected');
+            selected.each(function(index) {
+                var val = $(this).parents('.form-edit-product').attr('data-related');
 
-            $.each($('.color-variation'), function(index, val) {
-                var c = $(this).attr('data-variation');
-
-                if (c >= next_product) {
-                    next_product = (parseInt(c) + 1);
+                if (btn_generate) {
+                    $(this).parents('.form-edit-product').addClass('product-variation').attr('data-related', variation_value);
+                } else {
+                    $(this).parents('.form-edit-product').removeClass('product-variation').removeAttr('data-related');
                 }
+
+                var related = $(".form-edit-product[data-related='" + val + "']");
+
+                if (related.length == 1) {
+                    related.removeClass('product-variation').removeAttr('data-related');
+                }
+
+                if (index != 0 && btn_generate) {
+                    $(".form-edit-product[data-related='" + variation_value + "']").first().after($(this).parents('.form-edit-product')[0]);
+                }
+
+                ids.push($(this).parents('.form-edit-product').find('input[name=product_id]').val());
             });
 
-            actives.addClass('color-variation')
-                .text(next_product)
-                .attr('data-variation', next_product)
-                .attr('title', 'Clique para remover esta cor da variação');
-
-            $('button.select-color').not('.color-variation').hide();
-            $('.btns-color-variation').find('button').toggle();
-        } else {
-            modalAlert('Selecione dois ou mais produtos para agrupar.');
+            $.ajax({
+                url: $(this).data('url'),
+                method: 'POST',
+                dataType: 'json',
+                data: { ids : ids, variation : variation_value },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    if (data.status) {
+                        variation();
+                    } else {
+                        modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                    }
+                }
+            });
         }
     });
 
@@ -416,4 +448,24 @@ function number_format(numero, decimal, decimal_separador, milhar_separador) {
     }
 
     return s.join(dec);
+}
+
+function variation() {
+    var form = $('.product-variation');
+
+    form.find('.variation').remove();
+
+    form.each(function() {
+        var related = $(".product-variation[data-related='" + $(this).attr('data-related') + "']");
+
+        $(this).prepend("<span class='variation'></span>");
+
+        if ($(this)[0] === related.last()[0]) {
+            $(this).find('.variation').css('height', '0');
+        }
+
+        if (related.length == 1) {
+            $(this).find('.variation').remove();
+        }
+    });
 }

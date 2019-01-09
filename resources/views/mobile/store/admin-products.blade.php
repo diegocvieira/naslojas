@@ -39,6 +39,14 @@
                         </li>
 
                         <li>
+                            <a href="{{ route('color-variation') }}" data-type="variation-generate">Agrupar variação</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('color-variation') }}" data-type="variation-remove">Desagrupar variação</a>
+                        </li>
+
+                        <li>
                             <a href="{{ route('product-delete') }}" data-type="delete">Excluir</a>
                         </li>
                     </ul>
@@ -49,19 +57,8 @@
 
     <div class="container">
         {!! Form::open(['method' => 'POST', 'id' => 'form-product-manager']) !!}
-            @foreach ($products as $product)
-                <div class="product {{ $product->status == 0 ? 'disabled' : '' }}" data-slug="{{ $product->slug }}">
-                    {!! Form::checkbox('id[]', $product->id, null, ['id' => 'product_' . $product->id, 'autocomplete' => 'off']) !!}
-                    {!! Form::label('product_' . $product->id, ' ') !!}
-
-                    <a href="{{ route('get-create-edit-product', $product->id) }}">
-                        <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $product->images->first()->image) }}" class="image" alt="{{ $product->title }}" />
-                    </a>
-                </div>
-            @endforeach
+            @include('mobile.store.list-admin-products')
         {!! Form::close() !!}
-
-        @include('mobile.pagination', ['paginator' => $products])
 
         <a href="{{ route('get-create-edit-product') }}" class="btn-create-edit-product">+</a>
     </div>

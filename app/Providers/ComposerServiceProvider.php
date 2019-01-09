@@ -18,7 +18,7 @@ class ComposerServiceProvider extends ServiceProvider
 
         view()->composer(['home', 'store.show', 'search', 'mobile.inc.top-nav'], 'App\Http\ViewComposers\FiltersComposer');
 
-        view()->composer(['store.product-edit', 'mobile.store.create-edit-product'], 'App\Http\ViewComposers\SelectsProductComposer');
+        view()->composer(['store.list-product-edit', 'mobile.store.create-edit-product'], 'App\Http\ViewComposers\SelectsProductComposer');
     }
 
     /**
