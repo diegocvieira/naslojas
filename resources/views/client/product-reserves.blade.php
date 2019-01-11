@@ -13,6 +13,7 @@
                 <thead>
                     <tr>
                         <th>Produto</th>
+                        <th>Loja</th>
                         <th>Data da reserva</th>
                         <th>Confirmação da loja</th>
                         <th>Reservar até</th>
@@ -27,6 +28,7 @@
                     @foreach ($reserves as $reserve)
                         <tr>
                             <td>#{{ $reserve->product->identifier }}</td>
+                            <td>{{ $reserve->product->store->name }}</td>
                             <td>{{ date('d/m/y - H:i', strtotime($reserve->created_at)) }}</td>
                             <td>{{ $reserve->confirmed_at ? date('d/m/y - H:i', strtotime($reserve->confirmed_at)) : '-----' }}</td>
                             <td>{{ $reserve->reserved_until ? date('d/m/y - H:i', strtotime($reserve->reserved_until)) : '-----' }}</td>

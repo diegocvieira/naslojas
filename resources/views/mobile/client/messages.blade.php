@@ -30,6 +30,11 @@
                             </div>
 
                             <div class="info">
+                                <span class="info-title">Loja</span>
+                                <span class="info-detail">{{ $message->product->store->name }}</span>
+                            </div>
+
+                            <div class="info">
                                 <span class="info-title">Data da mensagem</span>
                                 <span class="info-detail">{{ date('d/m/y - H:i', strtotime($message->created_at)) }}</span>
                             </div>

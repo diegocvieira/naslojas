@@ -30,6 +30,11 @@
                             </div>
 
                             <div class="info">
+                                <span class="info-title">Loja</span>
+                                <span class="info-detail">{{ $confirm->product->store->name }}</span>
+                            </div>
+
+                            <div class="info">
                                 <span class="info-title">Data da solicitação</span>
                                 <span class="info-detail">{{ date('d/m/y - H:i', strtotime($confirm->created_at)) }}</span>
                             </div>
