@@ -13,6 +13,7 @@
                 <thead>
                     <tr>
                         <th>Produto</th>
+                        <th>Cliente</th>
                         <th>Data da solicitação</th>
                         <th>Confirmação da loja</th>
                         <th>Status</th>
@@ -26,6 +27,7 @@
                     @foreach ($confirms as $confirm)
                         <tr>
                             <td>#{{ $confirm->product->identifier }}</td>
+                            <td>{{ $confirm->client->name }}</td>
                             <td>{{ date('d/m/y - H:i', strtotime($confirm->created_at)) }}</td>
                             <td class="confirmed_date">{{ $confirm->confirmed_at ? date('d/m/y - H:i', strtotime($confirm->confirmed_at)) : '-----' }}</td>
 

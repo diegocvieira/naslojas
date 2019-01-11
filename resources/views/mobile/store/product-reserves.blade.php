@@ -30,6 +30,11 @@
                             </div>
 
                             <div class="info">
+                                <span class="info-title">Cliente</span>
+                                <span class="info-detail">{{ $reserve->client->name }}</span>
+                            </div>
+
+                            <div class="info">
                                 <span class="info-title">Data da reserva</span>
                                 <span class="info-detail">{{ date('d/m/y - H:i', strtotime($reserve->created_at)) }}</span>
                             </div>
