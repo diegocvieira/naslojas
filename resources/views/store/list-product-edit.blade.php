@@ -44,7 +44,11 @@
                     <a href="{{ route('show-product', $product->slug) }}" target="_blank" title="Ver produto"></a>
                 @endif
 
-                <button type="button" class="select-color {{ $product->related ? 'color-variation' : '' }}" title="Variação de cor"></button>
+                @if ($product->related)
+                    <button type="button" class="select-color color-variation" data-url="{{ route('color-variation') }}" title="Remover variação"></button>
+                @else
+                    <button type="button" class="select-color" title="Selecionar variação"></button>
+                @endif
             </div>
         </div>
 

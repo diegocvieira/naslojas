@@ -198,6 +198,7 @@
                     width: 60px;
                     height: 22px;
                     float: right;
+                    position: relative;
 
                     &.hidden {
                         display: none;
@@ -205,6 +206,21 @@
 
                     &.disabled, &.copied, &.selected {
                         color: rgb(255, 23, 68);
+                        -webkit-filter: sepia(100%) hue-rotate(-55deg) saturate(1000%);
+                        filter: sepia(100%) hue-rotate(-55deg) saturate(1000%);
+                    }
+
+                    &.color-variation:after {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        background-position: center;
+                        width: 100%;
+                        height: 100%;
+                        background-image: url('../images/icon-remove.png');
                         -webkit-filter: sepia(100%) hue-rotate(-55deg) saturate(1000%);
                         filter: sepia(100%) hue-rotate(-55deg) saturate(1000%);
                     }

@@ -104,6 +104,8 @@ $(function() {
                 selected.each(function(index) {
                     var val = $(this).attr('data-related');
 
+                    $(this).find('.variation-horizontal, .variation-vertical, .variation-diagonal').remove();
+
                     if (type == 'variation-generate') {
                         $(this).addClass('product-variation').attr('data-related', variation_value);
                     } else {
@@ -113,7 +115,7 @@ $(function() {
                     var related = $(".product[data-related='" + val + "']");
 
                     if (related.length == 1) {
-                        related.removeClass('product-variation').removeAttr('data-related');
+                        related.removeClass('product-variation').removeAttr('data-related').find('.variation-horizontal, .variation-vertical, .variation-diagonal').remove();
                     }
 
                     if (index != 0 && type == 'variation-generate') {

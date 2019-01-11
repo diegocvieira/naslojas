@@ -19,7 +19,6 @@
                                 <span class="btns-color-variation">
                                     <button type="button" class="open-color-variation">VARIAÇÃO DE COR</button>
                                     <button type="button" class="generate-color-variation" data-url="{{ route('color-variation') }}">AGRUPAR VARIAÇÃO</button>
-                                    <button type="button" class="remove-color-variation" data-url="{{ route('color-variation') }}">DESFAZER VARIAÇÃO</button>
                                 </span>
                                 <span class="color-variation-tooltip">Clique para selecionar as diferentes cores de um mesmo produto e assim indicar no site que o produto está à venda em mais de uma cor.</span>
 
