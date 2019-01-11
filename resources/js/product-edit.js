@@ -139,16 +139,14 @@ $(function() {
         e.preventDefault();
 
         if ($(this).hasClass('color-variation')) {
-            $(this).removeClass('color-variation').attr('title', 'Selecionar variação');
-
             var val = $(this).parents('form').attr('data-related');
 
-            $(this).parents('form').removeClass('product-variation').removeAttr('data-related');
+            $(this).parents('form').removeClass('product-variation').removeAttr('data-related').find('.select-color').toggleClass('hidden');
 
             var related = $(".form-edit-product[data-related='" + val + "']");
 
             if (related.length == 1) {
-                related.removeClass('product-variation').removeAttr('data-related').find('.color-variation').removeClass('color-variation').attr('title', 'Selecionar variação');
+                related.removeClass('product-variation').removeAttr('data-related').find('.select-color').toggleClass('hidden');
             }
 
             $.ajax({
@@ -169,6 +167,14 @@ $(function() {
             });
         } else {
             $(this).toggleClass('selected');
+
+            if ($('.select-color.selected').length > 1) {
+                $('.open-color-variation').hide();
+                $('.generate-color-variation').show();
+            } else {
+                $('.open-color-variation').show();
+                $('.generate-color-variation').hide();
+            }
         }
     });
 
@@ -176,61 +182,54 @@ $(function() {
     $(document).on('click', '.open-color-variation', function(e) {
         e.preventDefault();
 
-        $('button.select-color').toggle();
-
-        $('.btns-color-variation').find('button').toggle();
+        $('button.select-color').not('.hide').toggle();
     });
 
-    // Generate/Remove color variation
+    // Generate color variation
     $(document).on('click', '.generate-color-variation', function(e) {
         e.preventDefault();
 
         var variation_value = Math.round((new Date()).getTime()),
-            selected = $('.select-color.selected'),
             ids = [];
 
-        if (selected.length < 2) {
-            modalAlert('Selecione dois ou mais produtos para agrupar.');
-        } else {
-            $(this).hide();
-            $('.select-color').removeClass('selected').hide();
-            $('.open-color-variation').show();
+        $('.select-color.selected').each(function(index) {
+            var val = $(this).parents('.form-edit-product').attr('data-related');
 
-            selected.each(function(index) {
-                var val = $(this).parents('.form-edit-product').attr('data-related');
+            $(this).parents('form').addClass('product-variation').attr('data-related', variation_value).find('.select-color').toggleClass('hidden');
 
-                $(this).parents('.form-edit-product').addClass('product-variation').attr('data-related', variation_value);
+            var related = $(".form-edit-product[data-related='" + val + "']");
 
-                var related = $(".form-edit-product[data-related='" + val + "']");
+            if (related.length == 1) {
+                related.removeClass('product-variation').removeAttr('data-related').find('.select-color').toggleClass('hidden');
+            }
 
-                if (related.length == 1) {
-                    related.removeClass('product-variation').removeAttr('data-related');
+            if (index != 0) {
+                $(".form-edit-product[data-related='" + variation_value + "']").first().after($(this).parents('.form-edit-product')[0]);
+            }
+
+            ids.push($(this).parents('form').find('input[name=product_id]').val());
+        });
+
+        $(this).hide();
+        $('.select-color').removeClass('selected').hide();
+        $('.open-color-variation').show();
+
+        $.ajax({
+            url: $(this).data('url'),
+            method: 'POST',
+            dataType: 'json',
+            data: { ids : ids, variation : variation_value },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                if (data.status) {
+                    variation();
+                } else {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
-
-                if (index != 0) {
-                    $(".form-edit-product[data-related='" + variation_value + "']").first().after($(this).parents('.form-edit-product')[0]);
-                }
-
-                ids.push($(this).parents('.form-edit-product').find('input[name=product_id]').val());
-            });
-
-            $.ajax({
-                url: $(this).data('url'),
-                method: 'POST',
-                dataType: 'json',
-                data: { ids : ids, variation : variation_value },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (data) {
-                    if (data.status) {
-                        variation();
-                    } else {
-                        modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
-                    }
-                }
-            });
-        }
+            }
+        });
     });
 
     // Remove focus from button
