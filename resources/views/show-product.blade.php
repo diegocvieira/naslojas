@@ -186,25 +186,25 @@
 
                     <div class="infos">
                         <a href="{{ route('show-product', $rp->slug) }}" class="show-product">
+                            @if ($rp->reserve && $rp->reserve_discount)
+                                <span class="reserve" title="R$ {{ number_format(_reservePrice($rp->price, $rp->reserve_discount), 2, ',', '.') }} na reserva pelo naslojas"><span>DESCONTO NA RESERVA</span></span>
+                            @endif
+
                             @if ($rp->old_price)
                                 <span class="old-price">de R$ {{ number_format($rp->old_price, 2, ',', '.') }}</span>
                             @endif
 
-                            <span class="price" title="{{ ($product->reserve && $product->reserve_discount) ? 'Preço normal cobrado pela loja' : '' }}"><span>R$</span> {{ number_format($product->price, 2, ',', '.') }}</span>
+                            <span class="price" title="{{ ($rp->reserve && $rp->reserve_discount) ? 'Preço normal cobrado pela loja' : '' }}"><span>R$</span> {{ number_format($rp->price, 2, ',', '.') }}</span>
 
-                            @if ($product->old_price)
-                                <span class="price-off">{{ _discount($product->price, $product->old_price) }}% OFF</span>
+                            @if ($rp->old_price)
+                                <span class="price-off">{{ _discount($rp->price, $rp->old_price) }}% OFF</span>
                             @endif
 
-                            @if ($product->installment && $product->installment_price)
+                            @if ($rp->installment && $rp->installment_price)
                                 <span class="parcels">
-                                    em até {{ $product->installment }}x de R$ {{ number_format($product->installment_price, 2, ',', '.') }}
-                                    {{ _taxes($product->installment, $product->installment_price, $product->price) }}
+                                    em até {{ $rp->installment }}x de R$ {{ number_format($rp->installment_price, 2, ',', '.') }}
+                                    {{ _taxes($rp->installment, $rp->installment_price, $rp->price) }}
                                 </span>
-                            @endif
-
-                            @if ($product->reserve && $product->reserve_discount)
-                                <span class="reserve" title="Preço com desconto reservado pelo naslojas"><span>R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span> NA RESERVA</span>
                             @endif
 
                             <p class="title" title="{{ $rp->title }}">{{ $rp->title }}</p>

@@ -39,6 +39,10 @@
 
                         <div class="infos">
                             <a href="{{ route('show-product', $product->slug) }}" class="show-product">
+                                @if ($product->reserve && $product->reserve_discount)
+                                    <span class="reserve" title="R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }} na reserva pelo naslojas"><span>DESCONTO NA RESERVA</span></span>
+                                @endif
+
                                 @if ($product->old_price)
                                     <span class="old-price">de R$ {{ number_format($product->old_price, 2, ',', '.') }}</span>
                                 @endif
@@ -54,10 +58,6 @@
                                         em até {{ $product->installment }}x de R$ {{ number_format($product->installment_price, 2, ',', '.') }}
                                         {{ _taxes($product->installment, $product->installment_price, $product->price) }}
                                     </span>
-                                @endif
-
-                                @if ($product->reserve && $product->reserve_discount)
-                                    <span class="reserve" title="Preço com desconto reservado pelo naslojas"><span>R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span> NA RESERVA</span>
                                 @endif
 
                                 <p class="title" title="{{ $product->title }}">{{ $product->title }}</p>
