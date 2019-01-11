@@ -41,8 +41,6 @@ $(function() {
     });
 
     $(document).on('press', '.page-admin-products .product', function(e) {
-        e.preventDefault();
-
         if ($(this).hasClass('prepare-select')) {
             return false;
         }
