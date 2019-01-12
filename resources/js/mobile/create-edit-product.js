@@ -40,7 +40,7 @@ $(function() {
         var image_container = $(this).parent();
 
         image_container.find('input[name=image_remove]').attr('checked', true);
-        image_container.find('.remove-image').remove();
+        image_container.find(".remove-image, input[name='image_position[]']").remove();
         image_container.addClass('no-image').removeClass('loaded-image').find('input[type=file]').val('');
     });
 
@@ -53,7 +53,7 @@ $(function() {
             modalAlert('A imagem tem que ter no máximo 5mb.');
         } else {
             reader.onload = function(e) {
-                $this.parent().removeClass('no-image').addClass('loaded-image').append("<label class='remove-image'></label>").find('img').attr('src', e.target.result);
+                $this.parent().removeClass('no-image').addClass('loaded-image').append("<label class='remove-image'></label><input type='hidden' name='image_position[]' value='" + $this.data('position') + "' />").find('img').attr('src', e.target.result);
             }
 
             reader.readAsDataURL($(this)[0].files[0]);
@@ -187,47 +187,19 @@ $(function() {
 
             $(form).find('input[type=submit]').val('SALVANDO').attr('disabled', true);
 
-            var data = new FormData(),
-                images = true;
-
-            $('.color-variation').each(function(index) {
-                if ($(this).find('.image.loaded-image').length >= 1) {
-                    $(form).find('.field').each(function() {
-                        data.append('products[' + index + '][' + $(this).attr('name') + ']', $(this).val());
-                    });
-
-                    $(form).find("input[name='size[]']:checked").each(function() {
-                        data.append('products[' + index + '][sizes][]', $(this).val());
-                    });
-
-                    $(form).find("input[name='image_remove[]']:checked").each(function() {
-                        data.append('products[' + index + '][images_remove][]', $(this).val());
-                    });
-
-                    $(this).find('input:file').each(function(index2, element) {
-                        if (element.files[0]) {
-                            data.append('products[' + index + '][images][]', element.files[0]);
-                            data.append('products[' + index + '][images_position][]', $(this).data('position'));
-                        }
-                    });
-                } else {
-                    images = false;
-                }
-            });
+            var images = $('.image.loaded-image').length > 0 ? true : false;
 
             if (images == true) {
                 $.ajax({
                     url: $(form).attr('action'),
                     method: 'POST',
                     dataType: 'json',
-                    data: data,
+                    data: new FormData(form),
                     processData: false,
                     contentType: false,
                     cache: false,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
                     success: function (data) {
+                        console.log(data);
                         $(form).find('input[type=submit]').val('SALVAR').attr('disabled', false);
 
                         if (data.status) {
@@ -240,7 +212,7 @@ $(function() {
             } else {
                 $(form).find('input[type=submit]').val('SALVAR').attr('disabled', false);
 
-                modalAlert('Cada variação de cor precisa ter no mínimo uma imagem.');
+                modalAlert('Selecione no mínimo uma imagem.');
             }
 
             return false;

@@ -81,7 +81,7 @@
                     @endforeach
                 @endisset
 
-                @for ($i = isset($product) ? ($product->images->count() + 1) : 1; $i <= 5; $i++)
+                @for ($i = isset($product) ? ($product->images->count()) : 0; $i <= 4; $i++)
                     <div class="image no-image">
                         <span class="btn-add-image"></span>
                         {!! Form::file('image[]', ['data-position' => $i, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
