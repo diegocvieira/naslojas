@@ -84,6 +84,8 @@ $(function() {
     $(document).on('click', '.product-manager .dropdown-menu a', function(e) {
         e.preventDefault();
 
+        $('.close-menu').remove();
+
         var type = $(this).data('type'),
             url = $(this).attr('href');
 
@@ -91,7 +93,7 @@ $(function() {
             window.open(url, '_blank');
         } else if (type == 'variation-generate' || type == 'variation-remove') {
             var variation_value = type == 'variation-generate' ? Math.round((new Date()).getTime()) : null,
-                selected = $('#form-product-manager').find('.product.selected');
+                selected = $('#form-product-manager').find('.product.selected'),
                 ids = [];
 
             if (selected.length < 2 && type == 'variation-generate') {
@@ -99,10 +101,8 @@ $(function() {
             } else if (selected.length < 1 && type == 'variation-remove') {
                 modalAlert('Selecione pelo menos um produto para desagrupar.');
             } else {
-                selected.each(function(index) {
+                selected.each(function() {
                     var val = $(this).attr('data-related');
-
-                    $(this).find('.variation-horizontal, .variation-vertical, .variation-diagonal').remove();
 
                     if (type == 'variation-generate') {
                         $(this).addClass('product-variation').attr('data-related', variation_value);
@@ -113,11 +113,14 @@ $(function() {
                     var related = $(".product[data-related='" + val + "']");
 
                     if (related.length == 1) {
-                        related.removeClass('product-variation').removeAttr('data-related').find('.variation-horizontal, .variation-vertical, .variation-diagonal').remove();
+                        related.removeClass('product-variation').removeAttr('data-related');
                     }
 
-                    if (index != 0 && type == 'variation-generate') {
+                    // Move products
+                    if (type == 'variation-generate') {
                         $(".product[data-related='" + variation_value + "']").first().after($(this)[0]);
+                    } else {
+                        related.first().after(related.not(related.first()));
                     }
 
                     ids.push($(this).find('input[type=checkbox]').val());
@@ -212,6 +215,8 @@ $(function() {
 });
 
 function variation() {
+    $('#form-product-manager').find('.variation-horizontal, .variation-vertical, .variation-diagonal').remove();
+
     $('.product-variation').each(function() {
         var related = $(".product-variation[data-related='" + $(this).attr('data-related') + "']");
 

@@ -149,6 +149,8 @@ $(function() {
                 related.removeClass('product-variation').removeAttr('data-related').find('.select-color').toggleClass('hidden');
             }
 
+            related.first().after(related.not(related.first()));
+
             $.ajax({
                 url: $(this).data('url'),
                 method: 'POST',
@@ -192,7 +194,7 @@ $(function() {
         var variation_value = Math.round((new Date()).getTime()),
             ids = [];
 
-        $('.select-color.selected').each(function(index) {
+        $('.select-color.selected').each(function() {
             var val = $(this).parents('.form-edit-product').attr('data-related');
 
             $(this).parents('form').addClass('product-variation').attr('data-related', variation_value).find('.select-color').toggleClass('hidden');
@@ -203,9 +205,8 @@ $(function() {
                 related.removeClass('product-variation').removeAttr('data-related').find('.select-color').toggleClass('hidden');
             }
 
-            if (index != 0) {
-                $(".form-edit-product[data-related='" + variation_value + "']").first().after($(this).parents('.form-edit-product')[0]);
-            }
+            // Move products
+            $(".form-edit-product[data-related='" + variation_value + "']").first().after($(this).parents('.form-edit-product')[0]);
 
             ids.push($(this).parents('form').find('input[name=product_id]').val());
         });
