@@ -93,46 +93,46 @@
 
             <div class="section">
                 <div class="form-group">
-                    {!! Form::text('title', null, ['placeholder' => ' ', 'class' => 'field']) !!}
+                    {!! Form::text('title', null, ['placeholder' => ' ']) !!}
                     {!! Form::label('', 'Título do produto *') !!}
                 </div>
 
                 <div class="form-group description">
-                    {!! Form::textarea('description', null, ['placeholder' => ' ', 'class' => 'field']) !!}
+                    {!! Form::textarea('description', null, ['placeholder' => ' ']) !!}
                     {!! Form::label('', 'Descrição do produto') !!}
                 </div>
             </div>
 
             <div class="section">
                 <div class="form-group">
-                    {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
+                    {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
                     {!! Form::label('', 'Preço atual *') !!}
                 </div>
 
                 <div class="form-group">
-                    {!! Form::text('old_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
+                    {!! Form::text('old_price', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
                     {!! Form::label('', 'Preço anterior') !!}
                 </div>
 
                 <div class="form-group">
-                    {!! Form::text('reserve_discount', null, ['placeholder' => ' ', 'class' => 'mask-percent field']) !!}
+                    {!! Form::text('reserve_discount', null, ['placeholder' => ' ', 'class' => 'mask-percent']) !!}
                     {!! Form::label('', 'Desconto na reserva') !!}
                 </div>
             </div>
 
             <div class="section">
                 <div class="form-group gender">
-                    {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker field']) !!}
+                    {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker']) !!}
                     {!! Form::label('', 'Gênero *', ['style' => (isset($product) && $product->gender) ? 'display: block;' : '']) !!}
                 </div>
 
                 <div class="form-group">
-                    {!! Form::text('installment', null, ['placeholder' => ' ', 'class' => 'mask-x field']) !!}
+                    {!! Form::text('installment', null, ['placeholder' => ' ', 'class' => 'mask-x']) !!}
                     {!! Form::label('', 'Parcelamento') !!}
                 </div>
 
                 <div class="form-group">
-                    {!! Form::text('installment_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
+                    {!! Form::text('installment_price', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
                     {!! Form::label('', 'Valor da parcela') !!}
                 </div>
             </div>

@@ -21,13 +21,23 @@ $(function() {
         }
     });
 
-    $(document).on('blur', 'input[name=installment], input[name=price]', function() {
+    $(document).on('blur', 'input[name=installment], input[name=installment_price], input[name=price], input[name=old_price]', function() {
         var form = $(this).parents('.form-edit-product'),
-            price = form.find('input[name=price]').val(),
-            installment = form.find('input[name=installment]').val();
+            price = parseFloat(form.find('input[name=price]').val().replace('.', '').replace(',', '.')),
+            old_price = parseFloat(form.find('input[name=old_price]').val().replace('.', '').replace(',', '.'));
+            installment = form.find('input[name=installment]').val().replace('x', '');
+            installment_price = parseFloat(form.find('input[name=installment_price]').val().replace('.', '').replace(',', '.'));
 
-        if (price && installment && !$('input[name=installment_price]').val()) {
-            form.find('input[name=installment_price]').val(number_format(parseFloat(price.replace('.', '').replace(',', '.') / installment.replace('x', '')), 2, ',', '.'));
+        if (price && installment && !installment_price) {
+            form.find('input[name=installment_price]').val(number_format(price / installment, 2, ',', '.'));
+        }
+
+        if (price && old_price && price > old_price) {
+            form.find('input[name=old_price]').val('');
+        }
+
+        if (price && installment && installment_price && (installment * installment_price) < price) {
+            form.find('input[name=installment_price]').val('');
         }
     });
 
