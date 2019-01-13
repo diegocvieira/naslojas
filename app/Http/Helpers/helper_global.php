@@ -98,7 +98,40 @@ function _uploadImage($file)
         $image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
         $image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
         $image->cropThumbnailImage($size, $size);
-        $image->autoOrient();
+        //$image->autoOrient();
+
+        switch ($image->getImageOrientation()) {
+        case \Imagick::ORIENTATION_TOPLEFT:
+            break;
+        case \Imagick::ORIENTATION_TOPRIGHT:
+            $image->flopImage();
+            break;
+        case \Imagick::ORIENTATION_BOTTOMRIGHT:
+            $image->rotateImage("#fff", 180);
+            break;
+        case \Imagick::ORIENTATION_BOTTOMLEFT:
+            $image->flopImage();
+            $image->rotateImage("#fff", 180);
+            break;
+        case \Imagick::ORIENTATION_LEFTTOP:
+            $image->flopImage();
+            $image->rotateImage("#fff", -90);
+            break;
+        case \Imagick::ORIENTATION_RIGHTTOP:
+            $image->rotateImage("#fff", 90);
+            break;
+        case \Imagick::ORIENTATION_RIGHTBOTTOM:
+            $image->flopImage();
+            $image->rotateImage("#fff", 90);
+            break;
+        case \Imagick::ORIENTATION_LEFTBOTTOM:
+            $image->rotateImage("#fff", -90);
+            break;
+        default: // Invalid orientation
+            break;
+        }
+        $image->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
+
         $image->writeImage(public_path('uploads/' . Auth::guard('store')->user()->store_id . '/products/' . $image_name));
 
         $image->destroy();
