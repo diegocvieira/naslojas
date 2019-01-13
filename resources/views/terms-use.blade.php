@@ -113,6 +113,17 @@
             </p>
 
             <p>
+                <span>5.5. Reservas de produtos</span>
+                O usuário loja, que habilitar o recurso de reserva em um ou mais de seus produtos, assume a total e completa responsabilidade da reserva do produto em questão e quaisquer outros requisitos legais, garantindo a disponibilidade do produto e a reserva do mesmo pelo período mínimo de 24 (vinte e quatro) horas, para que o cliente possa retirá-lo na loja.
+                <br>O usuário cliente, ao reservar um ou mais produtos, entende que a reserva somente se dá de fato quando a loja confirma que o produto está disponível e reservado (o usuário cliente será notificado por e-mail e no painel de controle da sua conta no naslojas), que o período que o produto fica reservado para que ele possa retirar na loja é de apenas 24 (vinte e quatro) horas, que após esse período a reserva do produto não será mais garantida e não haverá nenhum tipo de aviso ou notificação e que qualquer inconveniente ou imprevisto deve ser resolvido diretamente com a loja, que é a responsável pelo gerenciamento do seu próprio perfil e consequentemente das reservas aceitas e efetuadas.
+            </p>
+
+            <p>
+                <span>5.6. Desconto na reserva de produtos</span>
+                O usuário loja tem a opção de oferecer descontos especiais para aquele usuário cliente que reservar um ou mais produtos no naslojas. O critério de quais produtos terão desconto e de qual será o desconto oferecido, é definido única e exclusivamente pelo usuário loja, sem nenhuma participação do site naslojas.com. Portanto o usuário loja e o usuário cliente, ao utilizar o naslojas, entendem que a responsabilidade e garantia de manutenção dos descontos oferecidos no naslojas são inteiramente do usuário loja, e este, caso opte por oferecer "desconto na reserva", assume completa e total responsabilidade de garantir o desconto para o usuário cliente que reservar um ou mais produtos no naslojas e se dirigir a loja para finalizar a compra e retirar o produto dentro do período de 24 (vinte e quatro) horas após a confirmação da reserva pelo usuário loja. Caso não o faça, o usuário loja corre o risco de se enquadrar no artigo 37 do Código de Defesa do Consumidor - Lei nº 8.078, de 11 de setembro de 1990, que versa sobre o crime de propaganda enganosa.
+            </p>
+
+            <p>
                 <span>6. Privacidade da Informação</span>
                 Toda informação ou Dado Pessoal do Usuário é armazenado em servidores. Salvo com relação às informações que são publicadas nos Sites, o naslojas.com
                 adotará todas as medidas possíveis para manter a confidencialidade e a segurança das informações sigilosas, porém não se responsabilizará por eventuais
