@@ -1,7 +1,7 @@
         <footer>
             <div class="links">
                 <a href="{{ url('/') }}">Início</a>
-                <a href="#" class="open-how-works">Como funciona</a>
+                <a href="{{ route('how-works') }}">Como funciona</a>
                 <a href="#" class="show-app">Baixe nosso app</a>
                 <a href="{{ route('client-register-get') }}">Cadastrar</a>
                 <a href="{{ route('client-login-get') }}">Entrar</a>
