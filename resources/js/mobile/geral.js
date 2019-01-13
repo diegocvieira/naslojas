@@ -84,11 +84,11 @@ $(function() {
         });
     });
 
-    // Show details confirm/reserve
+    // Show details confirm/reserve/messages
     $('.page-confirm, .page-reserve, .page-messages').on('click', '.result', function() {
-        $('.result').find('.more-details').hide();
+        $('.result').not($(this)).find('.more-details').hide();
 
-        $(this).find('.more-details').show();
+        $(this).find('.more-details').toggle();
     });
 
     $(document).on('click', '.page-messages .show-message', function(e) {
