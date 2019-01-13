@@ -98,6 +98,7 @@ function _uploadImage($file)
         $image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
         $image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
         $image->cropThumbnailImage($size, $size);
+        $image->autoOrient();
         $image->writeImage(public_path('uploads/' . Auth::guard('store')->user()->store_id . '/products/' . $image_name));
 
         $image->destroy();

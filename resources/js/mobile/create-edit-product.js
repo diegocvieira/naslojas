@@ -46,17 +46,44 @@ $(function() {
 
     // Preview images
     $(document).on('change', '.page-create-edit-product .image input:file', function() {
-        var reader = new FileReader(),
-            $this = $(this);
-
         if($(this)[0].files[0].size > 5100000) {
-            modalAlert('A imagem tem que ter no máximo 5mb.');
+            msgGeral('A imagem tem que ter no máximo 5mb.');
         } else {
-            reader.onload = function(e) {
-                $this.parent().removeClass('no-image').addClass('loaded-image').append("<label class='remove-image'></label><input type='hidden' name='image_position[]' value='" + $this.data('position') + "' />").find('img').attr('src', e.target.result);
-            }
+            var $this = $(this),
+                fr = new FileReader;
 
-            reader.readAsDataURL($(this)[0].files[0]);
+            fr.onload = function() {
+                var data = fr.result,
+                    node = $this.parent(),
+                    image = new Image();
+
+                image.src = data;
+
+                image.onload = function() {
+                    EXIF.getData(image, function() {
+                        var orientation = EXIF.getTag(this, "Orientation");
+
+                        switch(orientation) {
+                            case 3:
+                                var rotation = 'rotate(180deg)';
+                                break;
+                            case 6:
+                                var rotation = 'rotate(90deg)';
+                                break;
+                            case 8:
+                                var rotation = 'rotate(-90deg)';
+                                break;
+                        }
+
+                        node.removeClass('no-image')
+                            .addClass('loaded-image')
+                            .append("<label class='remove-image'></label><input type='hidden' name='image_position[]' value='" + $this.data('position') + "' />")
+                            .find('img').css('transform', rotation).attr('src', data);
+                    });
+                };
+            };
+
+            fr.readAsDataURL(this.files[0]);
         }
     });
 

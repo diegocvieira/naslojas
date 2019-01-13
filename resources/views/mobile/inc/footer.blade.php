@@ -63,7 +63,7 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        @if($app->environment('local'))
+        @if ($app->environment('local'))
             <script type="text/javascript" src="{{ asset('offline-developer/jquery.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('offline-developer/bootstrap.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('offline-developer/jquery.validate.min.js') }}"></script>
@@ -94,7 +94,14 @@
         <script src="{{ mix('js/global-mobile.js') }}"></script>
 
         @if (Auth::guard('store')->check())
-            <script src="//rawgit.com/ngryman/jquery.finger/v0.1.2/dist/jquery.finger.js"></script>
+            @if ($app->environment('local'))
+                <script type="text/javascript" src="{{ asset('offline-developer/exif.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('offline-developer/jquery.finger.min.js') }}"></script>
+            @else
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.finger/0.1.6/jquery.finger.min.js"></script>
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
+            @endif
+
             <script src="{{ mix('js/global-store-mobile.js') }}"></script>
         @endif
 
