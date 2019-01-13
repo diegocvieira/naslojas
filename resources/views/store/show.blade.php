@@ -12,7 +12,11 @@
                     <h1>{{ $store->name }}</h1>
 
                     <p>
-                        {{ $store->street }}, {{ $store->number }} - {{ $store->district }} - {{ $store->city->title }}/{{ $store->city->state->letter }}
+                        {{ $store->street }}, {{ $store->number }}
+                        @if ($store->complement)
+                            {{ $store->complement }}
+                        @endif
+                        - {{ $store->district }} - {{ $store->city->title }}/{{ $store->city->state->letter }}
                     </p>
                 </a>
 
