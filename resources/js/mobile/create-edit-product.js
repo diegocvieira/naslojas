@@ -88,7 +88,7 @@ $(function() {
                                 var rotation = 'rotate(180deg)';
                                 break;
                             case 6:
-                                var rotation = 'rotate(90deg)';
+                                var rotation = 'rotate(90deg) scale(1.15)';
                                 break;
                             case 8:
                                 var rotation = 'rotate(-90deg)';
