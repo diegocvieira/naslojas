@@ -33,11 +33,15 @@ $(function() {
         }
 
         if (price && old_price && price > old_price) {
-            form.find('input[name=old_price]').val('');
+            form.find('input[name=old_price]').addClass('validate-error');
+        } else {
+            form.find('input[name=old_price]').removeClass('validate-error');
         }
 
         if (price && installment && installment_price && (installment * installment_price) < price) {
-            form.find('input[name=installment_price]').val('');
+            form.find('input[name=installment_price]').addClass('validate-error');
+        } else {
+            form.find('input[name=installment_price]').removeClass('validate-error');
         }
     });
 
@@ -347,7 +351,7 @@ $(function() {
             images = true;
 
         $('.form-edit-product').each(function() {
-            if (!$(this).valid()) {
+            if (!$(this).valid() || $(this).find('.validate-error').length) {
                 errors = true;
             }
 

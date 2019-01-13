@@ -33,11 +33,15 @@ $(function() {
         }
 
         if (price && old_price && price > old_price) {
-            form.find('input[name=old_price]').val('');
+            form.find('input[name=old_price]').addClass('validate-error');
+        } else {
+            form.find('input[name=old_price]').removeClass('validate-error');
         }
 
         if (price && installment && installment_price && (installment * installment_price) < price) {
-            form.find('input[name=installment_price]').val('');
+            form.find('input[name=installment_price]').addClass('validate-error');
+        } else {
+            form.find('input[name=installment_price]').removeClass('validate-error');
         }
     });
 
@@ -228,6 +232,10 @@ $(function() {
                 return false;
             }
 
+            if ($(form).find('.validate-error').length) {
+                return false;
+            }
+
             $(form).find('input[type=submit]').val('SALVANDO').attr('disabled', true);
 
             var images = $('.image.loaded-image').length > 0 ? true : false;
@@ -242,7 +250,6 @@ $(function() {
                     contentType: false,
                     cache: false,
                     success: function (data) {
-                        console.log(data);
                         $(form).find('input[type=submit]').val('SALVAR').attr('disabled', false);
 
                         if (data.status) {
