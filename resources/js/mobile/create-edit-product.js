@@ -13,6 +13,12 @@ $(function() {
 
     $(document).on('change', '.sizes input', function() {
         $(this).parents('.sizes').find('input').removeClass('error');
+
+        if ($(this).parents('.sizes').find('input:checked').length > 1 && $(this).parents('.sizes').find("input[value='Ú']:checked").length) {
+            $(this).prop('checked', false);
+
+            modalAlert('Não é possível marcar um mesmo produto como tamanho único e também como outro tamanho.');
+        }
     });
 
     $(document).on('blur', 'input[name=installment], input[name=price]', function() {
