@@ -238,67 +238,136 @@ class ProductController extends Controller
     {
         $store_id = Auth::guard('store')->user()->store_id;
 
-        if ($id) {
-            foreach ($request->products as $data) {
-                $request = (object)$data;
+        if (Agent::isDesktop()) {
+            if ($id) {
+                foreach ($request->products as $data) {
+                    $request = (object)$data;
 
-                $validation = Validator::make(
-                    $data,
-                    $this->rules(),
-                    app('App\Http\Controllers\GlobalController')->customMessages()
-                );
+                    $validation = Validator::make(
+                        $data,
+                        $this->rules(),
+                        app('App\Http\Controllers\GlobalController')->customMessages()
+                    );
 
-                if ($validation->fails()) {
-                    $return['status'] = false;
-                    $return['msg'] = $validation->errors()->first();
+                    if ($validation->fails()) {
+                        $return['status'] = false;
+                        $return['msg'] = $validation->errors()->first();
 
-                    return json_encode($return);
-                } else if (!isset($request->sizes)) {
-                    $return['status'] = false;
-                    $return['msg'] = 'Informe pelo menos um tamanho';
+                        return json_encode($return);
+                    } else if (!isset($request->sizes)) {
+                        $return['status'] = false;
+                        $return['msg'] = 'Informe pelo menos um tamanho';
 
-                    return json_encode($return);
-                } else {
-                    $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                        ->where('store_id', $store_id)
-                        ->find($request->product_id);
+                        return json_encode($return);
+                    } else {
+                        $product = Product::withoutGlobalScopes(['active', 'active-store'])
+                            ->where('store_id', $store_id)
+                            ->find($request->product_id);
 
-                    if ($product->status == 2) {
-                        $product->status = 1;
+                        if ($product->status == 2) {
+                            $product->status = 1;
+                        }
+
+                        $product->title = $request->title;
+                        $product->price = number_format(str_replace(['.', ','], ['', '.'], $request->price), 2, '.', '');
+                        $product->installment = $request->installment ? str_replace('x', '', $request->installment) : null;
+                        $product->gender = $request->gender;
+                        $product->old_price = $request->old_price ? number_format(str_replace(['.', ','], ['', '.'], $request->old_price), 2, '.', '') : null;
+                        $product->installment_price = $request->installment_price ? number_format(str_replace(['.', ','], ['', '.'], $request->installment_price), 2, '.', '') : null;
+                        $product->slug = str_slug($product->title, '-');
+                        $product->description = $request->description;
+                        $product->reserve_discount = $request->reserve_discount ? str_replace('%', '', $request->reserve_discount) : null;
+
+                        // check if slug already exists and add dash in the end
+                        $NUM_OF_ATTEMPTS = 10;
+                        $attempts = 0;
+
+                        do {
+                            try {
+                                $product->save();
+
+                                $return['status'] = true;
+                                //$return['msg'] = 'Alterações salvas com sucesso!';
+                                session()->flash('session_flash_alert', 'Produtos salvos com sucesso!');
+                            } catch(\Exception $e) {
+                                $attempts++;
+
+                                if ($attempts >= $NUM_OF_ATTEMPTS) {
+                                    $return['status'] = false;
+                                    $return['msg'] = 'Ocorreu um erro inesperado. Por favor, atualize a página e tente novamente.';
+                                }
+
+                                sleep(rand(0, 10) / 10);
+
+                                $product->slug .= '-' . uniqid();
+
+                                continue;
+                            }
+
+                            break;
+                        } while ($attempts < $NUM_OF_ATTEMPTS);
+
+                       ProductSize::where('product_id', $product->id)->delete();
+                       if (isset($request->sizes)) {
+                           foreach ($request->sizes as $size) {
+                               $product->sizes()->create(['size' => $size]);
+                           }
+                       }
+
+                       if (isset($request->images_remove)) {
+                           foreach ($request->images_remove as $image_remove) {
+                               $this->deleteImages($image_remove);
+                           }
+                       }
+
+                       if (isset($request->images)) {
+                           $key_image = 0;
+
+                           foreach ($request->images as $image) {
+                               if(!empty($image)) {
+                                   $image_name = _uploadImage($image);
+
+                                   foreach ($request->images_position as $key_position => $image_position) {
+                                        if ($key_position == $key_image) {
+                                            $position = $image_position;
+                                        }
+                                    }
+
+                                   $product->images()->create([
+                                       'image' => $image_name,
+                                       'position' => $position ?? '0'
+                                   ]);
+
+                                   $key_image++;
+                               }
+                           }
+                       }
                     }
+                }
 
-                    $product->title = $request->title;
-                    $product->price = number_format(str_replace(['.', ','], ['', '.'], $request->price), 2, '.', '');
-                    $product->installment = $request->installment ? str_replace('x', '', $request->installment) : null;
-                    $product->gender = $request->gender;
-                    $product->old_price = $request->old_price ? number_format(str_replace(['.', ','], ['', '.'], $request->old_price), 2, '.', '') : null;
-                    $product->installment_price = $request->installment_price ? number_format(str_replace(['.', ','], ['', '.'], $request->installment_price), 2, '.', '') : null;
-                    $product->slug = str_slug($product->title, '-');
-                    $product->description = $request->description;
-                    $product->reserve_discount = $request->reserve_discount ? str_replace('%', '', $request->reserve_discount) : null;
+                return json_encode($return);
+            } else {
+                foreach ($request->images as $index) {
+                    $product = new Product;
 
-                    // check if slug already exists and add dash in the end
+                    $product->store_id = $store_id;
+                    $product->status = 2;
+                    $product->identifier = mt_rand(1000000000, 9999990000);
+                    $product->reserve = Auth::guard('store')->user()->store->reserve;
+
+                    // Checks if identifier arent in use
                     $NUM_OF_ATTEMPTS = 10;
                     $attempts = 0;
 
                     do {
                         try {
                             $product->save();
-
-                            $return['status'] = true;
-                            //$return['msg'] = 'Alterações salvas com sucesso!';
-                            session()->flash('session_flash_alert', 'Produtos salvos com sucesso!');
                         } catch(\Exception $e) {
                             $attempts++;
 
-                            if ($attempts >= $NUM_OF_ATTEMPTS) {
-                                $return['status'] = false;
-                                $return['msg'] = 'Ocorreu um erro inesperado. Por favor, atualize a página e tente novamente.';
-                            }
-
                             sleep(rand(0, 10) / 10);
 
-                            $product->slug .= '-' . uniqid();
+                            $product->identifier = mt_rand(1000000000, 9999990000);
 
                             continue;
                         }
@@ -306,67 +375,82 @@ class ProductController extends Controller
                         break;
                     } while ($attempts < $NUM_OF_ATTEMPTS);
 
-                   ProductSize::where('product_id', $product->id)->delete();
-                   if (isset($request->sizes)) {
-                       foreach ($request->sizes as $size) {
-                           $product->sizes()->create(['size' => $size]);
-                       }
-                   }
-
-                   if (isset($request->images_remove)) {
-                       foreach ($request->images_remove as $image_remove) {
-                           $this->deleteImages($image_remove);
-                       }
-                   }
-
-                   if (isset($request->images)) {
-                       $key_image = 0;
-
-                       foreach ($request->images as $image) {
-                           if(!empty($image)) {
-                               $image_name = _uploadImage($image);
-
-                               foreach ($request->images_position as $key_position => $image_position) {
-                                    if ($key_position == $key_image) {
-                                        $position = $image_position;
-                                    }
-                                }
-
-                               $product->images()->create([
-                                   'image' => $image_name,
-                                   'position' => $position ?? '0'
-                               ]);
-
-                               $key_image++;
-                           }
-                       }
-                   }
+                     foreach ($index as $key => $img) {
+                        $image = new ProductImage;
+                        $image->product_id = $product->id;
+                        $image->image = $img;
+                        $image->position = $key;
+                        $image->save();
+                    }
                 }
+
+                return redirect()->route('product-images');
             }
-
-            return json_encode($return);
         } else {
-            foreach ($request->images as $index) {
-                $product = new Product;
+            $validation = Validator::make(
+                $request->all(),
+                $this->rules(),
+                app('App\Http\Controllers\GlobalController')->customMessages()
+            );
 
-                $product->store_id = $store_id;
-                $product->status = 2;
-                $product->identifier = mt_rand(1000000000, 9999990000);
-                $product->reserve = Auth::guard('store')->user()->store->reserve;
+            if ($validation->fails()) {
+                $return['status'] = false;
+                $return['msg'] = $validation->errors()->first();
 
-                // Checks if identifier arent in use
+                return json_encode($return);
+            } else if (!isset($request->size)) {
+                $return['status'] = false;
+                $return['msg'] = 'Informe pelo menos um tamanho';
+
+                return json_encode($return);
+            } else {
+                if ($id) {
+                    $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($id);
+                } else {
+                    $product = new Product;
+
+                    $product->store_id = Auth::guard('store')->user()->store_id;
+                    $product->status = 1;
+                    $product->identifier = mt_rand(1000000000, 9999990000);
+                    $product->reserve = Auth::guard('store')->user()->store->reserve;
+                }
+
+                $product->title = $request->title;
+                $product->price = number_format(str_replace(['.', ','], ['', '.'], $request->price), 2, '.', '');
+                $product->installment = $request->installment ? str_replace('x', '', $request->installment) : null;
+                $product->gender = $request->gender;
+                $product->old_price = $request->old_price ? number_format(str_replace(['.', ','], ['', '.'], $request->old_price), 2, '.', '') : null;
+                $product->installment_price = $request->installment_price ? number_format(str_replace(['.', ','], ['', '.'], $request->installment_price), 2, '.', '') : null;
+                $product->slug = str_slug($product->title, '-');
+                $product->description = $request->description;
+                $product->reserve_discount = $request->reserve_discount ? str_replace('%', '', $request->reserve_discount) : null;
+
+               // check if slug already exists and add dash in the end
                 $NUM_OF_ATTEMPTS = 10;
                 $attempts = 0;
 
                 do {
                     try {
                         $product->save();
+
+                        $return['status'] = true;
+                        //$return['msg'] = 'Alterações salvas com sucesso!';
+                        session()->flash('session_flash_alert', 'Produto salvo com sucesso!');
                     } catch(\Exception $e) {
                         $attempts++;
 
+                        if ($attempts >= $NUM_OF_ATTEMPTS) {
+                            $return['status'] = false;
+                            $return['msg'] = 'Ocorreu um erro inesperado. Por favor, atualize a página e tente novamente.';
+                        }
+
                         sleep(rand(0, 10) / 10);
 
-                        $product->identifier = mt_rand(1000000000, 9999990000);
+                        $product->slug .= '-' . uniqid();
+
+                        if (!$product->id) {
+                            $product->identifier = mt_rand(1000000000, 9999990000);
+                        }
 
                         continue;
                     }
@@ -374,16 +458,44 @@ class ProductController extends Controller
                     break;
                 } while ($attempts < $NUM_OF_ATTEMPTS);
 
-                 foreach ($index as $key => $img) {
-                    $image = new ProductImage;
-                    $image->product_id = $product->id;
-                    $image->image = $img;
-                    $image->position = $key;
-                    $image->save();
-                }
-            }
+               ProductSize::where('product_id', $product->id)->delete();
+               if (isset($request->size)) {
+                   foreach ($request->size as $size) {
+                       $product->sizes()->create(['size' => $size]);
+                   }
+               }
 
-            return redirect()->route('product-images');
+               if (isset($request->image_remove)) {
+                   foreach ($request->image_remove as $image_remove) {
+                       $this->deleteImages($image_remove);
+                   }
+               }
+
+               if (isset($request->image)) {
+                   $key_image = 0;
+
+                   foreach ($request->image as $image) {
+                       if (!empty($image)) {
+                           $image_name = _uploadImage($image);
+
+                           foreach ($request->image_position as $key_position => $image_position) {
+                                if ($key_position == $key_image) {
+                                    $position = $image_position;
+                                }
+                            }
+
+                           $product->images()->create([
+                               'image' => $image_name,
+                               'position' => $position ?? '0'
+                           ]);
+
+                           $key_image++;
+                       }
+                   }
+               }
+
+               return json_encode($return);
+            }
         }
     }
 
@@ -398,119 +510,6 @@ class ProductController extends Controller
         }
 
         return view('mobile.store.create-edit-product', compact('header_title', 'product'));
-    }
-
-    public function saveIndividual(Request $request, $id = null)
-    {
-        $validation = Validator::make(
-            $request->all(),
-            $this->rules(),
-            app('App\Http\Controllers\GlobalController')->customMessages()
-        );
-
-        if ($validation->fails()) {
-            $return['status'] = false;
-            $return['msg'] = $validation->errors()->first();
-
-            return json_encode($return);
-        } else if (!isset($request->size)) {
-            $return['status'] = false;
-            $return['msg'] = 'Informe pelo menos um tamanho';
-
-            return json_encode($return);
-        } else {
-            if ($id) {
-                $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($id);
-            } else {
-                $product = new Product;
-
-                $product->store_id = Auth::guard('store')->user()->store_id;
-                $product->status = 1;
-                $product->identifier = mt_rand(1000000000, 9999990000);
-                $product->reserve = Auth::guard('store')->user()->store->reserve;
-            }
-
-            $product->title = $request->title;
-            $product->price = number_format(str_replace(['.', ','], ['', '.'], $request->price), 2, '.', '');
-            $product->installment = $request->installment ? str_replace('x', '', $request->installment) : null;
-            $product->gender = $request->gender;
-            $product->old_price = $request->old_price ? number_format(str_replace(['.', ','], ['', '.'], $request->old_price), 2, '.', '') : null;
-            $product->installment_price = $request->installment_price ? number_format(str_replace(['.', ','], ['', '.'], $request->installment_price), 2, '.', '') : null;
-            $product->slug = str_slug($product->title, '-');
-            $product->description = $request->description;
-            $product->reserve_discount = $request->reserve_discount ? str_replace('%', '', $request->reserve_discount) : null;
-
-           // check if slug already exists and add dash in the end
-            $NUM_OF_ATTEMPTS = 10;
-            $attempts = 0;
-
-            do {
-                try {
-                    $product->save();
-
-                    $return['status'] = true;
-                    //$return['msg'] = 'Alterações salvas com sucesso!';
-                    session()->flash('session_flash_alert', 'Produto salvo com sucesso!');
-                } catch(\Exception $e) {
-                    $attempts++;
-
-                    if ($attempts >= $NUM_OF_ATTEMPTS) {
-                        $return['status'] = false;
-                        $return['msg'] = 'Ocorreu um erro inesperado. Por favor, atualize a página e tente novamente.';
-                    }
-
-                    sleep(rand(0, 10) / 10);
-
-                    $product->slug .= '-' . uniqid();
-
-                    if (!$product->id) {
-                        $product->identifier = mt_rand(1000000000, 9999990000);
-                    }
-
-                    continue;
-                }
-
-                break;
-            } while ($attempts < $NUM_OF_ATTEMPTS);
-
-           ProductSize::where('product_id', $product->id)->delete();
-           if (isset($request->size)) {
-               foreach ($request->size as $size) {
-                   $product->sizes()->create(['size' => $size]);
-               }
-           }
-
-           if (isset($request->image_remove)) {
-               foreach ($request->image_remove as $image_remove) {
-                   $this->deleteImages($image_remove);
-               }
-           }
-
-           if (isset($request->image)) {
-               $key_image = 0;
-
-               foreach ($request->image as $image) {
-                   if (!empty($image)) {
-                       $image_name = _uploadImage($image);
-
-                       foreach ($request->image_position as $key_position => $image_position) {
-                            if ($key_position == $key_image) {
-                                $position = $image_position;
-                            }
-                        }
-
-                       $product->images()->create([
-                           'image' => $image_name,
-                           'position' => $position ?? '0'
-                       ]);
-
-                       $key_image++;
-                   }
-               }
-           }
-
-           return json_encode($return);
-        }
     }
 
     public function deleteImages($image)
