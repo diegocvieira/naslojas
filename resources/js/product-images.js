@@ -74,6 +74,7 @@ $(function() {
         clickable: true,
         thumbnailWidth: 300,
         thumbnailHeight: 300,
+        timeout: 0,
         accept: function(file, done) {
             if ((file.type).toLowerCase() != "image/jpg" && (file.type).toLowerCase() != "image/gif" && (file.type).toLowerCase() != "image/jpeg" && (file.type).toLowerCase() != "image/png") {
                 done('Formato inválido');
