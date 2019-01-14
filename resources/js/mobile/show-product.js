@@ -4,6 +4,23 @@ $(function() {
         $('#image-destaque').find('#photo-zoom').attr('src', $(this).attr('src').replace('_resize', ''));
     });
 
+    $(document).on('click', '.related-products .pagination a', function(e) {
+        e.preventDefault();
+
+        $(this).css('pointer-events', 'none');
+
+        $.ajax({
+            url: $(this).attr('href'),
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('.related-products').find('.pagination').remove();
+
+                $('.related-products').find('.list-products').append(data.body);
+            }
+        });
+    });
+
     // Rating
     $(document).on('change', '#form-rating-product input', function() {
         if(client_logged) {

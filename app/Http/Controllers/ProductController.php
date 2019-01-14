@@ -16,6 +16,33 @@ use Agent;
 
 class ProductController extends Controller
 {
+    public function relatedProducts(Product $product, $pagination = null)
+    {
+        $related_products = Product::where('id', '!=', $product->id)
+            ->whereHas('store', function ($query) use ($product) {
+                $query->where('city_id', $product->store->city->id);
+            })
+            ->where(function ($query) use ($product) {
+                //$query->search($product->title);
+                $query->where('title', 'like', '%' . $product->title . '%');
+            })
+            ->paginate(8);
+
+        if ($pagination) {
+            if (Agent::isDesktop()) {
+                return response()->json([
+                    'body' => view('related-products', compact('related_products', 'product'))->render()
+                ]);
+            } else {
+                return response()->json([
+                    'body' => view('mobile.related-products', compact('related_products', 'product'))->render()
+                ]);
+            }
+        } else {
+            return $related_products;
+        }
+    }
+
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
@@ -28,15 +55,7 @@ class ProductController extends Controller
 
         $more_colors = Product::whereNotNull('related')->where('related', $product->related)->where('id', '!=', $product->id)->get();
 
-        $related_products = Product::where('id', '!=', $product->id)
-            ->whereHas('store', function ($query) use ($product) {
-                $query->where('city_id', $product->store->city->id);
-            })
-            ->where(function ($query) use ($product) {
-                //$query->search($product->title);
-                $query->where('title', 'like', '%' . $product->title . '%');
-            })
-            ->paginate(30);
+        $related_products = $this->relatedProducts($product);
 
         if (Auth::guard('client')->check()) {
             $client_rating = ProductRating::where('client_id', Auth::guard('client')->user()->id)->where('product_id', $product->id)->first();

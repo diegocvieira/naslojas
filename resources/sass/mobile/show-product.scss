@@ -461,7 +461,7 @@
         }
     }
 
-    .related_products {
+    .related-products {
         margin-top: 100px;
         float: left;
         width: 100%;
@@ -472,6 +472,19 @@
             font-weight: 700;
             margin: 0;
             padding-left: 10px;
+        }
+
+        .pagination a {
+            background-color: transparent;
+            border: 1px solid rgb(255, 23, 68);
+            color: rgb(255, 23, 68);
+            font-weight: 700;
+            border-radius: 25px;
+            padding: 10px 20px;
+
+            &:after {
+                background-image: url('');
+            }
         }
     }
 }

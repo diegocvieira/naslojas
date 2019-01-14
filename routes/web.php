@@ -69,6 +69,7 @@ Route::get('{slug}', 'StoreController@show')->name('show-store');
 
 // Product Page
 Route::get('produto/{slug}', 'ProductController@show')->name('show-product');
+Route::get('related-products/{product}/{pagination?}', 'ProductController@relatedProducts')->name('related-products');
 
 // Search store products
 Route::get('loja/produtos/busca', 'StoreController@formSearch')->name('form-search-store');

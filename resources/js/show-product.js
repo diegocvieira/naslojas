@@ -27,6 +27,23 @@ $(function() {
         });
     });
 
+    $(document).on('click', '.related-products .pagination a', function(e) {
+        e.preventDefault();
+
+        $(this).css('pointer-events', 'none');
+
+        $.ajax({
+            url: $(this).attr('href'),
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('.related-products').find('.pagination').remove();
+
+                $('.related-products').find('.list-products').append(data.body);
+            }
+        });
+    });
+
     $(document).on('mouseover', '#image-destaque', function() {
         $(this).children('#photo-zoom').css('transform', 'scale(1.5)');
     });
