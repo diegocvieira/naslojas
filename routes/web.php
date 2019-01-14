@@ -126,7 +126,6 @@ Route::group(['prefix' => 'loja'], function () {
 			Route::post('dropzone', 'ProductController@uploadImages');
 			Route::get('cadastrar-editar/{id?}', 'ProductController@getCreateEdit')->name('get-create-edit-product');
 			Route::post('save/{id?}', 'ProductController@save')->name('save-products');
-			Route::post('save-individual/{id?}', 'ProductController@saveIndividual')->name('save-product-individual');
 
 			Route::get('/', 'ProductController@edit')->name('edit-products');
 

@@ -3,9 +3,9 @@
 @section('content')
     <div class="container page-create-edit-product">
         @if (isset($product))
-            {!! Form::model($product, ['method' => 'POST', 'route' => ['save-product-individual', $product->id], 'id' => 'form-create-edit-product', 'files' => true]) !!}
+            {!! Form::model($product, ['method' => 'POST', 'route' => ['save-products', $product->id], 'id' => 'form-create-edit-product', 'files' => true]) !!}
         @else
-            {!! Form::open(['method' => 'POST', 'route' => 'save-product-individual', 'id' => 'form-create-edit-product', 'files' => true]) !!}
+            {!! Form::open(['method' => 'POST', 'route' => 'save-products', 'id' => 'form-create-edit-product', 'files' => true]) !!}
         @endif
 
             <header>

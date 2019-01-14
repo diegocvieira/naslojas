@@ -47,7 +47,7 @@
                             <span style="margin-top: 10px; text-decoration: line-through; font-size: 12.5px; display: block; color: rgb(50, 50, 50);">de R$ {{ number_format($reserve->product->old_price, 2, ',', '.') }}</span>
                         @endif
 
-                        <span style="margin: 10px 0; display: inline-block; font-weight: 700; font-size: 14.5px; color: rgb(50, 50, 50)"><span style="font-size: 12.5px;">R$</span> {{ number_format($reserve->product->price, 2, ',', '.') }}</span>
+                        <span style="margin: 10px 0; display: inline-block; font-weight: 700; font-size: 16.6px; color: rgb(50, 50, 50)"><span style="font-size: 12.5px;">R$</span> {{ number_format($reserve->product->price, 2, ',', '.') }}</span>
 
                         @if ($reserve->product->old_price)
                             <span style="margin-bottom: 10px; display: inline-block; margin-left: 10px; font-size: 14.5px; color: rgb(112, 202, 124);">{{ _discount($reserve->product->price, $reserve->product->old_price) }}% OFF</span>
@@ -58,6 +58,17 @@
                                 em até {{ $reserve->product->installment }}x de R$ {{ number_format($reserve->product->installment_price, 2, ',', '.') }}
                                 {{ _taxes($reserve->product->installment, $reserve->product->installment_price, $reserve->product->price) }}
                             </span>
+                        @endif
+
+                        @if ($reserve->product->reserve && $reserve->product->reserve_discount)
+                            <span style="color: #000; display: block; position: relative; left: -10px; font-size: 14.5px; margin-top: 10px;" title="Preço com desconto reservado pelo naslojas"><span style="font-size: 16.6px; font-weight: 700; background-color: rgb(255, 215, 223); padding: 5px 10px; border-radius: 25px; margin-right: 5px;">R$ {{ number_format(_reservePrice($reserve->product->price, $reserve->product->reserve_discount), 2, ',', '.') }}</span> na reserva pelo <i>naslojas</i></span>
+
+                            @if ($reserve->product->installment && $reserve->product->installment_price)
+                                <span style="color: #000; margin-top: 5px; font-size: 14.5px; display: block; padding-left: 10px;">
+                                    em até {{ $reserve->product->installment }}x de R$ {{ number_format(_reservePrice(($reserve->product->installment_price * $reserve->product->installment) / $reserve->product->installment, $reserve->product->reserve_discount), 2, ',', '.') }}
+                                    {{ _taxes($reserve->product->installment, $reserve->product->installment_price, $reserve->product->price) }}
+                                </span>
+                            @endif
                         @endif
 
                         <span style="display: block; font-size: 14.5px; color: rgb(150, 150, 150); line-height: 1.286;">{{ $reserve->product->title }}</span>
