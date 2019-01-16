@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\ProductReserve;
 use App\ProductSize;
 use App\Product;
+use Mail;
 
 class cronPendingReserves extends Command
 {

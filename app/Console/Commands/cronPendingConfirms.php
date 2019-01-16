@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\ProductConfirm;
 use App\ProductSize;
 use App\Product;
+use Mail;
 
 class cronPendingConfirms extends Command
 {
