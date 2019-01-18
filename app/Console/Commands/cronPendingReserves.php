@@ -28,7 +28,16 @@ class cronPendingReserves extends Command
             ->get();
 
         foreach ($reserves as $reserve) {
-    		$r = ProductReserve::find($reserve->id);
+    		$r = ProductReserve::whereHas('product', function ($query) {
+        			$query->withTrashed()
+        				->withoutGlobalScopes(['active', 'active-store']);
+        		})
+        		->with(['product' => function($query) {
+        			$query->withTrashed()
+        				->withoutGlobalScopes(['active', 'active-store']);
+        		}])
+                ->find($reserve->id);
+
     		$r->status = 0;
             $r->confirmed_at = date('Y-m-d H:i:s');
             $r->token = null;

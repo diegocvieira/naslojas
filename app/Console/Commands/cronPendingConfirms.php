@@ -28,8 +28,17 @@ class cronPendingConfirms extends Command
             ->get();
 
         foreach ($confirms as $confirm) {
-    		$c = ProductConfirm::find($confirm->id);
-    		$c->status = 0;
+    		$c = ProductConfirm::whereHas('product', function ($query) {
+        			$query->withTrashed()
+        				->withoutGlobalScopes(['active', 'active-store']);
+        		})
+        		->with(['product' => function($query) {
+        			$query->withTrashed()
+        				->withoutGlobalScopes(['active', 'active-store']);
+        		}])
+                ->find($confirm->id);
+
+            $c->status = 0;
             $c->confirmed_at = date('Y-m-d H:i:s');
             $c->token = null;
 
