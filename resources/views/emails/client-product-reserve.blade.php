@@ -85,7 +85,7 @@
                     <td style="box-shadow: 5px 8.66px 9px 1px rgba(100, 100, 100, 0.118); background-color: #fff; padding: 40px 50px 0 50px;">
                         <span style="text-align: center; display: block; font-weight: 700; font-size: 14.5px; color: rgb(255, 23, 68);">
                             @if ($type == 1)
-                                {{ $reserve->size ? 'RESERVAMOS O TAMANHO ' . $reserve->size . ' DESTE PRODUTO PARA VOCÊ POR 24HS' : 'RESERVAMOS ESTE PRODUTO PARA VOCÊ POR 24HS' }}
+                                {{ $reserve->size ? 'RESERVAMOS O TAMANHO ' . $reserve->size . ' DESTE' : 'RESERVAMOS ESTE' }} PRODUTO PARA VOCÊ POR {{ (date('w') == 6 ? '48' : '24') }}HS.
                             @else
                                 {{ $reserve->size ? 'NÃO TEMOS MAIS O TAMANHO ' . $reserve->size . ' DESTE PRODUTO' : 'INFELIZMENTE NÃO TEMOS MAIS ESTE PRODUTO' }}
                             @endif
