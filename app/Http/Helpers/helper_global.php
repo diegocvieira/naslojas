@@ -79,7 +79,7 @@ function _uploadImage($file)
 
     $images = [
         '248' => $microtime . '_resize.jpg',
-        '600' => $microtime . '.jpg'
+        '900' => $microtime . '.jpg'
     ];
 
     foreach($images as $size => $image_name) {
