@@ -52,14 +52,22 @@ class ProductReserveController extends Controller
             ->where('token', $token)
             ->first();
 
-        if($reserve) {
+        if ($reserve) {
+            $date = date('Y-m-d H:i:s');
+
             $reserve->status = $type;
-            $reserve->confirmed_at = date('Y-m-d H:i:s');
+            $reserve->confirmed_at = $date;
             $reserve->token = null;
 
-            if($reserve->save()) {
+            if ($type == '1') {
+                $days = date('w') == 6 ? '2' : '1';
+
+                $reserve->reserved_until = date('Y-m-d H:i:s', strtotime($date . '+' . $days . 'day'));
+            }
+
+            if ($reserve->save()) {
                 if ($type == '1') {
-                    $message = 'O cliente foi notificado que o produto está reservado para ele na loja por 24hs.';
+                    $message = 'O cliente foi notificado que o produto está reservado para ele na loja por ' . ($days == '2' ? '48' : '24') . 'hs.';
                     $this->emailResponse($reserve, 1);
                 } else {
                     // Desactive product or size
@@ -166,18 +174,19 @@ class ProductReserveController extends Controller
             ->first();
 
         $date = date('Y-m-d H:i:s');
+        $days = date('w') == 6 ? '2' : '1';
 
         $reserve->status = 1;
         $reserve->confirmed_at = $date;
-        $reserve->reserved_until = date('Y-m-d H:i:s', strtotime($date . '+1 day'));
+        $reserve->reserved_until = date('Y-m-d H:i:s', strtotime($date . '+' . $days . 'day'));
         $reserve->token = null;
 
         if ($reserve->save()) {
             $return['status'] = true;
             $return['date_confirmed'] = date('d/m/y - H:i', strtotime($date));
-            $return['date_reserved'] = date('d/m/y - H:i', strtotime($date . '+1 day'));
+            $return['date_reserved'] = date('d/m/y - H:i', strtotime($reserve->reserved_until));
             $return['type'] = 1;
-            $return['msg'] = 'Reserva realizada com sucesso! <br> O cliente já foi notificado de que o produto que ele deseja estará aguardando por ele na loja por 24hs.';
+            $return['msg'] = 'Reserva realizada com sucesso! <br> O cliente já foi notificado de que o produto que ele deseja estará aguardando por ele na loja por ' . ($days == '2' ? '48' : '24') . 'hs.';
 
             $this->emailResponse($reserve, 1);
         } else {
