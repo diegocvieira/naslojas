@@ -29,22 +29,6 @@
             display: none;
         }
 
-        input {
-            border: none;
-            width: 100%;
-            float: left;
-            font-size: 14.5px;
-            margin-top: 10px;
-        }
-
-        input[type=text], input[type=email], input[type=password] {
-            border-radius: 5px;
-            background-color: rgb(245, 245, 245);
-            height: 55px;
-            color: #000;
-            padding-left: 15px;
-        }
-
         input[type=submit] {
             color: rgb(255, 255, 255);
             font-weight: 700;
@@ -52,6 +36,9 @@
             height: 45px;
             border-radius: 25px;
             margin: 20px 0;
+            border: none;
+            font-size: 14.5;
+            width: 100%;
         }
     }
 }

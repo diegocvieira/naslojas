@@ -1,31 +1,65 @@
 {!! Form::model($user->store, ['method' => 'POST', 'route' => 'set-store-config', 'id' => 'form-store-config']) !!}
     {!! Form::input('password', 'current_password') !!}
 
-    {!! Form::email('email', $user->email, ['placeholder' => 'E-mail']) !!}
+    <div class="form-group">
+        {!! Form::email('email', $user->email, ['placeholder' => ' ']) !!}
+        {!! Form::label('', 'E-mail') !!}
+    </div>
 
-    {!! Form::input('password', 'password', null, ['placeholder' => 'Nova senha', 'id' => 'password', 'class' => 'margin half']) !!}
+    <div class="form-group margin half">
+        {!! Form::input('password', 'password', null, ['placeholder' => ' ', 'id' => 'password']) !!}
+        {!! Form::label('', 'Nova senha') !!}
+    </div>
 
-    {!! Form::input('password', 'password_confirmation', null, ['placeholder' => 'Confirmar nova senha', 'class' => 'half']) !!}
+    <div class="form-group half">
+        {!! Form::input('password', 'password_confirmation', null, ['placeholder' => ' ']) !!}
+        {!! Form::label('', 'Confirmar nova senha') !!}
+    </div>
 
-    {!! Form::text('name', null, ['placeholder' => 'Nome da loja', 'id' => 'name']) !!}
+    <div class="form-group name">
+        {!! Form::text('name', null, ['placeholder' => ' ']) !!}
+        {!! Form::label('', 'Nome da loja') !!}
+    </div>
 
-    <span class="slug">
-        {!! Form::text('slug', null, ['id' => 'slug']) !!}
-    </span>
+    <div class="form-group slug">
+        {!! Form::text('slug', null, ['placeholder' => ' ', 'id' => 'slug', 'class' => 'move-placeholder']) !!}
+        {!! Form::label('', 'Slug') !!}
+    </div>
 
-    {!! Form::text('cep', null, ['placeholder' => 'Cep', 'id' => 'cep']) !!}
+    <div class="form-group">
+        {!! Form::text('cep', null, ['placeholder' => ' ', 'id' => 'cep']) !!}
+        {!! Form::label('', 'Cep') !!}
+    </div>
 
-    {!! Form::text('street', null, ['placeholder' => 'Endereço', 'id' => 'street']) !!}
+    <div class="form-group">
+        {!! Form::text('street', null, ['placeholder' => ' ', 'id' => 'street']) !!}
+        {!! Form::label('', 'Endereço') !!}
+    </div>
 
-    {!! Form::text('number', null, ['placeholder' => 'Número', 'class' => 'margin half', 'id' => 'number']) !!}
+    <div class="form-group margin half">
+        {!! Form::text('number', null, ['placeholder' => ' ', 'id' => 'number']) !!}
+        {!! Form::label('', 'Número') !!}
+    </div>
 
-    {!! Form::text('complement', null, ['placeholder' => 'Complemento', 'class' => 'half']) !!}
+    <div class="form-group half">
+        {!! Form::text('complement', null, ['placeholder' => ' ']) !!}
+        {!! Form::label('', 'Complemento') !!}
+    </div>
 
-    {!! Form::text('district', null, ['placeholder' => 'Bairro', 'id' => 'district']) !!}
+    <div class="form-group">
+        {!! Form::text('district', null, ['placeholder' => ' ', 'id' => 'district']) !!}
+        {!! Form::label('', 'Bairro') !!}
+    </div>
 
-    {!! Form::text('city', $user->store->city_id ? $user->store->city->title : null, ['placeholder' => 'Cidade', 'class' => 'margin half', 'id' => 'city']) !!}
+    <div class="form-group margin half margin-bottom">
+        {!! Form::text('city', $user->store->city_id ? $user->store->city->title : null, ['placeholder' => ' ', 'id' => 'city']) !!}
+        {!! Form::label('', 'Cidade') !!}
+    </div>
 
-    {!! Form::text('state', $user->store->city_id ? $user->store->city->state->letter : null, ['placeholder' => 'Estado', 'class' => 'half', 'id' => 'state']) !!}
+    <div class="form-group half margin-bottom">
+        {!! Form::text('state', $user->store->city_id ? $user->store->city->state->letter : null, ['placeholder' => ' ', 'id' => 'state']) !!}
+        {!! Form::label('', 'Estado') !!}
+    </div>
 
     <div class="switch-container" title="Mostra ou oculta a sua loja no site">
         <label class="switch">
