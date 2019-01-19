@@ -94,7 +94,8 @@ class ProductConfirmController extends Controller
     public function emailUrl($type, $token)
     {
         $confirm = ProductConfirm::whereHas('product', function ($query) {
-                $query->withoutGlobalScopes(['active', 'active-store']);
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
             })
             ->where('token', $token)->first();
 
@@ -112,7 +113,8 @@ class ProductConfirmController extends Controller
                     // Desactive product or size
                     if ($confirm->size) {
                         $size = ProductSize::whereHas('product', function ($query) {
-                                $query->withoutGlobalScopes(['active', 'active-store']);
+                                $query->withTrashed()
+                                    ->withoutGlobalScopes(['active', 'active-store']);
                             })
                             ->where('product_id', $confirm->product_id)
                             ->where('size', $confirm->size)
@@ -120,13 +122,15 @@ class ProductConfirmController extends Controller
                             ->delete();
 
                         $sizes = ProductSize::whereHas('product', function ($query) {
-                                $query->withoutGlobalScopes(['active', 'active-store']);
+                                $query->withTrashed()
+                                    ->withoutGlobalScopes(['active', 'active-store']);
                             })
                             ->where('product_id', $confirm->product_id)
                             ->get();
 
                         if ($sizes->count() == 0) {
                             $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                                ->withTrashed()
                                 ->where('id', $confirm->product_id)
                                 ->first();
 
@@ -135,6 +139,7 @@ class ProductConfirmController extends Controller
                         }
                     } else {
                         $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                            ->withTrashed()
                             ->where('id', $confirm->product_id)
                             ->first();
 
@@ -162,6 +167,7 @@ class ProductConfirmController extends Controller
     {
         $confirm = ProductConfirm::whereHas('product', function ($query) {
             $query->withoutGlobalScopes(['active', 'active-store'])
+                ->withTrashed()
                 ->where('store_id', Auth::guard('store')->user()->store_id);
         })
         ->where('id', $id)
@@ -192,6 +198,7 @@ class ProductConfirmController extends Controller
     {
         $confirm = ProductConfirm::whereHas('product', function ($query) {
             $query->withoutGlobalScopes(['active', 'active-store'])
+                ->withTrashed()
                 ->where('store_id', Auth::guard('store')->user()->store_id);
         })
         ->where('id', $id)
@@ -212,7 +219,8 @@ class ProductConfirmController extends Controller
             // Desactive product or size
             if ($confirm->size) {
                 $size = ProductSize::whereHas('product', function ($query) {
-                    $query->withoutGlobalScopes(['active', 'active-store']);
+                    $query->withTrashed()
+                        ->withoutGlobalScopes(['active', 'active-store']);
                 })
                 ->where('product_id', $confirm->product_id)
                 ->where('size', $confirm->size)
@@ -220,12 +228,14 @@ class ProductConfirmController extends Controller
                 ->delete();
 
                 $sizes = ProductSize::whereHas('product', function ($query) {
-                    $query->withoutGlobalScopes(['active', 'active-store']);
+                    $query->withTrashed()
+                        ->withoutGlobalScopes(['active', 'active-store']);
                 })
                 ->where('product_id', $confirm->product_id)->get();
 
                 if ($sizes->count() == 0) {
                     $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                        ->withTrashed()
                         ->where('id', $confirm->product_id)
                         ->first();
 
@@ -234,6 +244,7 @@ class ProductConfirmController extends Controller
                 }
             } else {
                 $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                    ->withTrashed()
                     ->where('id', $confirm->product_id)
                     ->first();
 

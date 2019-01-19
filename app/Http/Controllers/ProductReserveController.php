@@ -47,7 +47,8 @@ class ProductReserveController extends Controller
     public function emailUrl($type, $token)
     {
         $reserve = ProductReserve::whereHas('product', function ($query) {
-                $query->withoutGlobalScopes(['active', 'active-store']);
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
             })
             ->where('token', $token)
             ->first();
@@ -73,7 +74,8 @@ class ProductReserveController extends Controller
                     // Desactive product or size
                     if ($reserve->size) {
                         $size = ProductSize::whereHas('product', function ($query) {
-                            $query->withoutGlobalScopes(['active', 'active-store']);
+                            $query->withTrashed()
+                                ->withoutGlobalScopes(['active', 'active-store']);
                         })
                         ->where('product_id', $reserve->product_id)
                         ->where('size', $reserve->size)
@@ -81,12 +83,14 @@ class ProductReserveController extends Controller
                         ->delete();
 
                         $sizes = ProductSize::whereHas('product', function ($query) {
-                            $query->withoutGlobalScopes(['active', 'active-store']);
+                            $query->withTrashed()
+                                ->withoutGlobalScopes(['active', 'active-store']);
                         })
                         ->where('product_id', $reserve->product_id)->get();
 
                         if ($sizes->count() == 0) {
                             $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                                ->withTrashed()
                                 ->where('id', $reserve->product_id)
                                 ->first();
 
@@ -95,6 +99,7 @@ class ProductReserveController extends Controller
                         }
                     } else {
                         $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                            ->withTrashed()
                             ->where('id', $reserve->product_id)
                             ->first();
 
@@ -168,6 +173,7 @@ class ProductReserveController extends Controller
     {
         $reserve = ProductReserve::whereHas('product', function ($query) {
                 $query->withoutGlobalScopes(['active', 'active-store'])
+                    ->withTrashed()
                     ->where('store_id', Auth::guard('store')->user()->store_id);
             })
             ->where('id', $id)
@@ -201,6 +207,7 @@ class ProductReserveController extends Controller
     {
         $reserve = ProductReserve::whereHas('product', function ($query) {
                 $query->withoutGlobalScopes(['active', 'active-store'])
+                    ->withTrashed()
                     ->where('store_id', Auth::guard('store')->user()->store_id);
             })
             ->where('id', $id)
@@ -221,7 +228,8 @@ class ProductReserveController extends Controller
             // Desactive product or size
             if ($reserve->size) {
                 $size = ProductSize::whereHas('product', function ($query) {
-                    $query->withoutGlobalScopes(['active', 'active-store']);
+                    $query->withTrashed()
+                        ->withoutGlobalScopes(['active', 'active-store']);
                 })
                 ->where('product_id', $reserve->product_id)
                 ->where('size', $reserve->size)
@@ -229,12 +237,14 @@ class ProductReserveController extends Controller
                 ->delete();
 
                 $sizes = ProductSize::whereHas('product', function ($query) {
-                    $query->withoutGlobalScopes(['active', 'active-store']);
+                    $query->withTrashed()
+                        ->withoutGlobalScopes(['active', 'active-store']);
                 })
                 ->where('product_id', $reserve->product_id)->get();
 
                 if ($sizes->count() == 0) {
                     $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                        ->withTrashed()
                         ->where('id', $reserve->product_id)
                         ->first();
 
@@ -243,6 +253,7 @@ class ProductReserveController extends Controller
                 }
             } else {
                 $p = Product::withoutGlobalScopes(['active', 'active-store'])
+                    ->withTrashed()
                     ->where('id', $reserve->product_id)
                     ->first();
 
