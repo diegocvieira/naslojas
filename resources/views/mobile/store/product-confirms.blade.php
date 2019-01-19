@@ -64,8 +64,8 @@
                                 <span class="info-title">Opções</span>
                                 <span class="info-detail btn-status">
                                     @if ($confirm->status == 2)
-                                        <a href="{{ route('product-confirm-confirm', $confirm->id) }}" class="change-confirm-status">Produto disponível</a>
-                                        <a href="{{ route('product-refuse-confirm', $confirm->id) }}" class="change-confirm-status">Produto indisponível</a>
+                                        <a href="{{ route('product-confirm-confirm', $confirm->id) }}" class="change-confirm-status">PRODUTO DISPONÍVEL</a>
+                                        <a href="{{ route('product-refuse-confirm', $confirm->id) }}" class="change-confirm-status">PRODUTO INDISPONÍVEL</a>
                                     @else
                                         -----
                                     @endif

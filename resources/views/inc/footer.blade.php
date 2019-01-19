@@ -1,11 +1,11 @@
         <footer>
             <div class="container">
                 <div class="col-xs-6 support">
-                    <a href="http://www.pelotas.com.br/" target="_blank">
+                    <a href="http://www.pelotas.com.br/" target="_blank" class="pelotas">
                         <img src="{{ asset('images/pelotas.png') }}" />
                     </a>
 
-                    <a href="http://fecomercio-rs.org.br/" target="_blank">
+                    <a href="http://fecomercio-rs.org.br/" target="_blank" class="fecomercio">
                         <img src="{{ asset('images/fecomercio.png') }}" />
                     </a>
                 </div>
@@ -14,12 +14,12 @@
                     <div class="col-xs-4">
                         <a href="{{ url('/') }}">Início</a>
                         <a href="#" class="open-how-works">Como funciona</a>
+                        <a href="#" class="show-app">Baixe nosso app</a>
                         <a href="{{ route('client-register-get') }}">Cadastrar</a>
                         <a href="{{ route('client-login-get') }}">Entrar</a>
-                        <a href="#" class="show-app">Baixe nosso app</a>
                     </div>
 
-                    <div class="col-xs-4">
+                    <div class="col-xs-3">
                         <a href="{{ route('rules') }}" target="_blank">Regras</a>
                         <a href="{{ route('terms-use') }}" target="_blank">Termos de uso</a>
                         <a href="{{ route('privacy-policy') }}" target="_blank">Privacidade</a>
@@ -27,7 +27,7 @@
                         <a href="{{ route('store-login-get') }}">Admin da loja</a>
                     </div>
 
-                    <div class="col-xs-4">
+                    <div class="col-xs-5">
                         <a href="#" class="city show-city-modal">{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</a>
 
                         <a href="mailto:naslojas.com" class="email">contato@naslojas.com</a>

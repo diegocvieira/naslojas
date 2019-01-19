@@ -69,8 +69,8 @@
                                 <span class="info-title">Opções</span>
                                 <span class="info-detail btn-status">
                                     @if ($reserve->status == 2)
-                                        <a href="{{ route('product-confirm-reserve', $reserve->id) }}" class="change-reserve-status">Confirmar reserva</a>
-                                        <a href="{{ route('product-refuse-reserve', $reserve->id) }}" class="change-reserve-status">Recusar reserva</a>
+                                        <a href="{{ route('product-confirm-reserve', $reserve->id) }}" class="change-reserve-status">CONFIRMAR RESERVA</a>
+                                        <a href="{{ route('product-refuse-reserve', $reserve->id) }}" class="change-reserve-status">RECUSAR RESERVA</a>
                                     @else
                                         -----
                                     @endif

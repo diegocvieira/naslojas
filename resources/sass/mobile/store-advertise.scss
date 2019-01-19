@@ -22,9 +22,8 @@
     .year {
         font-size: 100px;
         color: rgb(0, 0, 0);
-        font-weight: 700;
         display: block;
-        font-family: 'AgencyFb-Bold';
+        font-family: 'AgencyFb-Black';
         position: relative;
         top: 10px;
 
@@ -69,6 +68,7 @@
                 padding: 50px 0;
                 margin: 0;
                 line-height: 1.3;
+                font-family: 'Roboto';
             }
         }
     }
@@ -91,7 +91,7 @@
             }
 
             .img-truck {
-                width: 129px;
+                width: 117px;
             }
 
             p {
@@ -192,12 +192,14 @@
             font-size: 18.7px;
             color: #000;
             line-height: 1.5;
+            font-family: 'Roboto';
         }
 
         h3 {
             font-size: 25px;
             color: #fff;
             margin: 20px 0 40px 0;
+            font-family: 'Roboto';
         }
 
         .phone {

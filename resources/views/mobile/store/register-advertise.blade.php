@@ -88,7 +88,7 @@
 
             <a href="{{ route('store-register-get') }}" class="btn-advertise">DIVULGAR OFERTAS</a>
 
-            <p class="phone">Dúvidas no whatsApp da empresa<br>53 9 9169 1716</p>
+            <p class="phone">Dúvidas no whatsapp da empresa<br>53 9 9169 1716</p>
         </div>
     </div>
 @endsection

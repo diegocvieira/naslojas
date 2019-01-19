@@ -23,9 +23,8 @@
     .year {
         font-size: 100px;
         color: rgb(0, 0, 0);
-        font-weight: 700;
         display: block;
-        font-family: 'AgencyFb-Bold';
+        font-family: 'AgencyFb-Black';
         margin-top: 30px;
         position: relative;
         top: 20px;
@@ -74,6 +73,7 @@
                 padding: 50px 0;
                 margin: 0;
                 line-height: 1.3;
+                font-family: 'OpenSans-Regular';
             }
         }
     }
@@ -100,7 +100,7 @@
             }
 
             .img-truck {
-                width: 142px;
+                width: 120px;
             }
 
             p {
@@ -151,6 +151,7 @@
             font-size: 20.8px;
             color: #000;
             margin: 0;
+            line-height: 2;
 
             &.taxe {
                 font-size: 16.6px;
@@ -160,7 +161,7 @@
         h3 {
             font-size: 33.3px;
             color: #000;
-            margin: 5px 0 0 0;
+            margin: 15px 0 0 0;
             font-family: 'KeepCalm';
         }
     }
@@ -196,15 +197,17 @@
         background-image: linear-gradient(to right, #5effd3, 60%, #909ae5);
 
         p {
-            font-size: 18.7px;
+            font-size: 21px;
             color: #000;
             line-height: 1.5;
+            font-family: 'OpenSans-Regular';
         }
 
         h3 {
-            font-size: 25px;
+            font-size: 30px;
             color: #fff;
             margin: 20px 0 40px 0;
+            font-family: 'OpenSans-Regular';
         }
 
         .phone {

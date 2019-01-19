@@ -15,7 +15,7 @@
                     <span class="swipe"><span class="text padding-left">DESLIZE</span><span class="arrow right"></span></span>
                 </div>
 
-                <div class="slide-wrapper padding">
+                <div class="slide-wrapper">
                     <p>Você pode encontrar o que procura de um jeito rápido e fácil</p>
 
                     <span class="swipe"><span class="arrow left"></span><span class="text">DESLIZE</span><span class="arrow right"></span></span>
@@ -27,7 +27,7 @@
                     <span class="swipe"><span class="arrow left"></span><span class="text">DESLIZE</span><span class="arrow right"></span></span>
                 </div>
 
-                <div class="slide-wrapper padding">
+                <div class="slide-wrapper">
                     <p>Tire dúvidas sobre os produtos diretamente com as lojas</p>
 
                     <span class="swipe"><span class="arrow left"></span><span class="text">DESLIZE</span><span class="arrow right"></span></span>

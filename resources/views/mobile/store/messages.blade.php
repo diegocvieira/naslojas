@@ -52,7 +52,7 @@
                             <div class="info">
                                 <span class="info-title">Opções</span>
                                 <span class="info-detail">
-                                    <a href="#" class="show-message" data-id="{{ $message->id }}" data-clientmessage="{{ $message->question }}" data-clientname="{{ $message->client->name }}" data-storemessage="{{ $message->response }}" data-storename="{{ $message->product->store->name }}">{{ $message->status ? 'Visualizar resposta' : 'Responder usuário' }}</a>
+                                    <a href="#" class="show-message" data-id="{{ $message->id }}" data-clientmessage="{{ $message->question }}" data-clientname="{{ $message->client->name }}" data-storemessage="{{ $message->response }}" data-storename="{{ $message->product->store->name }}">{{ $message->status ? 'VISUALIZAR RESPOSTA' : 'RESPONDER USUÁRIO' }}</a>
                                 </span>
                             </div>
                         </div>
