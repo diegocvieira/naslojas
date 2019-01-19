@@ -6,7 +6,8 @@ use Illuminate\Console\Command;
 use App\ProductConfirm;
 use App\ProductSize;
 use App\Product;
-use Mail;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PendingConfirmStore;
 
 class cronPendingConfirms extends Command
 {
@@ -25,6 +26,7 @@ class cronPendingConfirms extends Command
     		}])
             ->where('status', 2)
             ->whereRaw('TIMESTAMPDIFF(DAY, created_at, NOW()) >= 2')
+            ->where('id', 2)
             ->get();
 
         foreach ($confirms as $confirm) {
@@ -71,17 +73,21 @@ class cronPendingConfirms extends Command
     				$product->save();
     			}
 
-                Mail::send('emails.store-pending-confirm', ['confirm' => $c], function($q) use($c) {
+                Mail::send(new PendingConfirmStore($c));
+
+                $this->info('E-mail enviado com sucesso...');
+
+                /*Mail::send('emails.store-pending-confirm', ['confirm' => $c], function($q) use($c) {
                     $q->from('no-reply@naslojas.com', 'naslojas');
                     $q->to($c->product->store->user->first()->email);
                     $q->subject('Confirmação de produto');
-                });
+                });*/
 
-                Mail::send('emails.client-pending-confirm', ['confirm' => $c], function($q) use($c) {
+                /*Mail::send('emails.client-pending-confirm', ['confirm' => $c], function($q) use($c) {
                     $q->from('no-reply@naslojas.com', 'naslojas');
                     $q->to($c->client->email);
                     $q->subject('Confirmação de produto');
-                });
+                });*/
     		}
     	}
     }

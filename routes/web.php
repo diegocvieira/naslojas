@@ -11,22 +11,6 @@
 |
 */
 
-Route::get('teste/teste', function () {
-	$confirms = \App\ProductConfirm::whereHas('product', function ($query) {
-			$query->withTrashed()
-				->withoutGlobalScopes(['active', 'active-store']);
-		})
-		->with(['product' => function($query) {
-			$query->withTrashed()
-				->withoutGlobalScopes(['active', 'active-store']);
-		}])
-		->where('status', 2)
-		->whereRaw('TIMESTAMPDIFF(DAY, created_at, NOW()) >= 2')
-		->get();
-
-	return $confirms;
-});
-
 Route::get('/', 'GlobalController@home')->name('home');
 
 Route::group(['prefix' => 'site'], function () {
