@@ -40,8 +40,8 @@
                 </tr>
 
                 <tr>
-                    <td style="box-shadow: 5px 8.66px 9px 1px rgba(100, 100, 100, 0.118); border-radius: 0 0 5px 5px; background-color: #fff; padding: 40px 50px 50px 50px;">
-                        <a href="{{ $url }}" style="display: inline-block; border-radius: 25px; font-weight: 700; font-size: 14.5; margin-top: 10px; background-color: rgb(255, 23, 68); color: #fff; padding: 13px 25px;">CADASTRAR NOVA SENHA</a>
+                    <td style="box-shadow: 5px 8.66px 9px 1px rgba(100, 100, 100, 0.118); border-radius: 0 0 5px 5px; background-color: #fff; padding: 50px 50px 50px 50px;">
+                        <a href="{{ $url }}" style="display: inline-block; border-radius: 25px; font-weight: 700; font-size: 14.5px; background-color: rgb(255, 23, 68); color: #fff; padding: 13px 25px;">CADASTRAR NOVA SENHA</a>
                     </td>
                 </tr>
 
@@ -52,7 +52,7 @@
                 </tr>
 
                 <tr>
-                    <td style="padding: 5px 50px 40px 50px;">
+                    <td style="padding: 0 50px 40px 50px;">
                         <span style="text-align: center; display: block; font-size: 12.5; color: rgb(150, 150, 150);">Dogs Are Awesome Atividades de Internet Ltda - CNPJ 32.194.554/0001-63</span>
                     </td>
                 </tr>

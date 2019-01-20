@@ -11,11 +11,6 @@
 |
 */
 
-Route::get('teste/teste', function () {
-	$reserve = \App\ProductReserve::find(1);
-	return view('emails.store-product-reserve', compact('reserve'));
-});
-
 Route::get('/', 'GlobalController@home')->name('home');
 
 Route::group(['prefix' => 'site'], function () {

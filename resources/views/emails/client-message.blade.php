@@ -41,7 +41,7 @@
 
                 <tr>
                     <td style="box-shadow: 5px 8.66px 9px 1px rgba(100, 100, 100, 0.118); background-color: #fff; padding: 40px 50px 0 50px;">
-                        <img src="{{ asset('uploads/' . $message->product->store_id . '/products/' . $message->product->images->first()->image) }}" style="float: left; margin-right: 10px; width: 248px; height: 248px; object-fit: cover;" />
+                        <img src="{{ asset('uploads/' . $message->product->store_id . '/products/' . $message->product->images->first()->image) }}" style="box-shadow: 5px 8.66px 9px 1px rgba(100, 100, 100, 0.118); float: left; margin-right: 10px; width: 248px; height: 248px; object-fit: cover;" />
 
                         @if ($message->product->old_price)
                             <span style="margin-top: 10px; text-decoration: line-through; font-size: 12.5px; display: block; color: rgb(50, 50, 50);">de R$ {{ number_format($message->product->old_price, 2, ',', '.') }}</span>
@@ -50,7 +50,7 @@
                         <span style="margin: 10px 0; display: inline-block; font-weight: 700; font-size: 16.6px; color: rgb(50, 50, 50)"><span style="font-size: 12.5px;">R$</span> {{ number_format($message->product->price, 2, ',', '.') }}</span>
 
                         @if ($message->product->old_price)
-                            <span style="display: inline-block; margin-left: 10px; font-size: 14.5px; color: rgb(112, 202, 124);">{{ _discount($message->product->price, $message->product->old_price) }}% OFF</span>
+                            <span style="display: inline-block; margin-left: 10px; font-size: 14.5px; color: #ff1744;">{{ _discount($message->product->price, $message->product->old_price) }}% OFF</span>
                         @endif
 
                         @if ($message->product->installment && $message->product->installment_price)
@@ -61,7 +61,7 @@
                         @endif
 
                         @if ($message->product->reserve && $message->product->reserve_discount)
-                            <span style="color: #000; display: block; position: relative; left: -10px; font-size: 14.5px; margin-top: 10px;" title="Preço com desconto reservado pelo naslojas"><span style="font-size: 16.6px; font-weight: 700; background-color: rgb(255, 215, 223); padding: 5px 10px; border-radius: 25px; margin-right: 5px;">R$ {{ number_format(_reservePrice($message->product->price, $message->product->reserve_discount), 2, ',', '.') }}</span> na reserva pelo <i>naslojas</i></span>
+                            <span style="color: #000; display: block; font-size: 14.5px; margin-top: 10px;" title="Preço com desconto reservado pelo naslojas"><span style="font-size: 16.6px; font-weight: 700; background-color: rgb(255, 215, 223); padding: 2px 4px; margin-right: 5px;"><span style="font-size: 12.5px;">R$</span> {{ number_format(_reservePrice($message->product->price, $message->product->reserve_discount), 2, ',', '.') }}</span> na reserva pelo <i>naslojas</i></span>
 
                             @if ($message->product->installment && $message->product->installment_price)
                                 <span style="color: #000; margin-top: 5px; font-size: 14.5px; display: block; padding-left: 10px;">
@@ -71,7 +71,7 @@
                             @endif
                         @endif
 
-                        <span style="margin: 10px 0; display: block; font-size: 14.5px; color: rgb(150, 150, 150); line-height: 1.286;">{{ $message->product->title }}</span>
+                        <span style="margin-top: 10px; display: block; font-size: 14.5px; color: rgb(150, 150, 150); line-height: 1.286;">{{ $message->product->title }}</span>
 
                         <a href="{{ route('show-product', $message->product->slug) }}" style="margin-top: 20px; display: inline-block; font-size: 14.5px; color: rgb(122, 184, 236);">Ver produto no site</a>
                     </td>
@@ -90,8 +90,8 @@
                 </tr>
 
                 <tr>
-                    <td style="box-shadow: 5px 8.66px 9px 1px rgba(100, 100, 100, 0.118); border-radius: 0 0 5px 5px; background-color: #fff; padding: 40px 50px 50px 50px;">
-                        <a href="{{ route('show-product', $message->product->slug) }}" style="display: inline-block; border-radius: 25px; font-weight: 700; font-size: 14.5; margin-top: 10px; background-color: rgb(255, 23, 68); color: #fff; padding: 13px 25px;">ENVIAR OUTRA MENSAGEM</a>
+                    <td style="box-shadow: 5px 8.66px 9px 1px rgba(100, 100, 100, 0.118); border-radius: 0 0 5px 5px; background-color: #fff; padding: 50px 50px 50px 50px;">
+                        <a href="{{ route('show-product', $message->product->slug) }}" style="display: inline-block; border-radius: 25px; font-weight: 700; font-size: 14.5px; background-color: rgb(255, 23, 68); color: #fff; padding: 13px 25px;">ENVIAR OUTRA MENSAGEM</a>
                     </td>
                 </tr>
 
@@ -102,7 +102,7 @@
                 </tr>
 
                 <tr>
-                    <td style="padding: 5px 50px 40px 50px;">
+                    <td style="padding: 0 50px 40px 50px;">
                         <span style="text-align: center; display: block; font-size: 12.5; color: rgb(150, 150, 150);">Dogs Are Awesome Atividades de Internet Ltda - CNPJ 32.194.554/0001-63</span>
                     </td>
                 </tr>
