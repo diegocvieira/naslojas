@@ -254,7 +254,9 @@
         .price-off {
             font-size: 14.5px;
             color: #ff1744;
-            margin-left: 15px;
+            margin-left: 10px;
+            position: relative;
+            top: -5px;
         }
 
         .parcels {
@@ -331,7 +333,7 @@
                 font-size: 13.7px;
                 color: rgb(100, 100, 100);
                 border-radius: 50%;
-                background-color: rgb(245, 245, 245);
+                background-color: #f0f0f0;
                 width: 100%;
                 height: 100%;
                 line-height: 40px;
@@ -433,7 +435,7 @@
             color: #fff;
 
             &.btn-product-confirm {
-                background-color: rgb(245, 245, 245);
+                background-color: #f0f0f0;
                 margin-bottom: 5px;
                 color: rgb(255, 23, 68);
             }

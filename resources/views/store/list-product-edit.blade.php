@@ -44,7 +44,7 @@
                     <a href="{{ route('show-product', $product->slug) }}" target="_blank" title="Ver produto"></a>
                 @endif
 
-                <button type="button" class="select-color color-variation {{ !$product->related ? 'hidden' : '' }}" data-url="{{ route('color-variation') }}" title="Remover variação"></button>
+                <button type="button" class="select-color color-variation {{ !$product->related ? 'hidden' : '' }}" data-url="{{ route('color-variation') }}" title="Remover variação de cor"></button>
                 <button type="button" class="select-color {{ $product->related ? 'hidden' : '' }}" title="Selecionar variação"></button>
             </div>
         </div>

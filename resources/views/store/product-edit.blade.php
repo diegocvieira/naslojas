@@ -20,7 +20,7 @@
                                     <button type="button" class="open-color-variation">VARIAÇÃO DE COR</button>
                                     <span class="color-variation-tooltip">Clique para selecionar as diferentes cores de<br>um mesmo produto e assim indicar no site que<br>o produto está à venda em mais de uma cor.</span>
 
-                                    <button type="button" class="generate-color-variation" data-url="{{ route('color-variation') }}">AGRUPAR VARIAÇÃO</button>
+                                    <button type="button" title="Clique para agrupar as variações de cor selecionadas" class="generate-color-variation" data-url="{{ route('color-variation') }}">AGRUPAR VARIAÇÃO</button>
                                 </span>
 
                                 <button type="button" class="btn-finish">{{ $section == 'add' ? 'ADICIONAR AO SITE' : 'SALVAR ALTERAÇÕES' }}</button>

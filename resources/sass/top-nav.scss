@@ -107,6 +107,10 @@ header {
                 color: rgb(100, 100, 100);
                 display: block;
                 padding: 0 25px;
+
+                &:hover {
+                    color: #646464;
+                }
             }
         }
 

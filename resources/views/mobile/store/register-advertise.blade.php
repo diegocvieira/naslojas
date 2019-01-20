@@ -70,7 +70,7 @@
 
             <h3>TOTALMENTE GRÁTIS</h3>
 
-            <p class="taxe">Após pague apenas R$ 0,50 por oferta<br>+ taxa única de R$ 5,00 do transporte</p>
+            <p class="taxe">Depois o custo é de apenas R$ 0,50 por oferta<br>+ taxa única de R$ 5,00 do transporte</p>
         </div>
 
         <div class="race">

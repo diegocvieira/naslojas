@@ -307,7 +307,7 @@ class ProductController extends Controller
 
                                 $return['status'] = true;
                                 //$return['msg'] = 'Alterações salvas com sucesso!';
-                                session()->flash('session_flash_alert', 'Produtos salvos com sucesso!');
+                                session()->flash('session_flash_alert', 'Alterações realizadas com sucesso!');
                             } catch(\Exception $e) {
                                 $attempts++;
 
@@ -454,7 +454,7 @@ class ProductController extends Controller
 
                         $return['status'] = true;
                         //$return['msg'] = 'Alterações salvas com sucesso!';
-                        session()->flash('session_flash_alert', 'Produto salvo com sucesso!');
+                        session()->flash('session_flash_alert', 'Alterações realizadas com sucesso!');
                     } catch(\Exception $e) {
                         $attempts++;
 

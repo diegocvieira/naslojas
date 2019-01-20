@@ -99,13 +99,8 @@
             }
         }
 
-        .dz-error-mark svg {
-            background-color: #fff;
-            border-radius: 50%;
-
-            g g {
-                fill: #ff1744 !important;
-            }
+        .dz-error-mark svg g g {
+            fill: #ff1744 !important;
         }
 
         .dz-preview {

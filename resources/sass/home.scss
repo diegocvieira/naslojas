@@ -35,7 +35,8 @@
     .app-mobile {
         background: radial-gradient(#b12872 1%, #ff1744);
         background-attachment: fixed;
-        padding: 90px 0;
+        //padding: 90px 0;
+        height: 300px;
         margin-top: 150px;
 
         .container {
@@ -44,6 +45,7 @@
 
         .text {
             padding-right: 100px;
+            margin-top: 80px;
 
             img {
                 filter: brightness(0) invert(1);
@@ -71,13 +73,14 @@
             img {
                 width: 460px;
                 position: absolute;
-                bottom: -235px;
+                bottom: -300px;
                 left: 0;
             }
         }
 
         .links {
             padding-left: 70px;
+            margin-top: 85px;
 
             a {
                 font-size: 14.5px;
