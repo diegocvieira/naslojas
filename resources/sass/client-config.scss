@@ -12,6 +12,12 @@
     }
 
     #form-client-config {
+        input, textarea {
+            &focus + label, &:not(:placeholder-shown) + label {
+                background-color: #fff;
+            }
+        }
+
         .half {
             width: 49%;
 

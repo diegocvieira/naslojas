@@ -12,13 +12,25 @@
 
             <p class="sub">Nós fazemos o trabalho pesado</p>
 
-            {!! Form::text('store_name', null, ['placeholder' => 'Nome da loja', 'required']) !!}
+            <div class="form-group">
+                {!! Form::text('store_name', null, ['placeholder' => ' ', 'required']) !!}
+                {!! Form::label('', 'Nome da loja') !!}
+            </div>
 
-            {!! Form::text('user_name', null, ['placeholder' => 'Seu nome', 'required']) !!}
+            <div class="form-group">
+                {!! Form::text('user_name', null, ['placeholder' => ' ', 'required']) !!}
+                {!! Form::label('', 'Seu nome') !!}
+            </div>
 
-            {!! Form::email('email', null, ['placeholder' => 'E-mail', 'required']) !!}
+            <div class="form-group">
+                {!! Form::email('email', null, ['placeholder' => ' ', 'required']) !!}
+                {!! Form::label('', 'E-mail') !!}
+            </div>
 
-            {!! Form::text('phone', null, ['placeholder' => 'Telefone', 'required']) !!}
+            <div class="form-group">
+                {!! Form::text('phone', null, ['placeholder' => ' ', 'required']) !!}
+                {!! Form::label('', 'Telefone') !!}
+            </div>
 
             {!! Form::submit('ENVIAR') !!}
 

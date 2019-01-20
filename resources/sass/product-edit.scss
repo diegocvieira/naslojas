@@ -361,13 +361,15 @@
 
                 input, textarea {
                     font-size: 12.5px;
+                    padding-left: 20px;
 
                     &focus + label, &:not(:placeholder-shown) + label {
                         top: -7px;
+                        font-size: 10.4px;
                     }
 
                     &:not(:placeholder-shown) {
-                        padding-top: 15px;
+                        padding-top: 10px;
                     }
                 }
 
@@ -389,6 +391,10 @@
                     textarea {
                         resize: none;
                         padding: 10px 20px;
+
+                        &:not(:placeholder-shown) {
+                            padding-top: 20px;
+                        }
                     }
                 }
 

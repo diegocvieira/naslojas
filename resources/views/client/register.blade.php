@@ -12,13 +12,25 @@
 
             <p class="sub">Cadastre-se totalmente grátis</p>
 
-            {!! Form::text('name', null, ['placeholder' => 'Nome']) !!}
+            <div class="form-group">
+                {!! Form::text('name', null, ['placeholder' => ' ']) !!}
+                {!! Form::label('', 'Nome') !!}
+            </div>
 
-            {!! Form::email('email', null, ['placeholder' => 'E-mail', 'required']) !!}
+            <div class="form-group">
+                {!! Form::email('email', null, ['placeholder' => ' ', 'required']) !!}
+                {!! Form::label('', 'E-mail') !!}
+            </div>
 
-            {!! Form::input('password', 'password', null, ['placeholder' => 'Senha', 'class' => 'half', 'id' => 'password']) !!}
+            <div class="form-group half margin">
+                {!! Form::input('password', 'password', null, ['placeholder' => ' ', 'id' => 'password']) !!}
+                {!! Form::label('', 'Senha') !!}
+            </div>
 
-            {!! Form::input('password', 'password_confirmation', null, ['placeholder' => 'Confirmar senha', 'class' => 'half']) !!}
+            <div class="form-group half">
+                {!! Form::input('password', 'password_confirmation', null, ['placeholder' => ' ']) !!}
+                {!! Form::label('', 'Confirmar senha') !!}
+            </div>
 
             {!! Form::submit('CADASTRAR') !!}
 

@@ -12,9 +12,15 @@
 
             <p class="sub">Acesse sua conta para começar</p>
 
-            {!! Form::email('email', null, ['placeholder' => 'E-mail', 'required']) !!}
+            <div class="form-group">
+                {!! Form::email('email', null, ['placeholder' => ' ', 'required']) !!}
+                {!! Form::label('', 'E-mail') !!}
+            </div>
 
-            {!! Form::input('password', 'password', null, ['placeholder' => 'Senha', 'required']) !!}
+            <div class="form-group">
+                {!! Form::input('password', 'password', null, ['placeholder' => ' ', 'required']) !!}
+                {!! Form::label('', 'Senha') !!}
+            </div>
 
             {!! Form::submit('ENTRAR') !!}
 
