@@ -570,9 +570,8 @@ class ProductController extends Controller
 
         if ($product) {
             $return['status'] = true;
-            $return['type'] = 'delete';
 
-            // Verify and set to null if exists a unique related product
+            // Verify and set to null if exists just one related product
             $this->verifyVariation();
         } else {
             $return['status'] = false;
@@ -607,7 +606,6 @@ class ProductController extends Controller
 
         if ($save) {
             $return['status'] = true;
-            $return['type'] = 'enable';
         } else {
             $return['status'] = false;
         }
@@ -641,7 +639,6 @@ class ProductController extends Controller
 
         if ($save) {
             $return['status'] = true;
-            $return['type'] = 'disable';
         } else {
             $return['status'] = false;
         }

@@ -536,16 +536,7 @@ $(function() {
 });
 
 function modalAlert(body, btn = 'OK') {
-    /*var modal = $('#modal-alert');
-
-    modal.find('.modal-footer .btn-back').remove();
-
-    modal.find('.modal-body').html(body);
-    modal.find('.modal-footer .btn').removeClass('btn-confirm').text(btn);
-    modal.find('.modal-footer .btn').text(btn);
-    modal.modal('show');*/
-
-    $('#modal-alert').remove();
+    $('#modal-alert, .modal-backdrop').remove();
 
     $('body').append("<div class='modal fade' id='modal-alert' tabindex='-1' role='dialog'><div class='modal-dialog' role='document'><div class='modal-content'><div class='modal-body'>" + body + "</div><div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>" + btn + "</button></div></div></div></div>");
 

@@ -86,8 +86,9 @@ $(function() {
 
         $('.close-menu').remove();
 
-        var type = $(this).data('type'),
-            url = $(this).attr('href');
+        var type = $(this).attr('data-type'),
+            url = $(this).attr('href'),
+            form = $('#form-product-manager');
 
         if (type == 'show-product') {
             window.open(url, '_blank');
@@ -137,7 +138,7 @@ $(function() {
                     success: function (data) {
                         if (data.status) {
                             selected.removeClass('selected').find('input[type=checkbox]').attr('checked', false);
-                            $('#form-product-manager').find('.product').removeClass('prepare-select').find('label').hide();
+                            form.find('.product').removeClass('prepare-select').find('label').hide();
 
                             $('header').toggle();
 
@@ -149,33 +150,28 @@ $(function() {
                 });
             }
         } else {
-            if (type == 'product-enable') {
-                var msg = 'Tem certeza que deseja <b>mostrar</b> todos os produtos selecionados?';
-            } else if (type == 'product-disable') {
-                var msg = 'Tem certeza que deseja <b>ocultar</b> todos os produtos selecionados?';
-            } else if (type == 'delete') {
-                var msg = 'Tem certeza que deseja <b>apagar</b> todos os produtos selecionados?';
-            } else if (type == 'reserve-enable') {
-                var msg = 'Tem certeza que deseja <b>habilitar</b> a reserva de todos os produtos selecionados?';
-            } else if (type == 'reserve-disable') {
-                var msg = 'Tem certeza que deseja <b>desabilitar</b> a reserva de todos os produtos selecionados?';
+            form.attr('action', url).attr('data-type', type);
+
+            if (type == 'delete') {
+                modalAlert('Tem certeza que deseja excluir todos os produtos selecionados?', 'CONFIRMAR');
+
+                var modal = $('#modal-alert');
+
+                modal.find('.btn-default').addClass('btn-confirm invert-color');
+                modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back' data-dismiss='modal'>VOLTAR</button>");
+
+                modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
+                    form.submit();
+                });
+            } else {
+                form.submit();
             }
-
-            modalAlert(msg, 'CONFIRMAR');
-
-            var modal = $('#modal-alert');
-
-            modal.find('.btn-default').addClass('btn-confirm invert-color');
-            modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back' data-dismiss='modal'>VOLTAR</button>");
-
-            modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
-                $('#form-product-manager').attr('action', url).submit();
-            });
         }
     });
 
     $(document).on('submit', '#form-product-manager', function() {
-        var form = $(this);
+        var form = $(this),
+            type = $(this).attr('data-type');
 
         $.ajax({
             url: form.attr('action'),
@@ -186,24 +182,40 @@ $(function() {
                 if (data.status) {
                     var selected = form.find('.product.selected');
 
-                    if (data.type == 'enable') {
+                    if (type == 'product-enable') {
                         selected.removeClass('disabled');
-                    } else if (data.type == 'disable') {
+
+                        var msg = 'Os produtos selecionados foram ativados.';
+                    } else if (type == 'product-disable') {
                         selected.addClass('disabled');
-                    } else if (data.type == 'delete') {
+
+                        var msg = 'Os produtos selecionados foram desativados.';
+                    } else if (type == 'reserve-enable') {
+                        var msg = 'Os produtos selecionados tiveram a reserva habilitada.';
+                    }  else if (type == 'reserve-disable') {
+                        var msg = 'Os produtos selecionados tiveram a reserva desabilitada.';
+                    } else if (type == 'delete') {
                         selected.remove();
+
+                        var msg = 'Os produtos selecionados foram excluídos.';
 
                         if (form.find('.product').length == 0) {
                             setTimeout(function() {
                                 window.location.reload(true);
                             }, 100);
                         }
+
+                        variation();
+                    } else {
+                        var msg = 'Informações salvas com sucesso!'; // Just for precaution
                     }
 
                     selected.removeClass('selected').find('input[type=checkbox]').attr('checked', false);
                     form.find('.product').removeClass('prepare-select').find('label').hide();
 
                     $('header').toggle();
+
+                    modalAlert(msg);
                 } else {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
