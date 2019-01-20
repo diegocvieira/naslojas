@@ -70,7 +70,7 @@
 
     <div class="price-container">
         @if ($product->old_price)
-            <span class="old-price">de R$ {{ number_format($product->old_price, 2, ',', '.') }}</span>
+            <span class="old-price">de <span>{{ number_format($product->old_price, 2, ',', '.') }}</span></span>
         @endif
 
         <span class="price" title="{{ ($product->reserve && $product->reserve_discount) ? 'Preço normal cobrado pela loja' : '' }}"><span>R$</span> {{ number_format($product->price, 2, ',', '.') }}</span>
