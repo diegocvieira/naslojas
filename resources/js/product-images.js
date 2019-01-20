@@ -51,6 +51,12 @@ $(function() {
                 $('.dz-preview.product .dz-success-mark').text('Grupo ' + next_product);
 
                 actives.addClass('grouped').removeClass('product').attr('title', 'Clique para remover esta imagem do grupo');
+
+                // Move products
+                var move = $(".dz-preview[data-product='" + next_product + "']");
+                move.each(function(index) {
+                    move.first().after($(this)[0]);
+                });
             } else {
                 modalAlert('Você pode adicionar no máximo 5 imagens por produto.');
             }
@@ -100,6 +106,10 @@ $(function() {
                 $('.top-images').hide();
             }
 
+            if ($('.dz-preview').length > 1) {
+                $('.top-images').find('.btn-agroup').show();
+            }
+
             $('.dz-preview').unbind('click');
         	$('.dz-preview').on('click', function(e) {
                 if (!$(this).hasClass('dz-error')) {
@@ -138,6 +148,10 @@ $(function() {
 
                     if ($('.dz-preview').length <= 1) {
                         $('.top-images').hide();
+                    }
+
+                    if ($('.dz-preview').length == 2) {
+                        $('.top-images').find('.btn-agroup').hide();
                     }
 
                     if (!$(file.previewElement).hasClass('dz-error')) {
