@@ -7,14 +7,18 @@
 @section('content')
     <div class="container page-product-images">
         <div class="top-images">
-            <div class="col-xs-6">
-                <p>Selecione as imagens de um mesmo produto e clique em agrupar imagens</p>
-            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p>Selecione as imagens de um mesmo produto e clique em agrupar imagens</p>
+                    </div>
 
-            <div class="col-xs-6 text-right">
-                <button type="button" class="btn-agroup">AGRUPAR IMAGENS</button>
+                    <div class="col-xs-6 text-right">
+                        <button type="button" class="btn-agroup">AGRUPAR IMAGENS</button>
 
-                <button type="button" class="btn-finish">PRÓXIMO</button>
+                        <button type="button" class="btn-finish">PRÓXIMO</button>
+                    </div>
+                </div>
             </div>
         </div>
 
