@@ -22,7 +22,7 @@
             <div class="dz-message">
                 <img src="{{ asset('images/icon-box.png') }}" />
 
-                <p>Clique para carregar as imagens dos<br>produtos ou arraste e solte-as aqui <span>Máximo de 30 imagens por vez<br>Tamanho ideal 900x900 px</span></p>
+                <p>Clique para carregar as imagens dos<br>produtos ou arraste e solte-as aqui <span>Máximo de 50 imagens por vez<br>Tamanho ideal 900x900 px</span></p>
             </div>
         {!! Form::close() !!}
     </div>

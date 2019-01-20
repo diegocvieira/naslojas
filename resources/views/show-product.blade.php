@@ -87,7 +87,7 @@
         @endif
 
         @if ($product->reserve && $product->reserve_discount)
-            <span class="reserve" title="Preço com desconto reservado pelo naslojas"><span>R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span> na reserva pelo <i>naslojas</i></span>
+            <span class="reserve" title="Preço com desconto reservando pelo naslojas"><span>R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span> na reserva pelo <i>naslojas</i></span>
 
             @if ($product->installment && $product->installment_price)
                 <span class="reserve_parcels">
@@ -134,21 +134,18 @@
     </div>
 
     <div class="btn-container">
-        <button type="button" class="btn-product-confirm" data-url="{{ route('create-product-confirm') }}" data-productid="{{ $product->id }}">CONFIRMAR</button>
-        <span class="btn-tooltip">Confirmar se o produto ainda está disponível.</span>
+        <button type="button" class="btn-product-confirm" data-url="{{ route('create-product-confirm') }}" data-productid="{{ $product->id }}" title="Confirmar se o produto ainda está disponível">CONFIRMAR</button>
 
-        @if($product->reserve)
-            <button type="button" class="btn-product-reserve" data-url="{{ route('create-product-reserve') }}" data-productid="{{ $product->id }}">
-                @if($product->reserve_discount)
-                    RESERVAR POR R$ <span>{{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span>
+        @if ($product->reserve)
+            <button type="button" class="btn-product-reserve" data-url="{{ route('create-product-reserve') }}" data-productid="{{ $product->id }}" title="Você só precisa ir até a loja e informar o seu nome">
+                @if ($product->reserve_discount)
+                    RESERVAR POR R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}
                 @else
                     RESERVAR
                 @endif
             </button>
-            <span class="btn-tooltip">Você só precisa ir até a loja e informar o seu nome.</span>
         @else
-            <button type="button" class="btn-disabled">RESERVA DESABILITADA</button>
-            <span class="btn-tooltip">A loja desabilitou a reserva deste produto.</span>
+            <button type="button" class="btn-disabled" title="A loja desabilitou a reserva deste produto">RESERVA DESABILITADA</button>
         @endif
     </div>
 

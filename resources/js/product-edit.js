@@ -498,7 +498,7 @@ function variation() {
     form.each(function() {
         var related = $(".product-variation[data-related='" + $(this).attr('data-related') + "']");
 
-        $(this).prepend("<span class='variation'></span>");
+        $(this).prepend("<span class='variation' title='Variações de cor de um mesmo produto'></span>");
 
         if ($(this)[0] === related.last()[0]) {
             $(this).find('.variation').css('height', '0');

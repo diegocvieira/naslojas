@@ -26,7 +26,11 @@ $(function() {
     $(document).on('click', '.open-filter-products', function(e) {
         e.preventDefault();
 
+        $('.close-menu').remove();
+
         var filter = $('.filter-products');
+
+        $(this).toggleClass('active');
 
         filter.toggle();
 

@@ -27,11 +27,11 @@
                                     @endif
 
                                     <li @if ($product->reserve == 1) style="display: none;" @endif>
-                                        <a href="{{ route('reserve-enable') }}" data-type="reserve-enable" class="option">Habilitar reserva</a>
+                                        <a href="{{ route('reserve-enable') }}" data-type="reserve-enable" class="option" data-productid="{{ $product->id }}">Habilitar reserva</a>
                                     </li>
 
                                     <li @if ($product->reserve == 0) style="display: none;" @endif>
-                                        <a href="{{ route('reserve-disable') }}" data-type="reserve-disable" class="option">Desabilitar reserva</a>
+                                        <a href="{{ route('reserve-disable') }}" data-type="reserve-disable" class="option" data-productid="{{ $product->id }}">Desabilitar reserva</a>
                                     </li>
 
                                     <li>
@@ -45,15 +45,15 @@
 
                                 @isset ($product)
                                     <li @if ($product->status == 1) style="display: none;" @endif>
-                                        <a href="{{ route('product-enable') }}" data-type="product-enable" class="option">Ativar</a>
+                                        <a href="{{ route('product-enable') }}" data-type="product-enable" class="option" data-productid="{{ $product->id }}">Ativar</a>
                                     </li>
 
                                     <li @if ($product->status == 0) style="display: none;" @endif>
-                                        <a href="{{ route('product-disable') }}" data-type="product-disable" class="option">Desativar</a>
+                                        <a href="{{ route('product-disable') }}" data-type="product-disable" class="option" data-productid="{{ $product->id }}">Desativar</a>
                                     </li>
 
                                     <li>
-                                        <a href="{{ route('product-delete') }}" data-type="delete" class="option">Excluir</a>
+                                        <a href="{{ route('product-delete') }}" data-type="delete" class="option" data-productid="{{ $product->id }}">Excluir</a>
                                     </li>
                                 @endisset
                             </ul>

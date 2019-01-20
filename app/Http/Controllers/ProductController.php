@@ -196,7 +196,7 @@ class ProductController extends Controller
             if (Agent::isDesktop()) {
                 return view('store.product-edit', compact('products', 'section', 'keyword', 'header_title'));
             } else {
-                return view('mobile.store.admin-products', compact('products', 'keyword', 'header_title'));
+                return view('mobile.store.admin-products', compact('products', 'section', 'keyword', 'header_title'));
             }
         } else {
             if (Agent::isDesktop()) {

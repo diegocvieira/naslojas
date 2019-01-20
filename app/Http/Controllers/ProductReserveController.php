@@ -141,7 +141,9 @@ class ProductReserveController extends Controller
         if (Agent::isDesktop()) {
             return view('client.product-reserves', compact('header_title', 'reserves'));
         } else {
-            return view('mobile.client.product-reserves', compact('header_title', 'reserves'));
+            $section = 'reserve';
+
+            return view('mobile.client.product-reserves', compact('header_title', 'reserves', 'section'));
         }
     }
 
@@ -165,7 +167,7 @@ class ProductReserveController extends Controller
         if (Agent::isDesktop()) {
             return view('store.product-reserves', compact('header_title', 'reserves', 'section'));
         } else {
-            return view('mobile.store.product-reserves', compact('header_title', 'reserves'));
+            return view('mobile.store.product-reserves', compact('header_title', 'reserves', 'section'));
         }
     }
 

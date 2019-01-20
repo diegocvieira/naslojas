@@ -87,7 +87,9 @@ class MessageController extends Controller
         if (Agent::isDesktop()) {
             return view('client.messages', compact('header_title', 'messages'));
         } else {
-            return view('mobile.client.messages', compact('header_title', 'messages'));
+            $section = 'message';
+
+            return view('mobile.client.messages', compact('header_title', 'messages', 'section'));
         }
     }
 
@@ -111,7 +113,7 @@ class MessageController extends Controller
         if (Agent::isDesktop()) {
             return view('store.messages', compact('header_title', 'messages', 'section'));
         } else {
-            return view('mobile.store.messages', compact('header_title', 'messages'));
+            return view('mobile.store.messages', compact('header_title', 'messages', 'section'));
         }
     }
 }

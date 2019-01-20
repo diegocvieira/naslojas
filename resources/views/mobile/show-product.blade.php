@@ -100,8 +100,14 @@
         <div class="btn-container">
             <button type="button" class="btn-product-confirm" data-url="{{ route('create-product-confirm') }}" data-productid="{{ $product->id }}">CONFIRMAR</button>
 
-            @if($product->store->reserve)
-                <button type="button" class="btn-product-reserve" data-url="{{ route('create-product-reserve') }}" data-productid="{{ $product->id }}">RESERVAR</button>
+            @if ($product->reserve)
+                <button type="button" class="btn-product-reserve" data-url="{{ route('create-product-reserve') }}" data-productid="{{ $product->id }}">
+                    @if ($product->reserve_discount)
+                        RESERVAR POR R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}
+                    @else
+                        RESERVAR
+                    @endif
+                </button>
             @else
                 <button type="button" class="btn-disabled">RESERVA DESABILITADA</button>
             @endif

@@ -36,39 +36,39 @@
                             <img src="{{ asset('images/icon-profile.png') }}" alt="Foto de perfil de {{ Auth::guard('store')->user()->store->name }}" />
                         </a>
 
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-store">
                             @if(Auth::guard('store')->user()->store->status)
                                 <li>
-                                    <a href="{{ route('show-store', Auth::guard('store')->user()->store->slug) }}" class="icon-store">Minha loja</a>
+                                    <a href="{{ route('show-store', Auth::guard('store')->user()->store->slug) }}">Minha loja</a>
                                 </li>
                             @endif
 
                             <li>
-                                <a href="{{ route('product-images') }}" class="icon-add">Adicionar produtos</a>
+                                <a href="{{ route('product-images') }}">Adicionar produtos</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('edit-products') }}" class="icon-edit">Editar produtos</a>
+                                <a href="{{ route('edit-products') }}">Editar produtos</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('list-store-confirms') }}" class="icon-check">Confirmações</a>
+                                <a href="{{ route('list-store-confirms') }}">Confirmações</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('list-store-reserves') }}" class="icon-reserve">Reservas</a>
+                                <a href="{{ route('list-store-reserves') }}">Reservas</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('list-store-messages') }}" class="icon-messages">Mensagens</a>
+                                <a href="{{ route('list-store-messages') }}">Mensagens</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('get-store-config') }}" class="icon-config show-store-config">Configurações</a>
+                                <a href="{{ route('get-store-config') }}">Configurações</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('logout') }}" class="icon-logout">Sair</a>
+                                <a href="{{ route('logout') }}">Sair</a>
                             </li>
                         </ul>
                     </li>

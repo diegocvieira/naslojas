@@ -44,10 +44,10 @@
                                 @endif
 
                                 @if ($product->old_price)
-                                    <span class="old-price">de R$ {{ number_format($product->old_price, 2, ',', '.') }}</span>
+                                    <span class="old-price">de <span>{{ number_format($product->old_price, 2, ',', '.') }}</span></span>
                                 @endif
 
-                                <span class="price" title="{{ ($product->reserve && $product->reserve_discount) ? 'Preço normal cobrado pela loja' : '' }}"><span>R$</span> {{ number_format($product->price, 2, ',', '.') }}</span>
+                                <span class="price" title="{{ ($product->reserve && $product->reserve_discount) ? 'Preço normal do produto' : '' }}"><span>R$</span> {{ number_format($product->price, 2, ',', '.') }}</span>
 
                                 @if ($product->old_price)
         							<span class="price-off">{{ _discount($product->price, $product->old_price) }}% OFF</span>
@@ -77,7 +77,7 @@
                 <div class="col-xs-4 text text-right">
                     <span>app</span>
                     <img src="{{ asset('images/logo-naslojas.png') }}" />
-                    <p>feito para os humanos<br>de Pelotas</p>
+                    <p>as ofertas de Pelotas<br>sempre com você</p>
                 </div>
 
                 <div class="col-xs-4 img">

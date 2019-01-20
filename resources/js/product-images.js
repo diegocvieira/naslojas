@@ -64,11 +64,11 @@ $(function() {
         },
         paramName: 'image',
         maxFilesize: 5, // MB
-        maxFiles: 30,
+        maxFiles: 50,
         parallelUploads: 25,
         addRemoveLinks: true,
         dictFileTooBig: "A imagem não pode ter mais de 5mb",
-        dictMaxFilesExceeded: "Máximo de 30 imagens por vez",
+        dictMaxFilesExceeded: "Máximo de 50 imagens por vez",
         dictRemoveFile: "",
         dictCancelUploadConfirmation: "Quer cancelar o upload?",
         clickable: true,
@@ -95,6 +95,10 @@ $(function() {
         },
         queuecomplete:function(file, done) {
             $('.top-images').show();
+
+            if ($('.dz-preview').length == 0) {
+                $('.top-images').hide();
+            }
 
             $('.dz-preview').unbind('click');
         	$('.dz-preview').on('click', function(e) {

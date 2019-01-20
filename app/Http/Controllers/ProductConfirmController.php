@@ -63,7 +63,9 @@ class ProductConfirmController extends Controller
         if (Agent::isDesktop()) {
             return view('client.product-confirms', compact('header_title', 'confirms'));
         } else {
-            return view('mobile.client.product-confirms', compact('header_title', 'confirms'));
+            $section = 'confirm';
+
+            return view('mobile.client.product-confirms', compact('header_title', 'confirms', 'section'));
         }
     }
 
@@ -87,7 +89,7 @@ class ProductConfirmController extends Controller
         if (Agent::isDesktop()) {
             return view('store.product-confirms', compact('header_title', 'confirms', 'section'));
         } else {
-            return view('mobile.store.product-confirms', compact('header_title', 'confirms'));
+            return view('mobile.store.product-confirms', compact('header_title', 'confirms', 'section'));
         }
     }
 

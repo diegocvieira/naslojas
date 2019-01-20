@@ -18,9 +18,10 @@
                             <div class="col-xs-6 text-right">
                                 <span class="btns-color-variation">
                                     <button type="button" class="open-color-variation">VARIAÇÃO DE COR</button>
+                                    <span class="color-variation-tooltip">Clique para selecionar as diferentes cores de<br>um mesmo produto e assim indicar no site que<br>o produto está à venda em mais de uma cor.</span>
+
                                     <button type="button" class="generate-color-variation" data-url="{{ route('color-variation') }}">AGRUPAR VARIAÇÃO</button>
                                 </span>
-                                <span class="color-variation-tooltip">Clique para selecionar as diferentes cores de um mesmo produto e assim indicar no site que o produto está à venda em mais de uma cor.</span>
 
                                 <button type="button" class="btn-finish">{{ $section == 'add' ? 'ADICIONAR AO SITE' : 'SALVAR ALTERAÇÕES' }}</button>
                             </div>
@@ -33,7 +34,7 @@
 
             @if ($section == 'edit')
                 {!! Form::open(['method' => 'GET', 'route' => 'form-search-admin', 'id' => 'form-search']) !!}
-                    {!! Form::text('keyword', $keyword ?? null, ['placeholder' => 'Pesquise aqui o produto que você deseja editar']) !!}
+                    {!! Form::text('keyword', $keyword ?? null, ['placeholder' => 'Pesquise aqui o produto que você deseja editar', 'required']) !!}
                     {!! Form::submit('') !!}
                 {!! Form::close() !!}
             @endif

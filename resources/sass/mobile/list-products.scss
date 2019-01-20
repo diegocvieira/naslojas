@@ -69,14 +69,14 @@
             width: 100%;
         }
 
-        .old-price {
+        .old-price span {
             text-decoration: line-through;
         }
 
         .price-off {
-            font-size: 14.5px;
+            font-size: 14px;
             color: #ff1744;
-            margin-left: 5px;
+            margin-left: 3px;
         }
 
         .reserve {

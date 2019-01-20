@@ -28,7 +28,11 @@ class StoreController extends Controller
         if (Agent::isDesktop()) {
             return view('store.show', compact('store', 'products', 'header_title', 'header_desc'));
         } else {
-            return view('mobile.store.show', compact('store', 'products', 'header_title', 'header_desc'));
+            if ($store->id == Auth::guard('store')->user()->store_id) {
+                $section = 'store';
+            }
+
+            return view('mobile.store.show', compact('store', 'products', 'header_title', 'header_desc', 'section'));
         }
     }
 
@@ -156,7 +160,9 @@ class StoreController extends Controller
                 'body' => view('store.config', compact('user'))->render()
             ]);
         } else {
-            return view('mobile.store.config', compact('user'));
+            $section = 'config';
+
+            return view('mobile.store.config', compact('user', 'section'));
         }
     }
 

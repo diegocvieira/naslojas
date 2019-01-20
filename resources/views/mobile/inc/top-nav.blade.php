@@ -46,24 +46,24 @@
                     @if (Auth::guard('client')->check() || Auth::guard('store')->check())
                         @if (Auth::guard('client')->check())
                             <li>
-                                <a href="{{ route('get-client-config') }}">Minha conta</a>
+                                <a href="{{ route('get-client-config') }}" class="{{ (isset($section) && $section == 'config') ? 'active' : '' }}">Minha conta</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('list-client-confirms') }}">Confirmações</a>
+                                <a href="{{ route('list-client-confirms') }}" class="{{ (isset($section) && $section == 'confirm') ? 'active' : '' }}">Confirmações</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('list-client-reserves') }}">Reservas</a>
+                                <a href="{{ route('list-client-reserves') }}" class="{{ (isset($section) && $section == 'reserve') ? 'active' : '' }}">Reservas</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('list-client-messages') }}">Mensagens</a>
+                                <a href="{{ route('list-client-messages') }}" class="{{ (isset($section) && $section == 'message') ? 'active' : '' }}">Mensagens</a>
                             </li>
                         @elseif (Auth::guard('store')->check())
                             @if(Auth::guard('store')->user()->store->status)
                                 <li>
-                                    <a href="{{ route('show-store', Auth::guard('store')->user()->store->slug) }}">Minha loja</a>
+                                    <a href="{{ route('show-store', Auth::guard('store')->user()->store->slug) }}" class="{{ (isset($section) && $section == 'store') ? 'active' : '' }}">Minha loja</a>
                                 </li>
                             @endif
 
@@ -72,23 +72,23 @@
                             </li>
 
                             <li>
-                                <a href="{{ route('edit-products') }}">Editar produtos</a>
+                                <a href="{{ route('edit-products') }}" class="{{ (isset($section) && $section == 'edit') ? 'active' : '' }}">Editar produtos</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('list-store-confirms') }}">Confirmações</a>
+                                <a href="{{ route('list-store-confirms') }}" class="{{ (isset($section) && $section == 'confirm') ? 'active' : '' }}">Confirmações</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('list-store-reserves') }}">Reservas</a>
+                                <a href="{{ route('list-store-reserves') }}" class="{{ (isset($section) && $section == 'reserve') ? 'active' : '' }}">Reservas</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('list-store-messages') }}">Mensagens</a>
+                                <a href="{{ route('list-store-messages') }}" class="{{ (isset($section) && $section == 'message') ? 'active' : '' }}">Mensagens</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('get-store-config') }}">Configurações</a>
+                                <a href="{{ route('get-store-config') }}" class="{{ (isset($section) && $section == 'config') ? 'active' : '' }}">Configurações</a>
                             </li>
                         @endif
 
@@ -97,11 +97,11 @@
                         </li>
                     @else
                         <li>
-                            <a href="{{ route('know') }}">Entenda</a>
+                            <a href="{{ route('know') }}" class="{{ (isset($section) && $section == 'know') ? 'active' : '' }}">Entenda</a>
                         </li>
 
                         <li>
-                            <a href="{{ route('how-works') }}">Como funciona</a>
+                            <a href="{{ route('how-works') }}" class="{{ (isset($section) && $section == 'how-works') ? 'active' : '' }}">Como funciona</a>
                         </li>
 
                         <li>
@@ -109,11 +109,11 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('client-register-get') }}">Cadastrar</a>
+                            <a href="{{ route('client-register-get') }}" class="{{ (isset($section) && $section == 'client-register') ? 'active' : '' }}">Cadastrar</a>
                         </li>
 
                         <li>
-                            <a href="{{ route('client-login-get') }}">Entrar</a>
+                            <a href="{{ route('client-login-get') }}" class="{{ (isset($section) && $section == 'client-login') ? 'active' : '' }}">Entrar</a>
                         </li>
                     @endif
                 </ul>

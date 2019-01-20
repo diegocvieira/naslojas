@@ -63,7 +63,9 @@ class ClientController extends Controller
                 'body' => view('client.config', compact('client'))->render()
             ]);
         } else {
-            return view('mobile.client.config', compact('client'));
+            $section = 'config';
+
+            return view('mobile.client.config', compact('client', 'section'));
         }
     }
 

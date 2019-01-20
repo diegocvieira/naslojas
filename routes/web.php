@@ -47,7 +47,9 @@ Route::group(['prefix' => 'site'], function () {
 		if (Agent::isDesktop()) {
 			return view('know');
 		} else {
-			return view('mobile.know');
+			$section = 'know';
+
+			return view('mobile.know', compact('section'));
 		}
 	})->name('know');
 
@@ -57,7 +59,9 @@ Route::group(['prefix' => 'site'], function () {
 
         	return redirect()->route('home');
 		} else {
-			return view('mobile.how-works');
+			$section = 'how-works';
+
+			return view('mobile.how-works', compact('section'));
 		}
 	})->name('how-works');
 });
@@ -189,7 +193,9 @@ Route::group(['prefix' => 'cliente'], function () {
 		if (Agent::isDesktop()) {
 			return view('client.login');
 		} else {
-			return view('mobile.client.login');
+			$section = 'client-login';
+
+			return view('mobile.client.login', compact('section'));
 		}
 	})->name('client-login-get');
 	Route::post('login', 'ClientController@login')->name('client-login-post');
@@ -198,7 +204,9 @@ Route::group(['prefix' => 'cliente'], function () {
 		if (Agent::isDesktop()) {
 			return view('client.register');
 		} else {
-			return view('mobile.client.register');
+			$section = 'client-register';
+
+			return view('mobile.client.register', compact('section'));
 		}
 	})->name('client-register-get');
 	Route::post('cadastro', 'ClientController@register')->name('client-register-post');

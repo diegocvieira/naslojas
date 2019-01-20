@@ -1,14 +1,20 @@
 .page-product-images {
     .top-images {
         width: 100%;
-        float: left;
-        height: 140px;
-        padding-top: 80px;
         display: none;
+        top: 60px;
+        position: fixed;
+        z-index: 11;
+        left: 0;
+        background-color: #fafafa;
+        padding: 15px 0 10px 0;
+        border-bottom: 1px solid #e6e6e6;
 
         p {
             font-size: 14.5px;
             color: rgb(100, 100, 100);
+            position: relative;
+            top: 10px;
         }
 
         button {
@@ -19,7 +25,6 @@
             width: 200px;
             height: 40px;
             border: none;
-
 
             &:first-child {
                 margin-right: 25px;
@@ -38,10 +43,16 @@
         background-color: transparent !important;
         float: left;
         border: none;
+        padding-top: 100px;
+        position: relative;
 
         .dz-message {
             margin: 0;
-            padding-top: 20%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
 
             img {
                 width: 98px;
@@ -50,7 +61,7 @@
             p {
                 font-size: 14.5px;
                 color: rgb(150, 150, 150);
-                margin-top: 20px;
+                margin: 20px 0 0 0;
 
                 span {
                     font-size: 12.5px;

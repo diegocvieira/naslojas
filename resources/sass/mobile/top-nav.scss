@@ -84,18 +84,22 @@ header {
         }
 
         .dropdown-menu {
-            left: -130px;
+            left: -150px;
             top: 10px;
             border-radius: 3px;
             background-color: #fff !important;
             box-shadow: 2.5px 4.33px 13.5px 1.5px rgba(100, 100, 100, 0.118) !important;
-            width: 178px;
+            min-width: 188px;
             border: 1px solid rgb(240, 240, 240) !important;
             position: absolute !important;
 
             li a {
                 font-size: 14.5px;
                 padding: 10px 0 10px 20px !important;
+            }
+
+            .active {
+                color: rgb(255, 23, 68);
             }
         }
     }
@@ -109,6 +113,7 @@ header {
     margin-top: 50px;
     padding: 0 10px;
     display: none;
+    z-index: 1000;
 
     .active {
         color: rgb(255, 23, 68) !important;
