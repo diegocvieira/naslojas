@@ -110,7 +110,9 @@ $(function() {
     $(document).on('click', '.page-create-edit-product header .option', function(e) {
         e.preventDefault();
 
-        var type = $(this).data('type');
+        $('.close-menu').remove();
+
+        var type = $(this).attr('data-type');
 
         if (type == 'copy-data') {
             var form = $('#form-create-edit-product');
@@ -143,28 +145,36 @@ $(function() {
                  }
             });
         } else {
-            if (type == 'product-enable') {
-                var msg = 'Tem certeza que deseja <b>mostrar</b> este produto?';
-            } else if (type == 'product-disable') {
-                var msg = 'Tem certeza que deseja <b>ocultar</b> este produto?';
-            } else if (type == 'delete') {
-                var msg = 'Tem certeza que deseja <b>apagar</b> este produto?';
-            } else if (type == 'reserve-enable') {
-                var msg = 'Tem certeza que deseja <b>habilitar</b> a reserva deste produto?';
-            } else if (type == 'reserve-disable') {
-                var msg = 'Tem certeza que deseja <b>desabilitar</b> a reserva deste produto?';
-            }
-
-            modalAlert(msg, 'CONFIRMAR');
-
-            var modal = $('#modal-alert'),
-                url = $(this).attr('href'),
+            var url = $(this).attr('href'),
                 product_id = $(this).data('productid');
 
-            modal.find('.btn-default').addClass('btn-confirm invert-color');
-            modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back' data-dismiss='modal'>VOLTAR</button>");
+            if (type == 'delete') {
+                modalAlert('Tem certeza que deseja excluir este produto?', 'CONFIRMAR');
 
-            modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
+                var modal = $('#modal-alert');
+
+                modal.find('.btn-default').addClass('btn-confirm invert-color');
+                modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back' data-dismiss='modal'>VOLTAR</button>");
+
+                modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        dataType: 'json',
+                        data: { id : product_id },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            if (data.status) {
+                                window.location = '/loja/admin/produtos';
+                            } else {
+                                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                            }
+                        }
+                    });
+                });
+            } else {
                 $.ajax({
                     url: url,
                     method: 'POST',
@@ -175,17 +185,33 @@ $(function() {
                     },
                     success: function (data) {
                         if (data.status) {
-                            if (data.type == 'delete') {
-                                window.location = '/loja/admin/produtos';
+                            if (type == 'product-enable') {
+                                var msg = 'O produto foi ativado.';
+                            } else if (type == 'product-disable') {
+                                var msg = 'O produto foi desativado.';
+                            } else if (type == 'reserve-enable') {
+                                var msg = 'O produto teve a reserva habilitada.';
+                            } else if (type == 'reserve-disable') {
+                                var msg = 'O produto teve a reserva desabilitada.';
                             } else {
-                                $('.page-create-edit-product .header').find('.btn-option.enable, .btn-option.disable').toggleClass('hidden');
+                                var msg = 'Informações salvas com sucesso!'; // Just for precaution
                             }
+
+                            var header = $('.page-create-edit-product header');
+
+                            if (type == 'product-enable' || type == 'product-disable') {
+                                header.find('a[data-type=product-enable], a[data-type=product-disable]').parent().toggleClass('hidden');
+                            } else {
+                                header.find('a[data-type=reserve-enable], a[data-type=reserve-disable]').parent().toggleClass('hidden');
+                            }
+
+                            modalAlert(msg);
                         } else {
                             modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                         }
                     }
                 });
-            });
+            }
         }
     });
 

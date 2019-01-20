@@ -26,11 +26,11 @@
                                         </li>
                                     @endif
 
-                                    <li @if ($product->reserve == 1) style="display: none;" @endif>
+                                    <li class="{{ $product->reserve == 1 ? 'hidden' : '' }}">
                                         <a href="{{ route('reserve-enable') }}" data-type="reserve-enable" class="option" data-productid="{{ $product->id }}">Habilitar reserva</a>
                                     </li>
 
-                                    <li @if ($product->reserve == 0) style="display: none;" @endif>
+                                    <li class="{{ $product->reserve == 0 ? 'hidden' : '' }}">
                                         <a href="{{ route('reserve-disable') }}" data-type="reserve-disable" class="option" data-productid="{{ $product->id }}">Desabilitar reserva</a>
                                     </li>
 
@@ -44,11 +44,11 @@
                                 </li>
 
                                 @isset ($product)
-                                    <li @if ($product->status == 1) style="display: none;" @endif>
+                                    <li class="{{ $product->status == 1 ? 'hidden' : '' }}">
                                         <a href="{{ route('product-enable') }}" data-type="product-enable" class="option" data-productid="{{ $product->id }}">Ativar</a>
                                     </li>
 
-                                    <li @if ($product->status == 0) style="display: none;" @endif>
+                                    <li class="{{ $product->status == 0 ? 'hidden' : '' }}">
                                         <a href="{{ route('product-disable') }}" data-type="product-disable" class="option" data-productid="{{ $product->id }}">Desativar</a>
                                     </li>
 
@@ -93,46 +93,46 @@
 
             <div class="section">
                 <div class="form-group">
-                    {!! Form::text('title', null, ['placeholder' => ' ']) !!}
+                    {!! Form::text('title', null, ['placeholder' => ' ', 'class' => 'field']) !!}
                     {!! Form::label('', 'Título do produto *') !!}
                 </div>
 
                 <div class="form-group description">
-                    {!! Form::textarea('description', null, ['placeholder' => ' ']) !!}
+                    {!! Form::textarea('description', null, ['placeholder' => ' ', 'class' => 'field']) !!}
                     {!! Form::label('', 'Descrição do produto') !!}
                 </div>
             </div>
 
             <div class="section">
                 <div class="form-group">
-                    {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
+                    {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
                     {!! Form::label('', 'Preço atual *') !!}
                 </div>
 
                 <div class="form-group">
-                    {!! Form::text('old_price', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
+                    {!! Form::text('old_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
                     {!! Form::label('', 'Preço anterior') !!}
                 </div>
 
                 <div class="form-group">
-                    {!! Form::text('reserve_discount', null, ['placeholder' => ' ', 'class' => 'mask-percent']) !!}
+                    {!! Form::text('reserve_discount', null, ['placeholder' => ' ', 'class' => 'mask-percent field']) !!}
                     {!! Form::label('', 'Desconto na reserva') !!}
                 </div>
             </div>
 
             <div class="section">
                 <div class="form-group gender">
-                    {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker']) !!}
+                    {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker field']) !!}
                     {!! Form::label('', 'Gênero *', ['style' => (isset($product) && $product->gender) ? 'display: block;' : '']) !!}
                 </div>
 
                 <div class="form-group">
-                    {!! Form::text('installment', null, ['placeholder' => ' ', 'class' => 'mask-x']) !!}
+                    {!! Form::text('installment', null, ['placeholder' => ' ', 'class' => 'mask-x field']) !!}
                     {!! Form::label('', 'Parcelamento') !!}
                 </div>
 
                 <div class="form-group">
-                    {!! Form::text('installment_price', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
+                    {!! Form::text('installment_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
                     {!! Form::label('', 'Valor da parcela') !!}
                 </div>
             </div>
