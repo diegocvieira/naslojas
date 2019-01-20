@@ -4,7 +4,7 @@
         display: none;
         top: 60px;
         position: fixed;
-        z-index: 11;
+        z-index: 999;
         left: 0;
         background-color: #fafafa;
         padding: 15px 0 10px 0;
@@ -84,8 +84,13 @@
             }
         }
 
-        .dz-error-mark svg g g {
-            fill: #ff1744 !important;
+        .dz-error-mark svg {
+            background-color: #fff;
+            border-radius: 50%;
+
+            g g {
+                fill: #ff1744 !important;
+            }
         }
 
         .dz-preview {
