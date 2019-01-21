@@ -9,7 +9,7 @@
         @endif
 
             <header>
-                <a href="javascript: history.go(-1);" class="btn-back"></a>
+                <a href="{{ route('edit-products') }}" class="btn-back"></a>
 
                 <nav class="nav navbar-nav nav-menu">
                     <ul>
