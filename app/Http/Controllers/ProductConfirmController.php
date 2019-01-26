@@ -12,6 +12,19 @@ use App\ProductSize;
 
 class ProductConfirmController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::guard('store')->check()) {
+                $this->store_id = Auth::guard('store')->user()->store_id;
+            } else if (Auth::guard('superadmin')->check()) {
+                $this->store_id = session('superadmin_store_id');
+            }
+
+            return $next($request);
+        });
+    }
+
     public function create(Request $request)
     {
         if (isset($request->sizes)) {
@@ -77,7 +90,7 @@ class ProductConfirmController extends Controller
         $confirms = ProductConfirm::whereHas('product', function ($query) {
                 $query->withTrashed()
                     ->withoutGlobalScopes(['active', 'active-store'])
-                    ->where('store_id', Auth::guard('store')->user()->store_id);
+                    ->where('store_id', $this->store_id);
             })
             ->with(['product' => function($query) {
                 $query->withTrashed()
@@ -170,7 +183,7 @@ class ProductConfirmController extends Controller
         $confirm = ProductConfirm::whereHas('product', function ($query) {
             $query->withoutGlobalScopes(['active', 'active-store'])
                 ->withTrashed()
-                ->where('store_id', Auth::guard('store')->user()->store_id);
+                ->where('store_id', $this->store_id);
         })
         ->where('id', $id)
         ->first();
@@ -201,7 +214,7 @@ class ProductConfirmController extends Controller
         $confirm = ProductConfirm::whereHas('product', function ($query) {
             $query->withoutGlobalScopes(['active', 'active-store'])
                 ->withTrashed()
-                ->where('store_id', Auth::guard('store')->user()->store_id);
+                ->where('store_id', $this->store_id);
         })
         ->where('id', $id)
         ->first();

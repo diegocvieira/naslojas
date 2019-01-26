@@ -96,7 +96,7 @@
                 var client_logged = false;
             @endif
 
-            @if (Auth::guard('store')->check())
+            @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
                 var store_logged = true;
             @else
                 var store_logged = false;
@@ -105,7 +105,7 @@
 
         <script src="{{ mix('js/global-mobile.js') }}"></script>
 
-        @if (Auth::guard('store')->check())
+        @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
             @if ($app->environment('local'))
                 <script type="text/javascript" src="{{ asset('offline-developer/exif.min.js') }}"></script>
                 <script type="text/javascript" src="{{ asset('offline-developer/jquery.finger.min.js') }}"></script>

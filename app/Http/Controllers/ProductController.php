@@ -11,11 +11,26 @@ use Validator;
 use App\ProductImage;
 use App\ProductSize;
 use App\ProductRating;
+use App\Store;
 use DB;
 use Agent;
+use Session;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::guard('store')->check()) {
+                $this->store_id = Auth::guard('store')->user()->store_id;
+            } else if (Auth::guard('superadmin')->check()) {
+                $this->store_id = session('superadmin_store_id');
+            }
+
+            return $next($request);
+        });
+    }
+
     public function relatedProducts(Product $product, $pagination = null)
     {
         $related_products = Product::where('id', '!=', $product->id)
@@ -50,8 +65,8 @@ class ProductController extends Controller
         $url = '/produto/' . $product->slug;
 
         $product_rating = ProductRating::select(DB::raw('ROUND((SUM(rating) / COUNT(id)), 1) as rating, COUNT(id) as rating_number'))
-        ->where('product_id', $product->id)
-        ->first();
+            ->where('product_id', $product->id)
+            ->first();
 
         $more_colors = Product::whereNotNull('related')->where('related', $product->related)->where('id', '!=', $product->id)->get();
 
@@ -171,7 +186,7 @@ class ProductController extends Controller
     public function edit($keyword = null)
     {
         $products = Product::withoutGlobalScopes(['active', 'active-store'])
-            ->where('store_id', Auth::guard('store')->user()->store_id)
+            ->where('store_id', $this->store_id)
             ->where('status', '!=', 2);
 
         if ($keyword) {
@@ -214,7 +229,7 @@ class ProductController extends Controller
     public function images()
     {
         $products = Product::withoutGlobalScopes(['active', 'active-store'])
-            ->where('store_id', Auth::guard('store')->user()->store_id)
+            ->where('store_id', $this->store_id)
             ->where('status', 2)
             ->orderBy('id', 'DESC')
             ->paginate(999);
@@ -243,7 +258,7 @@ class ProductController extends Controller
         if ($validation->fails()) {
             return Response::make($validation->errors->first(), 400);
         } else {
-            $file_name = _uploadImage($request->file('image'));
+            $file_name = _uploadImage($request->file('image'), $this->store_id);
 
             if ($file_name) {
                 return Response::json($file_name, 200);
@@ -255,7 +270,7 @@ class ProductController extends Controller
 
     public function save(Request $request, $id = null)
     {
-        $store_id = Auth::guard('store')->user()->store_id;
+        $store = Store::find($this->store_id);
 
         if (Agent::isDesktop()) {
             if ($id) {
@@ -280,7 +295,7 @@ class ProductController extends Controller
                         return json_encode($return);
                     } else {
                         $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                            ->where('store_id', $store_id)
+                            ->where('store_id', $this->store_id)
                             ->find($request->product_id);
 
                         if ($product->status == 2) {
@@ -344,7 +359,7 @@ class ProductController extends Controller
 
                            foreach ($request->images as $image) {
                                if(!empty($image)) {
-                                   $image_name = _uploadImage($image);
+                                   $image_name = _uploadImage($image, $this->store_id);
 
                                    foreach ($request->images_position as $key_position => $image_position) {
                                         if ($key_position == $key_image) {
@@ -369,10 +384,10 @@ class ProductController extends Controller
                 foreach ($request->images as $index) {
                     $product = new Product;
 
-                    $product->store_id = $store_id;
+                    $product->store_id = $this->store_id;
                     $product->status = 2;
                     $product->identifier = mt_rand(1000000000, 9999990000);
-                    $product->reserve = Auth::guard('store')->user()->store->reserve;
+                    $product->reserve = $store->reserve;
 
                     // Checks if identifier arent in use
                     $NUM_OF_ATTEMPTS = 10;
@@ -428,10 +443,10 @@ class ProductController extends Controller
                 } else {
                     $product = new Product;
 
-                    $product->store_id = Auth::guard('store')->user()->store_id;
+                    $product->store_id = $this->store_id;
                     $product->status = 1;
                     $product->identifier = mt_rand(1000000000, 9999990000);
-                    $product->reserve = Auth::guard('store')->user()->store->reserve;
+                    $product->reserve = $store->reserve;
                 }
 
                 $product->title = $request->title;
@@ -495,7 +510,7 @@ class ProductController extends Controller
 
                    foreach ($request->image as $image) {
                        if (!empty($image)) {
-                           $image_name = _uploadImage($image);
+                           $image_name = _uploadImage($image, $this->store_id);
 
                            foreach ($request->image_position as $key_position => $image_position) {
                                 if ($key_position == $key_image) {
@@ -533,7 +548,7 @@ class ProductController extends Controller
 
     public function deleteImages($image)
     {
-        $path = public_path('uploads/' . Auth::guard('store')->user()->store_id . '/products/');
+        $path = public_path('uploads/' . $this->store_id . '/products/');
 
         $image_resize_path = $path . $image;
         $image_path = $path . str_replace('_resize', '', $image);
@@ -551,19 +566,18 @@ class ProductController extends Controller
 
     public function delete(Request $request)
     {
-        $store_id = Auth::guard('store')->user()->store_id;
         $id = $request->id;
 
         if (is_array($id)) {
             foreach ($id as $i) {
                 $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                    ->where('store_id', $store_id)
+                    ->where('store_id', $this->store_id)
                     ->where('id', $i)
                     ->delete();
             }
         } else {
             $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                ->where('store_id', $store_id)
+                ->where('store_id', $this->store_id)
                 ->where('id', $id)
                 ->delete();
         }
@@ -582,12 +596,10 @@ class ProductController extends Controller
 
     public function enable(Request $request)
     {
-        $store_id = Auth::guard('store')->user()->store_id;
-
         if (is_array($request->id)) {
             foreach ($request->id as $i) {
                 $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                    ->where('store_id', $store_id)
+                    ->where('store_id', $this->store_id)
                     ->where('id', $i)
                     ->first();
 
@@ -596,7 +608,7 @@ class ProductController extends Controller
             }
         } else {
             $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                ->where('store_id', $store_id)
+                ->where('store_id', $this->store_id)
                 ->where('id', $request->id)
                 ->first();
 
@@ -615,12 +627,10 @@ class ProductController extends Controller
 
     public function disable(Request $request)
     {
-        $store_id = Auth::guard('store')->user()->store_id;
-
         if (is_array($request->id)) {
             foreach ($request->id as $i) {
                 $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                    ->where('store_id', $store_id)
+                    ->where('store_id', $this->store_id)
                     ->where('id', $i)
                     ->first();
 
@@ -629,7 +639,7 @@ class ProductController extends Controller
             }
         } else {
             $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                ->where('store_id', $store_id)
+                ->where('store_id', $this->store_id)
                 ->where('id', $request->id)
                 ->first();
 
@@ -648,12 +658,11 @@ class ProductController extends Controller
 
     public function reserveEnable(Request $request)
     {
-        $store_id = Auth::guard('store')->user()->store_id;
 
         if (is_array($request->id)) {
             foreach ($request->id as $i) {
                 $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                    ->where('store_id', $store_id)
+                    ->where('store_id', $this->store_id)
                     ->where('id', $i)
                     ->first();
 
@@ -662,7 +671,7 @@ class ProductController extends Controller
             }
         } else {
             $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                ->where('store_id', $store_id)
+                ->where('store_id', $this->store_id)
                 ->where('id', $request->id)
                 ->first();
 
@@ -681,12 +690,10 @@ class ProductController extends Controller
 
     public function reserveDisable(Request $request)
     {
-        $store_id = Auth::guard('store')->user()->store_id;
-
         if (is_array($request->id)) {
             foreach ($request->id as $i) {
                 $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                    ->where('store_id', $store_id)
+                    ->where('store_id', $this->store_id)
                     ->where('id', $i)
                     ->first();
 
@@ -695,7 +702,7 @@ class ProductController extends Controller
             }
         } else {
             $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                ->where('store_id', $store_id)
+                ->where('store_id', $this->store_id)
                 ->where('id', $request->id)
                 ->first();
 
@@ -728,20 +735,18 @@ class ProductController extends Controller
 
     public function verifyVariation()
     {
-        $store_id = Auth::guard('store')->user()->store_id;
-
         $relateds = Product::withoutGlobalScopes(['orderby-reserve', 'active', 'active-store'])
             ->select('related')
             ->groupBy('related')
             ->havingRaw('count(*) = 1')
-            ->where('store_id', $store_id)
+            ->where('store_id', $this->store_id)
             ->get();
 
         foreach ($relateds as $related) {
             Product::withoutGlobalScopes(['active', 'active-store'])
                 ->select('id')
                 ->where('related', $related->related)
-                ->where('store_id', $store_id)
+                ->where('store_id', $this->store_id)
                 ->first()
                 ->update(['related' => null]);
         }

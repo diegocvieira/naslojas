@@ -56,9 +56,21 @@
     </header>
 
     <div class="container">
-        {!! Form::open(['method' => 'POST', 'id' => 'form-product-manager']) !!}
-            @include('mobile.store.list-admin-products')
-        {!! Form::close() !!}
+        @if ($products->count())
+            {!! Form::open(['method' => 'POST', 'id' => 'form-product-manager']) !!}
+                @include('mobile.store.list-admin-products')
+            {!! Form::close() !!}
+        @else
+            <div class="no-results">
+                <img src="{{ asset('images/icon-box.png') }}" />
+
+                @if ($products->count() == 0 && isset($keyword))
+                    <p>Não encontramos resultados. <br> Tente palavras-chave diferentes</p>
+                @else
+                    <p>Adicione produtos para poder editá-los aqui</p>
+                @endif
+            </div>
+        @endif
 
         <a href="{{ route('get-create-edit-product') }}" class="btn-create-edit-product">+</a>
     </div>

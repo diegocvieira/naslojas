@@ -120,7 +120,7 @@ Route::group(['prefix' => 'loja'], function () {
 	// Confirm/refuse product reserves from email
 	Route::get('reservas/{type}/{token}', 'ProductReserveController@emailUrl')->name('product-reserve-email-url');
 
-	Route::group(['prefix' => 'admin', 'middleware' => 'auth:store'], function () {
+	Route::group(['prefix' => 'admin', 'middleware' => 'auth-store-superadmin'], function () {
 		Route::get('config', 'StoreController@getConfig')->name('get-store-config');
 		Route::post('config', 'StoreController@setConfig')->name('set-store-config');
 
@@ -242,13 +242,35 @@ Route::group(['prefix' => 'cliente'], function () {
 // Superadmin
 Route::group(['prefix' => 'superadmin'], function () {
 	Route::get('login', function () {
-		return view('superadmin.login');
+		if (Agent::isDesktop()) {
+			return view('superadmin.login');
+		} else {
+			return view('mobile.superadmin.login');
+		}
 	})->name('superadmin-login');
 	Route::post('login', 'SuperadminController@login')->name('superadmin-login');
 
-	Route::get('loja/cadastro', 'SuperadminController@getStoreRegister')->name('superadmin-store-register');
-	Route::post('loja/cadastro', 'SuperadminController@postStoreRegister')->name('superadmin-store-register');
+	Route::group(['middleware' => 'auth:superadmin'], function () {
+		Route::get('loja/cadastro', function () {
+			if (Agent::isDesktop()) {
+				return view('superadmin.store-register');
+			} else {
+				return view('mobile.superadmin.store-register');
+			}
+		})->name('superadmin-store-register');
+		Route::post('loja/cadastro', 'SuperadminController@storeRegister')->name('superadmin-store-register');
+
+		Route::get('inicio', function () {
+			if (Agent::isDesktop()) {
+				return view('superadmin.index');
+			} else {
+				return view('mobile.superadmin.index');
+			}
+		})->name('superadmin-index');
+
+		Route::get('set-store/{id}', 'SuperadminController@setStore')->name('superadmin-set-store');
+	});
 });
 
-// Store/Client logout
+// User logout
 Route::get('user/logout', 'GlobalController@logout')->name('logout');

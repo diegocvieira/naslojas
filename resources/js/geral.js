@@ -497,17 +497,23 @@ $(function() {
             }
         });
     });
+
+    // List stores when logged like superadmin
+    $(document).on('click', '.open-search-stores', function(e) {
+        e.preventDefault();
+
+        $(this).next().toggle();
+    });
+
+    // Close modal list stores
+    $(document).click(function(event) {
+        if (!$(event.target).closest('.search-stores').length && $('.search-stores .dropdown').is(":visible")) {
+            $('.search-stores .dropdown').hide();
+        }
+    });
 });
 
 function modalAlert(body, btn = 'OK') {
-    /*var modal = $('#modal-alert');
-
-    modal.find('.modal-footer .btn-back').remove();
-    modal.find('.modal-body').html(body);
-    modal.find('.modal-footer .btn').removeClass('btn-confirm').text(btn);
-
-    modal.modal('show');*/
-
     $('#modal-alert').remove();
 
     $('body').append("<div class='modal fade' id='modal-alert' tabindex='-1' role='dialog'><div class='modal-dialog' role='document'><div class='modal-content'><div class='modal-body'>" + body + "</div><div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>" + btn + "</button></div></div></div></div>");

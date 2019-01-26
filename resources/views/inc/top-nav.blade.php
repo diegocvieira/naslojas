@@ -28,18 +28,18 @@
 
         <nav class="nav navbar-nav nav-menu">
             <ul>
-                @if (Auth::guard('store')->check())
+                @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
                     <li>
                         <a href="#" class="logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span>{{ Auth::guard('store')->user()->store->name }}</span>
+                            <span>{{ Auth::guard('store')->check() ? Auth::guard('store')->user()->store->name : 'Admin' }}</span>
 
-                            <img src="{{ asset('images/icon-profile.png') }}" alt="Foto de perfil de {{ Auth::guard('store')->user()->store->name }}" />
+                            <img src="{{ asset('images/icon-profile.png') }}" alt="Foto de perfil de {{ Auth::guard('store')->check() ? Auth::guard('store')->user()->store->name : 'Admin' }}" />
                         </a>
 
                         <ul class="dropdown-menu dropdown-store">
-                            @if(Auth::guard('store')->user()->store->status)
+                            @if (Auth::guard('store')->check() && Auth::guard('store')->user()->store->status || Auth::guard('superadmin')->check() && Session::has('superadmin_store_id'))
                                 <li>
-                                    <a href="{{ route('show-store', Auth::guard('store')->user()->store->slug) }}">Minha loja</a>
+                                    <a href="{{ route('show-store', Auth::guard('store')->check() ? Auth::guard('store')->user()->store->slug : session('superadmin_store_slug')) }}">Minha loja</a>
                                 </li>
                             @endif
 
@@ -51,17 +51,19 @@
                                 <a href="{{ route('edit-products') }}">Editar produtos</a>
                             </li>
 
-                            <li>
-                                <a href="{{ route('list-store-confirms') }}">Confirmações</a>
-                            </li>
+                            @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check() && Auth::guard('superadmin')->user()->type == 1)
+                                <li>
+                                    <a href="{{ route('list-store-confirms') }}">Confirmações</a>
+                                </li>
 
-                            <li>
-                                <a href="{{ route('list-store-reserves') }}">Reservas</a>
-                            </li>
+                                <li>
+                                    <a href="{{ route('list-store-reserves') }}">Reservas</a>
+                                </li>
 
-                            <li>
-                                <a href="{{ route('list-store-messages') }}">Mensagens</a>
-                            </li>
+                                <li>
+                                    <a href="{{ route('list-store-messages') }}">Mensagens</a>
+                                </li>
+                            @endif
 
                             <li>
                                 <a href="{{ route('get-store-config') }}" class="show-store-config">Configurações</a>

@@ -13,6 +13,11 @@ class Store extends Model
     protected $dates = ['created_at', 'updated_at'];
     protected $searchable = ['name'];
 
+    public function superadmin()
+    {
+        return $this->hasMany('App\SuperAdminStore', 'store_id', 'id');
+    }
+
     public function products()
     {
         return $this->hasMany('App\Product', 'store_id', 'id');

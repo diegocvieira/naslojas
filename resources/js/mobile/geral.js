@@ -23,12 +23,12 @@ $(function() {
         $('.close-menu').remove();
     });
 
-    $(document).on('click', '.open-filter-products', function(e) {
+    $(document).on('click', 'nav .options', function(e) {
         e.preventDefault();
 
         $('.close-menu').remove();
 
-        var filter = $('.filter-products');
+        var filter = $('.' + $(this).data('type'));
 
         $(this).toggleClass('active');
 

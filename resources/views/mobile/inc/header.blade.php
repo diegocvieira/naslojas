@@ -58,7 +58,7 @@
 
         <link rel="stylesheet" type="text/css" href="{{ mix('css/global-mobile.css') }}">
 
-        @if (Auth::guard('store')->check())
+        @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
             <link rel="stylesheet" type="text/css" href="{{ mix('css/global-store-mobile.css') }}">
         @endif
 

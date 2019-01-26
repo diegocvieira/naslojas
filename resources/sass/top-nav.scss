@@ -17,6 +17,58 @@ header {
         .active {
             border-bottom: 4px solid rgb(255, 23, 68);
         }
+
+        #logo-naslojas {
+            margin-right: 10px;
+        }
+
+        .search-stores {
+            position: relative;
+            display: inline-block;
+            margin-top: 15px;
+
+            .open-search-stores {
+                background-image: url('../images/icon-arrow.png');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                width: 35px;
+                height: 35px;
+                display: inline-block;
+                border: none;
+                background-color: transparent;
+            }
+
+            .dropdown {
+                display: none;
+                position: absolute;
+                top: 35px;
+                left: -40px;
+                border-radius: 5px;
+                background-color: rgb(255, 255, 255);
+                box-shadow: 2.5px 4.33px 13.5px 1.5px rgba(100, 99, 99, 0.118);
+                width: 300px;
+                max-height: 440px;
+                z-index: 9;
+                overflow: auto;
+                padding: 10px 0;
+
+                a {
+                    font-size: 14.5px;
+                    color: rgb(100, 100, 100);
+                    display: block;
+                    padding: 7px 20px;
+
+                    &:hover:not(.store-register), &.active-store {
+                        background-color: rgb(245, 245, 245);
+                    }
+
+                    &.store-register {
+                        color: rgb(122, 184, 236);
+                    }
+                }
+            }
+        }
     }
 
     &#top-simple {

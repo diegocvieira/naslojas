@@ -15,9 +15,24 @@ use Mail;
 
 class StoreController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::guard('store')->check()) {
+                $this->store_id = Auth::guard('store')->user()->store_id;
+                $this->user_id = Auth::guard('store')->user()->id;
+            } else if (Auth::guard('superadmin')->check()) {
+                $this->store_id = session('superadmin_store_id');
+                $this->user_id = session('superadmin_user_id');
+            }
+
+            return $next($request);
+        });
+    }
+
     public function show($slug)
     {
-        $store = Store::where('slug', $slug)->firstOrFail();
+        $store = Store::where('slug', $slug)->where('status', 1)->firstOrFail();
 
         // SEO
         $header_title = $store->name . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' | naslojas.com';
@@ -28,7 +43,7 @@ class StoreController extends Controller
         if (Agent::isDesktop()) {
             return view('store.show', compact('store', 'products', 'header_title', 'header_desc'));
         } else {
-            if ($store->id == Auth::guard('store')->user()->store_id) {
+            if (Auth::guard('store')->check() && $store->id == Auth::guard('store')->user()->store_id) {
                 $section = 'store';
             }
 
@@ -129,7 +144,7 @@ class StoreController extends Controller
             $m->subject('Solicitação de cadastro');
         });
 
-        if(!Mail::failures()) {
+        if (!Mail::failures()) {
             $return['msg'] = 'Solicitação de cadastro enviada com sucesso!';
         } else {
             $return['msg'] = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
@@ -153,7 +168,7 @@ class StoreController extends Controller
 
     public function getConfig()
     {
-        $user = User::find(Auth::guard('store')->user()->id);
+        $user = User::find($this->user_id);
 
         if (Agent::isDesktop()) {
             return response()->json([
@@ -178,7 +193,9 @@ class StoreController extends Controller
              $return['msg'] = $validator->errors()->first();
              $return['status'] = 0;
         } else {
-            if (Hash::check($request->current_password, Auth::guard('store')->user()->password)) {
+            $user = User::find($this->user_id);
+
+            if (Hash::check($request->current_password, $user->password)) {
                 // Search the city
                 $city = City::whereHas('state', function ($query) use ($request) {
                     $query->where('letter', $request->state);
@@ -191,7 +208,6 @@ class StoreController extends Controller
                     $return['msg'] = 'Em breve estaremos trabalhando na sua cidade.';
                     $return['status'] = 0;
                 } else {
-                    $user = User::find(Auth::guard('store')->user()->id);
                     $user->email = $request->email;
 
                     if ($request->password) {
@@ -211,6 +227,8 @@ class StoreController extends Controller
                     $store->reserve = isset($request->reserve) ? 1 : 0;
 
                     if ($store->save() && $user->save()) {
+                        app('App\Http\Controllers\SuperadminController')->setStore($store->id);
+
                         $return['msg'] = 'Informações atualizadas.';
                         $return['status'] = 1;
                     } else {
@@ -229,8 +247,10 @@ class StoreController extends Controller
 
     public function deleteAccount(Request $request)
     {
-        if(Hash::check($request->password, Auth::guard('store')->user()->password)) {
-            Store::find(Auth::guard('store')->user()->store_id)->delete();
+        $user = User::find($this->user_id);
+
+        if (Hash::check($request->password, $user->password)) {
+            Store::find($this->store_id)->delete();
 
             app('App\Http\Controllers\GlobalController')->logout();
 
@@ -244,11 +264,9 @@ class StoreController extends Controller
 
     private function storeEditRules()
     {
-        $store = Auth::guard('store')->user()->store ? Auth::guard('store')->user()->store->id : '';
-
         return [
-            'slug' => 'required|max:200|unique:stores,slug,' . $store,
-            'email' => 'required|max:100|unique:users,email,' . Auth::guard('store')->user()->id,
+            'slug' => 'required|max:200|unique:stores,slug,' . $this->store_id,
+            'email' => 'required|max:100|unique:users,email,' . $this->user_id,
             'name' => 'required|max:200',
             'password' => 'confirmed',
             'cep' => 'required|max:10',

@@ -10,6 +10,19 @@ use Agent;
 
 class MessageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::guard('store')->check()) {
+                $this->store_id = Auth::guard('store')->user()->store_id;
+            } else if (Auth::guard('superadmin')->check()) {
+                $this->store_id = session('superadmin_store_id');
+            }
+
+            return $next($request);
+        });
+    }
+
     public function createClientMessage(Request $request)
     {
         if($request->message) {
@@ -101,7 +114,7 @@ class MessageController extends Controller
         $messages = Message::whereHas('product', function ($query) {
                 $query->withTrashed()
                     ->withoutGlobalScopes(['active', 'active-store'])
-                    ->where('store_id', Auth::guard('store')->user()->store_id);
+                    ->where('store_id', $this->store_id);
             })
             ->with(['product' => function($query) {
                 $query->withTrashed()

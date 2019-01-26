@@ -1,9 +1,9 @@
 <header>
-    @if(isset($admin_search) && isset($keyword))
+    @if (isset($admin_search) && isset($keyword))
         <a href="{{ route('edit-products') }}" class="btn-back-search"></a>
     @else
         <a href="{{ url('/') }}" id="logo-naslojas">
-            <img src="{{ asset('images/icon-logo-naslojas.png') }}" />
+            <img src="{{ asset('images/icon-logo-naslojas.png') }}" alt="Logo naslojas.com" />
         </a>
     @endif
 
@@ -39,11 +39,11 @@
                 <ul class="dropdown-menu">
                     @isset ($show_filter_products)
                         <li>
-                            <a href="#" class="open-filter-products">Filtrar produtos</a>
+                            <a href="#" class="options" data-type="filter-products">Filtrar produtos</a>
                         </li>
                     @endisset
 
-                    @if (Auth::guard('client')->check() || Auth::guard('store')->check())
+                    @if (Auth::guard('client')->check() || Auth::guard('store')->check() || Auth::guard('superadmin')->check())
                         @if (Auth::guard('client')->check())
                             <li>
                                 <a href="{{ route('get-client-config') }}" class="{{ (isset($section) && $section == 'config') ? 'active' : '' }}">Minha conta</a>
@@ -60,10 +60,24 @@
                             <li>
                                 <a href="{{ route('list-client-messages') }}" class="{{ (isset($section) && $section == 'message') ? 'active' : '' }}">Mensagens</a>
                             </li>
-                        @elseif (Auth::guard('store')->check())
-                            @if(Auth::guard('store')->user()->store->status)
+                        @elseif (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
+                            @if (Auth::guard('superadmin')->check())
+                                <li>
+                                    <a href="{{ route('superadmin-store-register') }}" class="store-register">Cadastrar loja</a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="options" data-type="list-stores">Selecionar loja</a>
+                                </li>
+                            @endif
+
+                            @if (Auth::guard('store')->check() && Auth::guard('store')->user()->store->status)
                                 <li>
                                     <a href="{{ route('show-store', Auth::guard('store')->user()->store->slug) }}" class="{{ (isset($section) && $section == 'store') ? 'active' : '' }}">Minha loja</a>
+                                </li>
+                            @elseif (Auth::guard('superadmin')->check() && Session::has('superadmin_store_status'))
+                                <li>
+                                    <a href="{{ route('show-store', session('superadmin_store_slug')) }}" class="{{ (isset($section) && $section == 'store') ? 'active' : '' }}">Minha loja</a>
                                 </li>
                             @endif
 
@@ -75,17 +89,19 @@
                                 <a href="{{ route('edit-products') }}" class="{{ (isset($section) && $section == 'edit') ? 'active' : '' }}">Editar produtos</a>
                             </li>
 
-                            <li>
-                                <a href="{{ route('list-store-confirms') }}" class="{{ (isset($section) && $section == 'confirm') ? 'active' : '' }}">Confirmações</a>
-                            </li>
+                            @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check() && Auth::guard('superadmin')->user()->type == 1)
+                                <li>
+                                    <a href="{{ route('list-store-confirms') }}" class="{{ (isset($section) && $section == 'confirm') ? 'active' : '' }}">Confirmações</a>
+                                </li>
 
-                            <li>
-                                <a href="{{ route('list-store-reserves') }}" class="{{ (isset($section) && $section == 'reserve') ? 'active' : '' }}">Reservas</a>
-                            </li>
+                                <li>
+                                    <a href="{{ route('list-store-reserves') }}" class="{{ (isset($section) && $section == 'reserve') ? 'active' : '' }}">Reservas</a>
+                                </li>
 
-                            <li>
-                                <a href="{{ route('list-store-messages') }}" class="{{ (isset($section) && $section == 'message') ? 'active' : '' }}">Mensagens</a>
-                            </li>
+                                <li>
+                                    <a href="{{ route('list-store-messages') }}" class="{{ (isset($section) && $section == 'message') ? 'active' : '' }}">Mensagens</a>
+                                </li>
+                            @endif
 
                             <li>
                                 <a href="{{ route('get-store-config') }}" class="{{ (isset($section) && $section == 'config') ? 'active' : '' }}">Configurações</a>
@@ -123,7 +139,7 @@
 </header>
 
 <div class="filter-products">
-    <div class="filter">
+    <div>
         <span>Ordenar</span>
 
         @foreach ($orderby as $ok => $o)
@@ -131,11 +147,21 @@
         @endforeach
     </div>
 
-    <div class="filter">
+    <div>
         <span>Gênero</span>
 
         @foreach ($genders as $gk => $g)
             <a href="#" data-value="{{ $gk }}" data-type="gender" class="{{ (isset($search_gender) && $search_gender == $gk) ? 'active' : '' }}">{{ $g }}</a>
+        @endforeach
+    </div>
+</div>
+
+<div class="list-stores">
+    <div>
+        <span>Selecionar loja</span>
+
+        @foreach ($superadmin_stores as $superadmin_store)
+            <a href="{{ route('superadmin-set-store', $superadmin_store->id) }}" class="{{ session('superadmin_store_id') == $superadmin_store->id ? 'active' : '' }}">{{ $superadmin_store->name }}</a>
         @endforeach
     </div>
 </div>

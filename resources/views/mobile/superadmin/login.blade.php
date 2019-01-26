@@ -3,7 +3,7 @@
     $header_title = 'Acesso restrito - naslojas.com';
 ?>
 
-@extends('base')
+@extends('mobile.base')
 
 @section('content')
     <div class="container page-login-register">

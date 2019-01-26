@@ -3,7 +3,7 @@
     $header_title = 'Cadastro da loja - naslojas.com';
 ?>
 
-@extends('base')
+@extends('mobile.base')
 
 @section('content')
     <div class="container page-login-register">

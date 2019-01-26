@@ -73,7 +73,7 @@ function _dateFormat($date)
     return $date_format;
 }
 
-function _uploadImage($file)
+function _uploadImage($file, $store_id)
 {
     $microtime = microtime(true) . RAND(111111, 999999);
 
@@ -132,7 +132,7 @@ function _uploadImage($file)
         }
         $image->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
 
-        $image->writeImage(public_path('uploads/' . Auth::guard('store')->user()->store_id . '/products/' . $image_name));
+        $image->writeImage(public_path('uploads/' . $store_id . '/products/' . $image_name));
 
         $image->destroy();
     }

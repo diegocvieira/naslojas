@@ -92,7 +92,7 @@
             <script type="text/javascript" src="{{ asset('offline-developer/bootstrap-select.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('offline-developer/jquery.mask.min.js') }}"></script>
 
-            @if (Auth::guard('store')->check())
+            @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
                 <script type="text/javascript" src="{{ asset('offline-developer/dropzone.min.js') }}"></script>
                 <script type="text/javascript" src="{{ asset('offline-developer/exif.min.js') }}"></script>
             @endif
@@ -103,7 +103,7 @@
             <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js'></script>
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.8/jquery.mask.min.js"></script>
 
-            @if (Auth::guard('store')->check())
+            @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
             @endif
@@ -142,7 +142,7 @@
                 var client_logged = false;
             @endif
 
-            @if (Auth::guard('store')->check())
+            @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
                 Dropzone.autoDiscover = false;
                 var store_logged = true;
             @else
@@ -152,7 +152,7 @@
 
         <script src="{{ mix('js/global.js') }}"></script>
 
-        @if (Auth::guard('store')->check())
+        @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
             <script src="{{ mix('js/global-store.js') }}"></script>
         @endif
 
