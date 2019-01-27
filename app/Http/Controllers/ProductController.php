@@ -38,8 +38,8 @@ class ProductController extends Controller
                 $query->where('city_id', $product->store->city->id);
             })
             ->where(function ($query) use ($product) {
-                //$query->search($product->title);
-                $query->where('title', 'like', '%' . $product->title . '%');
+                $query->search($product->title);
+                //$query->where('title', 'like', '%' . $product->title . '%');
             })
             ->paginate(8);
 
@@ -147,12 +147,12 @@ class ProductController extends Controller
             $header_desc = 'Clique para ver ' . $keyword . ' em ' . Cookie::get('city_title') . ' - ' . Cookie::get('state_letter');
 
             $products = $products->where(function ($query) use ($keyword) {
-                /*$query->search($keyword)->orWhereHas('store', function ($query) use ($keyword) {
+                $query->search($keyword)->orWhereHas('store', function ($query) use ($keyword) {
                     $query->search($keyword);
-                });*/
-                $query->where('title', 'like', '%' . $keyword . '%')->orWhereHas('store', function ($query) use ($keyword) {
-                    $query->where('name', 'like', '%' . $keyword . '%');
                 });
+                //$query->where('title', 'like', '%' . $keyword . '%')->orWhereHas('store', function ($query) use ($keyword) {
+                    //$query->where('name', 'like', '%' . $keyword . '%');
+                //});
             });
         }
 
@@ -161,12 +161,12 @@ class ProductController extends Controller
         if ($keyword && $products->count() == 0) {
             $products = Product::filterGender($search_gender)->filterOrder($search_order)
                 ->where(function ($query) use ($keyword) {
-                    /*$query->search(preg_replace('{(.)\1+}','$1', $keyword))->orWhereHas('store', function ($query) use ($keyword) {
+                    $query->search(preg_replace('{(.)\1+}','$1', $keyword))->orWhereHas('store', function ($query) use ($keyword) {
                         $query->search(preg_replace('{(.)\1+}','$1', $keyword));
-                    });*/
-                    $query->where('title', 'like', '%' . preg_replace('{(.)\1+}','$1', $keyword) . '%')->orWhereHas('store', function ($query) use ($keyword) {
-                        $query->where('name', 'like', '%' . preg_replace('{(.)\1+}','$1', $keyword) . '%');
                     });
+                    //$query->where('title', 'like', '%' . preg_replace('{(.)\1+}','$1', $keyword) . '%')->orWhereHas('store', function ($query) use ($keyword) {
+                        //$query->where('name', 'like', '%' . preg_replace('{(.)\1+}','$1', $keyword) . '%');
+                    //});
                 })
                 ->paginate(30);
         }
@@ -193,9 +193,9 @@ class ProductController extends Controller
             $keyword = urldecode($keyword);
 
             $products = $products->where(function ($query) use ($keyword) {
-                //$query->search($keyword);
-                $query->where('title', 'like', '%' . $keyword . '%')
-                    ->orWhere('identifier', $keyword);
+                $query->search($keyword);
+                //$query->where('title', 'like', '%' . $keyword . '%')
+                    //->orWhere('identifier', $keyword);
             });
         }
 

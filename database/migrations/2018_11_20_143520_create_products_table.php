@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use DB;
 
 class CreateProductsTable extends Migration
 {
@@ -37,7 +36,7 @@ class CreateProductsTable extends Migration
         });
 
         // Full Text Index
-        DB::statement('ALTER TABLE products ADD FULLTEXT fulltext_index (title)');
+        DB::statement('ALTER TABLE products ADD FULLTEXT fulltext_index (title, identifier)');
     }
 
     /**
