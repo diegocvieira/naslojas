@@ -21,6 +21,8 @@ class ComposerServiceProvider extends ServiceProvider
         view()->composer(['store.list-product-edit', 'mobile.store.create-edit-product'], 'App\Http\ViewComposers\SelectsProductComposer');
 
         view()->composer(['inc.top-nav-store', 'mobile.inc.top-nav'], 'App\Http\ViewComposers\ListStoresComposer');
+
+        view()->composer(['inc.top-nav'], 'App\Http\ViewComposers\CountBagComposer');
     }
 
     /**

@@ -4,7 +4,7 @@
             <img src="{{ asset('images/logo-naslojas.png') }}" />
         </a>
 
-        @if(isset($store))
+        @if (isset($store))
             {!! Form::open(['method' => 'GET', 'route' => 'form-search-store', 'id' => 'form-search']) !!}
                 {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que voce procura na loja ' . $store->name]) !!}
 
@@ -28,6 +28,12 @@
 
         <nav class="nav navbar-nav nav-menu">
             <ul>
+                @if (Auth::guard('client')->check())
+                    <li>
+                        <a href="{{ route('bag-products') }}" class="open-bag">{{ $count_bag }}</a>
+                    </li>
+                @endif
+
                 @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
                     <li>
                         <a href="#" class="logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -119,6 +125,10 @@
 
                     <li>
                         <a href="{{ route('client-login-get') }}">Entrar</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('bag-products') }}" class="open-bag">{{ $count_bag }}</a>
                     </li>
                 @endif
             </ul>

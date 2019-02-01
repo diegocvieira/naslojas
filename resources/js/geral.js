@@ -511,7 +511,172 @@ $(function() {
             $('.search-stores .dropdown').hide();
         }
     });
+
+
+
+
+
+
+
+
+
+
+
+
+    $(document).click(function(event) {
+        if (!$(event.target).closest('header').find('.bag').length && $('header').find('.bag').is(':visible')) {
+            $('header').find('.bag').remove();
+        }
+    });
+
+    $(document).on('click', '.open-bag', function(e) {
+        e.preventDefault();
+
+        var bag = $('header').find('.bag');
+
+        if (bag.is(':visible')) {
+            bag.remove();
+        } else {
+            $.ajax({
+                url: $(this).attr('href'),
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('header').find('.container').append(data.body);
+                }
+            });
+        }
+    });
+
+    $(document).on('click', '.bag-add-product', function(e) {
+        e.preventDefault();
+
+        if (!$('.size-container').find('input').is(':checked')) {
+            modalAlert('Selecione um tamanho antes de adicionar o produto ao carrinho.');
+        } else {
+            var redirect = $(this).hasClass('redirect') ? true : false;
+
+            $.ajax({
+                url: $(this).data('url'),
+                data: {
+                    qtd : $('.qtd-container').find('select.qtd').val(),
+                    size : $('.size-container').find('input:checked').val(),
+                    product_id : $(this).data('productid')
+                },
+                method: 'POST',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    if (redirect) {
+                        //window.location = '/sacola/produtos';
+                    } else {
+                        $('#modal-default').modal('hide');
+
+                        $('.open-bag').trigger('click');
+
+                        var bag = $('header').find('.open-bag');
+                        bag.text(parseInt(bag.text()) + 1);
+                    }
+                },
+                error: function (request, status, error) {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
+            });
+        }
+    });
+
+    $(document).on('click', '.bag-remove-product', function(e) {
+        e.preventDefault();
+
+        var product = $(this).parents('.product');
+
+        $.ajax({
+            url: $(this).attr('href'),
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                product.remove();
+
+                var bag = $('header').find('.open-bag');
+                bag.text(parseInt(bag.text()) - 1);
+
+                updateBagInfos();
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+    });
+
+    $(document).on('change', 'select.bag-change-qtd', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: 'sacola/change-qtd/' + $(this).data('productid') + '/' + $(this).val(),
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                updateBagInfos();
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+    });
+
+    $(document).on('change', 'select.bag-change-size', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: 'sacola/change-size/' + $(this).data('productid') + '/' + $(this).val(),
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                updateBagInfos();
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+    });
 });
+
+function updateBagInfos() {
+    var subtotal = 0;
+
+    $('.bag').find('.product').each(function() {
+        subtotal += (parseInt($(this).find('select.qtd').val()) * parseFloat($(this).find('.price').data('price')));
+    });
+
+    $('.bag').find('.subtotal span').text('R$ ' + (number_format(subtotal, 2, ',', '.')));
+}
+
+function number_format(numero, decimal, decimal_separador, milhar_separador) {
+   numero = (numero + '').replace(/[^0-9+\-Ee.]/g, '');
+   var n = !isFinite(+numero) ? 0 : +numero,
+       prec = !isFinite(+decimal) ? 0 : Math.abs(decimal),
+       sep = (typeof milhar_separador === 'undefined') ? ',' : milhar_separador,
+       dec = (typeof decimal_separador === 'undefined') ? '.' : decimal_separador,
+       s = '',
+       toFixedFix = function (n, prec) {
+           var k = Math.pow(10, prec);
+           return '' + Math.round(n * k) / k;
+       };
+
+   // Fix para IE: parseFloat(0.55).toFixed(0) = 0;
+   s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+   if(s[0].length > 3) {
+       s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+   }
+   if((s[1] || '').length < prec) {
+       s[1] = s[1] || '';
+       s[1] += new Array(prec - s[1].length + 1).join('0');
+   }
+
+   return s.join(dec);
+}
 
 function modalAlert(body, btn = 'OK') {
     $('#modal-alert').remove();

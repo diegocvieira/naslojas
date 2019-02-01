@@ -13,7 +13,7 @@ $(function() {
 
                 var modal = $('#modal-default');
 
-                if(!modal.hasClass('page-show-product')) {
+                if (!modal.hasClass('page-show-product')) {
                     modal.removeClass().addClass('modal fade page-show-product');
                 } else {
                     modal.animate({
@@ -23,6 +23,8 @@ $(function() {
 
                 modal.find('.modal-content').html(data.body);
                 modal.modal('show');
+
+                $('select.qtd').selectpicker('refresh');
             }
         });
     });
@@ -79,82 +81,6 @@ $(function() {
         });
 
         return false;
-    });
-
-    $(document).on('click', '.btn-product-confirm', function(e) {
-        e.preventDefault();
-
-        if (client_logged) {
-            if($('.size-container').length && !$('.size-container input[type=checkbox]').is(':checked')) {
-                modalAlert('Selecione pelo menos um tamanho para confirmar.');
-            } else {
-                var sizes = [];
-                $('.size-container').find('input[type=checkbox]:checked').each(function() {
-                    sizes.push($(this).val());
-                });
-
-                $.ajax({
-                    url: $(this).data('url'),
-                    data: { sizes : sizes, product_id : $(this).data('productid') },
-                    method: 'POST',
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (data) {
-                        modalAlert(data.msg);
-                    }
-                });
-            }
-        } else {
-            modalAlert('É necessário acessar sua conta para fazer a confirmação de um produto.');
-        }
-    });
-
-    $(document).on('click', '.btn-product-reserve', function(e) {
-        e.preventDefault();
-
-        var url = $(this).data('url'),
-            product_id = $(this).data('productid');
-
-        if (client_logged) {
-            if($('.size-container').length && !$('.size-container input[type=checkbox]').is(':checked')) {
-                modalAlert('Selecione pelo menos um tamanho para reservar.');
-            } else {
-                modalAlert("Você deseja que este produto seja reservado para você conferir na loja em até 24hs após a confirmação? <br> Você não é obrigado(a) a finalizar a compra na loja!", 'RESERVAR');
-
-                var modal = $('#modal-alert');
-
-                modal.find('.btn-default').addClass('btn-confirm');
-                modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back invert-color' data-dismiss='modal'>VOLTAR</button>");
-
-                modal.find('.modal-footer .btn-confirm').off().on('click', function() {
-                    var sizes = [];
-                    $('.size-container').find('input[type=checkbox]:checked').each(function() {
-                        sizes.push($(this).val());
-                    });
-
-                    $.ajax({
-                        url: url,
-                        data: { sizes : sizes, product_id : product_id },
-                        method: 'POST',
-                        dataType: 'json',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function (data) {
-                            modal.find('.modal-body').html(data.msg);
-                            modal.find('.modal-footer .btn-confirm').remove();
-                            modal.find('.modal-footer .btn-back').text('OK').off();
-                        }
-                    });
-
-                    return false;
-                });
-            }
-        } else {
-            modalAlert('É necessário acessar sua conta para fazer a reserva de um produto.');
-        }
     });
 
     $(document).on('keyup', '#form-question-message textarea', function() {

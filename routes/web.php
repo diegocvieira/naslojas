@@ -274,3 +274,15 @@ Route::group(['prefix' => 'superadmin'], function () {
 
 // User logout
 Route::get('user/logout', 'GlobalController@logout')->name('logout');
+
+Route::group(['prefix' => 'sacola'], function () {
+	Route::post('add-product', 'BagController@add')->name('bag-add-product');
+
+	Route::get('remove-product/{product_id}', 'BagController@remove')->name('bag-remove-product');
+
+	Route::get('change-qtd/{product_id}/{qtd}', 'BagController@changeQtd')->name('bag-change-qtd');
+
+	Route::get('change-size/{product_id}/{size}', 'BagController@changeSize')->name('bag-change-size');
+
+	Route::get('produtos', 'BagController@products')->name('bag-products');
+});

@@ -4,17 +4,19 @@
             <img src="{{ asset('images/logo-naslojas.png') }}" />
         </a>
 
-        <div class="search-stores">
-            <button type="button" class="open-search-stores"></button>
+        @if (Auth::guard('superadmin')->check())
+            <div class="search-stores">
+                <button type="button" class="open-search-stores"></button>
 
-            <div class="dropdown">
-                <a href="{{ route('superadmin-store-register') }}" class="store-register">CADASTRAR LOJA</a>
+                <div class="dropdown">
+                    <a href="{{ route('superadmin-store-register') }}" class="store-register">CADASTRAR LOJA</a>
 
-                @foreach ($superadmin_stores as $superadmin_store)
-                    <a href="{{ route('superadmin-set-store', $superadmin_store->id) }}" class="{{ session('superadmin_store_id') == $superadmin_store->id ? 'active-store' : '' }}">{{ $superadmin_store->name }}</a>
-                @endforeach
+                    @foreach ($superadmin_stores as $superadmin_store)
+                        <a href="{{ route('superadmin-set-store', $superadmin_store->id) }}" class="{{ session('superadmin_store_id') == $superadmin_store->id ? 'active-store' : '' }}">{{ $superadmin_store->name }}</a>
+                    @endforeach
+                </div>
             </div>
-        </div>
+        @endif
 
         <nav class="nav navbar-nav nav-menu">
             <ul>

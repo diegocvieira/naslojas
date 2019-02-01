@@ -186,10 +186,18 @@
         width: 100%;
     }
 
+    .advice {
+        font-size: 12.5px;
+        color: rgb(112, 202, 124);
+        float: left;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
     .store-container {
         float: left;
         width: 100%;
-        margin: 20px 0;
+        margin: 5px 0;
         padding-bottom: 30px;
         border-bottom: 1px solid rgb(230, 230, 230);
 
@@ -198,13 +206,10 @@
             color: rgb(50, 50, 50);
             float: left;
             width: 100%;
-        }
 
-        .store-show {
-            font-size: 14.5px;
-            color: rgb(122, 184, 236);
-            float: left;
-            width: 100%;
+            a {
+                color: rgb(122, 184, 236);
+            }
         }
 
         .store-address {
@@ -262,46 +267,102 @@
         .parcels {
             float: left;
             width: 100%;
-            padding-left: 25px;
+            padding-left: 30px;
             font-size: 14.5px;
             color: rgb(50, 50, 50);
             background-image: url('../images/icon-card.png');
             background-position: left;
-            background-size: contain;
+            background-size: 22px;
             background-repeat: no-repeat;
         }
+    }
 
-        .reserve {
-            float: left;
-            width: 100%;
-            color: #000;
+    .shipping-container {
+        width: 100%;
+        float: left;
+        position: relative;
+        background-image: url('../images/icon-truck.png');
+        background-position: left left;
+        background-size: 22px;
+        background-repeat: no-repeat;
+        margin-top: 20px;
+        padding-left: 30px;
+
+        span {
             font-size: 14.5px;
-            margin-top: 10px;
-
-            span {
-                font-size: 16.6px;
-                font-family: "KeepCalm";
-                background-color: rgb(255, 215, 223);
-                padding: 5px 5px 2px 5px;
-                margin-right: 5px;
-                position: relative;
-                left: -4px;
-            }
+            color: rgb(50, 50, 50);
+            display: block;
         }
 
-        .reserve_parcels {
-            color: #000;
+        button {
+            font-size: 12.5px;
+            color: rgb(122, 184, 236);
+            background-color: transparent;
+            border: none;
+            padding: 0;
+        }
+    }
+
+    .qtd-container {
+        float: left;
+        width: 100%;
+        margin-top: 15px;
+
+        .label-select {
             font-size: 14.5px;
+            color: rgb(150, 150, 150);
             float: left;
-            width: 100%;
-            margin-top: 5px;
+            margin-top: 6px;
+        }
+
+        .bootstrap-select {
+            margin: 0 !important;
+            width: auto !important;
+            float: left;
+
+            &.open .dropdown-toggle {
+                color: #000;
+            }
+
+            .dropdown-toggle {
+                background-color: transparent;
+                border: none;
+                box-shadow: none;
+                color: #000;
+                font-size: 14.5px;
+                outline: none !important;
+                font-weight: 700;
+
+                &:hover {
+                    color: #000;
+                }
+            }
+
+            .dropdown-menu {
+                background-color: #fff !important;
+                top: 34px;
+                border: none;
+                padding: 0;
+                border-radius: 5px;
+                max-height: 220px !important;
+
+                a {
+                    padding: 8px 20px;
+                    color: rgb(100, 100, 100);
+                    font-size: 13.7px;
+
+                    &:hover {
+                        background-color: rgb(230, 230, 230);
+                    }
+                }
+            }
         }
     }
 
     .size-container {
         float: left;
         width: 100%;
-        margin-top: 30px;
+        margin: 10px 0 15px 0;
 
         span {
             font-size: 14.5px;
@@ -320,7 +381,7 @@
                 margin-right: 0;
             }
 
-            input[type=checkbox] {
+            input[type=radio] {
                 display: none;
 
                 &:checked + label {
@@ -350,6 +411,7 @@
         line-height: 1.5;
         width: 100%;
         float: left;
+        margin-bottom: 20px;
     }
 
     .rating-container {
@@ -424,7 +486,7 @@
         position: relative;
 
         button {
-            background-color: rgb(255, 23, 68);
+
             float: left;
             border: none;
             height: 40px;
@@ -432,17 +494,13 @@
             width: 100%;
             font-weight: 700;
             border-radius: 25px;
-            color: #fff;
+            background-color: #f0f0f0;
+            color: rgb(255, 23, 68);
 
-            &.btn-product-confirm {
-                background-color: #f0f0f0;
-                margin-bottom: 5px;
-                color: rgb(255, 23, 68);
-            }
-
-            &.btn-disabled {
-                opacity: .3;
-                cursor: default;
+            &.redirect {
+                background-color: rgb(255, 23, 68);
+                margin-top: 5px;
+                color: #fff;
             }
         }
     }

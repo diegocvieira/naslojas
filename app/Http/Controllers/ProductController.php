@@ -81,10 +81,14 @@ class ProductController extends Controller
         $header_canonical = route(\Request::route()->getName(), $product->slug);
         $header_image = url('/uploads/' . $product->store->id . '/products/' . $product->images->first()->image);
 
+        for ($i = 1; $i <= 5; $i++) {
+            $qtd[$i] = $i;
+        }
+
         if (Agent::isDesktop()) {
             if(\Request::ajax()) {
                 return response()->json([
-                    'body' => view('show-product', compact('product', 'more_colors', 'related_products', 'product_rating', 'client_rating'))->render(),
+                    'body' => view('show-product', compact('product', 'more_colors', 'related_products', 'product_rating', 'client_rating', 'qtd'))->render(),
                     'header_title' => $header_title,
                     'url' => $url
                 ]);
@@ -94,7 +98,7 @@ class ProductController extends Controller
                 return redirect()->route('home');
             }
         } else {
-            return view('mobile.show-product', compact('product', 'more_colors', 'related_products', 'product_rating', 'client_rating', 'header_title', 'header_desc', 'header_canonical', 'header_image'));
+            return view('mobile.show-product', compact('product', 'more_colors', 'related_products', 'product_rating', 'client_rating', 'header_title', 'header_desc', 'header_canonical', 'header_image', 'qtd'));
         }
     }
 

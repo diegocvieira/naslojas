@@ -54,12 +54,12 @@
 </div>
 
 <div class="col-xs-5">
-    <span class="identifier">#{{ $product->identifier }}</span>
+    <span class="advice">PAGUE SOMENTE AO RECEBER O PRODUTO</span>
+
+    <span class="identifier">Produto #{{ $product->identifier }}</span>
 
     <div class="store-container">
-        <span>Você encontra este produto na loja</span>
-
-        <a href="{{ route('show-store', $product->store->slug) }}" class="store-show">{{ $product->store->name }}</a>
+        <span>Vendido e entregue por <a href="{{ route('show-store', $product->store->slug) }}">{{ $product->store->name }}</a></span>
 
         <p class="store-address">{{ $product->store->street }}, {{ $product->store->number }} - {{ $product->store->district }} - {{ $product->store->city->title }}/{{ $product->store->city->state->letter }}</p>
 
@@ -67,6 +67,8 @@
             ver no mapa
         </a>
     </div>
+
+    <h1 class="product-title">{{ $product->title }}</h1>
 
     <div class="price-container">
         @if ($product->old_price)
@@ -85,33 +87,30 @@
                 {{ _taxes($product->installment, $product->installment_price, $product->price) }}
             </span>
         @endif
-
-        @if ($product->reserve && $product->reserve_discount)
-            <span class="reserve" title="Preço com desconto reservando pelo naslojas"><span>R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span> na reserva pelo <i>naslojas</i></span>
-
-            @if ($product->installment && $product->installment_price)
-                <span class="reserve_parcels">
-                    em até {{ $product->installment }}x de R$ {{ number_format(_reservePrice(($product->installment_price * $product->installment) / $product->installment, $product->reserve_discount), 2, ',', '.') }}
-                    {{ _taxes($product->installment, $product->installment_price, $product->price) }}
-                </span>
-            @endif
-        @endif
     </div>
 
-    @if ($product->sizes->count() > 0)
-        <div class="size-container">
-            <span>Tamanhos disponíveis</span>
+    <div class="shipping-container">
+        <span>Entrega a partir de 2hs em toda a cidade</span>
 
-            @foreach ($product->sizes as $size)
-                <div class="size">
-                    {!! Form::checkbox('size', $size->size, false, ['autocomplete' => 'off', 'id' => 'size_' . $size->size]) !!}
-                    {!! Form::label('size_' . $size->size, $size->size) !!}
-                </div>
-            @endforeach
-        </div>
-    @endif
+        <button type="button">Calcular frete</button>
+    </div>
 
-    <h1 class="product-title">{{ $product->title }}</h1>
+    <div class="qtd-container">
+        <span class="label-select">Quantidade:</span>
+
+        {!! Form::select('qtd', $qtd, null, ['class' => 'qtd selectpicker', 'autocomplete' => 'off']) !!}
+    </div>
+
+    <div class="size-container">
+        <span>Tamanhos disponíveis</span>
+
+        @foreach ($product->sizes as $size)
+            <div class="size">
+                {!! Form::radio('size', $size->size, false, ['autocomplete' => 'off', 'id' => 'size_' . $size->size]) !!}
+                {!! Form::label('size_' . $size->size, $size->size) !!}
+            </div>
+        @endforeach
+    </div>
 
     <div class="rating-container">
         @isset($product_rating->rating)
@@ -134,19 +133,9 @@
     </div>
 
     <div class="btn-container">
-        <button type="button" class="btn-product-confirm" data-url="{{ route('create-product-confirm') }}" data-productid="{{ $product->id }}" title="Confirmar se o produto ainda está disponível">CONFIRMAR</button>
+        <button type="button" class="bag-add-product" data-url="{{ route('bag-add-product') }}" data-productid="{{ $product->id }}">COLOCAR NA SACOLA</button>
 
-        @if ($product->reserve)
-            <button type="button" class="btn-product-reserve" data-url="{{ route('create-product-reserve') }}" data-productid="{{ $product->id }}" title="Você só precisa ir até a loja e informar o seu nome">
-                @if ($product->reserve_discount)
-                    RESERVAR POR R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}
-                @else
-                    RESERVAR
-                @endif
-            </button>
-        @else
-            <button type="button" class="btn-disabled" title="A loja desabilitou a reserva deste produto">RESERVA DESABILITADA</button>
-        @endif
+        <button type="button" class="bag-add-product redirect" data-url="{{ route('bag-add-product') }}" data-productid="{{ $product->id }}">PEDIR AGORA</button>
     </div>
 
     @if ($more_colors->count() > 0)
