@@ -391,7 +391,6 @@ class ProductController extends Controller
                     $product->store_id = $this->store_id;
                     $product->status = 2;
                     $product->identifier = mt_rand(1000000000, 9999990000);
-                    $product->reserve = $store->reserve;
 
                     // Checks if identifier arent in use
                     $NUM_OF_ATTEMPTS = 10;
@@ -450,7 +449,6 @@ class ProductController extends Controller
                     $product->store_id = $this->store_id;
                     $product->status = 1;
                     $product->identifier = mt_rand(1000000000, 9999990000);
-                    $product->reserve = $store->reserve;
                 }
 
                 $product->title = $request->title;
