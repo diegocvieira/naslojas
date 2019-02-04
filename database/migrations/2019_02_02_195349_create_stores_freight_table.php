@@ -17,8 +17,8 @@ class CreateStoresFreightTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('store_id');
             $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
-            $table->unsignedInteger('freight_id');
-            $table->foreign('freight_id')->references('id')->on('freights')->onDelete('cascade');
+            $table->unsignedInteger('district_id');
+            $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade');
             $table->decimal('price', 8, 2);
         });
     }
