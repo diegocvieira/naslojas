@@ -24,9 +24,24 @@ $(function() {
                 modal.find('.modal-content').html(data.body);
                 modal.modal('show');
 
-                $('select.qtd').selectpicker('refresh');
+                $('select.selectpicker').selectpicker('refresh');
             }
         });
+    });
+
+    $(document).on('change', '.page-show-product select.freights', function(e) {
+        e.preventDefault();
+
+        var span = $('.freights-container').find('.freight-selected'),
+            val = $(this).val();
+
+        if (val == 0.00) {
+            span.addClass('free').text('Frete grátis');
+        } else {
+            span.removeClass('free').text('Frete R$ ' + number_format(val, 2, ',', '.'));
+        }
+
+        $(this).val('').selectpicker('refresh');
     });
 
     $(document).on('click', '.related-products .pagination a', function(e) {

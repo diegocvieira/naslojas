@@ -1,16 +1,4 @@
 $(function() {
-    $('.mask-money').mask('000.000.000.000.000,00', { reverse: true });
-    $('.mask-percent').mask('00%', { reverse: true }).blur(function() {
-        if ($(this).val() == '%') {
-            $(this).val('');
-        }
-    });
-    $('.mask-x').mask('00x', { reverse: true }).blur(function() {
-        if ($(this).val() == 'x') {
-            $(this).val('');
-        }
-    });
-
     $(document).on('change', '.sizes input', function() {
         $(this).parents('.sizes').find('input').removeClass('error');
 

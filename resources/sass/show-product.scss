@@ -277,29 +277,104 @@
         }
     }
 
-    .shipping-container {
+    .freights-container {
         width: 100%;
         float: left;
         position: relative;
-        background-image: url('../images/icon-truck.png');
-        background-position: left left;
-        background-size: 22px;
-        background-repeat: no-repeat;
         margin-top: 20px;
-        padding-left: 30px;
 
-        span {
+        .freight-selected {
             font-size: 14.5px;
             color: rgb(50, 50, 50);
             display: block;
+            background-image: url('../images/icon-truck.png');
+            background-position: left top;
+            background-size: 22px;
+            background-repeat: no-repeat;
+            padding-left: 30px;
+            filter: brightness(10%);
+
+            &.free {
+                color: rgb(112, 202, 124);
+                filter: none;
+            }
         }
 
-        button {
-            font-size: 12.5px;
-            color: rgb(122, 184, 236);
+        .bootstrap-select {
+            margin: 0 !important;
             background-color: transparent;
-            border: none;
-            padding: 0;
+            width: auto !important;
+            padding-left: 30px;
+
+            .dropdown-toggle {
+                background-color: transparent;
+                border: none;
+                box-shadow: none;
+                outline: none !important;
+                padding: 0;
+
+                .filter-option {
+                    color: rgb(122, 184, 236);
+                    font-size: 12.5px;
+                }
+
+                .bs-caret {
+                    display: none;
+                }
+            }
+
+            .dropdown-menu.open {
+                background-color: #fff !important;
+                top: 24px;
+                border: none;
+                padding: 0;
+                border-radius: 5px;
+                box-shadow: 1px 1.732px 13.5px 1.5px rgba(98, 98, 98, 0.118);
+                max-height: 430px !important;
+                width: 390px;
+                left: 0;
+
+                .bs-searchbox {
+                    padding: 10px;
+
+                    input {
+                        background-color: rgb(245, 245, 245);
+                        height: 40px;
+                        font-size: 13.7px;
+                        color: rgb(100, 100, 100);
+                        border-radius: 25px;
+                        box-shadow: none;
+                        border: none;
+                        background-image: url('../images/icon-lupa.png');
+                        background-position: 97%;
+                        background-size: 25px;
+                        background-repeat: no-repeat;
+                        padding-right: 40px;
+                    }
+                }
+
+                li {
+                    &:first-child a {
+                        font-weight: 700;
+                        color: #000;
+                    }
+
+                    .no-results {
+                        margin: 20px 0 0 0;
+                        width: 95%;
+                    }
+
+                    a {
+                        padding: 8px 25px;
+                        color: rgb(100, 100, 100);
+                        font-size: 13.7px;
+
+                        &:hover {
+                            background-color: rgb(245, 245, 245);
+                        }
+                    }
+                }
+            }
         }
     }
 

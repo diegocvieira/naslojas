@@ -79,7 +79,14 @@ class GlobalController extends Controller
             'title.max' => 'O título deve ter no máximo 255 caracteres.',
             'price.required' => 'Informe o preço do produto.',
             'gender.required' => 'Informe o gênero do produto.',
-            'description.max' => 'A descrição deve ter no máximo 2000 caracteres.'
+            'description.max' => 'A descrição deve ter no máximo 2000 caracteres.',
+            'max_product_unit.numeric' => 'Informe apenas números inteiros.',
+            'max_parcel.numeric' => 'Informe apenas números inteiros.',
+            'min_parcel_price.required' => 'Informe o valor mínimo de cada parcela.',
+            'phone.required' => 'Informe o número de telefone.',
+            'phone.max' => 'O telefone deve ter no máximo 15 caracteres',
+            'cnpj.required' => 'Informe o CNPJ.',
+            'cnpj.max' => 'O CNPJ deve ter no máximo 18 caracteres.'
         ];
     }
 }

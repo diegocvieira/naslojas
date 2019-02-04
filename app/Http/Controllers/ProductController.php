@@ -81,7 +81,7 @@ class ProductController extends Controller
         $header_canonical = route(\Request::route()->getName(), $product->slug);
         $header_image = url('/uploads/' . $product->store->id . '/products/' . $product->images->first()->image);
 
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= $product->store->max_product_unit; $i++) {
             $qtd[$i] = $i;
         }
 

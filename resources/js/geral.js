@@ -1,6 +1,31 @@
 $(function() {
     $('body').css('opacity', '1');
 
+    $('.mask-week').mask('00:00 às 00:00 e 00:00 às 00:00', {reverse: false});
+    $('#cep').mask('00000-000', {reverse: false, clearIfNotMatch: true});
+    $('.mask-cnpj').mask('00.000.000/0000-00', {reverse: true, clearIfNotMatch: true});
+    var SPMaskBehavior = function (val) {
+        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+    },
+    spOptions = {
+        onKeyPress: function(val, e, field, options) {
+            field.mask(SPMaskBehavior.apply({}, arguments));
+        }
+    };
+    $('.mask-phone').mask(SPMaskBehavior, spOptions);
+    $('.mask-number').mask('#', {reverse: false});
+    $('.mask-money').mask('000.000.000.000.000,00', {reverse: true});
+    $('.mask-percent').mask('00%', {reverse: true}).blur(function() {
+        if ($(this).val() == '%') {
+            $(this).val('');
+        }
+    });
+    $('.mask-x').mask('00x', { reverse: true }).blur(function() {
+        if ($(this).val() == 'x') {
+            $(this).val('');
+        }
+    });
+
     // Alert app
     $(document).on('click', '.show-app', function (e) {
         e.preventDefault();

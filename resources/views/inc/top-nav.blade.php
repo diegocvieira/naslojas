@@ -72,7 +72,7 @@
                             @endif
 
                             <li>
-                                <a href="{{ route('get-store-config') }}" class="show-store-config">Configurações</a>
+                                <a href="{{ route('get-store-config') }}">Configurações</a>
                             </li>
 
                             <li>

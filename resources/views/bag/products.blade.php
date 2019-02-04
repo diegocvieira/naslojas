@@ -74,7 +74,7 @@
             </div>
         @else
             <div class="no-results">
-                <img src="{{ asset('images/icon-box.png') }}" alt="Sem resultados" />
+                <img src="{{ asset('images/icon-box.png') }}" alt="Sacola vazia" />
 
                 <p>Sua sacola está vazia!</p>
             </div>

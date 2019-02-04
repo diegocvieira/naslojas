@@ -25,7 +25,11 @@ class CreateStoresTable extends Migration
             $table->string('complement', 100)->nullable();
             $table->string('slug', 200)->unique()->nullable();
             $table->boolean('status')->default(0);
-            $table->boolean('reserve')->default(1);
+            $table->decimal('min_parcel_price', 8, 2)->nullable();
+            $table->integer('max_parcel')->nullable();
+            $table->integer('max_product_unit')->nullable();
+            $table->char('cnpj', 18)->nullable();
+            $table->string('phone', 15)->nullable();
             $table->timestamps();
         });
 

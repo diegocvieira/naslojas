@@ -53,7 +53,7 @@
                 @endif
 
                 <li>
-                    <a href="{{ route('get-store-config') }}" class="show-store-config">Configurações</a>
+                    <a href="{{ route('get-store-config') }}" class="{{ (isset($section) && $section == 'config') ? 'active' : '' }}">Configurações</a>
                 </li>
 
                 <li>

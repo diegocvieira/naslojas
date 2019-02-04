@@ -121,8 +121,10 @@ Route::group(['prefix' => 'loja'], function () {
 	Route::get('reservas/{type}/{token}', 'ProductReserveController@emailUrl')->name('product-reserve-email-url');
 
 	Route::group(['prefix' => 'admin', 'middleware' => 'auth-store-superadmin'], function () {
-		Route::get('config', 'StoreController@getConfig')->name('get-store-config');
+		Route::get('config/{navigation?}', 'StoreController@getConfig')->name('get-store-config');
 		Route::post('config', 'StoreController@setConfig')->name('set-store-config');
+
+		Route::post('profile-status/{status}', 'StoreController@profileStatus');
 
 		Route::post('delete-account', 'StoreController@deleteAccount')->name('delete-store-account');
 

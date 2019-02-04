@@ -12,6 +12,7 @@ use Hash;
 use App\City;
 use Agent;
 use Mail;
+use App\District;
 
 class StoreController extends Controller
 {
@@ -166,18 +167,27 @@ class StoreController extends Controller
         return json_encode($return);
     }
 
-    public function getConfig()
+    public function getConfig($navigation = null)
     {
+        $section = 'config';
+        $header_title = 'Configurações | naslojas.com';
+
         $user = User::find($this->user_id);
+        $districts = District::get();
+
+        $weeks = [
+            '1' => 'Segunda',
+            '2' => 'Terça',
+            '3' => 'Quarta',
+            '4' => 'Quinta',
+            '5' => 'Sexta',
+            '6' => 'Sábado'
+        ];
 
         if (Agent::isDesktop()) {
-            return response()->json([
-                'body' => view('store.config', compact('user'))->render()
-            ]);
+            return view('store.config', compact('user', 'districts', 'weeks', 'section', 'header_title', 'navigation'));
         } else {
-            $section = 'config';
-
-            return view('mobile.store.config', compact('user', 'section'));
+            return view('mobile.store.config', compact('user', 'districts', 'section', 'header_title'));
         }
     }
 
@@ -223,11 +233,61 @@ class StoreController extends Controller
                     $store->number = $request->number;
                     $store->complement = $request->complement;
                     $store->district = $request->district;
-                    $store->status = isset($request->status) ? 1 : 0;
-                    $store->reserve = isset($request->reserve) ? 1 : 0;
+                    $store->cnpj = $request->cnpj;
+                    $store->max_product_unit = $request->max_product_unit;
+                    $store->max_parcel = $request->max_parcel;
+                    $store->phone = $request->phone;
+                    $store->min_parcel_price = number_format(str_replace(['.', ','], ['', '.'], $request->min_parcel_price), 2, '.', '');
+
+                    // Delete and insert new freights
+                    $freights = array_map(function($q, $t) {
+                        return array('id' => $q, 'price' => $t);
+                    }, $request->district_id, $request->freight_price);
+                    $store->freights()->delete();
+                    foreach ($freights as $freight) {
+                        if ($freight['price']) {
+                            $store->freights()->create([
+                                'price' => number_format(str_replace(array(".", ","), array("", "."), $freight['price']), 2, '.', ''),
+                                'district_id' => $freight['id']
+                            ]);
+                        }
+                    }
+
+                    // Delete and insert new operation hours
+                    $hours = array_map(function($q, $t) {
+                        return array('week' => $q, 'hour' => $t);
+                    }, $request->week_id, $request->operating);
+                    $store->operatings()->delete();
+                    foreach ($hours as $hour) {
+                        if ($hour['hour']) {
+                            if (strlen($hour['hour']) == 15) {
+                                $opening_morning = substr($hour['hour'], 0, 5);
+                                $closed_morning = null;
+                                $opening_afternoon = null;
+                                $closed_afternoon = substr($hour['hour'], 10, 5);
+                            }
+
+                            if (strlen($hour['hour']) == 33) {
+                                $opening_morning = substr($hour['hour'], 0, 5);
+                                $closed_morning = substr($hour['hour'], 10, 5);
+                                $opening_afternoon = substr($hour['hour'], 18, 5);
+                                $closed_afternoon = substr($hour['hour'], 28, 5);
+                            }
+
+                            $store->operatings()->create([
+                                'week' => $hour['week'],
+                                'opening_morning' => $opening_morning,
+                                'closed_morning' => $closed_morning,
+                                'opening_afternoon' => $opening_afternoon,
+                                'closed_afternoon' => $closed_afternoon
+                            ]);
+                        }
+                    }
 
                     if ($store->save() && $user->save()) {
-                        app('App\Http\Controllers\SuperadminController')->setStore($store->id);
+                        if (Auth::guard('superadmin')->check()) {
+                            app('App\Http\Controllers\SuperadminController')->setStore($store->id);
+                        }
 
                         $return['msg'] = 'Informações atualizadas.';
                         $return['status'] = 1;
@@ -243,6 +303,15 @@ class StoreController extends Controller
         }
 
         return json_encode($return);
+    }
+
+    public function profileStatus($status)
+    {
+        $store = Store::find($this->store_id);
+
+        $store->status = $status;
+
+        $store->save();
     }
 
     public function deleteAccount(Request $request)
@@ -274,7 +343,12 @@ class StoreController extends Controller
             'district' => 'required|max:100',
             'number' => 'required|max:15',
             'city' => 'required',
-            'state' => 'required'
+            'state' => 'required',
+            'max_product_unit' => 'numeric',
+            'max_parcel' => 'numeric',
+            'min_parcel_price' => 'required',
+            'phone' => 'required|max:15',
+            'cnpj' => 'required|max:18'
         ];
     }
 }

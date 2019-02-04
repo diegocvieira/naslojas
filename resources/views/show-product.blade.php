@@ -89,10 +89,10 @@
         @endif
     </div>
 
-    <div class="shipping-container">
-        <span>Entrega a partir de 2hs em toda a cidade</span>
+    <div class="freights-container">
+        <span class="freight-selected">Entrega a partir de 2hs em toda a cidade</span>
 
-        <button type="button">Calcular frete</button>
+        {!! Form::select('freight', ['0.00' => 'Retirar na loja'] + $product->store->freights->pluck('district.name', 'price')->all(), null, ['title' => 'Calcular frete', 'class' => 'freights selectpicker', 'autocomplete' => 'off', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Pesquise aqui']) !!}
     </div>
 
     <div class="qtd-container">

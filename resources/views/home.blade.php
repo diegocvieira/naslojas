@@ -15,12 +15,12 @@
 
                 <div class="col-xs-4">
                     <img src="{{ asset('images/know/calendar.png') }}" />
-                    <p>Reserve por 24hs o<br>produto que gostou</p>
+                    <p>Agende a entrega<br>a partir de 2 horas</p>
                 </div>
 
                 <div class="col-xs-4">
                     <img src="{{ asset('images/know/store.png') }}" class="img-store" />
-                    <p>Passe na loja para<br>finalizar a compra</p>
+                    <p>Ou retire o pedido<br>diretamente na loja</p>
                 </div>
             </div>
 

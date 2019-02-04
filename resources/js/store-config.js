@@ -1,123 +1,146 @@
 $(function() {
-    $(document).on('click', '.show-store-config', function(e) {
+    $(document).on('click', '.page-store-config .activate-profile', function(e) {
         e.preventDefault();
 
+        var status = $(this).find('.switch');
+
+        status.toggleClass('active-profile');
+
         $.ajax({
-            url: $(this).attr('href'),
-            method: 'GET',
+            url: 'loja/admin/profile-status/' + (status.hasClass('active-profile') ? 1 : 0),
+            method: 'POST',
             dataType: 'json',
-            cache: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             success: function (data) {
-                $('#modal-default').removeClass().addClass('modal fade page-store-config').find('.modal-content').html(data.body);
-                $('#modal-default').modal('show');
 
-                $('#cep').mask('00000-000', {reverse: false, clearIfNotMatch : true});
-
-                $('#form-store-config').validate({
-                    rules: {
-                        name: {
-                            required: true,
-                            minlength: 1,
-                            maxlength: 200
-                        },
-                        email: {
-                            required: true,
-                            minlength: 1,
-                            maxlength: 100,
-                            email: true
-                        },
-                        slug: {
-                            required: true,
-                            minlength: 1,
-                            maxlength: 200
-                        },
-                        cep: {
-                            required: true,
-                            minlength: 9,
-                            maxlength: 10
-                        },
-                        street: {
-                            required: true,
-                            minlength: 1,
-                            maxlength: 200
-                        },
-                        district: {
-                            required: true,
-                            minlength: 1,
-                            maxlength: 100
-                        },
-                        number: {
-                            required: true,
-                            minlength: 1,
-                            maxlength: 15
-                        },
-                        city: {
-                            required: true,
-                            minlength: 1
-                        },
-                        state: {
-                            required: true,
-                            minlength: 1
-                        },
-                        password: {
-                            minlength: 8
-                        },
-                        password_confirmation: {
-                            minlength: 8,
-                            equalTo: "#password"
-                        }
-                    },
-                    highlight: function (element, errorClass, validClass) {
-                        $(element).addClass(errorClass).removeClass(validClass);
-                    },
-                    unhighlight: function (element, errorClass, validClass) {
-                        $(element).removeClass(errorClass).addClass(validClass);
-                    },
-                    errorPlacement: function(error, element) {
-                    },
-                    submitHandler: function(form) {
-                        modalAlert("Confirme sua senha atual.<input type='password' name='current_password' placeholder='digite aqui' />", 'ENVIAR');
-
-                        var modal = $('#modal-alert');
-
-                        modal.find('.btn').addClass('btn-confirm');
-
-                        modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
-                            $(form).find('input[name=current_password]').val(modal.find('input[name=current_password]').val());
-
-                            $.ajax({
-                                url: $(form).attr('action'),
-                                method: 'POST',
-                                dataType: 'json',
-                                data: $(form).serialize(),
-                                success: function (data) {
-                                    modal.find('.modal-footer .invalid-field').remove();
-
-                                    if(data.status == '0' || data.status == '1') {
-                                        modal.find('.modal-body').html(data.msg);
-                                        modal.find('.modal-footer .btn-confirm').removeClass('btn-confirm').text('OK');
-
-                                        modal.find('.modal-footer .btn').unbind().on('click', function() {
-                                            return true;
-                                        });
-                                    }
-
-                                    if(data.status == '1') {
-                                        $(form).find('input[type=password]').val('');
-                                    }
-
-                                    if(data.status == '2') {
-                                        modal.find('.modal-footer').prepend("<span class='invalid-field'>Senha inválida</span>");
-                                    }
-                                }
-                            });
-
-                            return false;
-                        });
-                    }
-                });
             }
         });
+    });
+
+    $('#form-store-config').validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 1,
+                maxlength: 200
+            },
+            email: {
+                required: true,
+                minlength: 1,
+                maxlength: 100,
+                email: true
+            },
+            slug: {
+                required: true,
+                minlength: 1,
+                maxlength: 200
+            },
+            cep: {
+                required: true,
+                minlength: 9,
+                maxlength: 10
+            },
+            street: {
+                required: true,
+                minlength: 1,
+                maxlength: 200
+            },
+            district: {
+                required: true,
+                minlength: 1,
+                maxlength: 100
+            },
+            number: {
+                required: true,
+                minlength: 1,
+                maxlength: 15
+            },
+            city: {
+                required: true,
+                minlength: 1
+            },
+            state: {
+                required: true,
+                minlength: 1
+            },
+            max_product_unit: {
+                required: true,
+                minlength: 1
+            },
+            min_parcel_price: {
+                required: true,
+                minlength: 1
+            },
+            max_parcel: {
+                required: true,
+                minlength: 1
+            },
+            phone: {
+                required: true,
+                minlength: 1
+            },
+            'operating[]': {
+                required: true,
+                minlength: 1
+            },
+            password: {
+                minlength: 8
+            },
+            password_confirmation: {
+                minlength: 8,
+                equalTo: "#password"
+            }
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass(errorClass).removeClass(validClass);
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass(errorClass).addClass(validClass);
+        },
+        errorPlacement: function(error, element) {
+        },
+        submitHandler: function(form) {
+            modalAlert("Confirme sua senha atual.<input type='password' name='current_password' placeholder='digite aqui' />", 'ENVIAR');
+
+            var modal = $('#modal-alert');
+
+            modal.find('.btn').addClass('btn-confirm');
+
+            modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
+                $(form).find('input[name=current_password]').val(modal.find('input[name=current_password]').val());
+
+                $.ajax({
+                    url: $(form).attr('action'),
+                    method: 'POST',
+                    dataType: 'json',
+                    data: $(form).serialize(),
+                    success: function (data) {
+                        modal.find('.modal-footer .invalid-field').remove();
+
+                        if(data.status == '0' || data.status == '1') {
+                            modal.find('.modal-body').html(data.msg);
+                            modal.find('.modal-footer .btn-confirm').removeClass('btn-confirm').text('OK');
+
+                            modal.find('.modal-footer .btn').unbind().on('click', function() {
+                                return true;
+                            });
+                        }
+
+                        if(data.status == '1') {
+                            $(form).find('input[type=password]').val('');
+                        }
+
+                        if(data.status == '2') {
+                            modal.find('.modal-footer').prepend("<span class='invalid-field'>Senha inválida</span>");
+                        }
+                    }
+                });
+
+                return false;
+            });
+        }
     });
 
     // Capture cep automatic
