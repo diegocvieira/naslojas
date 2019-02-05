@@ -4,17 +4,19 @@ $(function() {
 
         var status = $(this).find('.switch');
 
-        status.toggleClass('active-profile');
-
         $.ajax({
-            url: 'loja/admin/profile-status/' + (status.hasClass('active-profile') ? 1 : 0),
+            url: 'loja/admin/profile-status/' + (status.hasClass('active-profile') ? 0 : 1),
             method: 'POST',
             dataType: 'json',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-
+                if (data.status) {
+                    status.toggleClass('active-profile');
+                } else {
+                    modalAlert('Preencha os campos obrigatórios em todas as seções.');
+                }
             }
         });
     });

@@ -319,9 +319,17 @@ class StoreController extends Controller
     {
         $store = Store::find($this->store_id);
 
-        $store->status = $status;
+        if ($status == 0 || $status == 1 && $store->freights->count() == 45 && $store->operatings->count() == 6 && $store->phone && $store->cnpj && $store->max_product_unit && $store->max_parcel && $store->min_parcel_price && $store->cep && $store->district && $store->street && $store->number) {
+            $store->status = $status;
 
-        $store->save();
+            $store->save();
+
+            $return['status'] = true;
+        } else {
+            $return['status'] = false;
+        }
+
+        return json_encode($return);
     }
 
     public function deleteAccount(Request $request)

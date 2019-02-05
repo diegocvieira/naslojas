@@ -170,12 +170,12 @@
                                     <?php $accept_districts[] = $store_freight->district_id; ?>
 
                                     @if ($store_freight->district_id == $district->id)
-                                        {!! Form::text('freight_price[' . $district->id . ']', $store_freight->price, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
+                                        {!! Form::text('freight_price[' . $key . ']', $store_freight->price, ['placeholder' => ' ', 'class' => 'mask-money', 'required']) !!}
                                     @endif
                                 @endforeach
 
                                 @if (!isset($accept_districts) || !in_array($district->id, $accept_districts))
-                                    {!! Form::text('freight_price[' . $district->id . ']', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
+                                    {!! Form::text('freight_price[' . $key . ']', null, ['placeholder' => ' ', 'class' => 'mask-money', 'required']) !!}
                                 @endif
 
                                 {!! Form::label('', $district->name) !!}
