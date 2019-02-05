@@ -193,11 +193,13 @@ class StoreController extends Controller
 
     public function setConfig(Request $request)
     {
-        if ($request->section == 'store-profile') {
+        $section = $request->section;
+
+        if ($section == 'store-profile') {
             $rules = $this->storeProfileRules();
-        } else if ($request->section == 'address') {
+        } else if ($section == 'address') {
             $rules = $this->addressRules();
-        } else if ($request->section == 'access') {
+        } else if ($section == 'access') {
             $rules = $this->accessRules();
         } else {
             $rules = [];
@@ -216,95 +218,105 @@ class StoreController extends Controller
             $user = User::find($this->user_id);
 
             if (Hash::check($request->current_password, $user->password)) {
-                // Search the city
-                $city = City::whereHas('state', function ($query) use ($request) {
-                    $query->where('letter', $request->state);
-                })->where('title', 'LIKE', '%' . $request->city . '%')->select('id')->first();
+                if ($section == 'address') {
+                    // Search the city
+                    $city = City::whereHas('state', function ($query) use ($request) {
+                        $query->where('letter', $request->state);
+                    })->where('title', 'LIKE', '%' . $request->city . '%')->select('id')->first();
 
-                if (!$city) {
-                    $return['msg'] = 'Não identificamos a cidade informada.';
-                    $return['status'] = 0;
-                } else if ($city->id != 4913) {
-                    $return['msg'] = 'Em breve estaremos trabalhando na sua cidade.';
-                    $return['status'] = 0;
-                } else {
-                    $user->email = $request->email;
-
-                    if ($request->password) {
-                        $user->password = bcrypt($request->password);
-                    }
-
-                    $store = Store::find($user->store_id);
-                    $store->city_id = $city->id;
-                    $store->name = $request->name;
-                    $store->slug = str_slug($request->slug, '-');
-                    $store->cep = $request->cep;
-                    $store->street = $request->street;
-                    $store->number = $request->number;
-                    $store->complement = $request->complement;
-                    $store->district = $request->district;
-                    $store->cnpj = $request->cnpj;
-                    $store->max_product_unit = $request->max_product_unit;
-                    $store->max_parcel = $request->max_parcel;
-                    $store->phone = $request->phone;
-                    $store->min_parcel_price = number_format(str_replace(['.', ','], ['', '.'], $request->min_parcel_price), 2, '.', '');
-
-                    // Delete and insert new freights
-                    $freights = array_map(function($q, $t) {
-                        return array('id' => $q, 'price' => $t);
-                    }, $request->district_id, $request->freight_price);
-                    $store->freights()->delete();
-                    foreach ($freights as $freight) {
-                        if ($freight['price']) {
-                            $store->freights()->create([
-                                'price' => number_format(str_replace(array(".", ","), array("", "."), $freight['price']), 2, '.', ''),
-                                'district_id' => $freight['id']
-                            ]);
-                        }
-                    }
-
-                    // Delete and insert new operation hours
-                    $hours = array_map(function($q, $t) {
-                        return array('week' => $q, 'hour' => $t);
-                    }, $request->week_id, $request->operating);
-                    $store->operatings()->delete();
-                    foreach ($hours as $hour) {
-                        if ($hour['hour']) {
-                            if (strlen($hour['hour']) == 15) {
-                                $opening_morning = substr($hour['hour'], 0, 5);
-                                $closed_morning = null;
-                                $opening_afternoon = null;
-                                $closed_afternoon = substr($hour['hour'], 10, 5);
-                            }
-
-                            if (strlen($hour['hour']) == 33) {
-                                $opening_morning = substr($hour['hour'], 0, 5);
-                                $closed_morning = substr($hour['hour'], 10, 5);
-                                $opening_afternoon = substr($hour['hour'], 18, 5);
-                                $closed_afternoon = substr($hour['hour'], 28, 5);
-                            }
-
-                            $store->operatings()->create([
-                                'week' => $hour['week'],
-                                'opening_morning' => $opening_morning,
-                                'closed_morning' => $closed_morning,
-                                'opening_afternoon' => $opening_afternoon,
-                                'closed_afternoon' => $closed_afternoon
-                            ]);
-                        }
-                    }
-
-                    if ($store->save() && $user->save()) {
-                        if (Auth::guard('superadmin')->check()) {
-                            app('App\Http\Controllers\SuperadminController')->setStore($store->id);
-                        }
-
-                        $return['msg'] = 'Informações atualizadas.';
-                        $return['status'] = 1;
-                    } else {
-                        $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
+                    if (!$city) {
+                        $return['msg'] = 'Não identificamos a cidade informada.';
                         $return['status'] = 0;
+
+                        return json_encode($return);
+                    } else if ($city->id != 4913) {
+                        $return['msg'] = 'Em breve estaremos trabalhando na sua cidade.';
+                        $return['status'] = 0;
+
+                        return json_encode($return);
                     }
+                }
+
+                $user->email = $request->email;
+
+                if ($request->password) {
+                    $user->password = bcrypt($request->password);
+                }
+
+                $store = Store::find($user->store_id);
+
+                if (isset($city)) {
+                    $store->city_id = $city->id;
+                }
+
+                $store->name = $request->name;
+                $store->slug = str_slug($request->slug, '-');
+                $store->cep = $request->cep;
+                $store->street = $request->street;
+                $store->number = $request->number;
+                $store->complement = $request->complement;
+                $store->district = $request->district;
+                $store->cnpj = $request->cnpj;
+                $store->max_product_unit = $request->max_product_unit;
+                $store->max_parcel = $request->max_parcel;
+                $store->phone = $request->phone;
+                $store->min_parcel_price = $request->min_parcel_price ? number_format(str_replace(['.', ','], ['', '.'], $request->min_parcel_price), 2, '.', '') : null;
+
+                // Delete and insert new freights
+                $freights = array_map(function($q, $t) {
+                    return array('id' => $q, 'price' => $t);
+                }, $request->district_id, $request->freight_price);
+                $store->freights()->delete();
+                foreach ($freights as $freight) {
+                    if ($freight['price']) {
+                        $store->freights()->create([
+                            'price' => number_format(str_replace(array(".", ","), array("", "."), $freight['price']), 2, '.', ''),
+                            'district_id' => $freight['id']
+                        ]);
+                    }
+                }
+
+                // Delete and insert new operation hours
+                $hours = array_map(function($q, $t) {
+                    return array('week' => $q, 'hour' => $t);
+                }, $request->week_id, $request->operating);
+                $store->operatings()->delete();
+                foreach ($hours as $hour) {
+                    if ($hour['hour']) {
+                        if (strlen($hour['hour']) == 15) {
+                            $opening_morning = substr($hour['hour'], 0, 5);
+                            $closed_morning = null;
+                            $opening_afternoon = null;
+                            $closed_afternoon = substr($hour['hour'], 10, 5);
+                        }
+
+                        if (strlen($hour['hour']) == 33) {
+                            $opening_morning = substr($hour['hour'], 0, 5);
+                            $closed_morning = substr($hour['hour'], 10, 5);
+                            $opening_afternoon = substr($hour['hour'], 18, 5);
+                            $closed_afternoon = substr($hour['hour'], 28, 5);
+                        }
+
+                        $store->operatings()->create([
+                            'week' => $hour['week'],
+                            'opening_morning' => $opening_morning,
+                            'closed_morning' => $closed_morning,
+                            'opening_afternoon' => $opening_afternoon,
+                            'closed_afternoon' => $closed_afternoon
+                        ]);
+                    }
+                }
+
+                if ($store->save() && $user->save()) {
+                    if (Auth::guard('superadmin')->check()) {
+                        app('App\Http\Controllers\SuperadminController')->setStore($store->id);
+                    }
+
+                    $return['msg'] = 'Informações atualizadas.';
+                    $return['status'] = 1;
+                } else {
+                    $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
+                    $return['status'] = 0;
                 }
             } else {
                 $return['msg'] = 'A sua senha atual não confere.';
