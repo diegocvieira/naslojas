@@ -12,7 +12,7 @@ class Product extends Model
     use SoftDeletes;
 
     protected $table = 'products';
-    protected $fillable = ['store_id', 'title', 'slug', 'description', 'price', 'old_price', 'status', 'installment', 'gender', 'installment_price', 'related'];
+    protected $fillable = ['store_id', 'title', 'slug', 'description', 'price', 'old_price', 'status', 'gender', 'related'];
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     protected $searchable = ['title', 'identifier'];
 
@@ -72,11 +72,6 @@ class Product extends Model
 	        $builder->whereHas('store', function ($builder) {
 	        	$builder->where('status', 1);
 	        });
-	    });
-
-        static::addGlobalScope('orderby-reserve', function(Builder $builder) {
-            $builder->orderBy('reserve', 'DESC')
-                ->orderBy('reserve_discount', 'DESC');
 	    });
 	}
 }

@@ -193,9 +193,19 @@ class StoreController extends Controller
 
     public function setConfig(Request $request)
     {
+        if ($request->section == 'store-profile') {
+            $rules = $this->storeProfileRules();
+        } else if ($request->section == 'address') {
+            $rules = $this->addressRules();
+        } else if ($request->section == 'access') {
+            $rules = $this->accessRules();
+        } else {
+            $rules = [];
+        }
+
         $validator = Validator::make(
             $request->all(),
-            $this->storeEditRules(),
+            $rules,
             app('App\Http\Controllers\GlobalController')->customMessages()
         );
 
@@ -331,24 +341,36 @@ class StoreController extends Controller
         return json_encode($return);
     }
 
-    private function storeEditRules()
+    private function storeProfileRules()
     {
         return [
             'slug' => 'required|max:200|unique:stores,slug,' . $this->store_id,
-            'email' => 'required|max:100|unique:users,email,' . $this->user_id,
             'name' => 'required|max:200',
-            'password' => 'confirmed',
-            'cep' => 'required|max:10',
-            'street' => 'required|max:200',
-            'district' => 'required|max:100',
-            'number' => 'required|max:15',
-            'city' => 'required',
-            'state' => 'required',
             'max_product_unit' => 'numeric',
             'max_parcel' => 'numeric',
             'min_parcel_price' => 'required',
             'phone' => 'required|max:15',
             'cnpj' => 'required|max:18'
+        ];
+    }
+
+    private function addressRules()
+    {
+        return [
+            'cep' => 'required|max:10',
+            'street' => 'required|max:200',
+            'district' => 'required|max:100',
+            'number' => 'required|max:15',
+            'city' => 'required',
+            'state' => 'required'
+        ];
+    }
+
+    private function accessRules()
+    {
+        return [
+            'email' => 'required|max:100|unique:users,email,' . $this->user_id,
+            'password' => 'confirmed'
         ];
     }
 }

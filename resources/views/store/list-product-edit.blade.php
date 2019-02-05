@@ -37,9 +37,6 @@
                 <button type="button" class="paste-data" title="Colar dados"></button>
                 <button type="button" class="copy-data" title="Copiar dados"></button>
 
-                <button type="button" class="disable-reserve {{ $product->reserve == 1 ? 'hidden' : '' }}" data-productid="{{ $product->id }}" data-url="{{ route('reserve-enable') }}" title="Habilitar reserva"></button>
-                <button type="button" class="enable-reserve disabled {{ $product->reserve == 0 ? 'hidden' : '' }}" data-productid="{{ $product->id }}" data-url="{{ route('reserve-disable') }}" title="Desabilitar reserva"></button>
-
                 @if ($product->status == 1)
                     <a href="{{ route('show-product', $product->slug) }}" target="_blank" title="Ver produto"></a>
                 @endif
@@ -55,11 +52,6 @@
                 {!! Form::label('', 'Título do produto * (A busca é feita com base nas palavras escritas aqui)') !!}
             </div>
 
-            <div class="form-group">
-                {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
-                {!! Form::label('', 'Preço atual *') !!}
-            </div>
-
             <div class="form-group gender">
                 {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker field']) !!}
                 {!! Form::label('', 'Gênero *', ['style' => (isset($product) && $product->gender) ? 'display: block;' : '']) !!}
@@ -73,23 +65,13 @@
             </div>
 
             <div class="form-group">
+                {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
+                {!! Form::label('', 'Preço atual *') !!}
+            </div>
+
+            <div class="form-group">
                 {!! Form::text('old_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
                 {!! Form::label('', 'Preço anterior') !!}
-            </div>
-
-            <div class="form-group">
-                {!! Form::text('installment', null, ['placeholder' => ' ', 'class' => 'mask-x field']) !!}
-                {!! Form::label('', 'Parcelamento') !!}
-            </div>
-
-            <div class="form-group">
-                {!! Form::text('reserve_discount', null, ['placeholder' => ' ', 'class' => 'mask-percent field']) !!}
-                {!! Form::label('', 'Desconto na reserva') !!}
-            </div>
-
-            <div class="form-group">
-                {!! Form::text('installment_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
-                {!! Form::label('', 'Valor da parcela') !!}
             </div>
         </div>
 

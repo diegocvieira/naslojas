@@ -142,9 +142,6 @@ Route::group(['prefix' => 'loja'], function () {
 			Route::post('disable', 'ProductController@disable')->name('product-disable');
 			Route::post('enable', 'ProductController@enable')->name('product-enable');
 
-			Route::post('reserve-disable', 'ProductController@reserveDisable')->name('reserve-disable');
-			Route::post('reserve-enable', 'ProductController@reserveEnable')->name('reserve-enable');
-
 			Route::post('color-variation', 'ProductController@colorVariation')->name('color-variation');
 
 			Route::post('delete', 'ProductController@delete')->name('product-delete');

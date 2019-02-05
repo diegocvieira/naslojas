@@ -9,27 +9,15 @@ $(function() {
         }
     });
 
-    $(document).on('blur', 'input[name=installment], input[name=installment_price], input[name=price], input[name=old_price]', function() {
+    $(document).on('blur', 'input[name=price], input[name=old_price]', function() {
         var form = $(this).parents('.form-edit-product'),
             price = parseFloat(form.find('input[name=price]').val().replace('.', '').replace(',', '.')),
             old_price = parseFloat(form.find('input[name=old_price]').val().replace('.', '').replace(',', '.'));
-            installment = form.find('input[name=installment]').val().replace('x', '');
-            installment_price = parseFloat(form.find('input[name=installment_price]').val().replace('.', '').replace(',', '.'));
-
-        if (price && installment && !installment_price) {
-            form.find('input[name=installment_price]').val(number_format(price / installment, 2, ',', '.'));
-        }
 
         if (price && old_price && price > old_price) {
             form.find('input[name=old_price]').addClass('validate-error');
         } else {
             form.find('input[name=old_price]').removeClass('validate-error');
-        }
-
-        if (price && installment && installment_price && (installment * installment_price) < price) {
-            form.find('input[name=installment_price]').addClass('validate-error');
-        } else {
-            form.find('input[name=installment_price]').removeClass('validate-error');
         }
     });
 
@@ -54,29 +42,6 @@ $(function() {
                 if (data.status) {
                     $this.parent().find('.enable-product, .disable-product').toggleClass('hidden');
                     $this.parents('.form-edit-product').toggleClass('product-disabled');
-                } else {
-                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
-                }
-            }
-        });
-    });
-
-    $(document).on('click', '.disable-reserve, .enable-reserve', function(e) {
-        e.preventDefault();
-
-        var $this = $(this);
-
-        $.ajax({
-            url: $this.data('url'),
-            method: 'POST',
-            dataType: 'json',
-            data: { id : $this.data('productid') },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (data) {
-                if (data.status) {
-                    $this.parent().find('.enable-reserve, .disable-reserve').toggleClass('hidden');
                 } else {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }

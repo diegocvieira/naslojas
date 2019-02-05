@@ -259,10 +259,6 @@
                         background-image: url('../images/icon-hide.png');
                         height: 20px;
                     }
-
-                    &.disable-reserve, &.enable-reserve {
-                        background-image: url('../images/icon-reserve.png');
-                    }
                 }
 
                 a {
@@ -378,12 +374,12 @@
                 }
 
                 &.title {
-                    width: 65%;
+                    width: 82%;
                     margin-left: 0;
                 }
 
                 &.description {
-                    width: 65%;
+                    width: 82%;
                     height: 90px;
                     margin-left: 0;
 

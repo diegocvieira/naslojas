@@ -308,13 +308,10 @@ class ProductController extends Controller
 
                         $product->title = $request->title;
                         $product->price = number_format(str_replace(['.', ','], ['', '.'], $request->price), 2, '.', '');
-                        $product->installment = $request->installment ? str_replace('x', '', $request->installment) : null;
                         $product->gender = $request->gender;
                         $product->old_price = $request->old_price ? number_format(str_replace(['.', ','], ['', '.'], $request->old_price), 2, '.', '') : null;
-                        $product->installment_price = $request->installment_price ? number_format(str_replace(['.', ','], ['', '.'], $request->installment_price), 2, '.', '') : null;
                         $product->slug = str_slug($product->title, '-');
                         $product->description = $request->description;
-                        $product->reserve_discount = $request->reserve_discount ? str_replace('%', '', $request->reserve_discount) : null;
 
                         // check if slug already exists and add dash in the end
                         $NUM_OF_ATTEMPTS = 10;
@@ -453,13 +450,10 @@ class ProductController extends Controller
 
                 $product->title = $request->title;
                 $product->price = number_format(str_replace(['.', ','], ['', '.'], $request->price), 2, '.', '');
-                $product->installment = $request->installment ? str_replace('x', '', $request->installment) : null;
                 $product->gender = $request->gender;
                 $product->old_price = $request->old_price ? number_format(str_replace(['.', ','], ['', '.'], $request->old_price), 2, '.', '') : null;
-                $product->installment_price = $request->installment_price ? number_format(str_replace(['.', ','], ['', '.'], $request->installment_price), 2, '.', '') : null;
                 $product->slug = str_slug($product->title, '-');
                 $product->description = $request->description;
-                $product->reserve_discount = $request->reserve_discount ? str_replace('%', '', $request->reserve_discount) : null;
 
                // check if slug already exists and add dash in the end
                 $NUM_OF_ATTEMPTS = 10;
@@ -658,69 +652,6 @@ class ProductController extends Controller
         return json_encode($return);
     }
 
-    public function reserveEnable(Request $request)
-    {
-
-        if (is_array($request->id)) {
-            foreach ($request->id as $i) {
-                $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                    ->where('store_id', $this->store_id)
-                    ->where('id', $i)
-                    ->first();
-
-                $product->reserve = 1;
-                $save = $product->save();
-            }
-        } else {
-            $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                ->where('store_id', $this->store_id)
-                ->where('id', $request->id)
-                ->first();
-
-            $product->reserve = 1;
-            $save = $product->save();
-        }
-
-        if ($save) {
-            $return['status'] = true;
-        } else {
-            $return['status'] = false;
-        }
-
-        return json_encode($return);
-    }
-
-    public function reserveDisable(Request $request)
-    {
-        if (is_array($request->id)) {
-            foreach ($request->id as $i) {
-                $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                    ->where('store_id', $this->store_id)
-                    ->where('id', $i)
-                    ->first();
-
-                $product->reserve = 0;
-                $save = $product->save();
-            }
-        } else {
-            $product = Product::withoutGlobalScopes(['active', 'active-store'])
-                ->where('store_id', $this->store_id)
-                ->where('id', $request->id)
-                ->first();
-
-            $product->reserve = 0;
-            $save = $product->save();
-        }
-
-        if ($save) {
-            $return['status'] = true;
-        } else {
-            $return['status'] = false;
-        }
-
-        return json_encode($return);
-    }
-
     public function colorVariation(Request $request)
     {
         foreach ($request->ids as $id) {
@@ -737,7 +668,7 @@ class ProductController extends Controller
 
     public function verifyVariation()
     {
-        $relateds = Product::withoutGlobalScopes(['orderby-reserve', 'active', 'active-store'])
+        $relateds = Product::withoutGlobalScopes(['active', 'active-store'])
             ->select('related')
             ->groupBy('related')
             ->havingRaw('count(*) = 1')

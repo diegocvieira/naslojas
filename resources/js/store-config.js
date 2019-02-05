@@ -85,6 +85,10 @@ $(function() {
                 required: true,
                 minlength: 1
             },
+            'freight_price[]': {
+                required: true,
+                minlength: 1
+            },
             password: {
                 minlength: 8
             },
