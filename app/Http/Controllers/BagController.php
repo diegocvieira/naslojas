@@ -315,14 +315,12 @@ class BagController extends Controller
 
 
 
-
-
         if (count($hours) > 1) {
             // Get the first and last hour
             foreach ($hours as $hour) {
                 foreach ($hour as $week) {
-                    $first_value[] = substr(reset($week), 18, 5);
-                    $last_value[] = substr(end($week), 18, 5);
+                    $first_value[] = substr(reset($week), 23, 5);
+                    $last_value[] = substr(end($week), 23, 5);
                 }
             }
 
@@ -333,7 +331,7 @@ class BagController extends Controller
             foreach ($hours as $key => $hour) {
                 foreach ($hour as $key2 => $week) {
                     foreach($week as $key3 => $time) {
-                        if (substr($time, 18, 5) == $min || substr($time, 18, 5) == $max) {
+                        if (substr($time, 23, 5) == $min || substr($time, 23, 5) == $max) {
                             unset($hours[$key][$key2][$key3]);
                         }
                     }
