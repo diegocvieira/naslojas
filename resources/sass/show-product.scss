@@ -334,6 +334,10 @@
                 width: 390px;
                 left: 0;
 
+                ul {
+                    max-height: 376px !important;
+                }
+
                 .bs-searchbox {
                     padding: 10px;
 

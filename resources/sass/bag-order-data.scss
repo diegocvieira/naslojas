@@ -1,0 +1,213 @@
+.page-bag-order-data {
+    .header-bag {
+        float: left;
+        width: 100%;
+        margin-top: 30px;
+
+        h1 {
+            font-size: 25px;
+            color: #000;
+            font-weight: 700;
+            display: block;
+        }
+
+        p {
+            font-size: 14.5px;
+            color: rgb(100, 100, 100);
+            float: left;
+            margin: 0;
+        }
+
+        .keep-buying {
+            font-size: 14.5px;
+            color: rgb(122, 184, 236);
+            float: right;
+        }
+    }
+
+    input[type=submit] {
+        font-size: 14.5px;
+        color: #fff;
+        font-weight: 700;
+        background-color: rgb(255, 23, 68);
+        width: 300px;
+        height: 40px;
+        display: inline-block;
+        border: none;
+        border-radius: 25px;
+    }
+
+    .fields {
+        label {
+            display: block;
+            padding: 25px 20px 25px 0;
+            font-size: 14.5px;
+            color: rgb(50, 50, 50);
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .col-xs-9 {
+            padding-right: 130px;
+
+            input {
+                border-radius: 5px;
+                background-color: rgb(245, 245, 245);
+                float: left;
+                width: 100%;
+                height: 45px;
+                font-size: 14.5px;
+                color: rgb(50, 50, 50);
+                border: none;
+                padding-left: 20px;
+                margin: 15px 0;
+
+                &#client {
+                    background-color: transparent;
+                    color: rgb(150, 150, 150);
+                }
+            }
+
+            .bootstrap-select {
+                margin: 0 0 15px 0 !important;
+                width: 100% !important;
+                float: left;
+
+                &.open .dropdown-toggle {
+                    border-radius: 5px 5px 0 0;
+                    background-color: rgb(245, 245, 245);
+                    color: rgb(100, 100, 100);
+                }
+
+                .dropdown-toggle {
+                    background-color: rgb(245, 245, 245);
+                    height: 40px;
+                    border: none;
+                    border-radius: 5px;
+                    padding-left: 20px;
+                    box-shadow: none;
+                    color: rgb(50, 50, 50);
+                    font-size: 14.5px;
+                    outline: none !important;
+
+                    &:hover {
+                        color: rgb(50, 50, 50);
+                    }
+
+                    &[title='Bairro'], &[title='Agendar para'] {
+                        &, &:hover, &:focus, &:active {
+                            color: #969696;
+                        }
+                    }
+                }
+
+                .dropdown-menu {
+                    background-color: rgb(245, 245, 245) !important;
+                    border-radius: 0 0 5px 5px;
+                    top: 34px;
+                    box-shadow: none;
+                    border: none;
+                    padding: 0;
+
+                    a {
+                        padding: 8px 20px;
+                        color: rgb(100, 100, 100);
+                        font-size: 14.5px;
+
+                        &:hover {
+                            background-color: rgb(230, 230, 230);
+                        }
+                    }
+                }
+            }
+
+            &.buttons {
+                input {
+                    display: none;
+
+                    &:checked + label {
+                        background-color: rgb(122, 184, 236);
+                        color: #fff;
+                        font-weight: 700;
+                    }
+
+                    &#freight-store + label {
+                        margin-left: 6%;
+                    }
+                }
+
+                label {
+                    font-size: 14.5px;
+                    color: rgb(150, 150, 150);
+                    background-color: rgb(245, 245, 245);
+                    width: 47%;
+                    height: 45px;
+                    float: left;
+                    border-radius: 25px;
+                    text-align: center;
+                    cursor: pointer;
+                    line-height: 3;
+                    padding: 0;
+                    margin-top: 15px;
+                    font-weight: normal;
+                }
+            }
+        }
+
+        .payment .buttons {
+            label {
+                width: 29%;
+            }
+
+            #payment-debit + label, #payment-money + label {
+                margin-left: 6%;
+            }
+        }
+
+        .address {
+            margin-top: 15px;
+
+            label {
+                padding-top: 10px;
+            }
+
+            input {
+                margin: 0 0 15px 0;
+            }
+
+            .half {
+                width: 48%;
+            }
+
+            .margin {
+                margin-left: 4%;
+            }
+        }
+    }
+
+    .orders {
+        .order {
+            border-bottom: 1px solid rgb(230, 230, 230);;
+            float: left;
+            width: 100%;
+            padding: 50px 100px;
+            background-color: rgb(250, 250, 250);
+
+            .order-number {
+                display: block;
+                font-size: 14.5px;
+                color: rgb(122, 184, 236);
+                font-weight: 700;
+                padding: 5px 15px;
+            }
+
+            .item {
+                font-size: 16.6px;
+                color: #000;
+                font-weight: 700;
+                display: block;
+                padding: 5px 0;
+            }
+        }
+    }
+}

@@ -139,3 +139,39 @@ function _uploadImage($file, $store_id)
 
     return $images[248];
 }
+
+function _businessDay($date = null)
+{
+    if (!$date) {
+        $date = date('Y-m-d');
+    }
+
+    $week = date('w', strtotime($date));
+
+    if ($week == 6 || $week == 0) {
+        return _businessDay(date('Y-m-d', strtotime($date . ' + 1 day')));
+    } else {
+        return $date;
+    }
+}
+
+function _weekAbbreviation($week)
+{
+    switch ($week) {
+        case 1:
+            $week = 'Seg.';
+            break;
+        case 2:
+            $week = 'Ter.';
+            break;
+        case 3:
+            $week = 'Qua.';
+        case 4:
+            $week = 'Qui.';
+            break;
+        case 5:
+            $week = 'Sex.';
+    }
+
+    return $week;
+}

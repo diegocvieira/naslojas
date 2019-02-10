@@ -71,7 +71,7 @@ class Handler extends ExceptionHandler
         // Check request and redirect to appropriate login route
         if ($request->is('loja/admin/*')) {
             return redirect()->guest('loja/login');
-        } else if ($request->is('cliente/admin/*')) {
+        } else if ($request->is('cliente/admin/*') || $request->is('sacola/*')) {
             return redirect()->guest('cliente/login');
         } else {
             return redirect()->guest('/');

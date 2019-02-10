@@ -92,7 +92,12 @@
     <div class="freights-container">
         <span class="freight-selected">Entrega a partir de 2hs em toda a cidade</span>
 
-        {!! Form::select('freight', ['0.00' => 'Retirar na loja'] + $product->store->freights->pluck('district.name', 'price')->all(), null, ['title' => 'Calcular frete', 'class' => 'freights selectpicker', 'autocomplete' => 'off', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Pesquise aqui']) !!}
+        <select title="Calcular frete" class="freights selectpicker" autocomplete="off" data-live-search="true" data-live-search-placeholder="Pesquise aqui">
+            <option value="0.00">Retirar na loja</option>
+            @foreach ($product->store->freights as $store_freight)
+                <option value="{{ $store_freight->price }}">{{ $store_freight->district->name }}</option>
+            @endforeach
+        </select>
     </div>
 
     <div class="qtd-container">

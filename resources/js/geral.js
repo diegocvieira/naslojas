@@ -26,6 +26,46 @@ $(function() {
         }
     });
 
+    // Capture cep
+    $(document).on('blur', '#cep', function() {
+        var cep_original = this.value;
+        var cep = this.value.replace(/\D/g,'');
+        var url = "https://viacep.com.br/ws/" + cep + "/json/";
+
+        if(cep.length != 8) {
+            modalAlert('Não identificamos o CEP que você informou, verifique se digitou corretamente.');
+
+            return false;
+        }
+
+        $.getJSON(url, function(data) {
+            if (data.erro == true) {
+                $('#street').val('');
+                $('#district').val('');
+                $('#city').val('');
+                $('#state').val('');
+
+                modalAlert('Não identificamos o CEP que você informou, verifique se digitou corretamente.');
+            } else {
+                $('#street').val(data.logradouro);
+                $('#district').val(data.bairro);
+                $('#city').val(data.localidade);
+                $('#state').val(data.uf);
+
+                data.bairro != '' ? $("#number").focus() : $("#district").focus();
+            }
+        }).fail(function() {
+            modalAlert('Houve um erro ao identificar o seu CEP. Entre em contato conosco.');
+
+            return false;
+        });
+    });
+    $(document).on('keyup', '#cep', function(e) {
+        if(this.value.length == 9){
+            $('#cep').trigger('blur');
+        }
+    });
+
     // Alert app
     $(document).on('click', '.show-app', function (e) {
         e.preventDefault();
@@ -666,6 +706,8 @@ $(function() {
             }
         });
     });
+
+    
 });
 
 function updateBagInfos() {

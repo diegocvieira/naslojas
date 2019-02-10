@@ -36,7 +36,7 @@
 
             <a href="{{ route('bag-products') }}">VER SACOLA</a>
 
-            <a href="#" class="close-order">FECHAR PEDIDO</a>
+            <a href="{{ route('bag-data') }}" class="close-order">FECHAR PEDIDO</a>
         </div>
     @else
         <div class="no-results">

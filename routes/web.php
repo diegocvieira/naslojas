@@ -284,4 +284,8 @@ Route::group(['prefix' => 'sacola'], function () {
 	Route::get('change-size/{product_id}/{size}', 'BagController@changeSize')->name('bag-change-size');
 
 	Route::get('produtos', 'BagController@products')->name('bag-products');
+
+	Route::group(['middleware' => 'auth:client'], function () {
+		Route::get('dados', 'BagController@data')->name('bag-data');
+	});
 });
