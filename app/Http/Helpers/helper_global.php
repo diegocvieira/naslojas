@@ -155,9 +155,11 @@ function _businessDay($date = null)
     }
 }
 
-function _weekAbbreviation($week)
+function _weekAbbreviation($date)
 {
-    switch ($week) {
+    $date = date('w', strtotime($date));
+
+    switch ($date) {
         case 1:
             $week = 'Seg.';
             break;

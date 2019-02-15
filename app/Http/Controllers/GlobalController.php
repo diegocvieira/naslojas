@@ -86,7 +86,11 @@ class GlobalController extends Controller
             'phone.required' => 'Informe o número de telefone.',
             'phone.max' => 'O telefone deve ter no máximo 15 caracteres',
             'cnpj.required' => 'Informe o CNPJ.',
-            'cnpj.max' => 'O CNPJ deve ter no máximo 18 caracteres.'
+            'cnpj.max' => 'O CNPJ deve ter no máximo 18 caracteres.',
+            'cpf.required' => 'Informe o CPF',
+            'cpf.max' => 'O CPF deve ter no máximo 15 caracteres.',
+            'freight.required' => 'Informe o tipo de reserva.',
+            'reserve_date' => 'Informe o horário de entrega'            
         ];
     }
 }

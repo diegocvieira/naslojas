@@ -3,6 +3,7 @@ $(function() {
 
     $('.mask-week').mask('00:00 às 00:00 e 00:00 às 00:00', {reverse: false});
     $('#cep').mask('00000-000', {reverse: false, clearIfNotMatch: true});
+    $('.mask-cpf').mask('000.000.000-00', {reverse: true, clearIfNotMatch: true});
     $('.mask-cnpj').mask('00.000.000/0000-00', {reverse: true, clearIfNotMatch: true});
     var SPMaskBehavior = function (val) {
         return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
@@ -588,6 +589,27 @@ $(function() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     $(document).click(function(event) {
         if (!$(event.target).closest('header').find('.bag').length && $('header').find('.bag').is(':visible')) {
             $('header').find('.bag').remove();
@@ -630,9 +652,6 @@ $(function() {
                 },
                 method: 'POST',
                 dataType: 'json',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
                 success: function (data) {
                     if (redirect) {
                         //window.location = '/sacola/produtos';
@@ -707,7 +726,114 @@ $(function() {
         });
     });
 
-    
+    $(document).on('change', '.page-bag-order-data input[name=freight]', function() {
+        $('.freight-field, .text-freight').hide();
+
+        if ($(this).val() == '0') {
+            $('.freight-house, .text-freight-house').show();
+
+            $('.custom-validate').each(function() {
+                $(this).rules('add', {
+                    required: true,
+                    minlength: 1,
+                });
+            });
+        } else {
+            $('.freight-store, .text-freight-store').show();
+
+            $('.custom-validate').each(function() {
+                $(this).rules('remove');
+            });
+        }
+    });
+
+    $(document).on('change', '.page-bag-order-data select[name=district]', function() {
+        $.ajax({
+            url: 'sacola/change-district/' + $(this).val(),
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('.update-freight').each(function(index) {
+                    var freight = parseFloat(data.freights[index].price),
+                        subtotal = parseFloat($(this).parent().find('.update-subtotal').data('subtotal'));
+
+                    // Freight
+                    $(this).text(freight > 0 ? 'R$ ' + number_format(freight, 2, ',', '.') : 'grátis');
+
+                    // Subtotal
+                    $(this).parent().find('.update-subtotal').text('R$ ' + number_format(subtotal + freight, 2, ',', '.'));
+                });
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+    });
+
+    $('#form-bag-finish').validate({
+        ignore: ['input[type=radio]'],
+        rules: {
+            phone: {
+                required: true,
+                minlength: 1,
+                maxlength: 200
+            },
+            cpf: {
+                required: true,
+                minlength: 1,
+                maxlength: 100
+            },
+            freight: {
+                required: true,
+                minlength: 1,
+                maxlength: 100
+            }
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass(errorClass).removeClass(validClass);
+
+            if ($(element).attr('type') == 'radio') {
+                $(element).parent().find('label').addClass('validate-error');
+            }
+
+            if ($(element).hasClass('selectpicker')) {
+                $(element).prev().prev().addClass('validate-error');
+            }
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass(errorClass).addClass(validClass);
+
+            if ($(element).attr('type') == 'radio') {
+                $(element).parent().find('label').removeClass('validate-error');
+            }
+
+            if ($(element).hasClass('selectpicker')) {
+                $(element).prev().prev().removeClass('validate-error');
+            }
+        },
+        errorPlacement: function(error, element) {
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                url: $(form).attr('action'),
+                method: 'POST',
+                dataType: 'json',
+                data: $(form).serialize(),
+                success: function (data) {
+                    if (data.status) {
+                        window.location = data.route;
+                    } else {
+                        modalAlert(data.msg);
+                    }
+                },
+                error: function (request, status, error) {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
+            });
+
+            return false;
+        }
+    });
 });
 
 function updateBagInfos() {
@@ -734,10 +860,10 @@ function number_format(numero, decimal, decimal_separador, milhar_separador) {
 
    // Fix para IE: parseFloat(0.55).toFixed(0) = 0;
    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-   if(s[0].length > 3) {
+   if (s[0].length > 3) {
        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
    }
-   if((s[1] || '').length < prec) {
+   if ((s[1] || '').length < prec) {
        s[1] = s[1] || '';
        s[1] += new Array(prec - s[1].length + 1).join('0');
    }

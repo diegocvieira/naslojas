@@ -287,5 +287,11 @@ Route::group(['prefix' => 'sacola'], function () {
 
 	Route::group(['middleware' => 'auth:client'], function () {
 		Route::get('dados', 'BagController@data')->name('bag-data');
+
+		Route::get('change-district/{id}', 'BagController@changeDistrict')->name('bag-change-district');
+
+		Route::post('finish', 'BagController@finish')->name('bag-finish');
+
+		Route::get('sucesso/{id}', 'BagController@success')->name('bag-success');
 	});
 });

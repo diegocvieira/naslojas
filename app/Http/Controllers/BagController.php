@@ -7,8 +7,12 @@ use App\Product;
 use App\Store;
 use App\Client;
 use App\District;
+use App\Order;
+use App\City;
+use App\OrderProducts;
 use Session;
 use Auth;
+use Validator;
 
 class BagController extends Controller
 {
@@ -125,6 +129,21 @@ class BagController extends Controller
         return json_encode(true);
     }
 
+    public function changeDistrict($district_id)
+    {
+        foreach (session('bag')['stores'] as $store) {
+            $store_ids[] = $store['store_id'];
+        }
+
+        $stores = Store::find($store_ids);
+
+        foreach ($stores as $store) {
+            $freights[] = $store->freights->where('district_id', $district_id)->first();
+        }
+
+        return json_encode(['freights' => $freights]);
+    }
+
     public function products()
     {
         if (Session::has('bag')) {
@@ -158,164 +177,134 @@ class BagController extends Controller
             return redirect()->route('home');
         }
 
-        $today = time();
+        $client = Client::find(Auth::guard('client')->user()->id);
 
-        $date1 = _businessDay();
-        $week1 = date('w', strtotime($date1));
-        $date1_formatted = date('d/m/Y', strtotime($date1));
-        $week_text1 = _weekAbbreviation($week1);
+        $districts = District::pluck('name', 'id');
 
-        if (date('w') != 6 && date('w') != 0) {
-            $date2 = _businessDay(date('Y-m-d', strtotime($date1 . ' + 1 day')));
-            $week2 = date('w', strtotime($date2));
-            $date2_formatted = date('d/m/Y', strtotime($date2));
-            $week_text2 = _weekAbbreviation($week2);
-        } else {
-            $week2 = null;
-        }
+        $header_title = 'Dados do pedido | naslojas.com';
 
+        for ($i = 1; $i <= 2; $i++) {
+            $valid_date = $i == 1 ? _businessDay() : _businessDay(date('Y-m-d', strtotime($valid_date . ' + 1 day')));
 
+            $date = _weekAbbreviation($valid_date) . ' ' . date('d/m/Y', strtotime($valid_date)) . ' entre ';
 
+            $reserve_hours[$date . '10:00 e 11:00'] = $date . '10:00 e 11:00';
+            $reserve_hours[$date . '11:00 e 12:00'] = $date . '11:00 e 12:00';
+            $reserve_hours[$date . '12:00 e 13:00'] = $date . '12:00 e 13:00';
+            $reserve_hours[$date . '13:00 e 14:00'] = $date . '13:00 e 14:00';
+            $reserve_hours[$date . '14:00 e 15:00'] = $date . '14:00 e 15:00';
+            $reserve_hours[$date . '15:00 e 16:00'] = $date . '15:00 e 16:00';
+            $reserve_hours[$date . '16:00 e 17:00'] = $date . '16:00 e 17:00';
+            $reserve_hours[$date . '17:00 e 18:00'] = $date . '17:00 e 18:00';
+            $reserve_hours[$date . '18:00 e 19:00'] = $date . '18:00 e 19:00';
 
-
-
-
-
-
-
-
-
-
-
-
-
-        foreach (session('bag')['stores'] as $store_key => $s) {
-            $store = Store::find($s['store_id']);
-
-            $bag_data[$store_key]['freight'] = 0;
-            $bag_data[$store_key]['store'] = $store->name;
-            $bag_data[$store_key]['city'] = $store->city->title;
-            $bag_data[$store_key]['state'] = $store->city->state->letter;
-            $bag_data[$store_key]['street'] = $store->street;
-            $bag_data[$store_key]['district'] = $store->district;
-            $bag_data[$store_key]['number'] = $store->number;
-            $bag_data[$store_key]['complement'] = $store->complement;
-
-
-
-
-
-
-
-
-
-
-
-
-
-                foreach ($store->operatings as $operating_key => $operating) {
-                    if ($operating->week == $week1 || $operating->week == $week2) {
-                        // Add 30 minutes to opening hour
-                        $opening_morning = date('H:i', strtotime($operating->opening_morning . ' + 30 minute'));
-                        // Add 30 minutes to closed hour
-                        $closed_afternoon = date('H:i', strtotime($operating->closed_afternoon . ' - 30 minute'));
-
-                        $z = 0;
-                        $i = 0;
-                        $attempts = true;
-
-                        if ($operating->closed_morning) {
-                            // CALCULATE MORNING HOURS
-                            do {
-                                $generate_hour = date('H:i', strtotime($opening_morning . ' + ' . $i . ' hour'));
-                                $generate_hour2 = date('H:i', strtotime($generate_hour . ' + 1 hour'));
-
-                                if (strtotime($generate_hour) && strtotime($generate_hour) >= strtotime($opening_morning) && strtotime($generate_hour) <= strtotime($operating->closed_morning) && strtotime($generate_hour2) <= strtotime($operating->closed_morning)) {
-
-                                    if (strtotime($today) < strtotime($opening_morning) || strtotime($today) >= strtotime($opening_morning) && strtotime($today) <= strtotime($generate_hour)) {
-                                        $hours[$store_key][$operating_key][$z] = ($operating->week == $week1 ? ($week_text1 . ' ' . $date1_formatted) : ($week_text2 . ' ' . $date2_formatted)) . ' entre ' . $generate_hour . ' e ' . $generate_hour2;
-
-                                        $z++;
-                                    }
-
-                                    $i++;
-                                } else {
-                                    $attempts = false;
-                                }
-                            } while ($attempts == true);
-
-                            // CALCULATE AFTERNOON HOURS
-                            $i = 0;
-                            $attempts = true;
-
-                            do {
-                                $generate_hour = date('H:i', strtotime($operating->opening_afternoon . ' + ' . $i . ' hour'));
-                                $generate_hour2 = date('H:i', strtotime($generate_hour . ' + 1 hour'));
-
-                                if (strtotime($generate_hour) && strtotime($generate_hour) >= strtotime($operating->opening_afternoon) && strtotime($generate_hour) <= strtotime($closed_afternoon) && strtotime($generate_hour2) <= strtotime($closed_afternoon)) {
-                                    if (strtotime($today) < strtotime($operating->opening_afternoon) || strtotime($today) >= strtotime($operating->opening_afternoon) && strtotime($today) <= strtotime($generate_hour)) {
-                                        $hours[$store_key][$operating_key][$z] = ($operating->week == $week1 ? ($week_text1 . ' ' . $date1_formatted) : ($week_text2 . ' ' . $date2_formatted)) . ' entre ' . $generate_hour . ' e ' . $generate_hour2;
-
-                                        $z++;
-                                    }
-
-                                    $i++;
-                                } else {
-                                    $attempts = false;
-                                }
-                            } while ($attempts == true);
-                        } else {
-                            // CALCULATE MORNING TO AFTERNOON HOUR
-                            do {
-                                $generate_hour = date('H:i', strtotime($opening_morning . ' + ' . $i . ' hour'));
-                                $generate_hour2 = date('H:i', strtotime($generate_hour . ' + 1 hour'));
-
-                                if (strtotime($generate_hour) && strtotime($generate_hour) >= strtotime($opening_morning) && strtotime($generate_hour) <= strtotime($closed_afternoon) && strtotime($generate_hour2) <= strtotime($closed_afternoon)) {
-                                    if (strtotime($today) < strtotime($opening_morning) || strtotime($today) >= strtotime($opening_morning) && strtotime($today) <= strtotime($generate_hour)) {
-                                        $hours[$store_key][$operating_key][$z] = ($operating->week == $week1 ? ($week_text1 . ' ' . $date1_formatted) : ($week_text2 . ' ' . $date2_formatted)) . ' entre ' . $generate_hour . ' e ' . $generate_hour2;
-
-                                        $z++;
-                                    }
-
-                                    $i++;
-                                } else {
-                                    $attempts = false;
-                                }
-                            } while ($attempts == true);
-                        }
-                    }
-                }
-
-
-
-
-
-
-
-
-
-
-
-
-
-            $bag_data[$store_key]['subtotal'] = 0;
-            foreach ($s['products'] as $p) {
-                $product = Product::select('price', 'store_id')->find($p['id']);
-
-                $bag_data[$store_key]['subtotal'] += $product->price * $p['qtd'];
+            if (date('w') == 6 || date('w') == 0) {
+                break;
             }
         }
 
+        foreach (session('bag')['stores'] as $store_key => $store) {
+            $bag_data[$store_key]['subtotal'] = 0;
 
+            foreach ($store['products'] as $p) {
+                $product = Product::select('price', 'store_id')->find($p['id']);
 
+                if ($client->district_id) {
+                    $freight = $product->store->freights->where('district_id', $client->district_id)->first();
 
+                    $freight_price = $freight->price != 0.00 ?? 'free';
+                } else {
+                    $freight_price = 0;
+                }
 
+                $bag_data[$store_key]['subtotal'] += $product->price * $p['qtd'];
+                $bag_data[$store_key]['freight'] = $freight_price;
+                $bag_data[$store_key]['store'] = $product->store->name;
+                $bag_data[$store_key]['city'] = $product->store->city->title;
+                $bag_data[$store_key]['state'] = $product->store->city->state->letter;
+                $bag_data[$store_key]['street'] = $product->store->street;
+                $bag_data[$store_key]['district'] = $product->store->district;
+                $bag_data[$store_key]['number'] = $product->store->number;
+                $bag_data[$store_key]['complement'] = $product->store->complement;
+            }
+        }
 
+        return view('bag.order-data', compact('bag_data', 'client', 'districts', 'reserve_hours', 'header_title'));
 
+        /*foreach ($store->operatings as $operating_key => $operating) {
+            if ($operating->week == $week1 || $operating->week == $week2) {
+                // Add 30 minutes to opening hour
+                $opening_morning = date('H:i', strtotime($operating->opening_morning . ' + 30 minute'));
+                // Add 30 minutes to closed hour
+                $closed_afternoon = date('H:i', strtotime($operating->closed_afternoon . ' - 30 minute'));
 
+                $z = 0;
+                $i = 0;
+                $attempts = true;
 
+                if ($operating->closed_morning) {
+                    // CALCULATE MORNING HOURS
+                    do {
+                        $generate_hour = date('H:i', strtotime($opening_morning . ' + ' . $i . ' hour'));
+                        $generate_hour2 = date('H:i', strtotime($generate_hour . ' + 1 hour'));
 
-        if (count($hours) > 1) {
+                        if (strtotime($generate_hour) && strtotime($generate_hour) >= strtotime($opening_morning) && strtotime($generate_hour) <= strtotime($operating->closed_morning) && strtotime($generate_hour2) <= strtotime($operating->closed_morning)) {
+
+                            if (strtotime($today) < strtotime($opening_morning) || strtotime($today) >= strtotime($opening_morning) && strtotime($today) <= strtotime($generate_hour)) {
+                                $hours[$store_key][$operating_key][$z] = ($operating->week == $week1 ? ($week_text1 . ' ' . $date1_formatted) : ($week_text2 . ' ' . $date2_formatted)) . ' entre ' . $generate_hour . ' e ' . $generate_hour2;
+
+                                $z++;
+                            }
+
+                            $i++;
+                        } else {
+                            $attempts = false;
+                        }
+                    } while ($attempts == true);
+
+                    // CALCULATE AFTERNOON HOURS
+                    $i = 0;
+                    $attempts = true;
+
+                    do {
+                        $generate_hour = date('H:i', strtotime($operating->opening_afternoon . ' + ' . $i . ' hour'));
+                        $generate_hour2 = date('H:i', strtotime($generate_hour . ' + 1 hour'));
+
+                        if (strtotime($generate_hour) && strtotime($generate_hour) >= strtotime($operating->opening_afternoon) && strtotime($generate_hour) <= strtotime($closed_afternoon) && strtotime($generate_hour2) <= strtotime($closed_afternoon)) {
+                            if (strtotime($today) < strtotime($operating->opening_afternoon) || strtotime($today) >= strtotime($operating->opening_afternoon) && strtotime($today) <= strtotime($generate_hour)) {
+                                $hours[$store_key][$operating_key][$z] = ($operating->week == $week1 ? ($week_text1 . ' ' . $date1_formatted) : ($week_text2 . ' ' . $date2_formatted)) . ' entre ' . $generate_hour . ' e ' . $generate_hour2;
+
+                                $z++;
+                            }
+
+                            $i++;
+                        } else {
+                            $attempts = false;
+                        }
+                    } while ($attempts == true);
+                } else {
+                    // CALCULATE MORNING TO AFTERNOON HOUR
+                    do {
+                        $generate_hour = date('H:i', strtotime($opening_morning . ' + ' . $i . ' hour'));
+                        $generate_hour2 = date('H:i', strtotime($generate_hour . ' + 1 hour'));
+
+                        if (strtotime($generate_hour) && strtotime($generate_hour) >= strtotime($opening_morning) && strtotime($generate_hour) <= strtotime($closed_afternoon) && strtotime($generate_hour2) <= strtotime($closed_afternoon)) {
+                            if (strtotime($today) < strtotime($opening_morning) || strtotime($today) >= strtotime($opening_morning) && strtotime($today) <= strtotime($generate_hour)) {
+                                $hours[$store_key][$operating_key][$z] = ($operating->week == $week1 ? ($week_text1 . ' ' . $date1_formatted) : ($week_text2 . ' ' . $date2_formatted)) . ' entre ' . $generate_hour . ' e ' . $generate_hour2;
+
+                                $z++;
+                            }
+
+                            $i++;
+                        } else {
+                            $attempts = false;
+                        }
+                    } while ($attempts == true);
+                }
+            }
+        }*/
+
+        /*if (count($hours) > 1) {
             // Get the first and last hour
             foreach ($hours as $hour) {
                 foreach ($hour as $week) {
@@ -345,24 +334,147 @@ class BagController extends Controller
                     $reserve_hours[$hours[$key][$key2][$key3]] = $hours[$key][$key2][$key3];
                 }
             }
-        }
+        }*/
 
 
         //return $reserve_hours;
+    }
 
+    public function finish(Request $request)
+    {
+        $freight_house = $request->freight == 0 ? true : false;
+        $rules = $freight_house ? $this->freightHouseRules() : $this->freightStoreRules();
 
+        $validator = Validator::make(
+            $request->all(),
+            $rules,
+            app('App\Http\Controllers\GlobalController')->customMessages()
+        );
 
+         if ($validator->fails()) {
+              $return['status'] = false;
+              $return['msg'] = $validator->errors()->first();
+        } else {
+            if ($freight_house) {
+                // Search the city
+                $city = City::whereHas('state', function ($query) use ($request) {
+                        $query->where('letter', $request->state);
+                    })
+                    ->where('title', 'LIKE', '%' . $request->city . '%')
+                    ->select('id')
+                    ->first();
 
+                if (!$city) {
+                    $return['status'] = false;
+                    $return['msg'] = 'Não identificamos a cidade informada. Verifique a cidade e o estado e tente novamente.';
 
+                    return json_encode($return);
+                }
+            }
 
+            $client_id = Auth::guard('client')->user()->id;
 
+            $client = Client::find($client_id);
+            $client->cpf = $request->cpf;
+            $client->phone = $request->phone;
 
-        $client = Client::find(Auth::guard('client')->user()->id);
+            if ($freight_house) {
+                $client->city_id = $city->id;
+                $client->district_id = $request->district;
+                $client->cep = $request->cep;
+                $client->street = $request->street;
+                $client->number = $request->number;
+                $client->complement = $request->complement;
+            }
 
-        $districts = District::pluck('name', 'id');
+            $order = new Order;
+            $order->client_id = $client_id;
+            $order->freight_type = $request->freight;
+            $order->client_phone = $request->phone;
+            $order->client_cpf = $request->cpf;
 
-        $header_title = 'Dados do pedido | naslojas.com';
+            if ($freight_house) {
+                $order->client_city_id = $city->id;
+                $order->client_district_id = $request->district;
+                $order->client_cep = $request->cep;
+                $order->client_street = $request->street;
+                $order->client_number = $request->number;
+                $order->client_complement = $request->complement;
+                $order->reserve_date = $request->reserve_date;
+                $order->payment = $request->payment;
+            }
 
-        return view('bag.order-data', compact('bag_data', 'client', 'districts', 'reserve_hours', 'header_title'));
+            if ($client->save() && $order->save()) {
+                foreach (session('bag')['stores'] as $store) {
+                    foreach ($store['products'] as $product) {
+                        $p = Product::find($product['id']);
+
+                        $order->products()->create([
+                            'size' => $product['size'],
+                            'qtd' => $product['qtd'],
+                            'image' => $p->images()->first()->image,
+                            'price' => $p->price,
+                            'title' => $p->title,
+                            'product_id' => $p->id
+                        ]);
+                    }
+                }
+
+                Session::pull('bag');
+
+                $return['status'] = true;
+                $return['route'] = route('bag-success', $order->id);
+            } else {
+                $return['status'] = false;
+                $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
+            }
+        }
+
+        return json_encode($return);
+    }
+
+    public function success($id)
+    {
+        $order = Order::findOrFail($id);
+
+        if ($order->freight_type == 1) {
+            $products = OrderProducts::whereHas('product', function ($q) {
+                    $q->select('store_id');
+                })
+                ->select('product_id')
+                ->where('order_id', $id)
+                ->get();
+        }
+
+        $header_title = 'Pedido realizado - naslojas.com';
+
+        return view('bag.success', compact('order', 'products', 'header_title'));
+
+    }
+
+    private function freightHouseRules()
+    {
+        return [
+            'cep' => 'required|max:10',
+            'street' => 'required|max:200',
+            'district' => 'required|max:100',
+            'number' => 'required|max:15',
+            'city' => 'required',
+            'state' => 'required',
+            'cpf' => 'required|max:15',
+            'phone' => 'required|max:15',
+            'payment' => 'required',
+            'reserve_date' => 'required',
+            'freight' => 'required'
+        ];
+    }
+
+    private function freightStoreRules()
+    {
+        return [
+            'cpf' => 'required|max:15',
+            'phone' => 'required|max:15',
+            'freight' => 'required'
+        ];
     }
 }
