@@ -183,22 +183,20 @@ class BagController extends Controller
 
         $header_title = 'Dados do pedido | naslojas.com';
 
+        $today = date('H:i');
+
         for ($i = 1; $i <= 2; $i++) {
             $valid_date = $i == 1 ? _businessDay() : _businessDay(date('Y-m-d', strtotime($valid_date . ' + 1 day')));
 
             $date = _weekAbbreviation($valid_date) . ' ' . date('d/m/Y', strtotime($valid_date)) . ' entre ';
 
-            $reserve_hours[$date . '10:00 e 11:00'] = $date . '10:00 e 11:00';
-            $reserve_hours[$date . '11:00 e 12:00'] = $date . '11:00 e 12:00';
-            $reserve_hours[$date . '12:00 e 13:00'] = $date . '12:00 e 13:00';
-            $reserve_hours[$date . '13:00 e 14:00'] = $date . '13:00 e 14:00';
-            $reserve_hours[$date . '14:00 e 15:00'] = $date . '14:00 e 15:00';
-            $reserve_hours[$date . '15:00 e 16:00'] = $date . '15:00 e 16:00';
-            $reserve_hours[$date . '16:00 e 17:00'] = $date . '16:00 e 17:00';
-            $reserve_hours[$date . '17:00 e 18:00'] = $date . '17:00 e 18:00';
-            $reserve_hours[$date . '18:00 e 19:00'] = $date . '18:00 e 19:00';
+            for ($z = 10; $z <= 18; $z++) {
+                if (strtotime($z . ':00') > strtotime($today)) {
+                    $reserve_hours[$date . $z . ':00 e ' . ($z + 1) . ':00'] = $date . $z . ':00 e ' . ($z + 1) . ':00';
+                }
+            }
 
-            if (date('w') == 6 || date('w') == 0) {
+            if (count($reserve_hours) == 9 || date('w') == 6 || date('w') == 0) {
                 break;
             }
         }
