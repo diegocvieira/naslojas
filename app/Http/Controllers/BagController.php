@@ -210,7 +210,7 @@ class BagController extends Controller
                 if ($client->district_id) {
                     $freight = $product->store->freights->where('district_id', $client->district_id)->first();
 
-                    $freight_price = $freight->price != 0.00 ?? 'free';
+                    $freight_price = $freight->price != 0.00 ? $freight->price : 'free';
                 } else {
                     $freight_price = 0;
                 }
