@@ -135,11 +135,11 @@
 
                             {!! Form::text('complement', null, ['placeholder' => 'Complemento', 'class' => 'half margin']) !!}
 
-                            {!! Form::select('district', $districts, null, ['class' => 'selectpicker custom-validate', 'title' => 'Bairro']) !!}
+                            {!! Form::select('district', $districts, $client->district_id, ['class' => 'selectpicker custom-validate', 'title' => 'Bairro']) !!}
 
-                            {!! Form::text('city', null, ['placeholder' => 'Cidade', 'id' => 'city', 'class' => 'half custom-validate']) !!}
+                            {!! Form::text('city', $client->city_id ? $client->city->title : null, ['placeholder' => 'Cidade', 'id' => 'city', 'class' => 'half custom-validate']) !!}
 
-                            {!! Form::text('state', null, ['placeholder' => 'Estado', 'id' => 'state', 'class' => 'half margin custom-validate']) !!}
+                            {!! Form::text('state', $client->city_id ? $client->city->state->letter : null, ['placeholder' => 'Estado', 'id' => 'state', 'class' => 'half margin custom-validate']) !!}
                         </div>
                     </div>
 
@@ -149,7 +149,7 @@
                         </div>
 
                         <div class="col-xs-9">
-                            {!! Form::select('reserve_date', $reserve_hours, null, ['class' => 'selectpicker custom-validate', 'title' => 'Agendar para']) !!}
+                            {!! Form::select('reserve_date', $reserve_hours, null, ['class' => 'selectpicker custom-validate', 'title' => 'Agendar para', 'data-size' => '8']) !!}
                         </div>
                     </div>
                 </div>

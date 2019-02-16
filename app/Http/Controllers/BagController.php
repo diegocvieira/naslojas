@@ -191,12 +191,12 @@ class BagController extends Controller
             $date = _weekAbbreviation($valid_date) . ' ' . date('d/m/Y', strtotime($valid_date)) . ' entre ';
 
             for ($z = 10; $z <= 18; $z++) {
-                if (strtotime($z . ':00') > strtotime($today)) {
+                if (strtotime($z . ':00') > strtotime($today) || $i == 2) {
                     $reserve_hours[$date . $z . ':00 e ' . ($z + 1) . ':00'] = $date . $z . ':00 e ' . ($z + 1) . ':00';
                 }
             }
 
-            if (count($reserve_hours) == 9 || date('w') == 6 || date('w') == 0) {
+            if (isset($reserve_hours) && count($reserve_hours) == 9 || date('w') == 6 || date('w') == 0) {
                 break;
             }
         }
