@@ -253,6 +253,8 @@ class BagController extends Controller
             $payments = array_diff_assoc($payments, array_unique($payments));
         }
 
+        array_push($payments, '1-0', '1-1', '2-0', '2-1');
+
         return view('bag.order-data', compact('bag_data', 'client', 'districts', 'reserve_hours', 'payments', 'header_title'));
 
         /*foreach ($store->operatings as $operating_key => $operating) {
@@ -452,7 +454,7 @@ class BagController extends Controller
                     }
                 }
 
-                //Session::pull('bag');
+                Session::pull('bag');
 
                 $return['status'] = true;
                 $return['route'] = route('bag-success', $order->id);

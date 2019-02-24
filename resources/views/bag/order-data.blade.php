@@ -99,7 +99,7 @@
                                 @foreach(_paymentMethods() as $payment_key => $payment)
                                     @foreach($payment as $payment_type_key => $payment_type)
                                         @foreach($payment_type as $payment_description_key => $payment_description)
-                                            @if (in_array($payment_key . '-' . $payment_description_key, $payments) || $payment_description == 'Visa' || $payment_description == 'MasterCard')
+                                            @if (in_array($payment_key . '-' . $payment_description_key, $payments))
                                                 <option value="{{ $payment_key . '-' . $payment_description_key }}" data-method="{{ $payment_key }}">{{ $payment_description }}</option>
                                             @endif
                                         @endforeach
