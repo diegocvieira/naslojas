@@ -59,11 +59,7 @@
 
                             @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check() && Auth::guard('superadmin')->user()->type == 1)
                                 <li>
-                                    <a href="{{ route('list-store-confirms') }}">Confirmações</a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ route('list-store-reserves') }}">Reservas</a>
+                                    <a href="{{ route('list-store-orders') }}">Pedidos</a>
                                 </li>
 
                                 <li>
@@ -94,11 +90,7 @@
                             </li>
 
                             <li>
-                                <a href="{{ route('list-client-confirms') }}" class="icon-check">Confirmações</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('list-client-reserves') }}" class="icon-reserve">Reservas</a>
+                                <a href="{{ route('list-client-orders') }}" class="icon-check">Pedidos</a>
                             </li>
 
                             <li>

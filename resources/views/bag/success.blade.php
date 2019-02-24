@@ -16,7 +16,7 @@
                     <p>Passe na loja no endereço e horário informado para retirar seu pedido.</p>
 
                     <span>
-                        <b>Horário:</b> até às {{ date('H:i', strtotime($order->created_at)) }} de {{ _weekAbbreviation($order->created_at) }} {{ date('d/m/Y', strtotime($order->created_at . ' + 1 day')) }}
+                        <b>Horário:</b> {{ $order->reserve_date }}
                     </span>
 
                     @foreach ($products as $product)

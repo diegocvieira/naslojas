@@ -168,6 +168,7 @@ function _weekAbbreviation($date)
             break;
         case 3:
             $week = 'Qua.';
+            break;
         case 4:
             $week = 'Qui.';
             break;
@@ -176,4 +177,13 @@ function _weekAbbreviation($date)
     }
 
     return $week;
+}
+
+function _generateParcels($price, $min_parcel_price, $max_parcel)
+{
+    for ($i = 1; $i <= $max_parcel; $i++) {
+        if ($price / $i < $min_parcel_price) {
+            return $i - 1;
+        }
+    }
 }

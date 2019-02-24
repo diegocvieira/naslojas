@@ -157,26 +157,15 @@ Route::group(['prefix' => 'loja'], function () {
 			Route::post('create', 'MessageController@createStoreMessage');
 		});
 
-		Route::group(['prefix' => 'confirmacoes'], function () {
-			// List confirmations
-			Route::get('/', 'ProductConfirmController@listStoreConfirms')->name('list-store-confirms');
+		Route::group(['prefix' => 'pedidos'], function () {
+			// List orders
+			Route::get('/', 'OrderController@storeOrders')->name('list-store-orders');
 
-			// Confirm product
-			Route::post('confirm/{id}', 'ProductConfirmController@confirm')->name('product-confirm-confirm');
+			// Confirm order
+			Route::post('confirm/{id}', 'OrderController@confirm')->name('confirm-order');
 
-			// Refused product
-			Route::post('refuse/{id}', 'ProductConfirmController@refuse')->name('product-refuse-confirm');
-		});
-
-		Route::group(['prefix' => 'reservas'], function () {
-			// List reserves
-			Route::get('/', 'ProductReserveController@listStoreReserves')->name('list-store-reserves');
-
-			// Confirm product
-			Route::post('confirm/{id}', 'ProductReserveController@confirm')->name('product-confirm-reserve');
-
-			// Refused product
-			Route::post('refuse/{id}', 'ProductReserveController@refuse')->name('product-refuse-reserve');
+			// Refuse order
+			Route::post('refuse/{id}', 'OrderController@refuse')->name('refuse-order');
 		});
 	});
 });
@@ -211,29 +200,17 @@ Route::group(['prefix' => 'cliente'], function () {
 
 		Route::post('delete-account', 'ClientController@deleteAccount')->name('delete-client-account');
 
+		// Rate product
+		Route::post('product/rating', 'ProductController@rating')->name('rating-product');
+
+		Route::get('pedidos', 'OrderController@clientOrders')->name('list-client-orders');
+
 		Route::group(['prefix' => 'mensagens'], function () {
 			// List messages
 			Route::get('/', 'MessageController@listClientMessages')->name('list-client-messages');
 
 			// Create message
 			Route::post('create', 'MessageController@createClientMessage')->name('create-client-message');
-		});
-
-		Route::group(['prefix' => 'produto'], function () {
-			// Rate product
-			Route::post('rating', 'ProductController@rating')->name('rating-product');
-
-			// Request product confirmation
-			Route::post('create-confirmation', 'ProductConfirmController@create')->name('create-product-confirm');
-
-			// Request product reserve
-			Route::post('create-reserve', 'ProductReserveController@create')->name('create-product-reserve');
-
-			// List reserves
-			Route::get('reservas', 'ProductReserveController@listClientReserves')->name('list-client-reserves');
-
-			// List confirmations
-			Route::get('confirmacoes', 'ProductConfirmController@listClientConfirms')->name('list-client-confirms');
 		});
 	});
 });

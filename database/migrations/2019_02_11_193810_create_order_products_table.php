@@ -20,10 +20,11 @@ class CreateOrderProductsTable extends Migration
             $table->unsignedInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->dateTime('confirmed_at')->nullable();
-            $table->integer('status')->default(0);
+            $table->integer('status')->default(2);
             $table->string('title', 255);
             $table->integer('qtd');
             $table->decimal('price', 8, 2);
+            $table->decimal('freight_price', 8, 2);
             $table->string('size', 5);
             $table->string('image', 300)->nullable();
             $table->timestamps();

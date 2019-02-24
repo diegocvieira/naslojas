@@ -110,13 +110,13 @@
                         </div>
 
                         <div class="col-xs-9 buttons">
-                            {!! Form::radio('payment', '1', null, ['id' => 'payment-credit', 'class' => 'custom-validate']) !!}
+                            {!! Form::radio('payment', '1', null, ['id' => 'payment-credit', 'class' => 'custom-validate', 'autocomplete' => 'off']) !!}
                             {!! Form::label('payment-credit', 'Crédito') !!}
 
-                            {!! Form::radio('payment', '2', null, ['id' => 'payment-debit', 'class' => 'custom-validate']) !!}
+                            {!! Form::radio('payment', '2', null, ['id' => 'payment-debit', 'class' => 'custom-validate', 'autocomplete' => 'off']) !!}
                             {!! Form::label('payment-debit', 'Débito') !!}
 
-                            {!! Form::radio('payment', '3', null, ['id' => 'payment-money', 'class' => 'custom-validate']) !!}
+                            {!! Form::radio('payment', '3', null, ['id' => 'payment-money', 'class' => 'custom-validate', 'autocomplete' => 'off']) !!}
                             {!! Form::label('payment-money', 'Dinheiro') !!}
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                         </div>
 
                         <div class="col-xs-9">
-                            {!! Form::select('reserve_date', $reserve_hours, null, ['class' => 'selectpicker custom-validate', 'title' => 'Agendar para', 'data-size' => '8']) !!}
+                            {!! Form::select('reserve_date', $reserve_hours, null, ['class' => 'selectpicker custom-validate', 'title' => 'Agendar para']) !!}
                         </div>
                     </div>
                 </div>
@@ -170,9 +170,13 @@
                             <div class="col-xs-6 text-right">
                                 <span class="item">R$ {{ number_format($data['subtotal'], 2, ',', '.') }}</span>
 
-                                <span class="item update-freight">{{ $data['freight'] ? (is_numeric($data['freight']) ? 'R$ ' . number_format($data['freight'], 2, ',', '.') : 'grátis') : '-----' }}</span>
+                                <span class="item update-freight">-----</span>
 
-                                <span class="item update-subtotal" data-subtotal="{{ $data['subtotal'] }}">R$ {{ number_format($data['subtotal'] + $data['freight'], 2, ',', '.') }}</span>
+                                <span class="item update-subtotal" data-subtotal="{{ $data['subtotal'] }}">R$ {{ number_format($data['subtotal'], 2, ',', '.') }}</span>
+                            </div>
+
+                            <div class="col-xs-12 text-right">
+                                <span class="parcels" data-minparcelprice="{{ $data['min_parcel_price'] }}" data-maxparcel="{{ $data['max_parcel'] }}"></span>
                             </div>
                         </div>
                     @endforeach
