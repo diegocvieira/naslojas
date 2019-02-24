@@ -185,7 +185,7 @@
 
                                         @foreach($payment_type as $payment_description_key => $payment_description)
                                             <div class="payment-description">
-                                                {!! Form::checkbox('payment[]', $payment_key . '-' . $payment_description_key, (in_array($payment_key . '-' . $payment_description_key, $payments) || $payment_description == 'à vista' || $payment_description == 'Visa' || $payment_description == 'MasterCard') ? true : false, ['id' => 'payment' . $payment_key . $payment_description_key, 'disabled' => ($payment_description == 'à vista' || $payment_description == 'Visa' || $payment_description == 'MasterCard') ? true : false]) !!}
+                                                {!! Form::checkbox('payment[]', $payment_key . '-' . $payment_description_key, in_array($payment_key . '-' . $payment_description_key, $payments) ? true : false, ['id' => 'payment' . $payment_key . $payment_description_key, 'disabled' => ($payment_description == 'à vista' || $payment_description == 'Visa' || $payment_description == 'MasterCard') ? true : false]) !!}
 
                                                 {!! Form::label('payment' . $payment_key . $payment_description_key, $payment_description) !!}
                                             </div>

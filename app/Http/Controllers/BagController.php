@@ -225,6 +225,8 @@ class BagController extends Controller
             }
         }
 
+        $payments = [];
+
         foreach (session('bag')['stores'] as $store_key => $store) {
             $bag_data[$store_key]['subtotal'] = 0;
 

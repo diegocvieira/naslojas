@@ -184,9 +184,13 @@ class StoreController extends Controller
             '6' => 'Sábado'
         ];
 
+        $payments = [];
+
         foreach ($user->store->payments as $payment) {
             $payments[] = $payment->method . '-' . $payment->payment;
         }
+
+        array_push($payments, '0-0', '1-0', '1-1', '2-0', '2-1');
 
         if (Agent::isDesktop()) {
             return view('store.config', compact('user', 'districts', 'weeks', 'payments', 'section', 'header_title', 'navigation'));
@@ -270,13 +274,15 @@ class StoreController extends Controller
 
                 // Delete and insert new payments
                 $store->payments()->delete();
-                foreach ($request->payment as $payment) {
-                    $payment_split = explode('-', $payment);
+                if ($request->payment) {
+                    foreach ($request->payment as $payment) {
+                        $payment_split = explode('-', $payment);
 
-                    $store->payments()->create([
-                        'method' => $payment_split[0],
-                        'payment' => $payment_split[1]
-                    ]);
+                        $store->payments()->create([
+                            'method' => $payment_split[0],
+                            'payment' => $payment_split[1]
+                        ]);
+                    }
                 }
 
                 // Delete and insert new freights
