@@ -394,6 +394,7 @@ class BagController extends Controller
             $order->freight_type = $request->freight;
             $order->client_phone = $request->phone;
             $order->client_cpf = $request->cpf;
+            $order->payment = $request->payment == '0' ? '0-0' : $request->payment_card;
 
             if ($freight_house) {
                 // Search the city
@@ -425,7 +426,6 @@ class BagController extends Controller
                 $order->client_number = $request->number;
                 $order->client_complement = $request->complement;
                 $order->reserve_date = $request->reserve_date;
-                $order->payment = $request->payment == '0' ? '0-0' : $request->payment_card;
             } else {
                 $business_day = _businessDay(date('Y-m-d', strtotime('+ 1 day')));
 
