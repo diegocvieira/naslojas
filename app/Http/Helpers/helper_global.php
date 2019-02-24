@@ -187,3 +187,77 @@ function _generateParcels($price, $min_parcel_price, $max_parcel)
         }
     }
 }
+
+function _paymentMethods()
+{
+    return [
+        '0' => [
+            'Dinheiro' => [
+                '0' => 'à vista'
+            ]
+        ],
+        '1' => [
+            'Cartão de crédito' => [
+                '0' => 'Visa',
+                '1' => 'MasterCard',
+                '2' => 'Elo',
+                '3' => 'American Express',
+                '4' => 'Dinners Club',
+                '5' => 'Hipercard',
+                '6' => 'Banricompras'
+            ]
+        ],
+        '2' => [
+            'Cartão de débito' => [
+                '0' => 'Visa',
+                '1' => 'MasterCard',
+                '2' => 'Elo',
+                '3' => 'American Express',
+                '4' => 'Dinners Club',
+                '5' => 'Hipercard',
+                '6' => 'Banricompras'
+            ]
+        ]
+    ];
+}
+
+function _getPaymentMethod($value)
+{
+    $value_split = explode('-', $value);
+
+    switch ($value_split[0]) {
+        case 0:
+            $method = 'Dinheiro';
+            break;
+        case 1:
+            $method = 'Cartão de crédito';
+            break;
+        case 2:
+            $method = 'Cartão de débito';
+    }
+
+    switch ($value_split[1]) {
+        case 0:
+            $payment = 'Visa';
+            break;
+        case 1:
+            $payment = 'MasterCard';
+            break;
+        case 2:
+            $payment = 'Elo';
+            break;
+        case 1:
+            $payment = 'American Express';
+            break;
+        case 1:
+            $payment = 'Dinners Club';
+            break;
+        case 1:
+            $payment = 'Hipercard';
+            break;
+        case 1:
+            $payment = 'Banricompras';
+    }
+
+    return $method . ' - ' . $payment;
+}

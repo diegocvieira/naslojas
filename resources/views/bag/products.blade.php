@@ -1,6 +1,6 @@
-<?php
+@php
     $top_nav = true;
-?>
+@endphp
 
 @extends('base')
 
@@ -16,21 +16,7 @@
             </div>
 
             <div class="products">
-                <?php $subtotal = 0; ?>
-
                 @foreach ($products as $product)
-                    @foreach (session('bag')['stores'] as $bag_store)
-                        @foreach ($bag_store['products'] as $bag_product)
-                            @if ($bag_product['id'] == $product->id)
-                                <?php
-                                    $product_qtd = $bag_product['qtd'];
-                                    $product_size = $bag_product['size'];
-                                    $subtotal += $product_qtd * $product->price;
-                                ?>
-                            @endif
-                        @endforeach
-                    @endforeach
-
                     <div class="product">
                         <div class="col-xs-2">
                             <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $product->images->first()->image) }}" alt="Produto {{ $product->title }}" />
@@ -44,7 +30,7 @@
                             <div class="size">
                                 <span class="label-select">Tamanho selecionado:</span>
 
-                                {!! Form::select('size', $product->sizes->pluck('size', 'size'), $product_size, ['class' => 'bag-change-size selectpicker', 'data-productid' => $product->id, 'autocomplete' => 'off']) !!}
+                                {!! Form::select('size', $product->sizes->pluck('size', 'size'), $product->size, ['class' => 'bag-change-size selectpicker', 'data-productid' => $product->id, 'autocomplete' => 'off']) !!}
                             </div>
 
                             <a href="{{ route('bag-remove-product', $product->id) }}" class="bag-remove-product">Remover da sacola</a>
@@ -52,7 +38,7 @@
 
                         <div class="col-xs-2">
                             <div class="qtd">
-                                {!! Form::select('qtd', $qtd, $product_qtd, ['class' => 'bag-change-qtd qtd selectpicker', 'data-productid' => $product->id, 'autocomplete' => 'off']) !!}
+                                {!! Form::select('qtd', $product->store_qtd, $product->product_qtd, ['class' => 'bag-change-qtd qtd selectpicker', 'data-productid' => $product->id, 'autocomplete' => 'off']) !!}
 
                                 <span class="label-select">Quantidade:</span>
                             </div>
@@ -68,7 +54,7 @@
             <div class="footer-bag">
                 <span class="subtotal">SUBTOTAL <span>R$ {{ number_format($subtotal, 2, ',', '.') }}</span></span>
 
-                <a href="#" class="close-order">FECHAR PEDIDO</a>
+                <a href="{{ route('bag-data') }}" class="close-order">FECHAR PEDIDO</a>
 
                 <a href="{{ route('home') }}" class="keep-buying">Continuar comprando</a>
             </div>

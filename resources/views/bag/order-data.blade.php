@@ -60,7 +60,7 @@
 
                     <div class="row">
                         <div class="col-xs-3">
-                            {!! Form::label('freight', 'Frete') !!}
+                            {!! Form::label('', 'Frete') !!}
                         </div>
 
                         <div class="col-xs-9 buttons">
@@ -72,9 +72,46 @@
                         </div>
                     </div>
 
+                    <div class="row payment">
+                        <div class="col-xs-3">
+                            {!! Form::label('', 'Pagamento') !!}
+                        </div>
+
+                        <div class="col-xs-9 buttons">
+                            {!! Form::radio('payment', '1', null, ['id' => 'payment-credit', 'class' => 'custom-validate', 'autocomplete' => 'off']) !!}
+                            {!! Form::label('payment-credit', 'Crédito') !!}
+
+                            {!! Form::radio('payment', '2', null, ['id' => 'payment-debit', 'class' => 'custom-validate', 'autocomplete' => 'off']) !!}
+                            {!! Form::label('payment-debit', 'Débito') !!}
+
+                            {!! Form::radio('payment', '0', null, ['id' => 'payment-money', 'class' => 'custom-validate', 'autocomplete' => 'off']) !!}
+                            {!! Form::label('payment-money', 'Dinheiro') !!}
+                        </div>
+                    </div>
+
+                    <div class="row payment-card">
+                        <div class="col-xs-3">
+                            {!! Form::label('', 'Cartão') !!}
+                        </div>
+
+                        <div class="col-xs-9">
+                            <select name="payment_card" class="selectpicker custom-validate" title="Bandeira">
+                                @foreach(_paymentMethods() as $payment_key => $payment)
+                                    @foreach($payment as $payment_type_key => $payment_type)
+                                        @foreach($payment_type as $payment_description_key => $payment_description)
+                                            @if (in_array($payment_key . '-' . $payment_description_key, $payments) || $payment_description == 'Visa' || $payment_description == 'MasterCard')
+                                                <option value="{{ $payment_key . '-' . $payment_description_key }}" data-method="{{ $payment_key }}">{{ $payment_description }}</option>
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                 @endforeach
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="row store-adress freight-field freight-store">
                         <div class="col-xs-3">
-                            {!! Form::label('payment', 'Endereço') !!}
+                            {!! Form::label('', 'Endereço') !!}
                         </div>
 
                         <div class="col-xs-9">
@@ -104,26 +141,23 @@
                         </div>
                     </div>
 
-                    <div class="row payment freight-field freight-house">
+                    <div class="row store-reserve_hour freight-field freight-store">
                         <div class="col-xs-3">
-                            {!! Form::label('payment', 'Pagamento') !!}
+                            {!! Form::label('reserve_date', 'Data e horário') !!}
                         </div>
 
-                        <div class="col-xs-9 buttons">
-                            {!! Form::radio('payment', '1', null, ['id' => 'payment-credit', 'class' => 'custom-validate', 'autocomplete' => 'off']) !!}
-                            {!! Form::label('payment-credit', 'Crédito') !!}
+                        <div class="col-xs-9">
+                            @php
+                                $business_day = _businessDay(date('Y-m-d', strtotime('+ 1 day')));
+                            @endphp
 
-                            {!! Form::radio('payment', '2', null, ['id' => 'payment-debit', 'class' => 'custom-validate', 'autocomplete' => 'off']) !!}
-                            {!! Form::label('payment-debit', 'Débito') !!}
-
-                            {!! Form::radio('payment', '3', null, ['id' => 'payment-money', 'class' => 'custom-validate', 'autocomplete' => 'off']) !!}
-                            {!! Form::label('payment-money', 'Dinheiro') !!}
+                            Os produtos ficarão reservados para você na loja até às 19:00 de {{ _weekAbbreviation($business_day) }} {{ date('d/m/Y', strtotime($business_day)) }}
                         </div>
                     </div>
 
                     <div class="row client-address freight-field freight-house">
                         <div class="col-xs-3">
-                            {!! Form::label('payment', 'Endereço') !!}
+                            {!! Form::label('', 'Endereço') !!}
                         </div>
 
                         <div class="col-xs-9">

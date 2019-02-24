@@ -184,8 +184,12 @@ class StoreController extends Controller
             '6' => 'Sábado'
         ];
 
+        foreach ($user->store->payments as $payment) {
+            $payments[] = $payment->method . '-' . $payment->payment;
+        }
+
         if (Agent::isDesktop()) {
-            return view('store.config', compact('user', 'districts', 'weeks', 'section', 'header_title', 'navigation'));
+            return view('store.config', compact('user', 'districts', 'weeks', 'payments', 'section', 'header_title', 'navigation'));
         } else {
             return view('mobile.store.config', compact('user', 'districts', 'section', 'header_title'));
         }
@@ -201,6 +205,8 @@ class StoreController extends Controller
             $rules = $this->addressRules();
         } else if ($section == 'access') {
             $rules = $this->accessRules();
+        } else if ($section == 'payment') {
+            $rules = $this->paymentRules();
         } else {
             $rules = [];
         }
@@ -262,11 +268,24 @@ class StoreController extends Controller
                 $store->phone = $request->phone;
                 $store->min_parcel_price = $request->min_parcel_price ? number_format(str_replace(['.', ','], ['', '.'], $request->min_parcel_price), 2, '.', '') : null;
 
+                // Delete and insert new payments
+                $store->payments()->delete();
+                foreach ($request->payment as $payment) {
+                    $payment_split = explode('-', $payment);
+
+                    $store->payments()->create([
+                        'method' => $payment_split[0],
+                        'payment' => $payment_split[1]
+                    ]);
+                }
+
                 // Delete and insert new freights
                 $freights = array_map(function($q, $t) {
                     return array('id' => $q, 'price' => $t);
                 }, $request->district_id, $request->freight_price);
+
                 $store->freights()->delete();
+
                 foreach ($freights as $freight) {
                     if ($freight['price']) {
                         $store->freights()->create([
@@ -280,7 +299,9 @@ class StoreController extends Controller
                 $hours = array_map(function($q, $t) {
                     return array('week' => $q, 'hour' => $t);
                 }, $request->week_id, $request->operating);
+
                 $store->operatings()->delete();
+
                 foreach ($hours as $hour) {
                     if ($hour['hour']) {
                         if (strlen($hour['hour']) == 15) {
@@ -366,11 +387,17 @@ class StoreController extends Controller
         return [
             'slug' => 'required|max:200|unique:stores,slug,' . $this->store_id,
             'name' => 'required|max:200',
-            'max_product_unit' => 'numeric',
-            'max_parcel' => 'numeric',
-            'min_parcel_price' => 'required',
             'phone' => 'required|max:15',
             'cnpj' => 'required|max:18'
+        ];
+    }
+
+    private function paymentRules()
+    {
+        return [
+            'max_product_unit' => 'numeric',
+            'max_parcel' => 'numeric',
+            'min_parcel_price' => 'required'
         ];
     }
 

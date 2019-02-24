@@ -7,7 +7,11 @@
 @section('content')
     <div class="container page-admin page-messages">
         @if ($messages->count())
-            <h1 class="page-title">Confira as mensagens trocadas com as lojas</h1>
+            <div class="page-header">
+                <h1>Pedidos</h1>
+
+                <p>Confira as mensagens trocadas com as lojas</p>
+            </div>
 
             <table>
                 <thead>

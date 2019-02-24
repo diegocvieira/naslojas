@@ -154,20 +154,38 @@ class BagController extends Controller
             }
 
             $products = Product::find($ids);
+
+            $subtotal = 0;
+
+            foreach ($products as $key => $product) {
+                foreach (session('bag')['stores'] as $bag_store) {
+                    foreach ($bag_store['products'] as $bag_product) {
+                        if ($bag_product['id'] == $product->id) {
+                            $product->setAttribute('product_qtd', $bag_product['qtd']);
+                            $product->setAttribute('size', $bag_product['size']);
+
+                            $subtotal += $bag_product['qtd'] * $product->price;
+                        }
+                    }
+                }
+
+                $qtd = [];
+                for ($i = 1; $i <= $product->store->max_product_unit; $i++) {
+                    $qtd[$i] = $i;
+                }
+
+                $product->setAttribute('store_qtd', $qtd);
+            }
         }
 
         if (\Request::ajax()) {
             return response()->json([
-                'body' => view('bag.preview', compact('products'))->render()
+                'body' => view('bag.preview', compact('products', 'subtotal'))->render()
             ]);
         } else {
-            for ($i = 1; $i <= 5; $i++) {
-                $qtd[$i] = $i;
-            }
-
             $header_title = 'Itens na sacola | naslojas.com';
 
-            return view('bag.products', compact('products', 'qtd', 'header_title'));
+            return view('bag.products', compact('products', 'subtotal', 'header_title'));
         }
     }
 
@@ -223,10 +241,19 @@ class BagController extends Controller
                 $bag_data[$store_key]['district'] = $product->store->district;
                 $bag_data[$store_key]['number'] = $product->store->number;
                 $bag_data[$store_key]['complement'] = $product->store->complement;
+
+                foreach ($product->store->payments as $payment) {
+                    $payments[] = $payment->method . '-' . $payment->payment;
+                }
             }
         }
 
-        return view('bag.order-data', compact('bag_data', 'client', 'districts', 'reserve_hours', 'header_title'));
+        if (count(session('bag')['stores']) > 1) {
+            // Get only duplicate values
+            $payments = array_diff_assoc($payments, array_unique($payments));
+        }
+
+        return view('bag.order-data', compact('bag_data', 'client', 'districts', 'reserve_hours', 'payments', 'header_title'));
 
         /*foreach ($store->operatings as $operating_key => $operating) {
             if ($operating->week == $week1 || $operating->week == $week2) {
@@ -393,8 +420,8 @@ class BagController extends Controller
                 $order->client_street = $request->street;
                 $order->client_number = $request->number;
                 $order->client_complement = $request->complement;
-                $order->payment = $request->payment;
                 $order->reserve_date = $request->reserve_date;
+                $order->payment = $request->payment == '0' ? '0-0' : $request->payment_card;
             } else {
                 $business_day = _businessDay(date('Y-m-d', strtotime('+ 1 day')));
 
@@ -425,7 +452,7 @@ class BagController extends Controller
                     }
                 }
 
-                Session::pull('bag');
+                //Session::pull('bag');
 
                 $return['status'] = true;
                 $return['route'] = route('bag-success', $order->id);
@@ -454,7 +481,6 @@ class BagController extends Controller
         $header_title = 'Pedido realizado - naslojas.com';
 
         return view('bag.success', compact('order', 'products', 'header_title'));
-
     }
 
     private function freightHouseRules()

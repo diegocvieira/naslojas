@@ -18,6 +18,11 @@ class Store extends Model
         return $this->hasMany('App\SuperAdminStore', 'store_id', 'id');
     }
 
+    public function payments()
+    {
+        return $this->hasMany('App\PaymentMethods', 'store_id', 'id');
+    }
+
     public function freights()
     {
         return $this->hasMany('App\StoreFreight', 'store_id', 'id');

@@ -154,5 +154,66 @@
                 padding-left: 150px;
             }
         }
+
+        .payment-methods {
+            //border: 1px solid red;
+            float: left;
+            width: 100%;
+            margin-bottom: 30px;
+
+            .payment-group {
+                float: left;
+                width: 50%;
+                //border: 1px solid blue;
+                margin-bottom: 20px;
+
+                &:first-child {
+                    width: 100%;
+                }
+
+                .payment-type {
+                    font-size: 14.5px;
+                    color: #000;
+                    display: block;
+                    margin-bottom: 10px;
+                }
+
+                .payment-description {
+                    display: block;
+
+                    input {
+                        display: none;
+
+                        &:checked + label:after {
+                            background-image: url('../images/icon-check2.png');
+                            background-position: center;
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                        }
+                    }
+
+                    label {
+                        font-size: 14.5px;
+                        color: rgb(150, 150, 150);
+                        position: relative;
+                        //border: 1px solid red;
+                        padding-left: 30px;
+                        font-weight: normal;
+                        cursor: pointer;
+
+                        &:after {
+                            content: '';
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 50%;
+                            background-color: rgb(245, 245, 245);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

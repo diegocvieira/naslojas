@@ -43,14 +43,14 @@ $(function() {
                 dataType: 'json',
                 success: function (data) {
                     if (redirect) {
-                        //window.location = '/sacola/produtos';
+                        window.location = '/sacola/dados';
                     } else {
                         $('#modal-default').modal('hide');
 
                         $('.open-bag').trigger('click');
 
                         var bag = $('header').find('.open-bag');
-                        bag.text(parseInt(bag.text()) + 1);
+                        bag.text(parseInt(bag.text() ? bag.text() : 0) + 1);
                     }
                 },
                 error: function (request, status, error) {
@@ -117,6 +117,20 @@ $(function() {
 
     $(document).on('change', '.page-bag-order-data input[name=payment]', function() {
         updateParcels();
+
+        var div = $('.payment-card');
+
+        if ($(this).val() == 0) {
+            div.hide();
+        } else {
+            div.show();
+
+            div.find('select option').hide();
+
+            div.find("select option[data-method='" + $(this).val() + "']").show();
+
+            div.find('select').selectpicker('refresh');
+        }
     });
 
     $(document).on('change', '.page-bag-order-data input[name=freight]', function() {

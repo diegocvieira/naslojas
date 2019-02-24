@@ -1,13 +1,17 @@
-<?php
+@php
     $top_nav_store = true;
-?>
+@endphp
 
 @extends('base')
 
 @section('content')
     <div class="container page-admin">
         @if ($products->count())
-            <h1 class="page-title">Confira os dados e responda as solicitações de pedidos</h1>
+            <div class="page-header">
+                <h1>Pedidos</h1>
+
+                <p class="page-subtitle">Confira os dados e responda as solicitações de pedidos</p>
+            </div>
 
             <div class="list-orders">
                 @foreach ($products as $product)
@@ -110,6 +114,11 @@
 
                                 <div class="group">
                                     <span class="item">
+                                        <span>Forma de pagamento:</span>
+                                        {{ _getPaymentMethod($product->order->payment) }}
+                                    </span>
+
+                                    <span class="item">
                                         <span>Frete:</span>
 
                                         {{ $product->order->freight_type == 0 ? 'Receber em casa' : 'Retirar na loja' }}
@@ -143,18 +152,21 @@
                                         <span>Informação:</span>
 
                                         @if ($product->status == 0)
-                                            A loja não possui mais o tamanho {{ $product->size }} deste produto!
+                                            O cliente foi notificado e o tamanho {{ $product->size }} do produto foi removido do naslojas.
                                             <br>
-                                            Já o retiramos do site e notificamos a loja para que isso não ocorra novamente.
+                                            Mantenha os produtos atualizados para não perder relevância no site.
+                                            <br>
+                                            Se isso for recorrente todos os seus produtos serão removidos.
                                         @elseif ($product->status == 1 && $product->order->freight_type == 1)
-                                            O seu pedido ficará reservado para você na loja até a data e horário indicado acima.
+                                            Reserve o pedido na loja até a data e horário indicado acima.
                                             <br>
-                                            Passe na loja e informe o seu nome para finalizar a compra e retirar o produto.
+                                            O cliente irá até a loja para finalizar a compra.
                                         @elseif ($product->status == 1 && $product->order->freight_type == 0)
-                                            Certifique-se que haverá alguém no endereço de entrega no horário
-                                            <br>agendado para receber o produto e realizar o pagamento.
+                                            Chame um entregador e o oriente com as informações necessárias para
+                                            <br>
+                                            realizar a entrega do pedido no endereço e horário indicado acima.
                                         @else
-                                            Aguarde a confirmação da loja ou tente entrar em contato pelo telefone acima.
+                                            Certifique-se que o produto foi separado antes de confirmar a solicitação.
                                         @endif
                                     </span>
                                 </div>

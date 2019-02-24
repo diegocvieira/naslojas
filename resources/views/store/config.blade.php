@@ -37,6 +37,10 @@
                         </li>
 
                         <li>
+                            <a href="{{ route('get-store-config', 'payment') }}" class="option {{ (isset($navigation) && $navigation == 'payment') ? 'active' : '' }}">Formas de pagamento</a>
+                        </li>
+
+                        <li>
                             <a href="{{ route('get-store-config', 'access') }}" class="option {{ (isset($navigation) && $navigation == 'access') ? 'active' : '' }}">Dados de acesso</a>
                         </li>
 
@@ -71,21 +75,6 @@
                         <div class="form-group slug">
                             {!! Form::text('slug', null, ['placeholder' => ' ', 'id' => 'slug', 'class' => 'move-placeholder']) !!}
                             {!! Form::label('', 'Url') !!}
-                        </div>
-
-                        <div class="form-group">
-                            {!! Form::text('min_parcel_price', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
-                            {!! Form::label('', 'Valor mínimo da parcela') !!}
-                        </div>
-
-                        <div class="form-group">
-                            {!! Form::text('max_parcel', null, ['placeholder' => ' ', 'class' => 'mask-number']) !!}
-                            {!! Form::label('', 'Máximo de parcelas') !!}
-                        </div>
-
-                        <div class="form-group">
-                            {!! Form::text('max_product_unit', null, ['placeholder' => ' ', 'class' => 'mask-number']) !!}
-                            {!! Form::label('', 'Máximo de unidades por produto') !!}
                         </div>
 
                         <div class="form-group">
@@ -139,13 +128,13 @@
                                 {!! Form::hidden('week_id[]', $week_id) !!}
 
                                 @foreach ($user->store->operatings as $store_operating)
-                                    <?php
+                                    @php
                                         $accept_weeks[] = $store_operating->week;
                                         $opening_morning = substr($store_operating->opening_morning, 0, -3);
                                         $closed_morning = substr($store_operating->closed_morning, 0, -3);
                                         $opening_afternoon = substr($store_operating->opening_afternoon, 0, -3);
                                         $closed_afternoon = substr($store_operating->closed_afternoon, 0, -3);
-                                    ?>
+                                    @endphp
 
                                     @if ($store_operating->week == $week_id)
                                         {!! Form::text('operating[' . $week_id . ']', $opening_morning . $closed_morning . $opening_afternoon . $closed_afternoon, ['placeholder' => ' ', 'class' => 'mask-week operating']) !!}
@@ -167,7 +156,9 @@
                                 {!! Form::hidden('district_id[]', $district->id) !!}
 
                                 @foreach ($user->store->freights as $store_freight)
-                                    <?php $accept_districts[] = $store_freight->district_id; ?>
+                                    @php
+                                        $accept_districts[] = $store_freight->district_id;
+                                    @endphp
 
                                     @if ($store_freight->district_id == $district->id)
                                         {!! Form::text('freight_price[' . $key . ']', $store_freight->price, ['placeholder' => ' ', 'class' => 'mask-money', 'required']) !!}
@@ -181,6 +172,43 @@
                                 {!! Form::label('', $district->name) !!}
                             </div>
                         @endforeach
+                    </div>
+
+                    <div class="fields {{ (isset($navigation) && $navigation == 'payment') ? 'show-fields' : '' }}">
+                        <div class="payment-methods">
+                            @foreach(_paymentMethods() as $payment_key => $payment)
+                                @foreach($payment as $payment_type_key => $payment_type)
+                                    <div class="payment-group">
+                                        <span class="payment-type">
+                                            {{ $payment_type_key }}
+                                        </span>
+
+                                        @foreach($payment_type as $payment_description_key => $payment_description)
+                                            <div class="payment-description">
+                                                {!! Form::checkbox('payment[]', $payment_key . '-' . $payment_description_key, (in_array($payment_key . '-' . $payment_description_key, $payments) || $payment_description == 'à vista' || $payment_description == 'Visa' || $payment_description == 'MasterCard') ? true : false, ['id' => 'payment' . $payment_key . $payment_description_key, 'disabled' => ($payment_description == 'à vista' || $payment_description == 'Visa' || $payment_description == 'MasterCard') ? true : false]) !!}
+
+                                                {!! Form::label('payment' . $payment_key . $payment_description_key, $payment_description) !!}
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endforeach
+                             @endforeach
+                         </div>
+
+                        <div class="form-group">
+                            {!! Form::text('min_parcel_price', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
+                            {!! Form::label('', 'Valor mínimo da parcela') !!}
+                        </div>
+
+                        <div class="form-group">
+                            {!! Form::text('max_parcel', null, ['placeholder' => ' ', 'class' => 'mask-number']) !!}
+                            {!! Form::label('', 'Máximo de parcelas') !!}
+                        </div>
+
+                        <div class="form-group">
+                            {!! Form::text('max_product_unit', null, ['placeholder' => ' ', 'class' => 'mask-number']) !!}
+                            {!! Form::label('', 'Máximo de unidades por produto') !!}
+                        </div>
                     </div>
 
                     <div class="fields {{ (isset($navigation) && $navigation == 'access') ? 'show-fields' : '' }}">

@@ -1,13 +1,17 @@
-<?php
+@php
     $top_nav = true;
-?>
+@endphp
 
 @extends('base')
 
 @section('content')
     <div class="container page-admin">
         @if ($products->count())
-            <h1 class="page-title">Confira os dados e o status dos pedidos que você realizou</h1>
+            <div class="page-header">
+                <h1>Meus pedidos</h1>
+
+                <p>Confira os dados e o status dos pedidos que você realizou</p>
+            </div>
 
             <div class="list-orders">
                 @foreach ($products as $product)
@@ -99,6 +103,11 @@
 
                                 <div class="group">
                                     <span class="item">
+                                        <span>Forma de pagamento:</span>
+                                        {{ _getPaymentMethod($product->order->payment) }}
+                                    </span>
+
+                                    <span class="item">
                                         <span>Frete:</span>
                                         {{ $product->order->freight_type == 0 ? 'Receber em casa' : 'Retirar na loja' }}
                                     </span>
@@ -134,7 +143,8 @@
                                             Passe na loja e informe o seu nome para finalizar a compra e retirar o produto.
                                         @elseif ($product->status == 1 && $product->order->freight_type == 0)
                                             Certifique-se que haverá alguém no endereço de entrega no horário
-                                            <br>agendado para receber o produto e realizar o pagamento.
+                                            <br>
+                                            agendado para receber o produto e realizar o pagamento.
                                         @else
                                             Aguarde a confirmação da loja ou tente entrar em contato pelo telefone acima.
                                         @endif

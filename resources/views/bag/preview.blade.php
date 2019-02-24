@@ -3,22 +3,9 @@
         <h2 class="header-title">MINHA SACOLA</h2>
 
         <div class="products">
-            <?php $subtotal = 0; ?>
-
             @foreach ($products as $product)
-                @foreach (session('bag')['stores'] as $bag_store)
-                    @foreach ($bag_store['products'] as $bag_product)
-                        @if ($bag_product['id'] == $product->id)
-                            <?php
-                                $qtd = $bag_product['qtd'];
-                                $subtotal += $qtd * $product->price;
-                            ?>
-                        @endif
-                    @endforeach
-                @endforeach
-
                 <div class="product">
-                    {!! Form::select('qtd', [$qtd => $qtd], $qtd, ['class' => 'qtd']) !!}
+                    {!! Form::select('qtd', [$product->product_qtd => $product->product_qtd], $product->product_qtd, ['class' => 'qtd']) !!}
 
                     <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $product->images->first()->image) }}" alt="Produto {{ $product->title }}" />
 
