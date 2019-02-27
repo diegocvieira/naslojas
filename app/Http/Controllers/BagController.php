@@ -391,6 +391,7 @@ class BagController extends Controller
 
             $order = new Order;
             $order->client_id = $client_id;
+            $order->client_name = $request->name;
             $order->freight_type = $request->freight;
             $order->client_phone = $request->phone;
             $order->client_cpf = $request->cpf;

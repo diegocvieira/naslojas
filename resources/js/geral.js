@@ -519,8 +519,6 @@ $(function() {
                 if (data.status) {
                     var row = $this.parents('.order');
 
-                    row.find('.confirmed_date').text(data.confirmed_date);
-
                     if ($this.hasClass('confirm-order')) {
                         row.find('.status').addClass('green').text('Pedido confirmado');
                     } else {

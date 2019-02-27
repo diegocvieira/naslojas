@@ -76,11 +76,9 @@ class OrderController extends Controller
         $date = date('Y-m-d H:i:s');
 
         $order->status = 1;
-        $order->confirmed_at = $date;
 
         if ($order->save()) {
             $return['status'] = true;
-            $return['confirmed_date'] = date('d/m/Y', strtotime($date)) . ' às ' . date('H:i', strtotime($date));
             $return['msg'] = 'Reserva realizada com sucesso! <br> O cliente já foi notificado de que o produto que ele deseja estará aguardando por ele na loja até o horário informado.';
 
             //$this->emailResponse($order, 1);
@@ -105,11 +103,9 @@ class OrderController extends Controller
         $date = date('Y-m-d H:i:s');
 
         $order->status = 0;
-        $order->confirmed_at = $date;
 
         if ($order->save()) {
             $return['status'] = true;
-            $return['confirmed_date'] = date('d/m/Y', strtotime($date)) . ' às ' . date('H:i', strtotime($date));
             $return['msg'] = 'Mantenha seus produtos atualizados. <br> Isso evita que sua loja perca os pontos de relevância e seus produtos caiam de posição nas buscas.';
 
             //$this->emailResponse($order, 1);

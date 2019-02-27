@@ -60,11 +60,6 @@
                                     </span>
 
                                     <span class="item">
-                                        <span>Confirmação da loja:</span>
-                                        {{ $product->order->confirmed_at ? date('d/m/Y', strtotime($product->order->confirmed_at)) . ' às ' . date('H:i', strtotime($product->order->confirmed_at)) : '---------' }}
-                                    </span>
-
-                                    <span class="item">
                                         <span>Status:</span>
                                         @if ($product->status == 0)
                                             <span class="red">Pedido recusado</span>

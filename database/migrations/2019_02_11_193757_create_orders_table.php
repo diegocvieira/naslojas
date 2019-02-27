@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->boolean('freight_type');
             $table->string('payment', 10)->nullable();
             $table->string('reserve_date', 50)->nullable();
+            $table->string('client_name', 200)->nullable();
             $table->string('client_cpf', 15)->nullable();
             $table->string('client_phone', 15)->nullable();
             $table->unsignedInteger('client_city_id')->nullable();

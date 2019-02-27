@@ -62,12 +62,6 @@
                                     </span>
 
                                     <span class="item">
-                                        <span>Confirmação da loja:</span>
-
-                                        <span class="confirmed_date">{{ $product->order->confirmed_at ? date('d/m/Y', strtotime($product->order->confirmed_at)) . ' às ' . date('H:i', strtotime($product->order->confirmed_at)) : '---------' }}</span>
-                                    </span>
-
-                                    <span class="item">
                                         <span>Status:</span>
 
                                         @if ($product->status == 0)
@@ -77,38 +71,6 @@
                                         @else
                                             <span class="status pending">Pedido pendente</span>
                                         @endif
-                                    </span>
-                                </div>
-
-                                <div class="group">
-                                    <span class="item">
-                                        <span>Loja:</span>
-
-                                        Vendido e entregue por {{ $product->product->store->name }}
-                                    </span>
-
-                                    <span class="item">
-                                        <span>Endereço:</span>
-
-                                        {{ $product->product->store->street }}, {{ $product->product->store->number }}
-
-                                        @if ($product->product->store->complement)
-                                            - {{ $product->product->store->complement }}
-                                        @endif
-
-                                        - {{ $product->product->store->district }}
-
-                                        - {{ $product->product->store->city->title }}/{{ $product->product->store->city->state->letter }}
-
-                                        <a href="//maps.google.com/?q={{ $product->product->store->street }}, {{ $product->product->store->number }}, {{ $product->product->store->district }}, {{ $product->product->store->city->title }}, {{ $product->product->store->city->state->letter }}" target="_blank" class="map">
-                            				ver no mapa
-                            			</a>
-                                    </span>
-
-                                    <span class="item">
-                                        <span>Telefone:</span>
-
-                                        {{ $product->product->store->phone }}
                                     </span>
                                 </div>
 
