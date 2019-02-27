@@ -76,7 +76,28 @@
 
                                 <div class="group">
                                     <span class="item">
+                                        <span>Cliente:</span>
+
+                                        {{ $product->order->client_name }}
+                                    </span>
+
+                                    <span class="item">
+                                        <span>Telefone:</span>
+
+                                        {{ $product->order->client_phone }}
+                                    </span>
+
+                                    <span class="item">
+                                        <span>CPF:</span>
+
+                                        {{ $product->order->client_cpf }}
+                                    </span>
+                                </div>
+
+                                <div class="group">
+                                    <span class="item">
                                         <span>Forma de pagamento:</span>
+
                                         {{ _getPaymentMethod($product->order->payment) }}
                                     </span>
 
