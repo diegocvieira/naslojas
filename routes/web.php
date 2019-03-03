@@ -195,7 +195,7 @@ Route::group(['prefix' => 'cliente'], function () {
 	Route::post('cadastro', 'ClientController@register')->name('client-register-post');
 
 	Route::group(['prefix' => 'admin', 'middleware' => 'auth:client'], function () {
-		Route::get('config', 'ClientController@getConfig')->name('get-client-config');
+		Route::get('config/{navigation?}', 'ClientController@getConfig')->name('get-client-config');
 		Route::post('config', 'ClientController@setConfig')->name('set-client-config');
 
 		Route::post('delete-account', 'ClientController@deleteAccount')->name('delete-client-account');

@@ -19,7 +19,6 @@ class CreateOrderProductsTable extends Migration
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->unsignedInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->dateTime('confirmed_at')->nullable();
             $table->integer('status')->default(2);
             $table->string('title', 255);
             $table->integer('qtd');

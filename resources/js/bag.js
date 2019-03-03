@@ -133,40 +133,10 @@ $(function() {
         }
     });
 
-    $(document).on('change', '.page-bag-order-data input[name=freight]', function() {
-        $('.freight-field, .text-freight').hide();
-
-        $('.order').find('.parcels').text('');
-
-        // Freight house
-        if ($(this).val() == '0') {
-            $('.freight-house, .text-freight-house').show();
-
-            // Calculate freight
-            var freight = $('select[name=district]').val();
-
-            if (freight) {
-                updateFreight(freight);
-            }
-
-            $('.custom-validate').each(function() {
-                $(this).rules('add', {
+                /*$(this).rules('add', {
                     required: true,
                     minlength: 1,
-                });
-            });
-        } else {
-            $('.freight-store, .text-freight-store').show();
-
-            $('.update-freight').each(function(index) {
-                $(this).text('grátis');
-            });
-
-            $('.custom-validate').each(function() {
-                $(this).rules('remove');
-            });
-        }
-    });
+                });*/
 
     $(document).on('change', '.page-bag-order-data select[name=district]', function() {
         updateFreight($(this).val());
@@ -189,6 +159,10 @@ $(function() {
                 required: true,
                 minlength: 1,
                 maxlength: 100
+            },
+            payment: {
+                required: true,
+                minlength: 1
             }
         },
         highlight: function (element, errorClass, validClass) {

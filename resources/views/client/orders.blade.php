@@ -64,20 +64,6 @@
                                     </span>
 
                                     <span class="item">
-                                        <span>Status:</span>
-
-                                        @if ($product->status == 0)
-                                            <span class="red">Pedido recusado</span>
-                                        @elseif ($product->status == 1)
-                                            <span class="green">Pedido confirmado</span>
-                                        @else
-                                            Pedido pendente
-                                        @endif
-                                    </span>
-                                </div>
-
-                                <div class="group">
-                                    <span class="item">
                                         <span>Loja:</span>
 
                                         Vendido e entregue por {{ $product->product->store->name }}
@@ -116,55 +102,43 @@
                                     </span>
 
                                     <span class="item">
-                                        <span>Frete:</span>
+                                        <span>Endereço:</span>
 
-                                        {{ $product->order->freight_type == 0 ? 'Receber em casa' : 'Retirar na loja' }}
+                                        {{ $product->order->client_street }}, {{ $product->order->client_number }}
+
+                                        @if ($product->order->client_complement)
+                                            - {{ $product->order->client_complement }}
+                                        @endif
+
+                                        - {{ $product->order->district->name }}
+
+                                        - {{ $product->order->city->title }}/{{ $product->order->city->state->letter }}
                                     </span>
 
-                                    @if ($product->order->freight_type == 0)
-                                        <span class="item">
-                                            <span>Endereço:</span>
-
-                                            {{ $product->order->client_street }}, {{ $product->order->client_number }}
-
-                                            @if ($product->order->client_complement)
-                                                - {{ $product->order->client_complement }}
-                                            @endif
-
-                                            - {{ $product->order->district->name }}
-
-                                            - {{ $product->order->city->title }}/{{ $product->order->city->state->letter }}
-                                        </span>
-                                    @endif
-
                                     <span class="item">
-                                        <span>Data e horário:</span>
+                                        <span>Entrega:</span>
 
-                                        {{ $product->order->reserve_date }}
+                                        {{ _businessDay($product->order->created_at) }}
                                     </span>
                                 </div>
 
-                                <div class="group">
-                                    <span class="item">
-                                        <span>Informação:</span>
+                                @if ($product->status == 0)
+                                    <div class="group">
+                                        <span class="item">
+                                            <span>Status:</span>
 
-                                        @if ($product->status == 0)
+                                            <span class="red">Pedido recusado</span>
+                                        </span>
+
+                                        <span class="item">
+                                            <span>Informação:</span>
+
                                             A loja não possui mais o tamanho {{ $product->size }} deste produto!
                                             <br>
                                             Já o retiramos do site e notificamos a loja para que isso não ocorra novamente.
-                                        @elseif ($product->status == 1 && $product->order->freight_type == 1)
-                                            O seu pedido ficará reservado para você na loja até a data e horário indicado acima.
-                                            <br>
-                                            Passe na loja e informe o seu nome para finalizar a compra e retirar o produto.
-                                        @elseif ($product->status == 1 && $product->order->freight_type == 0)
-                                            Certifique-se que haverá alguém no endereço de entrega no horário
-                                            <br>
-                                            agendado para receber o produto e realizar o pagamento.
-                                        @else
-                                            Aguarde a confirmação da loja ou tente entrar em contato pelo telefone acima.
-                                        @endif
-                                    </span>
-                                </div>
+                                        </span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

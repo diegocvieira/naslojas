@@ -26,6 +26,7 @@
 
                                 <span class="item">
                                     Tamanho selecionado:
+
                                     <span>{{ $product->size }}</span>
                                 </span>
                             </div>
@@ -33,6 +34,7 @@
                             <div class="col-xs-2 text-center">
                                 <span class="item">
                                     Quantidade:
+
                                     <span>{{ $product->qtd }}</span>
                                 </span>
                             </div>
@@ -102,31 +104,23 @@
                                     </span>
 
                                     <span class="item">
-                                        <span>Frete:</span>
+                                        <span>Endereço:</span>
 
-                                        {{ $product->order->freight_type == 0 ? 'Receber em casa' : 'Retirar na loja' }}
+                                        {{ $product->order->client_street }}, {{ $product->order->client_number }}
+
+                                        @if ($product->order->client_complement)
+                                            - {{ $product->order->client_complement }}
+                                        @endif
+
+                                        - {{ $product->order->district->name }}
+
+                                        - {{ $product->order->city->title }}/{{ $product->order->city->state->letter }}
                                     </span>
 
-                                    @if ($product->order->freight_type == 0)
-                                        <span class="item">
-                                            <span>Endereço:</span>
-
-                                            {{ $product->order->client_street }}, {{ $product->order->client_number }}
-
-                                            @if ($product->order->client_complement)
-                                                - {{ $product->order->client_complement }}
-                                            @endif
-
-                                            - {{ $product->order->district->name }}
-
-                                            - {{ $product->order->city->title }}/{{ $product->order->city->state->letter }}
-                                        </span>
-                                    @endif
-
                                     <span class="item">
-                                        <span>Data e horário:</span>
+                                        <span>Entrega:</span>
 
-                                        {{ $product->order->reserve_date }}
+                                        {{ _businessDay($product->order->created_at) }}
                                     </span>
                                 </div>
 

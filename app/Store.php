@@ -28,10 +28,10 @@ class Store extends Model
         return $this->hasMany('App\StoreFreight', 'store_id', 'id');
     }
 
-    public function operatings()
+    /*public function operatings()
     {
         return $this->hasMany('App\StoreOperating', 'store_id', 'id');
-    }
+    }*/
 
     public function products()
     {

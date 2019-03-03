@@ -17,9 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
-            $table->boolean('freight_type');
             $table->string('payment', 10)->nullable();
-            $table->string('reserve_date', 50)->nullable();
             $table->string('client_name', 200)->nullable();
             $table->string('client_cpf', 15)->nullable();
             $table->string('client_phone', 15)->nullable();

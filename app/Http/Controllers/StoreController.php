@@ -175,14 +175,14 @@ class StoreController extends Controller
         $user = User::find($this->user_id);
         $districts = District::get();
 
-        $weeks = [
+        /*$weeks = [
             '1' => 'Segunda',
             '2' => 'Terça',
             '3' => 'Quarta',
             '4' => 'Quinta',
             '5' => 'Sexta',
             '6' => 'Sábado'
-        ];
+        ];*/
 
         $payments = [];
 
@@ -193,7 +193,7 @@ class StoreController extends Controller
         array_push($payments, '0-0', '1-0', '1-1', '2-0', '2-1');
 
         if (Agent::isDesktop()) {
-            return view('store.config', compact('user', 'districts', 'weeks', 'payments', 'section', 'header_title', 'navigation'));
+            return view('store.config', compact('user', 'districts', 'payments', 'section', 'header_title', 'navigation'));
         } else {
             return view('mobile.store.config', compact('user', 'districts', 'section', 'header_title'));
         }
@@ -302,7 +302,7 @@ class StoreController extends Controller
                 }
 
                 // Delete and insert new operation hours
-                $hours = array_map(function($q, $t) {
+                /*$hours = array_map(function($q, $t) {
                     return array('week' => $q, 'hour' => $t);
                 }, $request->week_id, $request->operating);
 
@@ -332,7 +332,7 @@ class StoreController extends Controller
                             'closed_afternoon' => $closed_afternoon
                         ]);
                     }
-                }
+                }*/
 
                 if ($store->save() && $user->save()) {
                     if (Auth::guard('superadmin')->check()) {
@@ -358,7 +358,7 @@ class StoreController extends Controller
     {
         $store = Store::find($this->store_id);
 
-        if ($status == 0 || $status == 1 && $store->freights->count() == 45 && $store->operatings->count() == 6 && $store->phone && $store->cnpj && $store->max_product_unit && $store->max_parcel && $store->min_parcel_price && $store->cep && $store->district && $store->street && $store->number) {
+        if ($status == 0 || $status == 1 && $store->freights->count() == 45 && $store->phone && $store->cnpj && $store->max_product_unit && $store->max_parcel && $store->min_parcel_price && $store->cep && $store->district && $store->street && $store->number) {
             $store->status = $status;
 
             $store->save();

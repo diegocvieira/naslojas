@@ -58,20 +58,6 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-xs-3">
-                            {!! Form::label('', 'Frete') !!}
-                        </div>
-
-                        <div class="col-xs-9 buttons">
-                            {!! Form::radio('freight', '0', null, ['id' => 'freight-house', 'autocomplete' => 'off']) !!}
-                            {!! Form::label('freight-house', 'Receber em casa') !!}
-
-                            {!! Form::radio('freight', '1', null, ['id' => 'freight-store', 'autocomplete' => 'off']) !!}
-                            {!! Form::label('freight-store', 'Retirar na loja') !!}
-                        </div>
-                    </div>
-
                     <div class="row payment">
                         <div class="col-xs-3">
                             {!! Form::label('', 'Pagamento') !!}
@@ -109,53 +95,7 @@
                         </div>
                     </div>
 
-                    <div class="row store-adress freight-field freight-store">
-                        <div class="col-xs-3">
-                            {!! Form::label('', 'Endereço') !!}
-                        </div>
-
-                        <div class="col-xs-9">
-                            @foreach ($bag_data as $key => $data)
-                                <div class="item">
-                                    <span class="order-number">Retirar pedido {{ $key + 1 }}</span>
-
-                                    <span class="store-name">{{ $data['store'] }}</span>
-
-                                    <span class="info-address">
-                                        {{ $data['street'] }}, {{ $data['number'] }}
-
-                                        @if ($data['complement'])
-                                            - {{ $data['complement'] }}
-                                        @endif
-                                    </span>
-
-                                    <span class="info-address">
-                                        {{ $data['district'] }} - {{ $data['city'] }}/{{ $data['state'] }}
-                                    </span>
-
-                                    <a href="//maps.google.com/?q={{ $data['street'] }}, {{ $data['number'] }}, {{ $data['district'] }}, {{ $data['city'] }}, {{ $data['state'] }}" target="_blank">
-                                        ver no mapa
-                                    </a>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <div class="row store-reserve_hour freight-field freight-store">
-                        <div class="col-xs-3">
-                            {!! Form::label('reserve_date', 'Data e horário') !!}
-                        </div>
-
-                        <div class="col-xs-9">
-                            @php
-                                $business_day = _businessDay(date('Y-m-d', strtotime('+ 1 day')));
-                            @endphp
-
-                            Os produtos ficarão reservados para você na loja até às 19:00 de {{ _weekAbbreviation($business_day) }} {{ date('d/m/Y', strtotime($business_day)) }}
-                        </div>
-                    </div>
-
-                    <div class="row client-address freight-field freight-house">
+                    <div class="row client-address">
                         <div class="col-xs-3">
                             {!! Form::label('', 'Endereço') !!}
                         </div>
@@ -177,13 +117,13 @@
                         </div>
                     </div>
 
-                    <div class="row reserve_hour freight-field freight-house">
+                    <div class="row reserve_hour">
                         <div class="col-xs-3">
-                            {!! Form::label('reserve_date', 'Data e horário') !!}
+                            {!! Form::label('reserve_date', 'Entrega') !!}
                         </div>
 
                         <div class="col-xs-9">
-                            {!! Form::select('reserve_date', $reserve_hours, null, ['class' => 'selectpicker custom-validate', 'title' => 'Agendar para']) !!}
+                            {{ _businessDay() }}
                         </div>
                     </div>
                 </div>
@@ -220,8 +160,7 @@
 
                         {!! Form::submit('ENVIAR PEDIDO') !!}
 
-                        <p class="text-freight-store text-freight">Lembre-se que você deve retirar e pagar os pedidos em cada loja separadamente.</p>
-                        <p class="text-freight-house text-freight">Lembre-se que você vai receber e pagar os pedidos de cada loja separadamente.</p>
+                        <p class="text-freight">Lembre-se que você vai receber e pagar os pedidos de cada loja separadamente.</p>
                     </div>
                 </div>
             {!! Form::close() !!}

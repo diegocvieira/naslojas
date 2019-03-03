@@ -1,6 +1,7 @@
 $(function() {
     $('body').css('opacity', '1');
 
+    $('.mask-date').mask('00/00/0000');
     $('.mask-week').mask('00:00 às 00:00 e 00:00 às 00:00', {reverse: false});
     $('#cep').mask('00000-000', {reverse: false, clearIfNotMatch: true});
     $('.mask-cpf').mask('000.000.000-00', {reverse: true, clearIfNotMatch: true});
@@ -322,90 +323,75 @@ $(function() {
         position == 1 ? modal.find('.prev').hide() : modal.find('.prev').show();
     });
 
-    $(document).on('click', '.show-client-config', function(e) {
-        e.preventDefault();
+    $('#form-client-config').validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 1,
+                maxlength: 200
+            },
+            email: {
+                required: true,
+                minlength: 1,
+                maxlength: 100,
+                email: true
+            },
+            password: {
+                minlength: 8
+            },
+            password_confirmation: {
+                minlength: 8,
+                equalTo: "#password"
+            }
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass(errorClass).removeClass(validClass);
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass(errorClass).addClass(validClass);
+        },
+        errorPlacement: function(error, element) {
+        },
+        submitHandler: function(form) {
+            modalAlert("Confirme sua senha atual.<input type='password' name='current_password' placeholder='digite aqui' />", 'ENVIAR');
 
-        $.ajax({
-            url: $(this).attr('href'),
-            method: 'GET',
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                $('#modal-default').removeClass().addClass('modal fade page-client-config').find('.modal-content').html(data.body);
-                $('#modal-default').modal('show');
+            var modal = $('#modal-alert');
 
-                $('#form-client-config').validate({
-                    rules: {
-                        name: {
-                            required: true,
-                            minlength: 1,
-                            maxlength: 200
-                        },
-                        email: {
-                            required: true,
-                            minlength: 1,
-                            maxlength: 100,
-                            email: true
-                        },
-                        password: {
-                            minlength: 8
-                        },
-                        password_confirmation: {
-                            minlength: 8,
-                            equalTo: "#password"
-                        }
-                    },
-                    highlight: function (element, errorClass, validClass) {
-                        $(element).addClass(errorClass).removeClass(validClass);
-                    },
-                    unhighlight: function (element, errorClass, validClass) {
-                        $(element).removeClass(errorClass).addClass(validClass);
-                    },
-                    errorPlacement: function(error, element) {
-                    },
-                    submitHandler: function(form) {
-                        modalAlert("Confirme sua senha atual.<input type='password' name='current_password' placeholder='digite aqui' />", 'ENVIAR');
+            modal.find('.btn').addClass('btn-confirm');
 
-                        var modal = $('#modal-alert');
+            modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
+                $(form).find('input[name=current_password]').val(modal.find('input[name=current_password]').val());
 
-                        modal.find('.btn').addClass('btn-confirm');
+                $.ajax({
+                    url: $(form).attr('action'),
+                    method: 'POST',
+                    dataType: 'json',
+                    data: $(form).serialize(),
+                    success: function (data) {
+                        modal.find('.modal-footer .invalid-field').remove();
 
-                        modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
-                            $(form).find('input[name=current_password]').val(modal.find('input[name=current_password]').val());
+                        if(data.status == '0' || data.status == '1') {
+                            modal.find('.modal-body').html(data.msg);
+                            modal.find('.modal-footer .btn-confirm').removeClass('btn-confirm').text('OK');
 
-                            $.ajax({
-                                url: $(form).attr('action'),
-                                method: 'POST',
-                                dataType: 'json',
-                                data: $(form).serialize(),
-                                success: function (data) {
-                                    modal.find('.modal-footer .invalid-field').remove();
-
-                                    if(data.status == '0' || data.status == '1') {
-                                        modal.find('.modal-body').html(data.msg);
-                                        modal.find('.modal-footer .btn-confirm').removeClass('btn-confirm').text('OK');
-
-                                        modal.find('.modal-footer .btn').unbind().on('click', function() {
-                                            return true;
-                                        });
-                                    }
-
-                                    if(data.status == '1') {
-                                        $(form).find('input[type=password]').val('');
-                                    }
-
-                                    if(data.status == '2') {
-                                        modal.find('.modal-footer').prepend("<span class='invalid-field'>Senha inválida</span>");
-                                    }
-                                }
+                            modal.find('.modal-footer .btn').unbind().on('click', function() {
+                                return true;
                             });
+                        }
 
-                            return false;
-                        });
+                        if(data.status == '1') {
+                            $(form).find('input[type=password]').val('');
+                        }
+
+                        if(data.status == '2') {
+                            modal.find('.modal-footer').prepend("<span class='invalid-field'>Senha inválida</span>");
+                        }
                     }
                 });
-            }
-        });
+
+                return false;
+            });
+        }
     });
 
     // Delete client account

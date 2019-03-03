@@ -143,37 +143,54 @@ function _uploadImage($file, $store_id)
 function _businessDay($date = null)
 {
     if (!$date) {
-        $date = date('Y-m-d');
+        $date = date('Y-m-d', strtotime('+ 1 day'));
     }
 
-    $week = date('w', strtotime($date));
+    $week_day = date('w', strtotime($date));
 
-    if ($week == 6 || $week == 0) {
+    if ($week_day == 6 || $week_day == 0) {
         return _businessDay(date('Y-m-d', strtotime($date . ' + 1 day')));
     } else {
-        return $date;
+        switch ($week_day) {
+            case 1:
+                $week = 'segunda-feira';
+                break;
+            case 2:
+                $week = 'terça-feira';
+                break;
+            case 3:
+                $week = 'quarta-feira';
+                break;
+            case 4:
+                $week = 'quinta-feira';
+                break;
+            case 5:
+                $week = 'sexta-feira';
+        }
+
+        return 'Até ' . $week . ' ' . date('d/m/Y', strtotime($date));
     }
 }
 
-function _weekAbbreviation($date)
+function _getWeek($date)
 {
     $date = date('w', strtotime($date));
 
     switch ($date) {
         case 1:
-            $week = 'Seg.';
+            $week = 'Segunda-feira';
             break;
         case 2:
-            $week = 'Ter.';
+            $week = 'Terça-feira';
             break;
         case 3:
-            $week = 'Qua.';
+            $week = 'Quarta-feira';
             break;
         case 4:
-            $week = 'Qui.';
+            $week = 'Quinta-feira';
             break;
         case 5:
-            $week = 'Sex.';
+            $week = 'Sexta-feira';
     }
 
     return $week;
@@ -234,6 +251,10 @@ function _getPaymentMethod($value)
             break;
         case 2:
             $method = 'Cartão de débito';
+    }
+
+    if ($method == 'Dinheiro') {
+        return $method;
     }
 
     switch ($value_split[1]) {

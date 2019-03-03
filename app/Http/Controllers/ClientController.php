@@ -54,14 +54,14 @@ class ClientController extends Controller
         return json_encode($return);
     }
 
-    public function getConfig()
+    public function getConfig($navigation = null)
     {
+        $header_title = 'Configurações | naslojas.com';
+
         $client = Client::find(Auth::guard('client')->user()->id);
 
         if (Agent::isDesktop()) {
-            return response()->json([
-                'body' => view('client.config', compact('client'))->render()
-            ]);
+            return view('client.config', compact('client', 'header_title', 'navigation'));
         } else {
             $section = 'config';
 

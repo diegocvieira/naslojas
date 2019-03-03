@@ -28,9 +28,9 @@
                             <a href="{{ route('get-store-config', 'address') }}" class="option {{ (isset($navigation) && $navigation == 'address') ? 'active' : '' }}">Endereço</a>
                         </li>
 
-                        <li>
+                        <?php /*<li>
                             <a href="{{ route('get-store-config', 'hours') }}" class="option {{ (isset($navigation) && $navigation == 'hours') ? 'active' : '' }}">Horário de atendimento</a>
-                        </li>
+                        </li>*/ ?>
 
                         <li>
                             <a href="{{ route('get-store-config', 'freights') }}" class="option {{ (isset($navigation) && $navigation == 'freights') ? 'active' : '' }}">Frete</a>
@@ -122,7 +122,7 @@
                         </div>
                     </div>
 
-                    <div class="fields {{ (isset($navigation) && $navigation == 'hours') ? 'show-fields' : '' }}">
+                    <?php /*<div class="fields {{ (isset($navigation) && $navigation == 'hours') ? 'show-fields' : '' }}">
                         @foreach ($weeks as $week_id => $week)
                             <div class="form-group">
                                 {!! Form::hidden('week_id[]', $week_id) !!}
@@ -148,7 +148,7 @@
                                 {!! Form::label('', $week) !!}
                             </div>
                         @endforeach
-                    </div>
+                    </div>*/ ?>
 
                     <div class="fields freights-fields {{ (isset($navigation) && $navigation == 'freights') ? 'show-fields' : '' }}">
                         @foreach ($districts as $key => $district)

@@ -201,20 +201,14 @@ class BagController extends Controller
 
         $header_title = 'Dados do pedido | naslojas.com';
 
-        $today = date('H:i');
-        $week = date('w');
-        //$week = 4;
-        //$today = '13:00';
+        //$today = date('H:i');
+        //$week = date('w');
 
-        //if ($week == 6 || $week == 0) {
-            //$today = '09:00';
-        //}
-
-        for ($i = 1; $i <= 2; $i++) {
+        /*for ($i = 1; $i <= 2; $i++) {
             $valid_date = $i == 1 ? _businessDay() : _businessDay(date('Y-m-d', strtotime($valid_date . ' + 1 day')));
             $date = _weekAbbreviation($valid_date) . ' ' . date('d/m/Y', strtotime($valid_date)) . ' entre ';
 
-            for ($z = 10; $z <= 18; $z++) {
+            for ($z = 12; $z <= 18; $z++) {
                 if (strtotime($z . ':00') > strtotime($today) || $i == 2 || $week == 6 || $week == 0) {
                     $reserve_hours[$date . $z . ':00 e ' . ($z + 1) . ':00'] = $date . $z . ':00 e ' . ($z + 1) . ':00';
                 }
@@ -223,7 +217,7 @@ class BagController extends Controller
             if (isset($reserve_hours) && count($reserve_hours) == 9 || $week == 6 || $week == 0) {
                 break;
             }
-        }
+        }*/
 
         $payments = [];
 
@@ -257,7 +251,7 @@ class BagController extends Controller
 
         array_push($payments, '1-0', '1-1', '2-0', '2-1');
 
-        return view('bag.order-data', compact('bag_data', 'client', 'districts', 'reserve_hours', 'payments', 'header_title'));
+        return view('bag.order-data', compact('bag_data', 'client', 'districts', 'payments', 'header_title'));
 
         /*foreach ($store->operatings as $operating_key => $operating) {
             if ($operating->week == $week1 || $operating->week == $week2) {
@@ -370,12 +364,9 @@ class BagController extends Controller
 
     public function finish(Request $request)
     {
-        $freight_house = $request->freight == 0 ? true : false;
-        $rules = $freight_house ? $this->freightHouseRules() : $this->freightStoreRules();
-
         $validator = Validator::make(
             $request->all(),
-            $rules,
+            $this->rules(),
             app('App\Http\Controllers\GlobalController')->customMessages()
         );
 
@@ -385,65 +376,50 @@ class BagController extends Controller
         } else {
             $client_id = Auth::guard('client')->user()->id;
 
+            // Search the city
+            $city = City::whereHas('state', function ($query) use ($request) {
+                    $query->where('letter', $request->state);
+                })
+                ->where('title', 'LIKE', '%' . $request->city . '%')
+                ->select('id')
+                ->first();
+
+            if (!$city) {
+                $return['status'] = false;
+                $return['msg'] = 'Não identificamos a cidade informada. Verifique a cidade e o estado e tente novamente.';
+
+                return json_encode($return);
+            }
+
             $client = Client::find($client_id);
             $client->cpf = $request->cpf;
             $client->phone = $request->phone;
+            $client->city_id = $city->id;
+            $client->district_id = $request->district;
+            $client->cep = $request->cep;
+            $client->street = $request->street;
+            $client->number = $request->number;
+            $client->complement = $request->complement;
 
             $order = new Order;
             $order->client_id = $client_id;
             $order->client_name = $request->name;
-            $order->freight_type = $request->freight;
             $order->client_phone = $request->phone;
             $order->client_cpf = $request->cpf;
             $order->payment = $request->payment == '0' ? '0-0' : $request->payment_card;
-
-            if ($freight_house) {
-                // Search the city
-                $city = City::whereHas('state', function ($query) use ($request) {
-                        $query->where('letter', $request->state);
-                    })
-                    ->where('title', 'LIKE', '%' . $request->city . '%')
-                    ->select('id')
-                    ->first();
-
-                if (!$city) {
-                    $return['status'] = false;
-                    $return['msg'] = 'Não identificamos a cidade informada. Verifique a cidade e o estado e tente novamente.';
-
-                    return json_encode($return);
-                }
-
-                $client->city_id = $city->id;
-                $client->district_id = $request->district;
-                $client->cep = $request->cep;
-                $client->street = $request->street;
-                $client->number = $request->number;
-                $client->complement = $request->complement;
-
-                $order->client_city_id = $city->id;
-                $order->client_district_id = $request->district;
-                $order->client_cep = $request->cep;
-                $order->client_street = $request->street;
-                $order->client_number = $request->number;
-                $order->client_complement = $request->complement;
-                $order->reserve_date = $request->reserve_date;
-            } else {
-                $business_day = _businessDay(date('Y-m-d', strtotime('+ 1 day')));
-
-                $order->reserve_date = 'até às 19:00 de ' . _weekAbbreviation($business_day) . ' ' . date('d/m/Y', strtotime($business_day));
-            }
+            $order->client_city_id = $city->id;
+            $order->client_district_id = $request->district;
+            $order->client_cep = $request->cep;
+            $order->client_street = $request->street;
+            $order->client_number = $request->number;
+            $order->client_complement = $request->complement;
 
             if ($client->save() && $order->save()) {
                 foreach (session('bag')['stores'] as $store) {
                     foreach ($store['products'] as $product) {
                         $p = Product::find($product['id']);
 
-                        if ($freight_house) {
-                            $freight = $p->store->freights->where('district_id', $client->district_id)->first();
-                            $freight_price = $freight->price;
-                        } else {
-                            $freight_price = 0.00;
-                        }
+                        $freight = $p->store->freights->where('district_id', $client->district_id)->first();
 
                         $order->products()->create([
                             'size' => $product['size'],
@@ -452,7 +428,7 @@ class BagController extends Controller
                             'price' => $p->price,
                             'title' => $p->title,
                             'product_id' => $p->id,
-                            'freight_price' => $freight_price
+                            'freight_price' => $freight->price
                         ]);
                     }
                 }
@@ -488,7 +464,7 @@ class BagController extends Controller
         return view('bag.success', compact('order', 'products', 'header_title'));
     }
 
-    private function freightHouseRules()
+    private function rules()
     {
         return [
             'cep' => 'required|max:10',
@@ -499,18 +475,7 @@ class BagController extends Controller
             'state' => 'required',
             'cpf' => 'required|max:15',
             'phone' => 'required|max:15',
-            'payment' => 'required',
-            'reserve_date' => 'required',
-            'freight' => 'required'
-        ];
-    }
-
-    private function freightStoreRules()
-    {
-        return [
-            'cpf' => 'required|max:15',
-            'phone' => 'required|max:15',
-            'freight' => 'required'
+            'payment' => 'required'
         ];
     }
 }

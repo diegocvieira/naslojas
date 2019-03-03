@@ -1,19 +1,85 @@
 .page-client-config {
-    .modal-dialog {
-        border-radius: 5px;
-        width: 538px;
+    margin-top: 50px;
+
+    .header-config {
+        margin-bottom: 20px;
+
+        .description {
+            font-size: 14.5px;
+            color: rgb(100, 100, 100);
+        }
+
+        input[type=submit] {
+            font-size: 14.5px;
+            color: #fff;
+            font-weight: 700;
+            background-color: rgb(255, 23, 68);
+            width: 200px;
+            height: 45px;
+            border: none;
+            border-radius: 25px;
+            float: right;
+        }
     }
 
-    .modal-content {
-        padding: 80px 80px 60px 80px;
-        width: 100%;
-        height: 100%;
+    .navigation {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 2.5px 4.33px 4.75px 0.25px rgba(200, 200, 200, 0.118);
+
+        li {
+            display: block;
+
+            &:first-child a {
+                border-top: none;
+
+                &.active {
+                    border-radius: 10px 10px 0 0;
+                }
+            }
+
+            a {
+                font-size: 16.6px;
+                color: rgb(150, 150, 150);
+                display: block;
+                padding: 20px 10px 20px 40px;
+                border-top: 1px solid rgb(240, 240, 240);
+                position: relative;
+
+                &.active {
+                    color: #000;
+                    font-weight: 700;
+                    background-color: rgb(245, 245, 245);
+                }
+
+                &#delete-client-account {
+                    color: rgb(255, 23, 68);
+                }
+            }
+        }
+    }
+
+    .fields {
+        background-color: #fff;
+        display: none;
         float: left;
-    }
+        width: 100%;
+        padding: 80px 200px 60px 200px;
+        border-radius: 10px;
+        box-shadow: 2.5px 4.33px 4.75px 0.25px rgba(200, 200, 200, 0.118);
 
-    #form-client-config {
+        &.show-fields {
+            display: block;
+        }
+
+        &.freights-fields {
+            padding: 80px 50px 60px 50px;
+            max-height: 780px;
+            overflow: auto;
+        }
+
         input, textarea {
-            &focus + label, &:not(:placeholder-shown) + label {
+            &focus + label, &:not(:placeholder-shown) + label, &.move-placeholder + label {
                 background-color: #fff;
             }
         }
@@ -26,25 +92,16 @@
             }
         }
 
-        #delete-client-account {
+        .cep a {
+            position: absolute;
+            right: -80px;
+            top: 18px;
             font-size: 12.5px;
-            color: rgb(150, 150, 150);
+            color: rgb(122, 184, 236);
         }
 
         input[name=current_password] {
             display: none;
-        }
-
-        input[type=submit] {
-            color: rgb(255, 255, 255);
-            font-weight: 700;
-            background-color: rgb(255, 23, 68);
-            height: 45px;
-            border-radius: 25px;
-            margin: 20px 0;
-            border: none;
-            font-size: 14.5;
-            width: 100%;
         }
     }
 }

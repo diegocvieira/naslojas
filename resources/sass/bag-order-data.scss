@@ -91,10 +91,6 @@
             text-align: right;
         }
 
-        .freight-field {
-            display: none;
-        }
-
         .col-xs-9 {
             padding-right: 130px;
 
@@ -229,44 +225,6 @@
 
             .margin {
                 margin-left: 4%;
-            }
-        }
-
-        .store-adress {
-            .item {
-                display: block;
-                margin-bottom: 50px;
-
-                .order-number {
-                    font-size: 14.5px;
-                    color: rgb(122, 184, 236);
-                    font-weight: 700;
-                    display: block;
-                }
-
-                .store-name {
-                    font-size: 14.5px;
-                    color: #000;
-                    line-height: 1.714;
-                    display: block;
-                }
-
-                .info-address {
-                    font-size: 14.5px;
-                    color: rgb(150, 150, 150);
-                    line-height: 1.714;
-                    display: block;
-                }
-
-                a {
-                    font-size: 12.5px;
-                    color: rgb(50, 50, 50);
-                    background-image: url('../images/icon-pin.png');
-                    background-position: left;
-                    background-repeat: no-repeat;
-                    background-size: 20px;
-                    padding-left: 25px;
-                }
             }
         }
 
