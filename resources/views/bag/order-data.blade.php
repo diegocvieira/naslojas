@@ -119,7 +119,7 @@
 
                     <div class="row reserve_hour">
                         <div class="col-xs-3">
-                            {!! Form::label('reserve_date', 'Entrega') !!}
+                            {!! Form::label('', 'Entrega') !!}
                         </div>
 
                         <div class="col-xs-9">

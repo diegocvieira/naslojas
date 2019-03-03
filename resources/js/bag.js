@@ -121,8 +121,15 @@ $(function() {
         var div = $('.payment-card');
 
         if ($(this).val() == 0) {
+            $('select[name=payment_card]').rules('remove');
+
             div.hide();
         } else {
+            $('select[name=payment_card]').rules('add', {
+                required: true,
+                minlength: 1,
+            });
+
             div.show();
 
             div.find('select option').hide();
@@ -132,11 +139,6 @@ $(function() {
             div.find('select').selectpicker('refresh');
         }
     });
-
-                /*$(this).rules('add', {
-                    required: true,
-                    minlength: 1,
-                });*/
 
     $(document).on('change', '.page-bag-order-data select[name=district]', function() {
         updateFreight($(this).val());
@@ -155,12 +157,31 @@ $(function() {
                 minlength: 1,
                 maxlength: 100
             },
-            freight: {
-                required: true,
-                minlength: 1,
-                maxlength: 100
-            },
             payment: {
+                required: true,
+                minlength: 1
+            },
+            cep: {
+                required: true,
+                minlength: 1
+            },
+            street: {
+                required: true,
+                minlength: 1
+            },
+            number: {
+                required: true,
+                minlength: 1
+            },
+            district: {
+                required: true,
+                minlength: 1
+            },
+            city: {
+                required: true,
+                minlength: 1
+            },
+            state: {
                 required: true,
                 minlength: 1
             }
