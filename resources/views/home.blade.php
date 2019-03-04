@@ -1,6 +1,6 @@
-<?php
+@php
     $top_nav = true;
-?>
+@endphp
 
 @extends('base')
 
@@ -10,17 +10,20 @@
             <div class="know">
                 <div class="col-xs-4">
                     <img src="{{ asset('images/know/shirt.png') }}" class="img-shirt" />
+
                     <p>Confira as ofertas<br>das lojas de Pelotas</p>
                 </div>
 
                 <div class="col-xs-4">
                     <img src="{{ asset('images/know/calendar.png') }}" />
-                    <p>Agende a entrega<br>a partir de 2 horas</p>
+
+                    <p>Receba seu pedido<br>em até 24 horas</p>
                 </div>
 
                 <div class="col-xs-4">
-                    <img src="{{ asset('images/know/store.png') }}" class="img-store" />
-                    <p>Ou retire o pedido<br>diretamente na loja</p>
+                    <img src="{{ asset('images/know/card.png') }}" class="img-card" />
+
+                    <p>Pague somente ao<br>receber o pedido</p>
                 </div>
             </div>
 

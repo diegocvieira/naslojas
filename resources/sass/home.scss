@@ -14,8 +14,12 @@
         img {
               width: 72px;
 
-              &.img-store + p {
-                  margin-top: 0;
+              &.img-card {
+                  width: 74px;
+
+                 &+ p {
+                      margin-top: 15px;
+                  }
               }
 
               &.img-shirt {
