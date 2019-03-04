@@ -1,35 +1,6 @@
-<!--{!! Form::model($client, ['method' => 'POST', 'route' => 'set-client-config', 'id' => 'form-client-config']) !!}
-    {!! Form::input('password', 'current_password') !!}
-
-    <div class="form-group">
-        {!! Form::text('name', null, ['placeholder' => ' ']) !!}
-        {!! Form::label('', 'Nome') !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::email('email', null, ['placeholder' => ' ']) !!}
-        {!! Form::label('', 'E-mail') !!}
-    </div>
-
-    <div class="form-group margin half">
-        {!! Form::input('password', 'password', null, ['placeholder' => ' ', 'id' => 'password']) !!}
-        {!! Form::label('', 'Nova senha') !!}
-    </div>
-
-    <div class="form-group half">
-        {!! Form::input('password', 'password_confirmation', null, ['placeholder' => ' ']) !!}
-        {!! Form::label('', 'Confirmar nova senha') !!}
-    </div>
-
-    {!! Form::submit('SALVAR') !!}
-
-    <a href="{{ route('delete-client-account') }}" id="delete-client-account">Deletar conta</a>
-{!! Form::close() !!}
--->
-
-<?php
+@php
     $top_nav = true;
-?>
+@endphp
 
 @extends('base')
 
@@ -38,7 +9,7 @@
         {!! Form::model($client, ['method' => 'POST', 'route' => 'set-client-config', 'id' => 'form-client-config']) !!}
             <div class="row header-config">
                 <div class="col-xs-4">
-                    <span class="description">Mantenha os dados da loja sempre atualizados</span>
+                    <span class="description">Mantenha os seus dados sempre atualizados</span>
                 </div>
 
                 <div class="col-xs-8">
@@ -65,6 +36,8 @@
                             <a href="{{ route('delete-client-account') }}" id="delete-client-account">Deletar conta</a>
                         </li>
                     </ul>
+
+                    <img src="{{ asset('images/ssl.png') }}" class="ssl" />
                 </div>
 
                 <div class="col-xs-8">
@@ -116,8 +89,7 @@
                         </div>
 
                         <div class="form-group">
-                            {!! Form::text('district', null, ['placeholder' => ' ', 'id' => 'district']) !!}
-                            {!! Form::label('', 'Bairro') !!}
+                            {!! Form::select('district', $districts, null, ['title' => 'Bairro', 'class' => 'selectpicker']) !!}
                         </div>
 
                         <div class="form-group margin half">

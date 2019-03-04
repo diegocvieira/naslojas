@@ -22,6 +22,12 @@
         }
     }
 
+    .ssl {
+        width: 131px;
+        float: right;
+        margin-top: 10px;
+    }
+
     .navigation {
         background-color: #fff;
         border-radius: 10px;
@@ -102,6 +108,67 @@
 
         input[name=current_password] {
             display: none;
+        }
+
+        .bootstrap-select {
+            margin: 0 !important;
+            width: 100% !important;
+            float: left;
+
+            &.open .dropdown-toggle {
+                border-radius: 5px 5px 0 0;
+                background-color: rgb(240, 240, 240);
+                color: rgb(100, 100, 100);
+            }
+
+            .dropdown-toggle {
+                background-color: rgb(240, 240, 240);
+                height: 55px;
+                border: none;
+                border-radius: 5px;
+                padding-left: 20px;
+                box-shadow: none;
+                color: #000;
+                font-size: 14.5px;
+                outline: none !important;
+
+                &:hover {
+                    color: #000;
+                }
+
+                &[title='Bairro'] {
+                    &, &:hover, &:focus, &:active {
+                        color: #969696;
+                    }
+
+                    .filter-option {
+                        line-height: normal;
+                    }
+                }
+
+                .filter-option {
+                    line-height: 3;
+                }
+            }
+
+            .dropdown-menu {
+                background-color: rgb(240, 240, 240) !important;
+                border-radius: 0 0 5px 5px;
+                top: 34px;
+                box-shadow: none;
+                border: none;
+                padding: 0;
+
+                a {
+                    padding: 8px 20px;
+                    color: rgb(100, 100, 100);
+                    font-size: 14.5px;
+
+                    &:hover {
+                        background-color: rgb(230, 230, 230);
+                    }
+                }
+            }
         }
     }
 }

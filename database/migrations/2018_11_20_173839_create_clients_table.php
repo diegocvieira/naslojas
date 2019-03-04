@@ -20,6 +20,7 @@ class CreateClientsTable extends Migration
             $table->string('password', 255);
             $table->string('cpf', 15)->nullable();
             $table->string('phone', 15)->nullable();
+            $table->date('birthdate')->nullable();
             $table->unsignedInteger('city_id')->nullable();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->unsignedInteger('district_id')->nullable();
