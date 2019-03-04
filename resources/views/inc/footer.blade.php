@@ -1,13 +1,23 @@
         <footer>
             <div class="container">
                 <div class="col-xs-6 support">
-                    <a href="http://www.pelotas.com.br/" target="_blank" class="pelotas">
-                        <img src="{{ asset('images/pelotas.png') }}" />
-                    </a>
+                    <div class="row">
+                        <a href="http://www.pelotas.com.br/" target="_blank">
+                            <img src="{{ asset('images/pelotas.png') }}" class="pelotas" />
+                        </a>
 
-                    <a href="http://fecomercio-rs.org.br/" target="_blank" class="fecomercio">
-                        <img src="{{ asset('images/fecomercio.png') }}" />
-                    </a>
+                        <a href="http://fecomercio-rs.org.br/" target="_blank">
+                            <img src="{{ asset('images/fecomercio.png') }}" class="fecomercio" />
+                        </a>
+                    </div>
+
+                    <div class="row">
+                        <a href="https://internetsegura.br/" target="_blank">
+                            <img src="{{ asset('images/safe-internet.png') }}" class="safe-internet" />
+                        </a>
+
+                        <img src="{{ asset('images/ssl.png') }}" class="ssl" />
+                    </div>
                 </div>
 
                 <div class="col-xs-6 links">
