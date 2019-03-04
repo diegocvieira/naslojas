@@ -64,13 +64,13 @@
                         </div>
 
                         <div class="col-xs-9 buttons">
-                            {!! Form::radio('payment', '1', null, ['id' => 'payment-credit', 'class' => 'custom-validate', 'autocomplete' => 'off']) !!}
+                            {!! Form::radio('payment', '1', null, ['id' => 'payment-credit', 'autocomplete' => 'off']) !!}
                             {!! Form::label('payment-credit', 'Crédito') !!}
 
-                            {!! Form::radio('payment', '2', null, ['id' => 'payment-debit', 'class' => 'custom-validate', 'autocomplete' => 'off']) !!}
+                            {!! Form::radio('payment', '2', null, ['id' => 'payment-debit', 'autocomplete' => 'off']) !!}
                             {!! Form::label('payment-debit', 'Débito') !!}
 
-                            {!! Form::radio('payment', '0', null, ['id' => 'payment-money', 'class' => 'custom-validate', 'autocomplete' => 'off']) !!}
+                            {!! Form::radio('payment', '0', null, ['id' => 'payment-money', 'autocomplete' => 'off']) !!}
                             {!! Form::label('payment-money', 'Dinheiro') !!}
                         </div>
                     </div>
@@ -101,19 +101,19 @@
                         </div>
 
                         <div class="col-xs-9">
-                            {!! Form::text('cep', null, ['placeholder' => 'Cep', 'id' => 'cep', 'class' => 'custom-validate']) !!}
+                            {!! Form::text('cep', null, ['placeholder' => 'Cep', 'id' => 'cep']) !!}
 
-                            {!! Form::text('street', null, ['placeholder' => 'Logradouro', 'id' => 'street', 'class' => 'custom-validate']) !!}
+                            {!! Form::text('street', null, ['placeholder' => 'Logradouro', 'id' => 'street']) !!}
 
-                            {!! Form::text('number', null, ['placeholder' => 'Número', 'class' => 'half custom-validate']) !!}
+                            {!! Form::text('number', null, ['placeholder' => 'Número', 'class' => 'half']) !!}
 
                             {!! Form::text('complement', null, ['placeholder' => 'Complemento', 'class' => 'half margin']) !!}
 
-                            {!! Form::select('district', $districts, $client->district_id, ['class' => 'selectpicker custom-validate', 'title' => 'Bairro']) !!}
+                            {!! Form::select('district', $districts, $client->district_id, ['class' => 'selectpicker', 'title' => 'Bairro']) !!}
 
-                            {!! Form::text('city', $client->city_id ? $client->city->title : null, ['placeholder' => 'Cidade', 'id' => 'city', 'class' => 'half custom-validate']) !!}
+                            {!! Form::text('city', $client->city_id ? $client->city->title : null, ['placeholder' => 'Cidade', 'id' => 'city', 'class' => 'half']) !!}
 
-                            {!! Form::text('state', $client->city_id ? $client->city->state->letter : null, ['placeholder' => 'Estado', 'id' => 'state', 'class' => 'half margin custom-validate']) !!}
+                            {!! Form::text('state', $client->city_id ? $client->city->state->letter : null, ['placeholder' => 'Estado', 'id' => 'state', 'class' => 'half margin']) !!}
                         </div>
                     </div>
 

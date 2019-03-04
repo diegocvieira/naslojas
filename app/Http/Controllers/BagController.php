@@ -197,7 +197,7 @@ class BagController extends Controller
 
         $client = Client::find(Auth::guard('client')->user()->id);
 
-        $districts = District::pluck('name', 'id');
+        $districts = District::orderBy('name', 'ASC')->pluck('name', 'id');
 
         $header_title = 'Dados do pedido | naslojas.com';
 
