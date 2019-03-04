@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="form-group">
-                            {!! Form::text('birthdate', null, ['placeholder' => ' ', 'class' => 'mask-date']) !!}
+                            {!! Form::text('birthdate', $client->birthdate ? date('d/m/Y', strtotime($client->birthdate)) : null, ['placeholder' => ' ', 'class' => 'mask-date']) !!}
                             {!! Form::label('', 'Aniversário') !!}
                         </div>
 

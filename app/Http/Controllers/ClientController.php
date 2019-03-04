@@ -124,7 +124,7 @@ class ClientController extends Controller
                 $client->name = $request->name;
                 $client->email = $request->email;
                 $client->phone = $request->phone;
-                $client->birthdate = $request->birthdate;
+                $client->birthdate = $request->birthdate ? date('Y-m-d', strtotime(str_replace('/', '-', $request->birthdate))) : null;
                 $client->cpf = $request->cpf;
                 $client->cep = $request->cep;
                 $client->street = $request->street;
