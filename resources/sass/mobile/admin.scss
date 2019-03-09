@@ -92,6 +92,139 @@
             }
         }
     }
+
+    .list-orders {
+        float: left;
+        width: 100%;
+        margin-top: 30px;
+
+        .order {
+            border-bottom: 1px solid rgb(230, 230, 230);
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            float: left;
+            width: 100%;
+
+            &:last-child {
+                border: none;
+            }
+
+            .resume-infos {
+                float: left;
+                width: 100%;
+
+                .top {
+                    width: 100%;
+                    float: left;
+
+                    img {
+                        border-radius: 5px;
+                        background-color: #fff;
+                        box-shadow: 0.5px 0.866px 2.97px 0.03px rgba(98, 98, 98, 0.118);
+                        width: 50px;
+                        height: 50px;
+                        object-fit: cover;
+                        object-position: center;
+                        float: left;
+                    }
+
+                    .show-product {
+                        float: right;
+                        width: 25px;
+                        height: 25px;
+                        background-image: url('../../images/icon-show-product.png');
+                        background-position: center;
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        margin: 12px 15px 0 0;
+                    }
+                }
+
+                .show-more-infos {
+                    font-size: 12.5px;
+                    color: rgb(122, 184, 236);
+                    float: left;
+                    border: none;
+                    background-color: transparent;
+                    padding-left: 0;
+                    margin-top: 10px;
+                }
+
+                h3 {
+                    font-size: 16.6px;
+                    color: #000;
+                    line-height: 1.5;
+                    float: left;
+                    width: 100%;
+                    margin: 15px 0 0 0;
+                }
+
+                .item {
+                    font-size: 14.5px;
+                    color: rgb(150, 150, 150);
+                    margin-top: 10px;
+                    float: left;
+                    width: 100%;
+
+                    span {
+                        font-weight: 700;
+                        color: #000;
+                    }
+                }
+            }
+
+            .complete-infos {
+                float: left;
+                width: 100%;
+                margin-top: 30px;
+                display: none;
+
+                .group {
+                    margin-bottom: 30px;
+
+                    .item {
+                        display: block;
+                        font-size: 14.5px;
+                        color: rgb(150, 150, 150);
+                        line-height: 1.714;
+
+                        span {
+                            color: rgb(50, 50, 50);
+
+                            &.green {
+                                color: rgb(112, 202, 124) !important;
+                            }
+
+                            &.red {
+                                color: rgb(255, 23, 68) !important;
+                            }
+
+                            &.pending, &.confirmed_date {
+                                color: rgb(150, 150, 150);
+                            }
+                        }
+                    }
+
+                    &.btns {
+                        button {
+                            font-size: 14.5px;
+                            color: #fff;
+                            background-color: rgb(255, 23, 68);
+                            width: 48%;
+                            height: 45px;
+                            float: left;
+                            border-radius: 25px;
+                            border: none;
+
+                            &:first-child {
+                                margin-right: 4%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 .modal-show-messages {

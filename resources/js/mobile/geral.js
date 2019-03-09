@@ -88,7 +88,7 @@ $(function() {
         });
     });
 
-    // Show details confirm/reserve/messages
+    // Show details messages
     $('.page-confirm, .page-reserve, .page-messages').on('click', '.result', function() {
         $('.result').not($(this)).find('.more-details').hide();
 
@@ -152,13 +152,13 @@ $(function() {
         }
     });
 
-    $(document).on('click', '.page-admin .change-reserve-status', function(e) {
+    $(document).on('click', '.confirm-order, .refuse-order', function(e) {
         e.preventDefault();
 
         var $this = $(this);
 
         $.ajax({
-            url: $(this).attr('href'),
+            url: $this.data('url'),
             method: 'POST',
             dataType: 'json',
             headers: {
@@ -167,52 +167,28 @@ $(function() {
             success: function (data) {
                  modalAlert(data.msg);
 
-                if(data.status) {
-                    var row = $this.parents('.more-details');
+                if (data.status) {
+                    var row = $this.parents('.order');
 
-                    row.find('.btn-status').text('-----');
-                    row.find('.confirmed_date').text(data.date_confirmed);
-
-                    if (data.type == 1) {
-                        row.find('.status').addClass('green').text('Confirmado');
-                        row.find('.reserved_until').text(data.date_reserved);
+                    if ($this.hasClass('confirm-order')) {
+                        row.find('.status').addClass('green').text('Pedido confirmado');
                     } else {
-                        row.find('.status').addClass('red').text('Recusado');
+                        row.find('.status').addClass('red').text('Pedido recusado');
                     }
+
+                    row.find('.confirm-order, .refuse-order').remove();
                 }
             }
         });
     });
 
-    $(document).on('click', '.page-admin .change-confirm-status', function(e) {
-        e.preventDefault();
+    $(document).on('click', '.page-admin .show-more-infos', function () {
+        var div = $(this).parents('.order');
 
-        var $this = $(this);
+        $('.page-admin').find('.order').not(div).find('.complete-infos').hide();
 
-        $.ajax({
-            url: $(this).attr('href'),
-            method: 'POST',
-            dataType: 'json',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (data) {
-                 modalAlert(data.msg);
-
-                if(data.status) {
-                    var row = $this.parents('.more-details');
-
-                    row.find('.btn-status').text('-----');
-                    row.find('.confirmed_date').text(data.date);
-
-                    if (data.type == 1) {
-                        row.find('.status').addClass('green').text('Confirmado');
-                    } else {
-                        row.find('.status').addClass('red').text('Recusado');
-                    }
-                }
-            }
-        });
+        div.find('.complete-infos').is(':visible') ? $(this).text('ver mais') : $(this).text('.ver menos');
+        div.find('.complete-infos').toggle();
     });
 
     $('#form-client-config').validate({
@@ -454,7 +430,7 @@ $(function() {
         }
     });
 
-    if($('.page-how-works').length) {
+    if ($('.page-how-works').length) {
         if(navigator.msMaxTouchPoints) {
             $('#slider').addClass('ms-touch');
         } else {
@@ -534,6 +510,31 @@ $(function() {
          }
      }
 });
+
+function number_format(numero, decimal, decimal_separador, milhar_separador) {
+   numero = (numero + '').replace(/[^0-9+\-Ee.]/g, '');
+   var n = !isFinite(+numero) ? 0 : +numero,
+       prec = !isFinite(+decimal) ? 0 : Math.abs(decimal),
+       sep = (typeof milhar_separador === 'undefined') ? ',' : milhar_separador,
+       dec = (typeof decimal_separador === 'undefined') ? '.' : decimal_separador,
+       s = '',
+       toFixedFix = function (n, prec) {
+           var k = Math.pow(10, prec);
+           return '' + Math.round(n * k) / k;
+       };
+
+   // Fix para IE: parseFloat(0.55).toFixed(0) = 0;
+   s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+   if (s[0].length > 3) {
+       s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+   }
+   if ((s[1] || '').length < prec) {
+       s[1] = s[1] || '';
+       s[1] += new Array(prec - s[1].length + 1).join('0');
+   }
+
+   return s.join(dec);
+}
 
 function modalAlert(body, btn = 'OK') {
     $('#modal-alert, .modal-backdrop').remove();

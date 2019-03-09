@@ -62,18 +62,22 @@
             @endif
         </div>
 
-        @if ($product->sizes->count() > 0)
-            <div class="size-container">
-                <span>Tamanhos disponíveis</span>
+        <div class="qtd-container">
+            <span class="label-select">Quantidade:</span>
 
-                @foreach ($product->sizes as $size)
-                    <div class="size">
-                        {!! Form::checkbox('size', $size->size, false, ['autocomplete' => 'off', 'id' => 'size_' . $size->size]) !!}
-                        {!! Form::label('size_' . $size->size, $size->size) !!}
-                    </div>
-                @endforeach
-            </div>
-        @endif
+            {!! Form::select('qtd', $qtd, null, ['class' => 'qtd selectpicker', 'autocomplete' => 'off']) !!}
+        </div>
+
+        <div class="size-container">
+            <span>Tamanhos disponíveis</span>
+
+            @foreach ($product->sizes as $size)
+                <div class="size">
+                    {!! Form::radio('size', $size->size, false, ['autocomplete' => 'off', 'id' => 'size_' . $size->size]) !!}
+                    {!! Form::label('size_' . $size->size, $size->size) !!}
+                </div>
+            @endforeach
+        </div>
 
         <h1 class="product-title">{{ $product->title }}</h1>
 
@@ -98,19 +102,9 @@
         </div>
 
         <div class="btn-container">
-            <button type="button" class="btn-product-confirm" data-url="{{ route('create-product-confirm') }}" data-productid="{{ $product->id }}">CONFIRMAR</button>
+            <button type="button" class="bag-add-product" data-url="{{ route('bag-add-product') }}" data-productid="{{ $product->id }}">COLOCAR NA SACOLA</button>
 
-            @if ($product->reserve)
-                <button type="button" class="btn-product-reserve" data-url="{{ route('create-product-reserve') }}" data-productid="{{ $product->id }}">
-                    @if ($product->reserve_discount)
-                        RESERVAR POR R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}
-                    @else
-                        RESERVAR
-                    @endif
-                </button>
-            @else
-                <button type="button" class="btn-disabled">RESERVA DESABILITADA</button>
-            @endif
+            <button type="button" class="bag-add-product redirect" data-url="{{ route('bag-add-product') }}" data-productid="{{ $product->id }}">PEDIR AGORA</button>
         </div>
 
         @if ($more_colors->count() > 0)

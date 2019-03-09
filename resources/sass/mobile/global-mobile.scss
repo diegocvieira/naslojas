@@ -141,9 +141,10 @@ a, a:hover, a:active, a:focus {
 
 .no-results {
     text-align: center;
-    position: relative;
+    position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     p {
         font-size: 14.5px;
@@ -298,3 +299,7 @@ a, a:hover, a:active, a:focus {
 @import 'login-register.scss';
 @import 'how-works.scss';
 @import 'store-advertise.scss';
+@import 'bag-preview.scss';
+@import 'bag-products.scss';
+@import 'bag-order-data.scss';
+@import 'bag-success.scss';

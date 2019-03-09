@@ -279,6 +279,62 @@
         }
     }
 
+    .qtd-container {
+        float: left;
+        width: 100%;
+        margin-top: 15px;
+
+        .label-select {
+            font-size: 14.5px;
+            color: rgb(150, 150, 150);
+            float: left;
+            margin-top: 6px;
+        }
+
+        .bootstrap-select {
+            margin: 0 !important;
+            width: auto !important;
+            float: left;
+
+            &.open .dropdown-toggle {
+                color: #000;
+            }
+
+            .dropdown-toggle {
+                background-color: transparent;
+                border: none;
+                box-shadow: none;
+                color: #000;
+                font-size: 14.5px;
+                outline: none !important;
+                font-weight: 700;
+
+                &:hover {
+                    color: #000;
+                }
+            }
+
+            .dropdown-menu {
+                background-color: #fff !important;
+                top: 34px;
+                border: none;
+                padding: 0;
+                border-radius: 5px;
+                max-height: 220px !important;
+
+                a {
+                    padding: 8px 20px;
+                    color: rgb(100, 100, 100);
+                    font-size: 13.7px;
+
+                    &:hover {
+                        background-color: rgb(230, 230, 230);
+                    }
+                }
+            }
+        }
+    }
+
     .size-container {
         float: left;
         width: 100%;
@@ -301,7 +357,7 @@
                 margin-right: 0;
             }
 
-            input[type=checkbox] {
+            input[type=radio] {
                 display: none;
 
                 &:checked + label {
@@ -405,7 +461,8 @@
         position: relative;
 
         button {
-            background-color: rgb(255, 23, 68);
+
+            background-color: #f0f0f0;
             float: left;
             border: none;
             height: 40px;
@@ -413,17 +470,12 @@
             width: 100%;
             font-weight: 700;
             border-radius: 25px;
-            color: #fff;
+            color: rgb(255, 23, 68);
 
-            &.btn-product-confirm {
-                background-color: #f0f0f0;
-                margin-bottom: 5px;
-                color: rgb(255, 23, 68);
-            }
-
-            &.btn-disabled {
-                opacity: .3;
-                cursor: default;
+            &.redirect {
+                background-color: rgb(255, 23, 68);
+                margin-top: 5px;
+                color: #fff;
             }
         }
     }

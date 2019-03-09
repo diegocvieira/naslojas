@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\OrderProducts;
 use Auth;
+use Agent;
 
 class OrderController extends Controller
 {
@@ -25,6 +26,8 @@ class OrderController extends Controller
     {
         $header_title = 'Meus pedidos | naslojas.com';
 
+        $section = 'order';
+
         $products = OrderProducts::whereHas('order', function ($query) {
                 $query->where('client_id', Auth::guard('client')->user()->id);
             })
@@ -39,7 +42,11 @@ class OrderController extends Controller
             ->orderByDesc('created_at')
             ->paginate(20);
 
-        return view('client.orders', compact('products', 'header_title'));
+        if (Agent::isDesktop()) {
+            return view('client.orders', compact('products', 'header_title'));
+        } else {
+            return view('mobile.client.orders', compact('products', 'header_title', 'section'));
+        }
     }
 
     public function storeOrders()
@@ -60,7 +67,11 @@ class OrderController extends Controller
             ->orderByDesc('created_at')
             ->paginate(20);
 
-        return view('store.orders', compact('products', 'header_title', 'section'));
+        if (Agent::isDesktop()) {
+            return view('store.orders', compact('products', 'header_title', 'section'));
+        } else {
+            return view('mobile.store.orders', compact('products', 'header_title', 'section'));
+        }
     }
 
     public function confirm($id)

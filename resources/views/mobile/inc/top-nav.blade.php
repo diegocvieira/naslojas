@@ -29,6 +29,8 @@
         {!! Form::close() !!}
     @endif
 
+    <button class="open-bag" data-url="{{ route('bag-products') }}">{{ $count_bag }}</button>
+
     <nav class="nav navbar-nav nav-menu">
         <ul>
             <li>
@@ -50,11 +52,7 @@
                             </li>
 
                             <li>
-                                <a href="{{ route('list-client-confirms') }}" class="{{ (isset($section) && $section == 'confirm') ? 'active' : '' }}">Confirmações</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('list-client-reserves') }}" class="{{ (isset($section) && $section == 'reserve') ? 'active' : '' }}">Reservas</a>
+                                <a href="{{ route('list-client-orders') }}" class="{{ (isset($section) && $section == 'order') ? 'active' : '' }}">Pedidos</a>
                             </li>
 
                             <li>
@@ -91,11 +89,7 @@
 
                             @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check() && Auth::guard('superadmin')->user()->type == 1)
                                 <li>
-                                    <a href="{{ route('list-store-confirms') }}" class="{{ (isset($section) && $section == 'confirm') ? 'active' : '' }}">Confirmações</a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ route('list-store-reserves') }}" class="{{ (isset($section) && $section == 'reserve') ? 'active' : '' }}">Reservas</a>
+                                    <a href="{{ route('list-store-orders') }}" class="{{ (isset($section) && $section == 'order') ? 'active' : '' }}">Pedidos</a>
                                 </li>
 
                                 <li>
@@ -156,12 +150,14 @@
     </div>
 </div>
 
-<div class="list-stores">
-    <div>
-        <span>Selecionar loja</span>
+@if (Auth::guard('superadmin')->check())
+    <div class="list-stores">
+        <div>
+            <span>Selecionar loja</span>
 
-        @foreach ($superadmin_stores as $superadmin_store)
-            <a href="{{ route('superadmin-set-store', $superadmin_store->id) }}" class="{{ session('superadmin_store_id') == $superadmin_store->id ? 'active' : '' }}">{{ $superadmin_store->name }}</a>
-        @endforeach
+            @foreach ($superadmin_stores as $superadmin_store)
+                <a href="{{ route('superadmin-set-store', $superadmin_store->id) }}" class="{{ session('superadmin_store_id') == $superadmin_store->id ? 'active' : '' }}">{{ $superadmin_store->name }}</a>
+            @endforeach
+        </div>
     </div>
-</div>
+@endif

@@ -13,6 +13,7 @@ use App\OrderProducts;
 use Session;
 use Auth;
 use Validator;
+use Agent;
 
 class BagController extends Controller
 {
@@ -179,13 +180,23 @@ class BagController extends Controller
         }
 
         if (\Request::ajax()) {
-            return response()->json([
-                'body' => view('bag.preview', compact('products', 'subtotal'))->render()
-            ]);
+            if (Agent::isDesktop()) {
+                return response()->json([
+                    'body' => view('bag.preview', compact('products', 'subtotal'))->render()
+                ]);
+            } else {
+                return response()->json([
+                    'body' => view('mobile.bag.preview', compact('products', 'subtotal'))->render()
+                ]);
+            }
         } else {
             $header_title = 'Itens na sacola | naslojas.com';
 
-            return view('bag.products', compact('products', 'subtotal', 'header_title'));
+            if (Agent::isDesktop()) {
+                return view('bag.products', compact('products', 'subtotal', 'header_title'));
+            } else {
+                return view('mobile.bag.products', compact('products', 'subtotal', 'header_title'));
+            }
         }
     }
 
@@ -251,7 +262,11 @@ class BagController extends Controller
 
         array_push($payments, '1-0', '1-1', '2-0', '2-1');
 
-        return view('bag.order-data', compact('bag_data', 'client', 'districts', 'payments', 'header_title'));
+        if (Agent::isDesktop()) {
+            return view('bag.order-data', compact('bag_data', 'client', 'districts', 'payments', 'header_title'));
+        } else {
+            return view('mobile.bag.order-data', compact('bag_data', 'client', 'districts', 'payments', 'header_title'));
+        }
 
         /*foreach ($store->operatings as $operating_key => $operating) {
             if ($operating->week == $week1 || $operating->week == $week2) {
@@ -461,7 +476,11 @@ class BagController extends Controller
 
         $header_title = 'Pedido realizado - naslojas.com';
 
-        return view('bag.success', compact('order', 'products', 'header_title'));
+        if (Agent::isDesktop()) {
+            return view('bag.success', compact('order', 'products', 'header_title'));
+        } else {
+            return view('mobile.bag.success', compact('order', 'products', 'header_title'));
+        }
     }
 
     private function rules()

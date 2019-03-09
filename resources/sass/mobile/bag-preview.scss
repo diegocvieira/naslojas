@@ -1,0 +1,140 @@
+.bag-preview {
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 1px 1.732px 13.5px 1.5px rgba(98, 98, 98, 0.118);
+    position: absolute;
+    left: 2.5%;
+    top: 60px;
+    width: 95%;
+    min-height: 300px;
+    max-height: 557px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 20px;
+
+    .no-results {
+        img {
+            width: 50px;
+        }
+
+        p {
+            margin-top: 10px;
+        }
+    }
+
+    .header-title {
+        font-size: 16.6px;
+        color: rgb(50, 50, 50);
+        font-weight: 700;
+        float: left;
+        width: 100%;
+        margin: 0 0 20px 20px;
+    }
+
+    .footer-bag {
+        float: left;
+        width: 100%;
+        background-color: rgb(245, 245, 245);
+        padding: 20px;
+        text-align: right;
+        margin-top: 50px;
+
+        .subtotal {
+            font-size: 14.5px;
+            color: rgb(50, 50, 50);
+            float: left;
+            width: 100%;
+            margin-bottom: 15px;
+
+            span {
+                margin-left: 15px;
+                font-weight: 700;
+            }
+        }
+
+        a {
+            background-color: transparent;
+            width: 49%;
+            height: 40px;
+            float: left;
+            font-size: 14.5px;
+            color: rgb(255, 23, 68);
+            font-weight: 700;
+            border-radius: 25px;
+            text-align: center;
+            border: 1px solid rgb(255, 23, 68);
+            line-height: 2.5;
+
+            &.close-order {
+                background-color: rgb(255, 23, 68);
+                color: #fff;
+                float: right;
+            }
+        }
+    }
+
+    .products {
+        float: left;
+        width: 100%;
+        min-height: 161px;
+        padding: 0 10px;
+
+        .qtd {
+            display: none;
+        }
+
+        .product {
+            float: left;
+            width: 100%;
+            border-top: 1px solid rgb(230, 230, 230);
+            margin-top: 20px;
+            padding-top: 20px;
+
+            &:first-child {
+                border-top: none;
+                margin-top: 0;
+                padding-top: 0;
+            }
+
+            img {
+                border-radius: 5px;
+                box-shadow: 0.5px 0.866px 2.97px 0.03px rgba(98, 98, 98, 0.118);
+                width: 50px;
+                height: 50px;
+                float: left;
+                margin-right: 10px;
+                object-fit: cover;
+            }
+
+            .infos {
+                float: left;
+                width: calc(100% - 60px);
+            }
+
+            .title {
+                font-size: 14.5px;
+                color: rgb(150, 150, 150);
+                line-height: 1.429;
+                display: block;
+                margin: 5px 0 0 0;
+            }
+
+            .price {
+                font-size: 16.6px;
+                color: rgb(50, 50, 50);
+                font-weight: 700;
+                float: left;
+            }
+
+            .bag-remove-product {
+                background-image: url('../../images/icon-delete.png');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                width: 18px;
+                height: 18px;
+                float: right;
+            }
+        }
+    }
+}
