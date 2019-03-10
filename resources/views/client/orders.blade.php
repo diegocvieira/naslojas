@@ -29,6 +29,12 @@
 
                                     <span>{{ $product->size }}</span>
                                 </span>
+
+                                @if ($product->status == 0 || $product->status == 3)
+                                    <span class="item">
+                                        <span class="red">PEDIDO RECUSADO</span>
+                                    </span>
+                                @endif
                             </div>
 
                             <div class="col-xs-2 text-center">
@@ -124,12 +130,6 @@
 
                                 @if ($product->status == 0 || $product->status == 3)
                                     <div class="group">
-                                        <span class="item">
-                                            <span>Status:</span>
-
-                                            <span class="red">Pedido recusado</span>
-                                        </span>
-
                                         <span class="item">
                                             <span>Informação:</span>
 

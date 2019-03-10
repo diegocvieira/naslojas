@@ -29,6 +29,16 @@
 
                                     <span>{{ $product->size }}</span>
                                 </span>
+
+                                <span class="item">
+                                    @if ($product->status == 0 || $product->status == 3)
+                                        <span class="status red">PEDIDO RECUSADO</span>
+                                    @elseif ($product->status == 1)
+                                        <span class="status green">PEDIDO CONFIRMADO</span>
+                                    @else
+                                        <span class="status pending">PEDIDO PENDENTE</span>
+                                    @endif
+                                </span>
                             </div>
 
                             <div class="col-xs-2 text-center">
@@ -61,18 +71,6 @@
                                         <span>Data do pedido:</span>
 
                                         {{ date('d/m/Y', strtotime($product->order->created_at)) . ' às ' . date('H:i', strtotime($product->order->created_at)) }}
-                                    </span>
-
-                                    <span class="item">
-                                        <span>Status:</span>
-
-                                        @if ($product->status == 0 || $product->status == 3)
-                                            <span class="status red">Pedido recusado</span>
-                                        @elseif ($product->status == 1)
-                                            <span class="status green">Pedido confirmado</span>
-                                        @else
-                                            <span class="status pending">Pedido pendente</span>
-                                        @endif
                                     </span>
                                 </div>
 

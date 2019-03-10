@@ -13,7 +13,7 @@
 
         <p>Aguarde no endereço e horário informado para receber o seu pedido.</p>
 
-        <span><b>Horário:</b> {{ _businessDay($order->created_at) }}</span>
+        <span><b>Entrega:</b> {{ _businessDay($order->created_at) }}</span>
         <span>
             <b>Endereço:</b>
             {{ $order->client_street }}, {{ $order->client_number }}

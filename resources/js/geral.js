@@ -550,9 +550,9 @@ $(function() {
                     var row = $this.parents('.order');
 
                     if ($this.hasClass('confirm-order')) {
-                        row.find('.status').addClass('green').text('Pedido confirmado');
+                        row.find('.status').addClass('green').text('PEDIDO CONFIRMADO');
                     } else {
-                        row.find('.status').addClass('red').text('Pedido recusado');
+                        row.find('.status').addClass('red').text('PEDIDO RECUSADO');
                     }
 
                     row.find('.confirm-order, .refuse-order').remove();
