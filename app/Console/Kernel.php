@@ -13,8 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\cronPendingReserves::class,
-        Commands\cronPendingConfirms::class,
+        Commands\cronPendingOrders::class,
     ];
 
     /**
@@ -25,8 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('cronPendingReserves')->dailyAt('06:00');
-        $schedule->command('cronPendingConfirms')->dailyAt('06:00');
+        $schedule->command('cronPendingOrders')->dailyAt('17:00');
         // $schedule->command('inspire')
         //          ->hourly();
     }

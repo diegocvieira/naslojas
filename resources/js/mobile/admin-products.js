@@ -190,10 +190,6 @@ $(function() {
                         selected.addClass('disabled');
 
                         var msg = 'Os produtos selecionados foram desativados.';
-                    } else if (type == 'reserve-enable') {
-                        var msg = 'Os produtos selecionados tiveram a reserva habilitada.';
-                    }  else if (type == 'reserve-disable') {
-                        var msg = 'Os produtos selecionados tiveram a reserva desabilitada.';
                     } else if (type == 'delete') {
                         selected.remove();
 

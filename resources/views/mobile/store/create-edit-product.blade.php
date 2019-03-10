@@ -26,14 +26,6 @@
                                         </li>
                                     @endif
 
-                                    <li class="{{ $product->reserve == 1 ? 'hidden' : '' }}">
-                                        <a href="{{ route('reserve-enable') }}" data-type="reserve-enable" class="option" data-productid="{{ $product->id }}">Habilitar reserva</a>
-                                    </li>
-
-                                    <li class="{{ $product->reserve == 0 ? 'hidden' : '' }}">
-                                        <a href="{{ route('reserve-disable') }}" data-type="reserve-disable" class="option" data-productid="{{ $product->id }}">Desabilitar reserva</a>
-                                    </li>
-
                                     <li>
                                         <a href="#" data-type="copy-data" class="option">Copiar dados</a>
                                     </li>

@@ -171,9 +171,9 @@ $(function() {
                     var row = $this.parents('.order');
 
                     if ($this.hasClass('confirm-order')) {
-                        row.find('.status').addClass('green').text('Pedido confirmado');
+                        row.find('.status').addClass('green').text('PEDIDO CONFIRMADO');
                     } else {
-                        row.find('.status').addClass('red').text('Pedido recusado');
+                        row.find('.status').addClass('red').text('PEDIDO RECUSADO');
                     }
 
                     row.find('.confirm-order, .refuse-order').remove();
@@ -187,7 +187,7 @@ $(function() {
 
         $('.page-admin').find('.order').not(div).find('.complete-infos').hide();
 
-        div.find('.complete-infos').is(':visible') ? $(this).text('ver mais') : $(this).text('.ver menos');
+        div.find('.complete-infos').is(':visible') ? $(this).text('ver mais') : $(this).text('ver menos');
         div.find('.complete-infos').toggle();
     });
 
@@ -509,6 +509,46 @@ $(function() {
              slider.init();
          }
      }
+
+     // Capture cep automatic
+     $(document).on('blur', '#cep', function() {
+         var cep_original = this.value;
+         var cep = this.value.replace(/\D/g,'');
+         var url = "https://viacep.com.br/ws/" + cep + "/json/";
+
+         if(cep.length != 8) {
+             modalAlert('Não identificamos o CEP que você informou, verifique se digitou corretamente.');
+
+             return false;
+         }
+
+         $.getJSON(url, function(data) {
+             if (data.erro == true) {
+                 $('#street').val('');
+                 $('#district').val('');
+                 $('#city').val('');
+                 $('#state').val('');
+
+                 modalAlert('Não identificamos o CEP que você informou, verifique se digitou corretamente.');
+             } else {
+                 $('#street').val(data.logradouro);
+                 $('#district').val(data.bairro);
+                 $('#city').val(data.localidade);
+                 $('#state').val(data.uf);
+
+                 data.bairro != '' ? $("#number").focus() : $("#district").focus();
+             }
+         }).fail(function() {
+             modalAlert('Houve um erro ao identificar o seu CEP. Entre em contato conosco.');
+
+             return false;
+         });
+     });
+     $(document).on('keyup', '#cep', function(e) {
+         if(this.value.length == 9){
+             $('#cep').trigger('blur');
+         }
+     });
 });
 
 function number_format(numero, decimal, decimal_separador, milhar_separador) {

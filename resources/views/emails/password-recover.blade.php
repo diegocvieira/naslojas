@@ -35,7 +35,7 @@
 
                 <tr>
                     <td style="box-shadow: 5px 8.66px 9px 1px rgba(100, 100, 100, 0.118); background-color: #fff; padding: 10px 50px 10px 50px;">
-                        <span style="display: block; font-size: 14.5px; color: rgb(100, 100, 100);">Clique no botão abaixo para cadastrar uma nova senha de acesso</span>
+                        <span style="display: block; font-size: 14.5px; color: rgb(100, 100, 100);">Clique no botão abaixo para cadastrar uma nova senha.</span>
                     </td>
                 </tr>
 

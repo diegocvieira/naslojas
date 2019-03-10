@@ -140,7 +140,7 @@ function _uploadImage($file, $store_id)
     return $images[248];
 }
 
-function _businessDay($date = null)
+function _businessDay($date = null, $check = null)
 {
     if (!$date) {
         $date = date('Y-m-d', strtotime('+ 1 day'));
@@ -149,7 +149,7 @@ function _businessDay($date = null)
     $week_day = date('w', strtotime($date));
 
     if ($week_day == 6 || $week_day == 0) {
-        return _businessDay(date('Y-m-d', strtotime($date . ' + 1 day')));
+        return _businessDay(date('Y-m-d', strtotime($date . ' + 1 day')), $check);
     } else {
         switch ($week_day) {
             case 1:
@@ -168,32 +168,12 @@ function _businessDay($date = null)
                 $week = 'sexta-feira';
         }
 
-        return 'Até ' . $week . ' ' . date('d/m/Y', strtotime($date));
+        if ($check) {
+            return $date;
+        } else {
+            return 'Até ' . $week . ' ' . date('d/m/Y', strtotime($date));
+        }
     }
-}
-
-function _getWeek($date)
-{
-    $date = date('w', strtotime($date));
-
-    switch ($date) {
-        case 1:
-            $week = 'Segunda-feira';
-            break;
-        case 2:
-            $week = 'Terça-feira';
-            break;
-        case 3:
-            $week = 'Quarta-feira';
-            break;
-        case 4:
-            $week = 'Quinta-feira';
-            break;
-        case 5:
-            $week = 'Sexta-feira';
-    }
-
-    return $week;
 }
 
 function _generateParcels($price, $min_parcel_price, $max_parcel)

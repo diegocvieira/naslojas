@@ -14,6 +14,7 @@ use Session;
 use Auth;
 use Validator;
 use Agent;
+use Mail;
 
 class BagController extends Controller
 {
@@ -430,6 +431,8 @@ class BagController extends Controller
             $order->client_complement = $request->complement;
 
             if ($client->save() && $order->save()) {
+                $emails = [];
+
                 foreach (session('bag')['stores'] as $store) {
                     foreach ($store['products'] as $product) {
                         $p = Product::find($product['id']);
@@ -445,8 +448,20 @@ class BagController extends Controller
                             'product_id' => $p->id,
                             'freight_price' => $freight->price
                         ]);
+
+                        $email = $p->store->user->first()->email;
+
+                        if (!in_array($email, $emails)) {
+                            array_push($emails, $email);
+                        }
                     }
                 }
+
+                Mail::send('emails.order', [], function ($q) use ($emails) {
+                    $q->from('no-reply@naslojas.com', 'naslojas');
+                    $q->to($emails);
+                    $q->subject('Novo pedido de reserva');
+                });
 
                 Session::pull('bag');
 

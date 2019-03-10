@@ -189,10 +189,6 @@ $(function() {
                                 var msg = 'O produto foi ativado.';
                             } else if (type == 'product-disable') {
                                 var msg = 'O produto foi desativado.';
-                            } else if (type == 'reserve-enable') {
-                                var msg = 'O produto teve a reserva habilitada.';
-                            } else if (type == 'reserve-disable') {
-                                var msg = 'O produto teve a reserva desabilitada.';
                             } else {
                                 var msg = 'Informações salvas com sucesso!'; // Just for precaution
                             }

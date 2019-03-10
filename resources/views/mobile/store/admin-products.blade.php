@@ -23,14 +23,6 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('reserve-enable') }}" data-type="reserve-enable">Habilitar reserva</a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('reserve-disable') }}" data-type="reserve-disable">Desabilitar reserva</a>
-                        </li>
-
-                        <li>
                             <a href="{{ route('product-enable') }}" data-type="product-enable">Ativar</a>
                         </li>
 

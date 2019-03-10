@@ -29,19 +29,19 @@
 
                 <tr>
                     <td style="box-shadow: 5px 8.66px 9px 1px rgba(100, 100, 100, 0.118); background-color: #fff; padding: 50px 50px 0 50px; border-radius: 5px 5px 0 0;">
-                        <span style="display: block; font-size: 25px; color: rgb(49, 49, 49);">Mensagem recebida</span>
+                        <span style="display: block; font-size: 25px; color: rgb(49, 49, 49);">Loja desativada</span>
                     </td>
                 </tr>
 
                 <tr>
                     <td style="box-shadow: 5px 8.66px 9px 1px rgba(100, 100, 100, 0.118); background-color: #fff; padding: 10px 50px 10px 50px;">
-                        <span style="display: block; font-size: 14.5px; color: rgb(100, 100, 100);">Sua mensagem foi respondida pela loja.</span>
+                        <span style="display: block; font-size: 14.5px; color: rgb(100, 100, 100);">A sua loja foi desativada por não responder os pedidos de entrega.</span>
                     </td>
                 </tr>
 
                 <tr>
                     <td style="box-shadow: 5px 8.66px 9px 1px rgba(100, 100, 100, 0.118); border-radius: 0 0 5px 5px; background-color: #fff; padding: 50px 50px 50px 50px;">
-                        <a href="{{ route('list-client-messages') }}" style="display: inline-block; border-radius: 25px; font-weight: 700; font-size: 14.5px; background-color: rgb(255, 23, 68); color: #fff; padding: 13px 25px;">VER MENSAGEM</a>
+                        <a href="{{ route('get-store-config') }}" style="display: inline-block; border-radius: 25px; font-weight: 700; font-size: 14.5px; background-color: rgb(255, 23, 68); color: #fff; padding: 13px 25px;">REATIVAR LOJA</a>
                     </td>
                 </tr>
 

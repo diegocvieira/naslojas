@@ -169,6 +169,18 @@
                     span {
                         font-weight: 700;
                         color: #000;
+
+                        &.green {
+                            color: rgb(112, 202, 124) !important;
+                        }
+
+                        &.red {
+                            color: rgb(255, 23, 68) !important;
+                        }
+
+                        &.pending {
+                            color: rgb(150, 150, 150);
+                        }
                     }
                 }
             }
@@ -190,18 +202,6 @@
 
                         span {
                             color: rgb(50, 50, 50);
-
-                            &.green {
-                                color: rgb(112, 202, 124) !important;
-                            }
-
-                            &.red {
-                                color: rgb(255, 23, 68) !important;
-                            }
-
-                            &.pending, &.confirmed_date {
-                                color: rgb(150, 150, 150);
-                            }
                         }
                     }
 

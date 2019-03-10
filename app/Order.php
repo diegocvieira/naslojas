@@ -24,6 +24,11 @@ class Order extends Model
 
     protected $dates = ['created_at', 'updated_at'];
 
+    public function client()
+    {
+        return $this->belongsTo('App\Client', 'client_id', 'id');
+    }
+
     public function products()
     {
         return $this->hasMany('App\OrderProducts', 'order_id', 'id');

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\OrderProducts;
+use App\ProductSize;
+use App\Product;
 use Auth;
 use Agent;
+use Mail;
 
 class OrderController extends Controller
 {
@@ -92,7 +95,11 @@ class OrderController extends Controller
             $return['status'] = true;
             $return['msg'] = 'Reserva realizada com sucesso! <br> O cliente já foi notificado de que o produto que ele deseja estará aguardando por ele na loja até o horário informado.';
 
-            //$this->emailResponse($order, 1);
+            Mail::send('emails.order-confirm', [], function ($q) use ($order) {
+                $q->from('no-reply@naslojas.com', 'naslojas');
+                $q->to($order->order->client->email);
+                $q->subject('Pedido confirmado');
+            });
         } else {
             $return['status'] = false;
             $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
@@ -116,10 +123,39 @@ class OrderController extends Controller
         $order->status = 0;
 
         if ($order->save()) {
+            ProductSize::whereHas('product', function ($query) {
+                    $query->withTrashed()
+                        ->withoutGlobalScopes(['active', 'active-store']);
+                })
+                ->where('product_id', $order->product_id)
+                ->where('size', $order->size)
+                ->delete();
+
+            $count_sizes = ProductSize::whereHas('product', function ($query) {
+                    $query->withTrashed()
+                        ->withoutGlobalScopes(['active', 'active-store']);
+                })
+                ->where('product_id', $order->product_id)
+                ->count();
+
+            if (!$count_sizes) {
+                $product = Product::withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store'])
+                    ->where('id', $order->product_id)
+                    ->first();
+
+                $product->status = 0;
+                $product->save();
+            }
+
             $return['status'] = true;
             $return['msg'] = 'Mantenha seus produtos atualizados. <br> Isso evita que sua loja perca os pontos de relevância e seus produtos caiam de posição nas buscas.';
 
-            //$this->emailResponse($order, 1);
+            Mail::send('emails.order-refuse', [], function ($q) use ($order) {
+                $q->from('no-reply@naslojas.com', 'naslojas');
+                $q->to($order->order->client->email);
+                $q->subject('Pedido recusado');
+            });
         } else {
             $return['status'] = false;
             $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
