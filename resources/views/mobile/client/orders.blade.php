@@ -115,7 +115,7 @@
                                 </span>
                             </div>
 
-                            @if ($product->status == 0)
+                            @if ($product->status == 0 || $product->status == 3)
                                 <div class="group">
                                     <span class="item">
                                         <span>Status:</span>

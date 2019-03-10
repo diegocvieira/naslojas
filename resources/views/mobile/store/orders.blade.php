@@ -42,7 +42,7 @@
                             </span>
 
                             <span class="item">
-                                @if ($product->status == 0)
+                                @if ($product->status == 0 || $product->status == 3)
                                     <span class="status red">PEDIDO RECUSADO</span>
                                 @elseif ($product->status == 1)
                                     <span class="status green">PEDIDO CONFIRMADO</span>
@@ -123,7 +123,7 @@
                                 <span class="item">
                                     <span>Informação:</span>
 
-                                    @if ($product->status == 0)
+                                    @if ($product->status == 0 || $product->status == 3)
                                         O cliente foi notificado e o tamanho {{ $product->size }} do produto foi removido do naslojas.
                                         <br>
                                         Mantenha os produtos atualizados para não perder relevância no site.
