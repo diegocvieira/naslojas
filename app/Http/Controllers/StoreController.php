@@ -195,7 +195,7 @@ class StoreController extends Controller
         if (Agent::isDesktop()) {
             return view('store.config', compact('user', 'districts', 'payments', 'section', 'header_title', 'navigation'));
         } else {
-            return view('mobile.store.config', compact('user', 'districts', 'section', 'header_title'));
+            return view('mobile.store.config', compact('user', 'districts', 'payments', 'section', 'header_title', 'navigation'));
         }
     }
 

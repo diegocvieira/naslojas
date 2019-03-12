@@ -1,5 +1,25 @@
 $(function() {
-    $('#cep').mask('00000-000', {reverse: false, clearIfNotMatch : true});
+    $(document).on('click', '.page-store-config .activate-profile', function(e) {
+        e.preventDefault();
+
+        var status = $(this).find('.switch');
+
+        $.ajax({
+            url: 'loja/admin/profile-status/' + (status.hasClass('active-profile') ? 0 : 1),
+            method: 'POST',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                if (data.status) {
+                    status.toggleClass('active-profile');
+                } else {
+                    modalAlert('Preencha os campos obrigatórios em todas as seções.');
+                }
+            }
+        });
+    });
 
     $('#form-store-config').validate({
         rules: {
@@ -44,6 +64,30 @@ $(function() {
                 minlength: 1
             },
             state: {
+                required: true,
+                minlength: 1
+            },
+            max_product_unit: {
+                required: true,
+                minlength: 1
+            },
+            min_parcel_price: {
+                required: true,
+                minlength: 1
+            },
+            max_parcel: {
+                required: true,
+                minlength: 1
+            },
+            phone: {
+                required: true,
+                minlength: 1
+            },
+            'operating[]': {
+                required: true,
+                minlength: 1
+            },
+            'freight_price[]': {
                 required: true,
                 minlength: 1
             },

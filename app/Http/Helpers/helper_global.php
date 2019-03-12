@@ -190,7 +190,7 @@ function _paymentMethods()
     return [
         '0' => [
             'Dinheiro' => [
-                '0' => 'à vista'
+                '0' => 'À vista'
             ]
         ],
         '1' => [

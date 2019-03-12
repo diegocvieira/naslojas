@@ -210,13 +210,57 @@ $(function() {
             password_confirmation: {
                 minlength: 8,
                 equalTo: "#password"
+            },
+            phone: {
+                required: true,
+                minlength: 1
+            },
+            cpf: {
+                required: true,
+                minlength: 1
+            },
+            cep: {
+                required: true,
+                minlength: 9,
+                maxlength: 10
+            },
+            street: {
+                required: true,
+                minlength: 1,
+                maxlength: 200
+            },
+            district: {
+                required: true,
+                minlength: 1,
+                maxlength: 100
+            },
+            number: {
+                required: true,
+                minlength: 1,
+                maxlength: 15
+            },
+            city: {
+                required: true,
+                minlength: 1
+            },
+            state: {
+                required: true,
+                minlength: 1
             }
         },
         highlight: function (element, errorClass, validClass) {
             $(element).addClass(errorClass).removeClass(validClass);
+
+            if ($(element).hasClass('selectpicker')) {
+                $(element).prev().prev().addClass('validate-error');
+            }
         },
         unhighlight: function (element, errorClass, validClass) {
             $(element).removeClass(errorClass).addClass(validClass);
+
+            if ($(element).hasClass('selectpicker')) {
+                $(element).prev().prev().removeClass('validate-error');
+            }
         },
         errorPlacement: function(error, element) {
         },

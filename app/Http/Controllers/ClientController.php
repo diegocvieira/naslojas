@@ -69,7 +69,7 @@ class ClientController extends Controller
         } else {
             $section = 'config';
 
-            return view('mobile.client.config', compact('client', 'section', 'districts'));
+            return view('mobile.client.config', compact('client', 'section', 'districts', 'navigation'));
         }
     }
 
