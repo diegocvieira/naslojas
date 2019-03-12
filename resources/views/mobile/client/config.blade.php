@@ -15,9 +15,9 @@
 
             <ul class="navigation">
                 <li>
-                    <a href="{{ route('get-client-config', 'profile') }}" class="option {{ (!isset($navigation) || isset($navigation) && $navigation == 'profile') ? 'active' : '' }}">Seus dados</a>
+                    <a href="{{ route('get-client-config', 'profile') }}">Seus dados</a>
 
-                    <div class="fields {{ (!isset($navigation) || isset($navigation) && $navigation == 'profile') ? 'show-fields' : '' }}">
+                    <div class="fields {{ (isset($navigation) && $navigation == 'profile') ? 'show-fields' : '' }}">
                         <div class="form-group name">
                             {!! Form::text('name', null, ['placeholder' => ' ']) !!}
                             {!! Form::label('', 'Nome') !!}
@@ -41,7 +41,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('get-client-config', 'address') }}" class="option {{ (isset($navigation) && $navigation == 'address') ? 'active' : '' }}">Endereço de entrega</a>
+                    <a href="{{ route('get-client-config', 'address') }}">Endereço de entrega</a>
 
                     <div class="fields {{ (isset($navigation) && $navigation == 'address') ? 'show-fields' : '' }}">
                         <div class="form-group cep">
@@ -81,7 +81,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('get-client-config', 'access') }}" class="option {{ (isset($navigation) && $navigation == 'access') ? 'active' : '' }}">Dados de acesso</a>
+                    <a href="{{ route('get-client-config', 'access') }}">Dados de acesso</a>
 
                     <div class="fields {{ (isset($navigation) && $navigation == 'access') ? 'show-fields' : '' }}">
                         {!! Form::input('password', 'current_password') !!}

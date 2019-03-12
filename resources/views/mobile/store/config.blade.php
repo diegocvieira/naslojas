@@ -15,9 +15,9 @@
 
             <ul class="navigation">
                 <li>
-                    <a href="{{ route('get-store-config', 'store-profile') }}" class="option {{ (!isset($navigation) || isset($navigation) && $navigation == 'store-profile') ? 'active' : '' }}">Dados da loja</a>
+                    <a href="{{ route('get-store-config', 'store-profile') }}">Dados da loja</a>
 
-                    <div class="fields {{ (!isset($navigation) || isset($navigation) && $navigation == 'store-profile') ? 'show-fields' : '' }}">
+                    <div class="fields {{ (isset($navigation) && $navigation == 'store-profile') ? 'show-fields' : '' }}">
                         <div class="form-group name">
                             {!! Form::text('name', null, ['placeholder' => ' ']) !!}
                             {!! Form::label('', 'Nome da loja') !!}
@@ -41,7 +41,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('get-store-config', 'address') }}" class="option {{ (isset($navigation) && $navigation == 'address') ? 'active' : '' }}">Endereço</a>
+                    <a href="{{ route('get-store-config', 'address') }}">Endereço</a>
 
                     <div class="fields {{ (isset($navigation) && $navigation == 'address') ? 'show-fields' : '' }}">
                         <div class="form-group cep">
@@ -82,7 +82,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('get-store-config', 'freights') }}" class="option {{ (isset($navigation) && $navigation == 'freights') ? 'active' : '' }}">Frete</a>
+                    <a href="{{ route('get-store-config', 'freights') }}">Frete</a>
 
                     <div class="fields freights-fields {{ (isset($navigation) && $navigation == 'freights') ? 'show-fields' : '' }}">
                         @foreach ($districts as $key => $district)
@@ -110,7 +110,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('get-store-config', 'payment') }}" class="option {{ (isset($navigation) && $navigation == 'payment') ? 'active' : '' }}">Formas de pagamento</a>
+                    <a href="{{ route('get-store-config', 'payment') }}">Formas de pagamento</a>
 
                     <div class="fields {{ (isset($navigation) && $navigation == 'payment') ? 'show-fields' : '' }}">
                         <div class="payment-methods">
@@ -151,7 +151,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('get-store-config', 'access') }}" class="option {{ (isset($navigation) && $navigation == 'access') ? 'active' : '' }}">Dados de acesso</a>
+                    <a href="{{ route('get-store-config', 'access') }}">Dados de acesso</a>
 
                     <div class="fields {{ (isset($navigation) && $navigation == 'access') ? 'show-fields' : '' }}">
                         {!! Form::input('password', 'current_password') !!}
