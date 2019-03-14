@@ -181,7 +181,7 @@ header {
                     line-height: 5.1;
                     position: relative;
 
-                    &:after {
+                    &.bag-logged:after {
                         content: 'Sacola';
                         position: absolute;
                         right: 47px;

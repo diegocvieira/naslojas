@@ -30,7 +30,7 @@
             <ul>
                 @if (Auth::guard('client')->check())
                     <li>
-                        <a href="{{ route('bag-products') }}" class="open-bag">{{ $count_bag }}</a>
+                        <a href="{{ route('bag-products') }}" class="open-bag bag-logged">{{ $count_bag }}</a>
                     </li>
                 @endif
 
