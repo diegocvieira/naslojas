@@ -10,31 +10,31 @@
         <div class="slider" id="slider">
             <div class="holder">
                 <div class="slide-wrapper">
-                    <p>O <i>naslojas</i> é um site e app onde você pode conferir os produtos à venda nas lojas físicas de Pelotas</p>
+                    <p>O <i>naslojas</i> é um site e app onde você pode conferir as maiores ofertas lojas físicas de Pelotas</p>
 
                     <span class="swipe"><span class="text padding-left">DESLIZE</span><span class="arrow right"></span></span>
                 </div>
 
                 <div class="slide-wrapper">
-                    <p>Você pode encontrar o que procura de um jeito rápido e fácil</p>
+                    <p>Você faz o pedido online e recebe o seu produto em até 24 horas</p>
 
                     <span class="swipe"><span class="arrow left"></span><span class="text">DESLIZE</span><span class="arrow right"></span></span>
                 </div>
 
                 <div class="slide-wrapper">
-                    <p>Reserve os produtos por 24hs e passe na loja somente para finalizar a compra</p>
+                    <p>Realize o pagamento somente ao receber o seu pedido</p>
 
                     <span class="swipe"><span class="arrow left"></span><span class="text">DESLIZE</span><span class="arrow right"></span></span>
                 </div>
 
                 <div class="slide-wrapper">
-                    <p>Tire dúvidas sobre os produtos diretamente com as lojas</p>
+                    <p>Tire dúvidas sobre os produtos e realize a troca diretamente com as lojas</p>
 
                     <span class="swipe"><span class="arrow left"></span><span class="text">DESLIZE</span><span class="arrow right"></span></span>
                 </div>
 
                 <div class="slide-wrapper">
-                    <p>Economize tempo e dinheiro conferindo o <i>naslojas</i> antes de ir às compras</p>
+                    <p>O jeito mais rápido e fácil de comprar e economizar em Pelotas</p>
 
                     <span class="swipe"><span class="arrow left"></span><span class="text padding-right">DESLIZE</span></span>
                 </div>

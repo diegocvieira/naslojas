@@ -16,13 +16,13 @@
         <div class="item">
             <img src="{{ asset('images/know/calendar.png') }}" />
 
-            <p>Reserve por 24hs o<br>produto que gostou</p>
+            <p>Receba seu pedido<br>em até 24 horas</p>
         </div>
 
         <div class="item">
-            <img src="{{ asset('images/know/store.png') }}" />
+            <img src="{{ asset('images/know/card.png') }}" class="img-card" />
 
-            <p>Passe na loja para<br>finalizar a compra</p>
+            <p>Pague somente ao<br>receber o produto</p>
         </div>
     </div>
 @endsection

@@ -277,6 +277,10 @@ a, a:hover, a:active, a:focus {
 
         img {
             width: 100px;
+
+            &.img-card {
+                margin-bottom: 10px;
+            }
         }
 
         p {

@@ -179,6 +179,17 @@ header {
                     font-weight: 700;
                     text-align: center;
                     line-height: 5.1;
+                    position: relative;
+
+                    &:after {
+                        content: 'Sacola';
+                        position: absolute;
+                        right: 47px;
+                        top: -3px;
+                        font-size: 13.7px;
+                        color: rgb(100, 100, 100);
+                        font-weight: normal;
+                    }
                 }
             }
         }

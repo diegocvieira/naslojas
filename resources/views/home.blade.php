@@ -23,7 +23,7 @@
                 <div class="col-xs-4">
                     <img src="{{ asset('images/know/card.png') }}" class="img-card" />
 
-                    <p>Pague somente ao<br>receber o pedido</p>
+                    <p>Pague somente ao<br>receber o produto</p>
                 </div>
             </div>
 

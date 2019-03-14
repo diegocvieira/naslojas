@@ -12,7 +12,7 @@
 
             <p>Informe como deseja receber o produto e a forma de pagamento</p>
 
-            <span class="warning"></span>
+            <span class="warning">TROCA FÁCIL DIRETAMENTE NA LOJA</span>
         </div>
 
             {!! Form::model($client, ['method' => 'POST', 'route' => 'bag-finish', 'id' => 'form-bag-finish']) !!}
@@ -107,9 +107,9 @@
                             <div class="right">
                                 <span class="item">R$ {{ number_format($data['subtotal'], 2, ',', '.') }}</span>
 
-                                <span class="item update-freight">-----</span>
+                                <span class="item update-freight">{{ $data['freight'] ? number_format($data['freight'], 2, ',', '.') : '-----' }}</span>
 
-                                <span class="item update-subtotal" data-subtotal="{{ $data['subtotal'] }}">R$ {{ number_format($data['subtotal'], 2, ',', '.') }}</span>
+                                <span class="item update-subtotal" data-subtotal="{{ $data['subtotal'] }}">R$ {{ number_format($data['subtotal'] + $data['freight'], 2, ',', '.') }}</span>
                             </div>
 
                             <span class="parcels" data-minparcelprice="{{ $data['min_parcel_price'] }}" data-maxparcel="{{ $data['max_parcel'] }}"></span>

@@ -54,7 +54,7 @@
 </div>
 
 <div class="col-xs-5">
-    <span class="advice">PAGUE SOMENTE AO RECEBER O PRODUTO</span>
+    <span class="advice">TROCA FÁCIL DIRETAMENTE NA LOJA</span>
 
     <span class="identifier">Produto #{{ $product->identifier }}</span>
 

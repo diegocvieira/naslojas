@@ -1,23 +1,15 @@
         <footer>
             <div class="container">
                 <div class="col-xs-6 support">
-                    <div class="row">
-                        <a href="http://www.pelotas.com.br/" target="_blank">
-                            <img src="{{ asset('images/pelotas.png') }}" class="pelotas" />
-                        </a>
+                    <a href="http://www.pelotas.com.br/" target="_blank">
+                        <img src="{{ asset('images/pelotas.png') }}" class="pelotas" />
+                    </a>
 
-                        <a href="http://fecomercio-rs.org.br/" target="_blank">
-                            <img src="{{ asset('images/fecomercio.png') }}" class="fecomercio" />
-                        </a>
-                    </div>
+                    <a href="http://fecomercio-rs.org.br/" target="_blank">
+                        <img src="{{ asset('images/fecomercio.png') }}" class="fecomercio" />
+                    </a>
 
-                    <div class="row">
-                        <a href="https://internetsegura.br/" target="_blank">
-                            <img src="{{ asset('images/safe-internet.png') }}" class="safe-internet" />
-                        </a>
-
-                        <img src="{{ asset('images/ssl.png') }}" class="ssl" />
-                    </div>
+                    <img src="{{ asset('images/ssl2.png') }}" class="ssl" />
                 </div>
 
                 <div class="col-xs-6 links">
@@ -42,7 +34,7 @@
 
                         <a href="mailto:naslojas.com" class="email">contato@naslojas.com</a>
 
-                        <span class="phone">53 9 9169 1716</span>
+                        <a href="http://api.whatsapp.com/send?1=pt_BR&phone=55991691716" class="phone">whatsapp 53 9 9169 1716</a>
 
                         <div class="social">
                             <a href="https://www.facebook.com/naslojas" target="_blank" class="facebook"></a>
@@ -76,18 +68,6 @@
                 </div><!-- /.modal-content -->
             </div>
         </div><!-- /.modal -->
-
-        <?php /*<div class="modal fade" id="modal-alert" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-body"></div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->*/ ?>
 
         <div class="modal fade" id="modal-default" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">

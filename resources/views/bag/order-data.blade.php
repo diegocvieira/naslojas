@@ -24,7 +24,7 @@
                 <div class="col-xs-6 fields">
                     <div class="row">
                         <div class="col-xs-12">
-                            <span class="warning"></span>
+                            <span class="warning">TROCA FÁCIL DIRETAMENTE NA LOJA</span>
                         </div>
                     </div>
 
@@ -144,9 +144,9 @@
                             <div class="col-xs-6 text-right">
                                 <span class="item">R$ {{ number_format($data['subtotal'], 2, ',', '.') }}</span>
 
-                                <span class="item update-freight">-----</span>
+                                <span class="item update-freight">{{ $data['freight'] ? number_format($data['freight'], 2, ',', '.') : '-----' }}</span>
 
-                                <span class="item update-subtotal" data-subtotal="{{ $data['subtotal'] }}">R$ {{ number_format($data['subtotal'], 2, ',', '.') }}</span>
+                                <span class="item update-subtotal" data-subtotal="{{ $data['subtotal'] }}">R$ {{ number_format($data['subtotal'] + $data['freight'], 2, ',', '.') }}</span>
                             </div>
 
                             <div class="col-xs-12 text-right">

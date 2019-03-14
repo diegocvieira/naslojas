@@ -12,7 +12,7 @@
                 <a href="{{ route('store-advertise') }}">Divulgar ofertas</a>
                 <a href="{{ route('store-login-get') }}">Admin da loja</a>
                 <a href="mailto:naslojas.com" class="email">contato@naslojas.com</a>
-                <span>53 9 9169 1716</span>
+                <a href="https://api.whatsapp.com/send?1=pt_BR&phone=55991691716" class="phone">whatsapp 53 9 9169 1716</a>
             </div>
 
             <div class="social">
@@ -44,18 +44,6 @@
                 </div><!-- /.modal-content -->
             </div>
         </div><!-- /.modal -->
-
-        <?php /*<div class="modal fade" id="modal-alert" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-body"></div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->*/ ?>
 
         <div class="modal fade" id="modal-default" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">

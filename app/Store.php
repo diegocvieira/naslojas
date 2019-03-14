@@ -25,7 +25,7 @@ class Store extends Model
 
     public function freights()
     {
-        return $this->hasMany('App\StoreFreight', 'store_id', 'id');
+        return $this->hasMany('App\StoreFreight', 'store_id', 'id')->orderBy('district_id', 'DESC');
     }
 
     /*public function operatings()

@@ -93,7 +93,7 @@ class OrderController extends Controller
 
         if ($order->save()) {
             $return['status'] = true;
-            $return['msg'] = 'Reserva realizada com sucesso! <br> O cliente já foi notificado de que o produto que ele deseja estará aguardando por ele na loja até o horário informado.';
+            $return['msg'] = 'Realize a entrega em até 24 horas e lembre-se de ligar para o cliente para combinar o melhor horário para a entrega.';
 
             Mail::send('emails.order-confirm', [], function ($q) use ($order) {
                 $q->from('no-reply@naslojas.com', 'naslojas');

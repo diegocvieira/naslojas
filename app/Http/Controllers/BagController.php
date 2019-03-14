@@ -213,24 +213,6 @@ class BagController extends Controller
 
         $header_title = 'Dados do pedido | naslojas.com';
 
-        //$today = date('H:i');
-        //$week = date('w');
-
-        /*for ($i = 1; $i <= 2; $i++) {
-            $valid_date = $i == 1 ? _businessDay() : _businessDay(date('Y-m-d', strtotime($valid_date . ' + 1 day')));
-            $date = _weekAbbreviation($valid_date) . ' ' . date('d/m/Y', strtotime($valid_date)) . ' entre ';
-
-            for ($z = 12; $z <= 18; $z++) {
-                if (strtotime($z . ':00') > strtotime($today) || $i == 2 || $week == 6 || $week == 0) {
-                    $reserve_hours[$date . $z . ':00 e ' . ($z + 1) . ':00'] = $date . $z . ':00 e ' . ($z + 1) . ':00';
-                }
-            }
-
-            if (isset($reserve_hours) && count($reserve_hours) == 9 || $week == 6 || $week == 0) {
-                break;
-            }
-        }*/
-
         $payments = [];
 
         foreach (session('bag')['stores'] as $store_key => $store) {
@@ -239,6 +221,7 @@ class BagController extends Controller
             foreach ($store['products'] as $p) {
                 $product = Product::select('price', 'store_id')->find($p['id']);
 
+                $bag_data[$store_key]['freight'] = $client->district_id ? $product->store->freights->where('district_id', $client->district_id)->first()->price : null;
                 $bag_data[$store_key]['subtotal'] += $product->price * $p['qtd'];
                 $bag_data[$store_key]['min_parcel_price'] = $product->store->min_parcel_price;
                 $bag_data[$store_key]['max_parcel'] = $product->store->max_parcel;
@@ -268,114 +251,6 @@ class BagController extends Controller
         } else {
             return view('mobile.bag.order-data', compact('bag_data', 'client', 'districts', 'payments', 'header_title'));
         }
-
-        /*foreach ($store->operatings as $operating_key => $operating) {
-            if ($operating->week == $week1 || $operating->week == $week2) {
-                // Add 30 minutes to opening hour
-                $opening_morning = date('H:i', strtotime($operating->opening_morning . ' + 30 minute'));
-                // Add 30 minutes to closed hour
-                $closed_afternoon = date('H:i', strtotime($operating->closed_afternoon . ' - 30 minute'));
-
-                $z = 0;
-                $i = 0;
-                $attempts = true;
-
-                if ($operating->closed_morning) {
-                    // CALCULATE MORNING HOURS
-                    do {
-                        $generate_hour = date('H:i', strtotime($opening_morning . ' + ' . $i . ' hour'));
-                        $generate_hour2 = date('H:i', strtotime($generate_hour . ' + 1 hour'));
-
-                        if (strtotime($generate_hour) && strtotime($generate_hour) >= strtotime($opening_morning) && strtotime($generate_hour) <= strtotime($operating->closed_morning) && strtotime($generate_hour2) <= strtotime($operating->closed_morning)) {
-
-                            if (strtotime($today) < strtotime($opening_morning) || strtotime($today) >= strtotime($opening_morning) && strtotime($today) <= strtotime($generate_hour)) {
-                                $hours[$store_key][$operating_key][$z] = ($operating->week == $week1 ? ($week_text1 . ' ' . $date1_formatted) : ($week_text2 . ' ' . $date2_formatted)) . ' entre ' . $generate_hour . ' e ' . $generate_hour2;
-
-                                $z++;
-                            }
-
-                            $i++;
-                        } else {
-                            $attempts = false;
-                        }
-                    } while ($attempts == true);
-
-                    // CALCULATE AFTERNOON HOURS
-                    $i = 0;
-                    $attempts = true;
-
-                    do {
-                        $generate_hour = date('H:i', strtotime($operating->opening_afternoon . ' + ' . $i . ' hour'));
-                        $generate_hour2 = date('H:i', strtotime($generate_hour . ' + 1 hour'));
-
-                        if (strtotime($generate_hour) && strtotime($generate_hour) >= strtotime($operating->opening_afternoon) && strtotime($generate_hour) <= strtotime($closed_afternoon) && strtotime($generate_hour2) <= strtotime($closed_afternoon)) {
-                            if (strtotime($today) < strtotime($operating->opening_afternoon) || strtotime($today) >= strtotime($operating->opening_afternoon) && strtotime($today) <= strtotime($generate_hour)) {
-                                $hours[$store_key][$operating_key][$z] = ($operating->week == $week1 ? ($week_text1 . ' ' . $date1_formatted) : ($week_text2 . ' ' . $date2_formatted)) . ' entre ' . $generate_hour . ' e ' . $generate_hour2;
-
-                                $z++;
-                            }
-
-                            $i++;
-                        } else {
-                            $attempts = false;
-                        }
-                    } while ($attempts == true);
-                } else {
-                    // CALCULATE MORNING TO AFTERNOON HOUR
-                    do {
-                        $generate_hour = date('H:i', strtotime($opening_morning . ' + ' . $i . ' hour'));
-                        $generate_hour2 = date('H:i', strtotime($generate_hour . ' + 1 hour'));
-
-                        if (strtotime($generate_hour) && strtotime($generate_hour) >= strtotime($opening_morning) && strtotime($generate_hour) <= strtotime($closed_afternoon) && strtotime($generate_hour2) <= strtotime($closed_afternoon)) {
-                            if (strtotime($today) < strtotime($opening_morning) || strtotime($today) >= strtotime($opening_morning) && strtotime($today) <= strtotime($generate_hour)) {
-                                $hours[$store_key][$operating_key][$z] = ($operating->week == $week1 ? ($week_text1 . ' ' . $date1_formatted) : ($week_text2 . ' ' . $date2_formatted)) . ' entre ' . $generate_hour . ' e ' . $generate_hour2;
-
-                                $z++;
-                            }
-
-                            $i++;
-                        } else {
-                            $attempts = false;
-                        }
-                    } while ($attempts == true);
-                }
-            }
-        }*/
-
-        /*if (count($hours) > 1) {
-            // Get the first and last hour
-            foreach ($hours as $hour) {
-                foreach ($hour as $week) {
-                    $first_value[] = substr(reset($week), 23, 5);
-                    $last_value[] = substr(end($week), 23, 5);
-                }
-            }
-
-            $min = min($first_value);
-            $max = max($last_value);
-
-            // Remove de min and max value
-            foreach ($hours as $key => $hour) {
-                foreach ($hour as $key2 => $week) {
-                    foreach($week as $key3 => $time) {
-                        if (substr($time, 23, 5) == $min || substr($time, 23, 5) == $max) {
-                            unset($hours[$key][$key2][$key3]);
-                        }
-                    }
-                }
-            }
-        }
-
-        foreach ($hours as $key => $hour) {
-            foreach ($hour as $key2 => $week) {
-                foreach($week as $key3 => $time) {
-                    $reserve_hours[$hours[$key][$key2][$key3]] = $hours[$key][$key2][$key3];
-                }
-            }
-        }*/
-
-
-        //return $reserve_hours;
     }
 
     public function finish(Request $request)
