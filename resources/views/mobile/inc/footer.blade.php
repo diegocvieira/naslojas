@@ -12,7 +12,7 @@
                 <a href="{{ route('store-advertise') }}">Divulgar ofertas</a>
                 <a href="{{ route('store-login-get') }}">Admin da loja</a>
                 <a href="mailto:naslojas.com" class="email">contato@naslojas.com</a>
-                <a href="https://api.whatsapp.com/send?1=pt_BR&phone=55991691716" class="phone">whatsapp 53 9 9169 1716</a>
+                <a href="https://api.whatsapp.com/send?phone=5553991786097" class="phone">whatsapp 53 9 9178 6097</a>
             </div>
 
             <div class="social">
