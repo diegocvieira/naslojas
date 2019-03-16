@@ -12,7 +12,7 @@
 
                 <h1>Pedido realizado com sucesso!</h1>
 
-                <p>Aguarde no endereço e horário informado para receber o seu pedido.</p>
+                <p>Aguarde no endereço informado para receber o seu pedido.</p>
 
                 <span><b>Entrega:</b> {{ _businessDay($order->created_at) }}</span>
                 <span>
