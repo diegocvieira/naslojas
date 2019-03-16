@@ -143,13 +143,14 @@ function _uploadImage($file, $store_id)
 function _businessDay($date = null, $check = null)
 {
     if (!$date) {
-        $date = date('Y-m-d', strtotime('+ 1 day'));
+        $date = date('Y-m-d');
     }
 
+    $date = date('Y-m-d', strtotime($date . ' + 1 day'));
     $week_day = date('w', strtotime($date));
 
     if ($week_day == 6 || $week_day == 0) {
-        return _businessDay(date('Y-m-d', strtotime($date . ' + 1 day')), $check);
+        return _businessDay($date, $check);
     } else {
         switch ($week_day) {
             case 1:
