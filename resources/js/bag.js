@@ -211,6 +211,10 @@ $(function() {
         errorPlacement: function(error, element) {
         },
         submitHandler: function(form) {
+            var btn = $(form).find('input[type=submit]');
+
+            btn.val('ENVIANDO PEDIDO').prop('disabled', true);
+
             $.ajax({
                 url: $(form).attr('action'),
                 method: 'POST',
@@ -220,10 +224,14 @@ $(function() {
                     if (data.status) {
                         window.location = data.route;
                     } else {
+                        btn.val('ENVIAR PEDIDO').prop('disabled', false);
+
                         modalAlert(data.msg);
                     }
                 },
                 error: function (request, status, error) {
+                    btn.val('ENVIAR PEDIDO').prop('disabled', false);
+
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
             });
