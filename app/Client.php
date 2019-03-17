@@ -14,4 +14,9 @@ class Client extends Authenticatable
     {
         return $this->belongsTo('App\City', 'city_id', 'id');
     }
+
+    public function district()
+    {
+        return $this->belongsTo('App\District', 'district_id', 'id');
+    }
 }

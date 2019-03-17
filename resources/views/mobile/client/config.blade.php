@@ -65,7 +65,7 @@
                         </div>
 
                         <div class="form-group">
-                            {!! Form::select('district', $districts, null, ['title' => 'Bairro', 'class' => 'selectpicker']) !!}
+                            {!! Form::select('district', $districts, $client->district_id ? $client->district->id : null, ['title' => 'Bairro', 'class' => 'selectpicker']) !!}
                         </div>
 
                         <div class="form-group">
