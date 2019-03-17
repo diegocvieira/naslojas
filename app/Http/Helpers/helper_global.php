@@ -224,14 +224,17 @@ function _getPaymentMethod($value)
     $value_split = explode('-', $value);
 
     switch ($value_split[0]) {
-        case 0:
+        case '0':
             $method = 'Dinheiro';
             break;
-        case 1:
+        case '1':
             $method = 'Cartão de crédito';
             break;
-        case 2:
+        case '2':
             $method = 'Cartão de débito';
+            break;
+        default:
+            $method = '';
     }
 
     if ($method == 'Dinheiro') {
@@ -239,26 +242,29 @@ function _getPaymentMethod($value)
     }
 
     switch ($value_split[1]) {
-        case 0:
+        case '0':
             $payment = 'Visa';
             break;
-        case 1:
+        case '1':
             $payment = 'MasterCard';
             break;
-        case 2:
+        case '2':
             $payment = 'Elo';
             break;
-        case 1:
+        case '3':
             $payment = 'American Express';
             break;
-        case 1:
+        case '4':
             $payment = 'Dinners Club';
             break;
-        case 1:
+        case '5':
             $payment = 'Hipercard';
             break;
-        case 1:
+        case '6':
             $payment = 'Banricompras';
+            break;
+        default:
+            $payment = '';
     }
 
     return $method . ' - ' . $payment;
