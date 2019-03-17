@@ -142,7 +142,28 @@ $(function() {
     });
 
     $(document).on('change', '.page-bag-order-data select[name=district]', function() {
-        updateFreight($(this).val());
+        $.ajax({
+            url: 'sacola/change-district/' + $(this).val(),
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('.update-freight').each(function(index) {
+                    var freight = parseFloat(data.freights[index].price),
+                        subtotal = parseFloat($(this).parent().find('.update-subtotal').data('subtotal'));
+
+                    // Freight
+                    $(this).text(freight > 0 ? 'R$ ' + number_format(freight, 2, ',', '.') : 'grátis');
+
+                    // Subtotal
+                    $(this).parent().find('.update-subtotal').text('R$ ' + number_format(subtotal + freight, 2, ',', '.'));
+                });
+
+                updateParcels();
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado ao calcular o frete. Atualize a página e tente novamente.');
+            }
+        });
     });
 
     $('#form-bag-finish').validate({
@@ -253,47 +274,19 @@ function updateBagInfos() {
 }
 
 function updateParcels() {
-    $('.order').each(function() {
-        var parcels_div = $(this).find('.parcels'),
-            parcels = 0;
-
-        if ($('.page-bag-order-data input[name=payment]:checked').val() == 1) {
-            var subtotal = parseFloat($(this).find('.update-subtotal').data('subtotal')) + parseFloat($('.update-freight').text().replace('R$', '').replace('.', '').replace(',', '.'));
+    if ($('.page-bag-order-data input[name=payment]:checked').val() == 1) {
+        $('.order').each(function() {
+            var parcels_div = $(this).find('.parcels'),
+                parcels = 0,
+                subtotal = parseFloat($(this).find('.update-subtotal').data('subtotal')) + parseFloat($('.update-freight').text().replace('R$', '').replace('.', '').replace(',', '.'));
 
             for (i = 1; i <= parcels_div.data('maxparcel'); i++) {
-                if (subtotal / i < parcels_div.data('minparcelprice')) {
-                    parcels = i - 1;
-
-                    break;
+                if ((subtotal / i) >= parcels_div.data('minparcelprice')) {
+                    parcels = i;
                 }
             }
-        }
 
-        parcels_div.text(parcels ? 'em até ' + parcels + 'x de R$ ' + number_format(subtotal / parcels, 2, ',', '.') + ' sem juros' : 'à vista');
-    });
-}
-
-function updateFreight(district_id) {
-    $.ajax({
-        url: 'sacola/change-district/' + district_id,
-        method: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            $('.update-freight').each(function(index) {
-                var freight = parseFloat(data.freights[index].price),
-                    subtotal = parseFloat($(this).parent().find('.update-subtotal').data('subtotal'));
-
-                // Freight
-                $(this).text(freight > 0 ? 'R$ ' + number_format(freight, 2, ',', '.') : 'grátis');
-
-                // Subtotal
-                $(this).parent().find('.update-subtotal').text('R$ ' + number_format(subtotal + freight, 2, ',', '.'));
-            });
-
-            updateParcels();
-        },
-        error: function (request, status, error) {
-            modalAlert('Ocorreu um erro inesperado ao calcular o frete. Atualize a página e tente novamente.');
-        }
-    });
+            parcels_div.text(parcels ? 'em até ' + parcels + 'x de R$ ' + number_format(subtotal / parcels, 2, ',', '.') + ' sem juros' : 'à vista');
+        });
+    }
 }
