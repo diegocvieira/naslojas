@@ -43,23 +43,9 @@
                 <span class="price-off">{{ _discount($product->price, $product->old_price) }}% OFF</span>
             @endif
 
-            @if ($product->installment && $product->installment_price)
-                <span class="parcels">
-                    em até {{ $product->installment }}x de R$ {{ number_format($product->installment_price, 2, ',', '.') }}
-                    {{ _taxes($product->installment, $product->installment_price, $product->price) }}
-                </span>
-            @endif
-
-            @if ($product->reserve && $product->reserve_discount)
-                <span class="reserve" title="Preço com desconto reservado pelo naslojas"><span>R$ {{ number_format(_reservePrice($product->price, $product->reserve_discount), 2, ',', '.') }}</span> na reserva pelo <i>naslojas</i></span>
-
-                @if ($product->installment && $product->installment_price)
-                    <span class="reserve_parcels">
-                        em até {{ $product->installment }}x de R$ {{ number_format(_reservePrice(($product->installment_price * $product->installment) / $product->installment, $product->reserve_discount), 2, ',', '.') }}
-                        {{ _taxes($product->installment, $product->installment_price, $product->price) }}
-                    </span>
-                @endif
-            @endif
+            <span class="parcels">
+                {{ $product->showParcels($product) }}
+            </span>
         </div>
 
         <div class="qtd-container">

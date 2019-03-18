@@ -16,6 +16,23 @@ class Product extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     protected $searchable = ['title', 'identifier'];
 
+    public function showParcels($product)
+    {
+        $parcels = 0;
+
+        for ($i = 2; $i <= $product->store->max_parcel; $i++) {
+            if (($product->price / $i) >= $product->store->min_parcel_price) {
+                $parcels = $i;
+            }
+        }
+
+        if ($parcels) {
+            return 'em até ' . $parcels . 'x de R$ ' . number_format($product->price / $parcels, 2, ',', '.') . ' sem juros';
+        } else {
+            return null;
+        }
+    }
+
     public function store()
     {
         return $this->belongsTo('App\Store', 'store_id', 'id');

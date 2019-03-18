@@ -279,7 +279,7 @@ function updateParcels() {
                 parcels = 0,
                 subtotal = parseFloat($(this).find('.update-subtotal').data('subtotal')) + parseFloat($('.update-freight').text().replace('R$', '').replace('.', '').replace(',', '.'));
 
-            for (i = 1; i <= parcels_div.data('maxparcel'); i++) {
+            for (i = 2; i <= parcels_div.data('maxparcel'); i++) {
                 if ((subtotal / i) >= parcels_div.data('minparcelprice')) {
                     parcels = i;
                 }

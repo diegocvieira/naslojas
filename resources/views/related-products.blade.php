@@ -6,26 +6,19 @@
 
         <div class="infos">
             <a href="{{ route('show-product', $rp->slug) }}" class="show-product">
-                @if ($rp->reserve && $rp->reserve_discount)
-                    <span class="reserve" title="R$ {{ number_format(_reservePrice($rp->price, $rp->reserve_discount), 2, ',', '.') }} na reserva pelo naslojas"><span>DESCONTO NA RESERVA</span></span>
-                @endif
-
                 @if ($rp->old_price)
                     <span class="old-price">de <span>{{ number_format($rp->old_price, 2, ',', '.') }}</span></span>
                 @endif
 
-                <span class="price" title="{{ ($rp->reserve && $rp->reserve_discount) ? 'Preço normal do produto' : '' }}"><span>R$</span> {{ number_format($rp->price, 2, ',', '.') }}</span>
+                <span class="price"><span>R$</span> {{ number_format($rp->price, 2, ',', '.') }}</span>
 
                 @if ($rp->old_price)
                     <span class="price-off">{{ _discount($rp->price, $rp->old_price) }}% OFF</span>
                 @endif
 
-                @if ($rp->installment && $rp->installment_price)
-                    <span class="parcels">
-                        em até {{ $rp->installment }}x de R$ {{ number_format($rp->installment_price, 2, ',', '.') }}
-                        {{ _taxes($rp->installment, $rp->installment_price, $rp->price) }}
-                    </span>
-                @endif
+                <span class="parcels">
+                    {{ $rp->showParcels($rp) }}
+                </span>
 
                 <p class="title" title="{{ $rp->title }}">{{ $rp->title }}</p>
             </a>
