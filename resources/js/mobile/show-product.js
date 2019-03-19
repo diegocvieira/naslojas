@@ -45,80 +45,19 @@ $(function() {
         return false;
     });
 
-    $(document).on('click', '.btn-product-confirm', function(e) {
+    $(document).on('change', '.page-show-product select.freights', function(e) {
         e.preventDefault();
 
-        if (client_logged) {
-            if($('.size-container').length && !$('.size-container input[type=checkbox]').is(':checked')) {
-                modalAlert('Selecione pelo menos um tamanho para confirmar.');
-            } else {
-                var sizes = [];
-                $('.size-container').find('input[type=checkbox]:checked').each(function() {
-                    sizes.push($(this).val());
-                });
+        var span = $('.freights-container').find('.freight-selected'),
+            val = $(this).val();
 
-                $.ajax({
-                    url: $(this).data('url'),
-                    data: { sizes : sizes, product_id : $(this).data('productid') },
-                    method: 'POST',
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (data) {
-                        modalAlert(data.msg);
-                    }
-                });
-            }
+        if (val == 0.00) {
+            span.addClass('free').text('Frete grátis');
         } else {
-            modalAlert('É necessário acessar sua conta para fazer a confirmação de um produto.');
+            span.removeClass('free').text('Frete R$ ' + number_format(val, 2, ',', '.'));
         }
-    });
 
-    $(document).on('click', '.btn-product-reserve', function(e) {
-        e.preventDefault();
-
-        var url = $(this).data('url'),
-            product_id = $(this).data('productid');
-
-        if (client_logged) {
-            if($('.size-container').length && !$('.size-container input[type=checkbox]').is(':checked')) {
-                modalAlert('Selecione pelo menos um tamanho para reservar.');
-            } else {
-                modalAlert("Você deseja que este produto seja reservado para você conferir na loja em até 24hs após a confirmação? <br> Você não é obrigado(a) a finalizar a compra na loja!", 'RESERVAR');
-
-                var modal = $('#modal-alert');
-
-                modal.find('.btn-default').addClass('btn-confirm');
-                modal.find('.modal-footer').prepend("<button type='button' class='btn btn-back invert-color' data-dismiss='modal'>VOLTAR</button>");
-
-                modal.find('.modal-footer .btn-confirm').off().on('click', function() {
-                    var sizes = [];
-                    $('.size-container').find('input[type=checkbox]:checked').each(function() {
-                        sizes.push($(this).val());
-                    });
-
-                    $.ajax({
-                        url: url,
-                        data: { sizes : sizes, product_id : product_id },
-                        method: 'POST',
-                        dataType: 'json',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function (data) {
-                            modal.find('.modal-body').html(data.msg);
-                            modal.find('.modal-footer .btn-confirm').remove();
-                            modal.find('.modal-footer .btn-back').text('OK').off();
-                        }
-                    });
-
-                    return false;
-                });
-            }
-        } else {
-            modalAlert('É necessário acessar sua conta para fazer a reserva de um produto.');
-        }
+        $(this).val('').selectpicker('refresh');
     });
 
     $(document).on('submit', '#form-question-message', function() {

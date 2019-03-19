@@ -173,7 +173,7 @@ class StoreController extends Controller
         $header_title = 'Configurações | naslojas.com';
 
         $user = User::find($this->user_id);
-        $districts = District::get();
+        $districts = District::orderBy('name', 'ASC')->get();
 
         /*$weeks = [
             '1' => 'Segunda',

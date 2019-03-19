@@ -48,6 +48,17 @@
             </span>
         </div>
 
+        <div class="freights-container">
+            <span class="freight-selected">Entrega a partir de 2hs em toda a cidade</span>
+
+            <select title="Calcular frete" class="freights selectpicker" autocomplete="off" data-live-search="true" data-live-search-placeholder="Pesquise aqui">
+                <option value="0.00">Retirar na loja</option>
+                @foreach (_freights($product->store_id) as $store_freight)
+                    <option value="{{ $store_freight->price }}">{{ $store_freight->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <div class="qtd-container">
             <span class="label-select">Quantidade:</span>
 

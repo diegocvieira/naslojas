@@ -269,3 +269,13 @@ function _getPaymentMethod($value)
 
     return $method . ' - ' . $payment;
 }
+
+function _freights($store_id)
+{
+    $freights = App\StoreFreight::join('districts', 'district_id', 'districts.id')
+        ->where('store_id', $store_id)
+        ->orderBy('districts.name', 'ASC')
+        ->get();
+
+    return $freights;
+}
