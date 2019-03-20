@@ -100,7 +100,7 @@
                                 @endforeach
 
                                 @if (!isset($accept_districts) || !in_array($district->id, $accept_districts))
-                                    {!! Form::text('freight_price[' . $key . ']', null, ['placeholder' => ' ', 'class' => 'mask-money', 'required']) !!}
+                                    {!! Form::text('freight_price[' . $key . ']', $district->preValue($district->id), ['placeholder' => ' ', 'class' => 'mask-money', 'required']) !!}
                                 @endif
 
                                 {!! Form::label('', $district->name) !!}
