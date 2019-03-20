@@ -276,7 +276,9 @@ function updateParcels() {
     $('.order').each(function() {
         var parcels_div = $(this).find('.parcels'),
             parcels = 0,
-            subtotal = parseFloat($(this).find('.update-subtotal').data('subtotal')) + parseFloat($('.update-freight').text().replace('R$', '').replace('.', '').replace(',', '.'));
+            price = parseFloat($(this).find('.update-subtotal').data('subtotal'));
+            freight = parseFloat($('.update-freight').text().replace('R$', '').replace('.', '').replace(',', '.')),
+            subtotal = freight ? price + freight : price;
 
         if ($('.page-bag-order-data input[name=payment]:checked').val() == 1) {
             for (i = 2; i <= parcels_div.data('maxparcel'); i++) {
