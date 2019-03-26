@@ -90,7 +90,7 @@
                             </li>
 
                             <li>
-                                <a href="{{ route('list-client-orders') }}" class="icon-check">Pedidos</a>
+                                <a href="{{ route('list-client-orders') }}" class="icon-check">Meus pedidos</a>
                             </li>
 
                             <li>

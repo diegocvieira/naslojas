@@ -51,7 +51,7 @@
 
                         <div class="form-group">
                             {!! Form::text('phone', null, ['placeholder' => ' ', 'class' => 'mask-phone']) !!}
-                            {!! Form::label('', 'Telefone') !!}
+                            {!! Form::label('', 'Celular') !!}
                         </div>
 
                         <div class="form-group">

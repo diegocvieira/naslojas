@@ -52,7 +52,7 @@
                             </li>
 
                             <li>
-                                <a href="{{ route('list-client-orders') }}" class="{{ (isset($section) && $section == 'order') ? 'active' : '' }}">Pedidos</a>
+                                <a href="{{ route('list-client-orders') }}" class="{{ (isset($section) && $section == 'order') ? 'active' : '' }}">Meus pedidos</a>
                             </li>
 
                             <li>

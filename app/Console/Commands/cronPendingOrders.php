@@ -52,19 +52,13 @@ class cronPendingOrders extends Command
                         ->where('size', $order->size)
                         ->delete();
 
-                    $count_sizes = ProductSize::whereHas('product', function ($query) {
-                            $query->withTrashed()
-                                ->withoutGlobalScopes(['active', 'active-store']);
-                        })
-                        ->where('product_id', $order->product_id)
-                        ->count();
+                    $product = Product::doesnthave('sizes')
+                        ->withTrashed()
+                        ->withoutGlobalScopes(['active', 'active-store'])
+                        ->where('id', $order->product_id)
+                        ->first();
 
-                    if (!$count_sizes) {
-                        $product = Product::withTrashed()
-                            ->withoutGlobalScopes(['active', 'active-store'])
-                            ->where('id', $order->product_id)
-                            ->first();
-
+                    if ($product) {
                         $product->status = 0;
                         $product->save();
                     }

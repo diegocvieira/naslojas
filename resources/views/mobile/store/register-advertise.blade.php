@@ -14,7 +14,7 @@
 
         <img src="{{ asset('images/advise/people.png') }}" class="img-responsive img-people" />
 
-        <a href="{{ route('store-register-get') }}" class="btn-advertise">DIVULGAR OFERTAS</a>
+        <a href="{{ route('store-register-get') }}" class="btn-advertise">VENDER ONLINE</a>
 
         <div class="cards">
             <div class="card">
@@ -40,7 +40,7 @@
 
         <div class="steps">
             <div class="step">
-                <img src="{{ asset('images/advise/shirt.png') }}" class="img-shirt" />
+                <img src="{{ asset('images/advise/store.png') }}" class="img-shirt" />
                 <p>Nós buscamos os<br>produtos na sua loja</p>
             </div>
 
@@ -60,7 +60,7 @@
 
             <p>Todos em Pelotas poderão<br>visitar sua loja 24hs por dia</p>
 
-            <p class="bg">Nunca foi tão fácil divulgar<br>suas ofertas online</p>
+            <p class="bg">Nunca foi tão fácil vender<br>seus produtos online</p>
         </div>
 
         <div class="price">
@@ -70,7 +70,7 @@
 
             <h3>TOTALMENTE GRÁTIS</h3>
 
-            <p class="taxe">Depois o custo é de apenas R$ 0,50 por oferta<br>+ taxa única de R$ 5,00 do transporte</p>
+            <p class="taxe">Depois o custo é de apenas R$ 0,50 por oferta + taxa única de R$ 5,00 do transporte</p>
         </div>
 
         <div class="race">
@@ -86,9 +86,9 @@
 
             <h3>TOTALMENTE GRÁTIS</h3>
 
-            <a href="{{ route('store-register-get') }}" class="btn-advertise">DIVULGAR OFERTAS</a>
+            <a href="{{ route('store-register-get') }}" class="btn-advertise">VENDER ONLINE</a>
 
-            <p class="phone">Dúvidas no whatsapp da empresa<br>53 9 9169 1716</p>
+            <p class="phone">Dúvidas no whatsapp da empresa<br>53 9 9178 6097</p>
         </div>
     </div>
 @endsection

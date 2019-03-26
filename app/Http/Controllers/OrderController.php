@@ -93,7 +93,7 @@ class OrderController extends Controller
 
         if ($order->save()) {
             $return['status'] = true;
-            $return['msg'] = 'Realize a entrega em até 24 horas e lembre-se de ligar para o cliente para combinar o melhor horário para a entrega.';
+            $return['msg'] = 'Lembre-se de ligar para o cliente para combinar o melhor horário para a entrega.';
 
             Mail::send('emails.order-confirm', [], function ($q) use ($order) {
                 $q->from('no-reply@naslojas.com', 'naslojas');
@@ -131,25 +131,19 @@ class OrderController extends Controller
                 ->where('size', $order->size)
                 ->delete();
 
-            $count_sizes = ProductSize::whereHas('product', function ($query) {
-                    $query->withTrashed()
-                        ->withoutGlobalScopes(['active', 'active-store']);
-                })
-                ->where('product_id', $order->product_id)
-                ->count();
+            $product = Product::doesnthave('sizes')
+                ->withTrashed()
+                ->withoutGlobalScopes(['active', 'active-store'])
+                ->where('id', $order->product_id)
+                ->first();
 
-            if (!$count_sizes) {
-                $product = Product::withTrashed()
-                    ->withoutGlobalScopes(['active', 'active-store'])
-                    ->where('id', $order->product_id)
-                    ->first();
-
+            if ($product) {
                 $product->status = 0;
                 $product->save();
             }
 
             $return['status'] = true;
-            $return['msg'] = 'Mantenha seus produtos atualizados. <br> Isso evita que sua loja perca os pontos de relevância e seus produtos caiam de posição nas buscas.';
+            $return['msg'] = 'Mantenha seus produtos atualizados. <br> Isso evita que sua loja perca pontos de relevância e seus produtos caiam de posição nas buscas.';
 
             Mail::send('emails.order-refuse', [], function ($q) use ($order) {
                 $q->from('no-reply@naslojas.com', 'naslojas');

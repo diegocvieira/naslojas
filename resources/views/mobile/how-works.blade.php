@@ -10,7 +10,7 @@
         <div class="slider" id="slider">
             <div class="holder">
                 <div class="slide-wrapper">
-                    <p>O <i>naslojas</i> é um site e app onde você pode conferir as maiores ofertas lojas físicas de Pelotas</p>
+                    <p>O <i>naslojas</i> é um site e app onde você pode conferir as maiores ofertas das lojas físicas de Pelotas</p>
 
                     <span class="swipe"><span class="text padding-left">DESLIZE</span><span class="arrow right"></span></span>
                 </div>

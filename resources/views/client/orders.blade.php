@@ -32,7 +32,7 @@
 
                                 @if ($product->status == 0 || $product->status == 3)
                                     <span class="item">
-                                        <span class="red">PEDIDO RECUSADO</span>
+                                        <span class="red">PEDIDO CANCELADO</span>
                                     </span>
                                 @endif
                             </div>
@@ -60,15 +60,15 @@
 
                                         #{{ $product->product->identifier }}
                                     </span>
-                                </div>
 
-                                <div class="group">
                                     <span class="item">
                                         <span>Data do pedido:</span>
 
                                         {{ date('d/m/Y', strtotime($product->order->created_at)) . ' às ' . date('H:i', strtotime($product->order->created_at)) }}
                                     </span>
+                                </div>
 
+                                <div class="group">
                                     <span class="item">
                                         <span>Loja:</span>
 

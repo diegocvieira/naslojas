@@ -43,7 +43,7 @@
 
                             <span class="item">
                                 @if ($product->status == 0 || $product->status == 3)
-                                    <span class="status red">PEDIDO RECUSADO</span>
+                                    <span class="status red">PEDIDO CANCELADO</span>
                                 @elseif ($product->status == 1)
                                     <span class="status green">PEDIDO CONFIRMADO</span>
                                 @else
@@ -61,9 +61,7 @@
 
                                     #{{ $product->product->identifier }}
                                 </span>
-                            </div>
 
-                            <div class="group">
                                 <span class="item">
                                     <span>Data do pedido:</span>
 
@@ -145,9 +143,9 @@
 
                             <div class="group btns">
                                 @if ($product->status == 2)
-                                    <button data-url="{{ route('confirm-order', $product->id) }}" class="confirm-order" type="button">ACEITAR ENTREGA</button>
+                                    <button data-url="{{ route('confirm-order', $product->id) }}" class="confirm-order" type="button">CONFIRMAR ENTREGA</button>
 
-                                    <button data-url="{{ route('refuse-order', $product->id) }}" class="refuse-order" type="button">RECUSAR ENTREGA</button>
+                                    <button data-url="{{ route('refuse-order', $product->id) }}" class="refuse-order" type="button">CANCELAR ENTREGA</button>
                                 @endif
                             </div>
                         </div>

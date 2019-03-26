@@ -29,7 +29,7 @@
 
                 <tr>
                     <td style="box-shadow: 5px 8.66px 9px 1px rgba(100, 100, 100, 0.118); background-color: #fff; padding: 50px 50px 0 50px; border-radius: 5px 5px 0 0;">
-                        <span style="display: block; font-size: 25px; color: rgb(49, 49, 49);">Pedido recusado</span>
+                        <span style="display: block; font-size: 25px; color: rgb(49, 49, 49);">Pedido cancelado</span>
                     </td>
                 </tr>
 

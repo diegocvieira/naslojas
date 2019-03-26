@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="group">
-                        {!! Form::label('phone', 'Telefone') !!}
+                        {!! Form::label('phone', 'Celular') !!}
 
                         {!! Form::text('phone', null, ['id' => 'phone', 'placeholder' => 'Digite aqui', 'class' => 'mask-phone']) !!}
                     </div>
@@ -71,7 +71,7 @@
 
                         {!! Form::text('cep', null, ['placeholder' => 'Cep', 'id' => 'cep']) !!}
 
-                        {!! Form::text('street', null, ['placeholder' => 'Logradouro', 'id' => 'street']) !!}
+                        {!! Form::text('street', null, ['placeholder' => 'Endereço', 'id' => 'street']) !!}
 
                         {!! Form::text('number', null, ['placeholder' => 'Número', 'class' => 'half']) !!}
 

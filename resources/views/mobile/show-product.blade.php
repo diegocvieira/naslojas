@@ -49,7 +49,7 @@
         </div>
 
         <div class="freights-container">
-            <span class="freight-selected">Entrega a partir de 2hs em toda a cidade</span>
+            <span class="freight-selected">Entrega em até 24 horas</span>
 
             <select title="Calcular frete" class="freights selectpicker" autocomplete="off" data-live-search="true" data-live-search-placeholder="Pesquise aqui">
                 <option value="0.00">Retirar na loja</option>
