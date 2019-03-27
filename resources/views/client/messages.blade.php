@@ -8,7 +8,7 @@
     <div class="container page-admin page-messages">
         @if ($messages->count())
             <div class="page-header">
-                <h1>Pedidos</h1>
+                <h1>Mensagens</h1>
 
                 <p>Confira as mensagens trocadas com as lojas</p>
             </div>

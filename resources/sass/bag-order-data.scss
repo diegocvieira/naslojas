@@ -218,6 +218,15 @@
 
         .payment-card {
             display: none;
+
+            .bootstrap-select.select-payment-card {
+                margin-top: 15px !important;
+            }
+        }
+
+        .reserve_hour .date-reserve {
+            margin-top: 25px;
+            display: block;
         }
     }
 

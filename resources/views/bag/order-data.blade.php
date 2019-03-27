@@ -81,7 +81,7 @@
                         </div>
 
                         <div class="col-xs-9">
-                            <select name="payment_card" class="selectpicker custom-validate" title="Bandeira">
+                            <select name="payment_card" class="selectpicker select-payment-card custom-validate" title="Bandeira">
                                 @foreach(_paymentMethods() as $payment_key => $payment)
                                     @foreach($payment as $payment_type_key => $payment_type)
                                         @foreach($payment_type as $payment_description_key => $payment_description)
@@ -123,7 +123,7 @@
                         </div>
 
                         <div class="col-xs-9">
-                            {{ _businessDay() }}
+                            <span class="date-reserve">{{ _businessDay() }}</span>
                         </div>
                     </div>
                 </div>

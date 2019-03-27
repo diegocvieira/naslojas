@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="container page-admin page-client-config">
-        <h1 class="page-title">Configurações</h1>
+        <h1 class="page-title">Minha conta</h1>
         <p class="page-description">Mantenha os seus dados sempre atualizados</p>
 
         {!! Form::model($client, ['method' => 'POST', 'route' => 'set-client-config', 'id' => 'form-client-config']) !!}
