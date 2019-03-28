@@ -82,7 +82,8 @@ class Product extends Model
 		static::addGlobalScope('active', function(Builder $builder) {
 	        $builder->where(function ($builder) {
 	        	$builder->where('status', 1);
-	        });
+	        })
+            ->has('sizes');
 	    });
 
         static::addGlobalScope('active-store', function(Builder $builder) {
