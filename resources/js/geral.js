@@ -28,6 +28,13 @@ $(function() {
         }
     });
 
+    // Alert app
+    $(document).on('click', '.show-app', function(e) {
+        e.preventDefault();
+
+        modalAlert('Em breve você poderá baixar o nosso aplicativo para ios.');
+    });
+
     // Capture cep
     $(document).on('blur', '#cep', function() {
         var cep_original = this.value;
@@ -66,13 +73,6 @@ $(function() {
         if(this.value.length == 9){
             $('#cep').trigger('blur');
         }
-    });
-
-    // Alert app
-    $(document).on('click', '.show-app', function (e) {
-        e.preventDefault();
-
-        modalAlert('Em breve você poderá baixar o nosso aplicativo para android e ios.');
     });
 
     // City

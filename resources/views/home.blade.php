@@ -82,11 +82,11 @@
 
                 <div class="col-xs-4 links text-left">
                     <div class="col-xs-12">
-                        <a href="#" class="android">baixe para android</a>
+                        <a href="https://play.google.com/store/apps/details?id=app.naslojas" class="android" target="_blank">baixe para android</a>
                     </div>
 
                     <div class="col-xs-12">
-                        <a href="#" class="ios">em breve para iphone</a>
+                        <a href="#" class="ios show-app">em breve para iphone</a>
                     </div>
                 </div>
             </div>

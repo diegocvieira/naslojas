@@ -16,7 +16,7 @@
                     <div class="col-xs-4">
                         <a href="{{ url('/') }}">Início</a>
                         <a href="#" class="open-how-works">Como funciona</a>
-                        <a href="#" class="show-app">Baixe nosso app</a>
+                        <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">Baixe nosso app</a>
                         <a href="{{ route('client-register-get') }}">Cadastrar</a>
                         <a href="{{ route('client-login-get') }}">Entrar</a>
                     </div>

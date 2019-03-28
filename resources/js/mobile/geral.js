@@ -1,13 +1,6 @@
 $(function() {
     $('body').css('opacity', '1');
 
-    // Alert app
-    $(document).on('click', '.show-app', function(e) {
-        e.preventDefault();
-
-        modalAlert('Em breve você poderá baixar o nosso aplicativo para android e ios.');
-    });
-
     // City
     $(document).on('click', '.show-city-modal', function(e) {
         e.preventDefault();
