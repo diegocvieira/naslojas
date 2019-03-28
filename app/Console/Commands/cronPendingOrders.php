@@ -76,20 +76,12 @@ class cronPendingOrders extends Command
             }
         }
 
-        /*Mail::send('emails.order-refuse', [], function ($q) use ($emails_client) {
-            $q->from('no-reply@naslojas.com', 'naslojas');
-            $q->to($emails_client);
-            $q->subject('Pedido recusado');
-        });*/
+        if ($emails_client) {
+            Mail::to($emails_client)->send(new OrderRefuseMail());
+        }
 
-        Mail::to($emails_client)->send(new OrderRefuseMail());
-
-        /*Mail::send('emails.product-disable', [], function ($q) use ($emails_store) {
-            $q->from('no-reply@naslojas.com', 'naslojas');
-            $q->to($emails_store);
-            $q->subject('Produto removido');
-        });*/
-
-        Mail::to($emails_store)->send(new ProductDisableMail());
+        if ($emails_store) {
+            Mail::to($emails_store)->send(new ProductDisableMail());
+        }
     }
 }
