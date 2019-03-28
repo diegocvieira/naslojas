@@ -7,6 +7,8 @@ use App\ProductSize;
 use App\Product;
 use App\OrderProducts;
 use Mail;
+use App\Mail\OrderRefuseMail;
+use App\Mail\ProductDisableMail;
 
 class cronPendingOrders extends Command
 {
@@ -74,16 +76,20 @@ class cronPendingOrders extends Command
             }
         }
 
-        Mail::send('emails.order-refuse', [], function ($q) use ($emails_client) {
+        /*Mail::send('emails.order-refuse', [], function ($q) use ($emails_client) {
             $q->from('no-reply@naslojas.com', 'naslojas');
             $q->to($emails_client);
             $q->subject('Pedido recusado');
-        });
+        });*/
 
-        Mail::send('emails.product-disable', [], function ($q) use ($emails_store) {
+        Mail::to($emails_client)->send(new OrderRefuseMail());
+
+        /*Mail::send('emails.product-disable', [], function ($q) use ($emails_store) {
             $q->from('no-reply@naslojas.com', 'naslojas');
             $q->to($emails_store);
             $q->subject('Produto removido');
-        });
+        });*/
+
+        Mail::to($emails_store)->send(new ProductDisableMail());
     }
 }
