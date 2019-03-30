@@ -18,19 +18,19 @@
 
         <div class="cards">
             <div class="card">
-                <p>Atraia mais clientes<br>para dentro da loja</p>
+                <p>Venda seus produtos<br>online em Pelotas</p>
             </div>
 
             <div class="card">
-                <p>Suas ofertas disponíveis<br>24hs por dia</p>
+                <p>Suas ofertas no<br>site e no app</p>
             </div>
 
             <div class="card">
-                <p>Tenha uma vitrine<br>virtual da sua loja</p>
+                <p>Aumente as vendas<br>e fature mais</p>
             </div>
 
             <div class="card">
-                <p>Suas ofertas<br>no site e no app</p>
+                <p>Frete rápido<br>e confiável</p>
             </div>
 
             <div class="card">
@@ -58,13 +58,13 @@
         <div class="ready">
             <h3>PRONTO!</h3>
 
-            <p>Todos em Pelotas poderão<br>visitar sua loja 24hs por dia</p>
+            <p>Todos em Pelotas poderão<br>comprar na sua loja 24hs por dia</p>
 
             <p class="bg">Nunca foi tão fácil vender<br>seus produtos online</p>
         </div>
 
         <div class="price">
-            <p>SEM MENSALIDADE</p>
+            <p>SEM MENSALIDADE E SEM COMISSÃO NAS VENDAS</p>
 
             <p>Até 30 produtos por mês é</p>
 
