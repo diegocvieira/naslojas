@@ -1,12 +1,11 @@
 .product-filter {
     margin-top: 50px;
-    float: right;
 
     .bootstrap-select {
         margin-left: 20px !important;
         width: 178px !important;
 
-        &.open .dropdown-toggle {
+        &.show .dropdown-toggle {
             border-radius: 15px 15px 0 0;
             background-color: #fff;
             color: rgb(100, 100, 100);
@@ -56,18 +55,41 @@
 }
 
 .list-products {
-    width: 100%;
-    float: left;
     margin-top: 25px;
 
     .product {
-		display: inline-block;
-        width: calc(20% - 20px);
-        margin: 0 0 100px 20px;
-        vertical-align: top;
+		//display: inline-block;
+        //width: calc(20% - 20px);
+        //margin: 0 0 100px 20px;
+        margin-bottom: 100px;
+        //vertical-align: top;
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+        padding-left: 10px;
+        padding-right: 10px;
+
+        @media (max-width: 1410px) {
+            -ms-flex: 0 0 25%;
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+
+        @media (max-width: 1160px) {
+            -ms-flex: 0 0 33.33%;
+            flex: 0 0 33.33%;
+            max-width: 33.33%;
+        }
+
+        @media (max-width: 910px) {
+            -ms-flex: 0 0 50%;
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
 
         &:nth-child(5n+1) {
-            margin-left: 0;
+            //margin-left: 0;
         }
 
         .image {
@@ -75,7 +97,7 @@
             float: left;
             border-radius: 5px;
             background-color: rgb(245, 245, 245);
-            height: 248px;
+            //height: 248px;
             object-fit: cover;
             transition: transform .2s;
             box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 20px 0px;

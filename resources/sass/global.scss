@@ -145,17 +145,26 @@ a, a:hover, a:active, a:focus {
     background-color: #fdd !important;
 }
 
-.container {
-    width: 1400px;
-    height: 100%;
+@media (min-width: 1410px) {
+    .container {
+        width: 1400px;
+        max-width: 1400px;
+    }
+}
+
+@media (max-width: 576px) {
+    .mobile-off {
+        display: none;
+    }
+}
+
+.page {
+    min-height: 100%;
     padding-top: 60px;
+    width: 100%;
 }
 
 .page-error {
-    .container {
-        width: 100%;
-    }
-
     footer {
         display: none;
     }

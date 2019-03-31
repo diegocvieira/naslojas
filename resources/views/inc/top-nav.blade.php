@@ -26,7 +26,7 @@
             {!! Form::close() !!}
         @endif
 
-        <nav class="nav navbar-nav nav-menu">
+        <!--<nav>
             <ul>
                 @if (Auth::guard('client')->check())
                     <li>
@@ -124,6 +124,86 @@
                     </li>
                 @endif
             </ul>
+        </nav>-->
+
+        <nav>
+            @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
+                <button class="open-menu store-logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    {{ Auth::guard('store')->check() ? Auth::guard('store')->user()->store->name : 'Admin' }}
+                </button>
+
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{ route('product-images') }}">Adicionar produtos</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('edit-products') }}">Editar produtos</a>
+                    </li>
+
+                    @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check() && Auth::guard('superadmin')->user()->type == 1)
+                        <li>
+                            <a href="{{ route('list-store-orders') }}">Pedidos</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('list-store-messages') }}">Mensagens</a>
+                        </li>
+                    @endif
+
+                    <li>
+                        <a href="{{ route('get-store-config') }}">Configurações</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('logout') }}">Sair</a>
+                    </li>
+                </ul>
+            @elseif (Auth::guard('client')->check())
+                <button class="open-menu client-logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    {{ Auth::guard('client')->user()->name }}
+                </button>
+
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{ route('get-client-config') }}" class="icon-account show-client-config">Minha conta</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('list-client-orders') }}" class="icon-check">Meus pedidos</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('list-client-messages') }}" class="icon-messages">Mensagens</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('logout') }}" class="icon-logout">Sair</a>
+                    </li>
+                </ul>
+            @else
+                <button class="open-menu unlogged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></button>
+
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#" class="open-how-works">Como funciona</a>
+                    </li>
+
+                    <li>
+                        <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">Baixe nosso app</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('client-register-get') }}">Cadastrar</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('client-login-get') }}">Entrar</a>
+                    </li>
+                </ul>
+            @endif
+
+            <a href="{{ route('bag-products') }}" class="open-bag">{{ $count_bag }}</a>
         </nav>
     </div>
 </header>

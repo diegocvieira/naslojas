@@ -1,55 +1,51 @@
 footer {
-    float: left;
-    width: 100%;
+    //float: left;
+    //width: 100%;
     background-color: rgb(245, 245, 245);
     margin-top: 100px;
 
     .container {
-        padding: 60px 0;
+        padding-top: 60px;
+        padding-bottom: 60px;
     }
 
     a:hover {
         color: #646464;
     }
 
-    a, p, .city, .phone {
+    a, p {
         font-size: 14.5px;
         color: rgb(150, 150, 150);
         margin: 0;
     }
 
     .support {
+        .col-xl-4 {
+            padding: 0;
+        }
+
         .fecomercio {
             width: 181px;
-            margin-right: 50px;
         }
 
         .pelotas {
             width: 144px;
-            margin-right: 50px;
+            margin: 10px 0 20px 0;
         }
 
         .ssl {
             width: 167px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
     }
 
     .links {
-        padding: 0;
-
         a {
             display: block;
             margin-top: 10px;
         }
 
-        .email, .city, .phone {
-            margin: 10px 0 10px 80px;
-            display: block;
-        }
-
         .social {
-            text-align: right;
             margin-top: 10px;
 
             a {
@@ -82,14 +78,47 @@ footer {
     }
 
     .copyright {
-        float: left;
-        width: 100%;
         background-color: rgb(240, 240, 240);
-        text-align: center;
-        padding: 25px 0;
+        padding-top: 25px;
+        padding-bottom: 25px;
 
         p {
             font-size: 12.5px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .support .col-xl-4 {
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .links .row {
+            display: block;
+            text-align: center;
+
+            .col-md-4 {
+                padding: 0;
+            }
+
+            a {
+                display: inline-block;
+                padding: 0 10px;
+            }
+
+            .social {
+                text-align: center !important;
+            }
+        }
+
+        .copyright .cnpj {
+            display: block;
         }
     }
 }

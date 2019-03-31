@@ -8,7 +8,6 @@ use Cookie;
 use Auth;
 use Session;
 use App\Product;
-use Agent;
 
 class GlobalController extends Controller
 {
@@ -20,11 +19,7 @@ class GlobalController extends Controller
 
         $products = Product::inRandomOrder()->paginate(30);
 
-        if (Agent::isDesktop()) {
-            return view('home', compact('products'));
-        } else {
-            return view('mobile.home', compact('products'));
-        }
+        return view('home', compact('products'));
     }
 
     public function setCity($id)
@@ -90,7 +85,7 @@ class GlobalController extends Controller
             'cpf.required' => 'Informe o CPF',
             'cpf.max' => 'O CPF deve ter no máximo 15 caracteres.',
             'freight.required' => 'Informe o tipo de reserva.',
-            'reserve_date' => 'Informe o horário de entrega'            
+            'reserve_date' => 'Informe o horário de entrega'
         ];
     }
 }

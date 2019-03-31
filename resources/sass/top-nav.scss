@@ -1,5 +1,5 @@
 header {
-    background-color: rgb(255, 255, 255);
+    background-color: #fff;
     box-shadow: 1.5px 2.598px 2.91px 0.09px rgba(200, 200, 200, 0.118);
     position: fixed;
     left: 0;
@@ -82,7 +82,6 @@ header {
     }
 
     .container {
-        padding-top: 0 !important;
         position: relative;
     }
 
@@ -124,6 +123,159 @@ header {
     }
 
     nav {
+        text-align: right;
+        position: relative;
+
+        .open-bag {
+            width: 60px;
+            height: 60px;
+            display: inline-block;
+            background-image: url('../images/icon-bag.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 20px;
+            font-size: 12.5px;
+            color: rgb(255, 23, 68);
+            font-weight: 700;
+            text-align: center;
+            line-height: 5.1;
+            position: relative;
+
+            &.bag-logged:after {
+                content: 'Sacola';
+                position: absolute;
+                right: 47px;
+                top: -3px;
+                font-size: 13.7px;
+                color: rgb(100, 100, 100);
+                font-weight: normal;
+            }
+        }
+
+        .open-menu {
+            width: 25px;
+            height: 60px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            background-color: transparent;
+            border: none;
+            vertical-align: top;
+            outline: none;
+            display: none;
+
+            &.unlogged {
+                background-image: url('../images/icon-menu.png');
+            }
+        }
+
+        .dropdown-menu {
+            display: inline-block;
+            vertical-align: top;
+            float: none;
+            position: static;
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+            min-width: inherit;
+
+            li {
+                display: inline-block;
+                height: 60px;
+                line-height: 60px;
+                vertical-align: top;
+
+                a {
+                    font-size: 13.7px;
+                    color: rgb(100, 100, 100);
+                    display: block;
+                    padding: 0 25px;
+
+                    &:hover {
+                        color: #646464;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1410px) {
+        nav {
+            .open-menu {
+                display: inline-block;
+            }
+
+            .dropdown-menu {
+                position: absolute;
+                right: 0 !important;
+                left: auto !important;
+                transform: none !important;
+                top: 80% !important;
+                border-radius: 5px;
+                background-color: rgb(255, 255, 255);
+                box-shadow: 2.5px 4.33px 13.5px 1.5px rgba(100, 100, 100, 0.118);
+                width: 210px;
+                padding: 0;
+                border: none;
+                text-align: left;
+                display: none;
+
+                li {
+                    display: block;
+                    height: auto;
+                    line-height: normal;
+
+                    a {
+                        font-size: 14.5px;
+                        padding: 10px 0 10px 45px;
+                        position: relative;
+
+                        &:hover {
+                            background-color: rgb(245, 245, 245);
+                        }
+
+                        &:after {
+                            content: '';
+                            width: 100%;
+                            height: 100%;
+                            left: 0;
+                            top: 0;
+                            position: absolute;
+                            background-position: 15px center;
+                            background-repeat: no-repeat;
+                            background-size: 20px;
+                        }
+
+                        &.icon-messages:after {
+                            background-image: url('../images/icon-message.png');
+                        }
+
+                        &.icon-logout:after {
+                            background-image: url('../images/icon-logout.png');
+                        }
+
+                        &.icon-account:after {
+                            background-image: url('../images/icon-account.png');
+                        }
+
+                        &.icon-reserve:after {
+                            background-image: url('../images/icon-reserve.png');
+                            -webkit-filter: grayscale(100%);
+                            filter: grayscale(100%);
+                            opacity: .6;
+                        }
+
+                        &.icon-check:after {
+                            background-image: url('../images/icon-check.png');
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /*nav {
         float: right !important;
         position: relative;
 
@@ -260,5 +412,5 @@ header {
                 }
             }
         }
-    }
+    }*/
 }

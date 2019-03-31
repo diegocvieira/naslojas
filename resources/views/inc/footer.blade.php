@@ -1,53 +1,73 @@
         <footer>
             <div class="container">
-                <div class="col-xs-6 support">
-                    <a href="http://www.pelotas.com.br/" target="_blank">
-                        <img src="{{ asset('images/pelotas.png') }}" class="pelotas" />
-                    </a>
+                <div class="row">
+                    <div class="col-xl-6 support mobile-off">
+                        <div class="row">
+                            <div class="col-xl-4 col-md-4">
+                                <a href="http://www.pelotas.com.br/" target="_blank">
+                                    <img src="{{ asset('images/pelotas.png') }}" class="pelotas" />
+                                </a>
+                            </div>
 
-                    <a href="http://fecomercio-rs.org.br/" target="_blank">
-                        <img src="{{ asset('images/fecomercio.png') }}" class="fecomercio" />
-                    </a>
+                            <div class="col-xl-4 col-md-4">
+                                <a href="http://fecomercio-rs.org.br/" target="_blank">
+                                    <img src="{{ asset('images/fecomercio.png') }}" class="fecomercio" />
+                                </a>
+                            </div>
 
-                    <img src="{{ asset('images/ssl2.png') }}" class="ssl" />
-                </div>
-
-                <div class="col-xs-6 links">
-                    <div class="col-xs-4">
-                        <a href="{{ url('/') }}">Início</a>
-                        <a href="#" class="open-how-works">Como funciona</a>
-                        <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">Baixe nosso app</a>
-                        <a href="{{ route('client-register-get') }}">Cadastrar</a>
-                        <a href="{{ route('client-login-get') }}">Entrar</a>
+                            <div class="col-xl-4 col-md-4">
+                                <img src="{{ asset('images/ssl2.png') }}" class="ssl" />
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="col-xs-3">
-                        <a href="{{ route('rules') }}" target="_blank">Regras</a>
-                        <a href="{{ route('terms-use') }}" target="_blank">Termos de uso</a>
-                        <a href="{{ route('privacy-policy') }}" target="_blank">Privacidade</a>
-                        <a href="{{ route('store-advertise') }}">Vender online</a>
-                        <a href="{{ route('store-login-get') }}">Admin da loja</a>
-                    </div>
+                    <div class="col-xl-6 links">
+                        <div class="row">
+                            <span class="col-md-4">
+                                <a href="{{ url('/') }}">Início</a>
+                                <a href="#" class="open-how-works">Como funciona</a>
+                                <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">Baixe nosso app</a>
+                                <a href="{{ route('client-register-get') }}">Cadastrar</a>
+                                <a href="{{ route('client-login-get') }}">Entrar</a>
+                            </span>
 
-                    <div class="col-xs-5">
-                        <a href="#" class="city show-city-modal">{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</a>
+                            <span class="col-md-4">
+                                <a href="{{ route('rules') }}" target="_blank">Regras</a>
+                                <a href="{{ route('terms-use') }}" target="_blank">Termos de uso</a>
+                                <a href="{{ route('privacy-policy') }}" target="_blank">Privacidade</a>
+                                <a href="{{ route('store-advertise') }}">Vender online</a>
+                                <a href="{{ route('store-login-get') }}">Admin da loja</a>
+                            </span>
 
-                        <a href="mailto:naslojas.com" class="email">contato@naslojas.com</a>
 
-                        <a href="https://api.whatsapp.com/send?phone=5553991786097" class="phone">whatsapp 53 9 9178 6097</a>
+                            <span class="col-md-4">
+                                <a href="#" class="show-city-modal">{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</a>
 
-                        <div class="social">
-                            <a href="https://www.facebook.com/naslojas" target="_blank" class="facebook"></a>
-                            <a href="https://www.instagram.com/naslojas" target="_blank" class="instagram"></a>
-                            <a href="https://twitter.com/naslojasoficial" target="_blank" class="twitter"></a>
-                            <a href="https://www.youtube.com/channel/UCiu9mJrHue1ZrkzgVFFttgQ" target="_blank" class="youtube"></a>
+                                <a href="mailto:naslojas.com">contato@naslojas.com</a>
+
+                                <a href="https://api.whatsapp.com/send?phone=5553991786097">whatsapp 53 9 9178 6097</a>
+
+                                <div class="social">
+                                    <a href="https://www.facebook.com/naslojas" target="_blank" class="facebook"></a>
+                                    <a href="https://www.instagram.com/naslojas" target="_blank" class="instagram"></a>
+                                    <a href="https://twitter.com/naslojasoficial" target="_blank" class="twitter"></a>
+                                    <a href="https://www.youtube.com/channel/UCiu9mJrHue1ZrkzgVFFttgQ" target="_blank" class="youtube"></a>
+                                </div>
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="copyright">
-                <p>Copyright {{ date('Y') }}. Todos os direitos reservados.<br>Dogs Are Awesome Atividades de Internet Ltda - CNPJ 32.194.554/0001-63</p>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12 text-center copyright">
+                        <p>
+                            Copyright {{ date('Y') }}. Todos os direitos reservados.
+                            <br>Dogs Are Awesome Atividades de Internet Ltda <span class="mobile-off">-</span> <span class="cnpj">CNPJ 32.194.554/0001-63</span>
+                        </p>
+                    </div>
+                </div>
             </div>
         </footer>
 
@@ -75,28 +95,16 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        @if ($app->environment('local'))
-            <script type="text/javascript" src="{{ asset('offline-developer/jquery.min.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('offline-developer/bootstrap.min.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('offline-developer/jquery.validate.min.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('offline-developer/bootstrap-select.min.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('offline-developer/jquery.mask.min.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.9/js/bootstrap-select.min.js'></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.8/jquery.mask.min.js"></script>
 
-            @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
-                <script type="text/javascript" src="{{ asset('offline-developer/dropzone.min.js') }}"></script>
-                <script type="text/javascript" src="{{ asset('offline-developer/exif.min.js') }}"></script>
-            @endif
-        @else
-            <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
-            <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js'></script>
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.8/jquery.mask.min.js"></script>
-
-            @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
-            @endif
+        @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
         @endif
 
         @if ($app->environment('production'))

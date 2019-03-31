@@ -1,15 +1,10 @@
 .page-home {
-    padding: 60px 0 0 0;
-    width: 100%;
-
     &+ footer {
         margin-top: 0;
     }
 
     .know {
-        width: 100%;
-        float: left;
-        text-align: center;
+        margin-top: 50px;
 
         img {
               width: 72px;
@@ -39,18 +34,10 @@
     .app-mobile {
         background: radial-gradient(#b12872 1%, #ff1744);
         background-attachment: fixed;
-        //padding: 90px 0;
-        height: 300px;
-        margin-top: 150px;
-
-        .container {
-            padding: 0;
-        }
+        margin-top: 50px;
+        padding: 80px 0;
 
         .text {
-            padding-right: 100px;
-            margin-top: 80px;
-
             img {
                 filter: brightness(0) invert(1);
                 width: 213px;
@@ -77,14 +64,16 @@
             img {
                 width: 460px;
                 position: absolute;
-                bottom: -300px;
-                left: 0;
+                top: -245px;
+                left: 50%;
+                transform: translateX(-50%);
             }
         }
 
         .links {
-            padding-left: 70px;
-            margin-top: 85px;
+            .link-container {
+                display: block;
+            }
 
             a {
                 font-size: 14.5px;
@@ -107,6 +96,12 @@
                     background-image: url('../images/icon-ios.png');
                 }
             }
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .app-mobile {
+            display: none;
         }
     }
 }
