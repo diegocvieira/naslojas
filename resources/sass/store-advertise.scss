@@ -8,6 +8,25 @@
         margin-top: 0;
     }
 
+    .section-title {
+        float: left;
+        width: 100%;
+        margin-bottom: 60px;
+
+        h2 {
+            font-size: 41.6px;
+            color: #000;
+            font-family: 'AgencyFb-Bold';
+            display: block;
+        }
+
+        h3 {
+            font-size: 20.8px;
+            color: rgb(62, 60, 71);
+            display: block;
+        }
+    }
+
     .btn-advertise {
         font-size: 14.5px;
         color: #fff;
@@ -78,6 +97,42 @@
         }
     }
 
+    .how-works {
+        width: 100%;
+        float: left;
+        margin: 50px 0;
+
+        .row {
+            margin-bottom: 150px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        .col-xs-6:first-child {
+            text-align: right;
+            padding-right: 50px;
+        }
+
+        .col-xs-6:last-child {
+            text-align: left;
+            padding-left: 50px;
+        }
+
+        img {
+            width: 350px;
+        }
+
+        p {
+            font-size: 25px;
+            color: rgb(62, 60, 71);
+            line-height: 1.667;
+            font-family: 'OpenSans-Regular';
+            margin-top: 50px;
+        }
+    }
+
     .steps {
         width: 100%;
         float: left;
@@ -85,10 +140,9 @@
 
         .step {
             display: inline-block;
-            margin-left: 200px;
 
-            &:first-child {
-                margin-left: 0;
+            &.ml {
+                margin-left: 200px;
             }
 
             .img-shirt {

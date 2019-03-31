@@ -30,28 +30,71 @@
             </div>
 
             <div class="card">
-                <p>Frete rápido<br>e confiável</p>
+                <p>Frete por R$5,00 para<br>toda cidade</p>
             </div>
 
             <div class="card">
-                <p>Tecnologia e inovação<br>para a sua loja</p>
+                <p>Entregas em no<br>máximo 24hs</p>
+            </div>
+        </div>
+
+        <div class="how-works">
+            <div class="section-title">
+                <h2>COMO FUNCIONA</h2>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <img src="{{ asset('images/advise/hw1.png') }}" />
+                    </div>
+
+                    <div class="col-xs-6">
+                        <p>O cliente encontra os seus produtos<br>no naslojas e faz o pedido online</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p>A loja recebe um e-mail avisando do<br>pedido e faz a confirmação da entrega</p>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <img src="{{ asset('images/advise/hw2.png') }}" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <img src="{{ asset('images/advise/hw3.png') }}" />
+                    </div>
+
+                    <div class="col-xs-6">
+                        <p>O entregador pega o produto na loja, leva para<br>o cliente e volta na loja com o pagamento</p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="steps">
+            <div class="section-title">
+                <h2>COMO PARTICIPAR</h2>
+                <h3>FAZEMOS O CADASTRO COMPLETO DA SUA LOJA!</h3>
+            </div>
+
             <div class="step">
                 <img src="{{ asset('images/advise/store.png') }}" class="img-shirt" />
                 <p>Nós buscamos os<br>produtos na sua loja</p>
             </div>
 
-            <div class="step">
+            <div class="step ml">
                 <img src="{{ asset('images/advise/camera.png') }}" class="img-camera" />
                 <p>Tiramos fotos lindas e<br>cadastramos no site</p>
             </div>
 
-            <div class="step">
+            <div class="step ml">
                 <img src="{{ asset('images/advise/truck.png') }}" class="img-truck" />
-                <p>Devolvemos para<br>você em 1 dia útil</p>
+                <p>Devolvemos para<br>a loja em 1 dia útil</p>
             </div>
         </div>
 
