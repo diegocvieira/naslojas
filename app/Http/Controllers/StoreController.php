@@ -227,7 +227,9 @@ class StoreController extends Controller
         } else {
             $user = User::find($this->user_id);
 
-            if (Hash::check($request->current_password, $user->password)) {
+            $current_password = Auth::guard('superadmin')->check() ? Auth::guard('superadmin')->user()->password : $user->password;
+
+            if (Hash::check($request->current_password, $current_password)) {
                 if ($section == 'address') {
                     // Search the city
                     $city = City::whereHas('state', function ($query) use ($request) {
@@ -358,7 +360,9 @@ class StoreController extends Controller
     {
         $store = Store::find($this->store_id);
 
-        if ($status == 0 || $status == 1 && $store->freights->count() == 45 && $store->phone && $store->cnpj && $store->max_product_unit && $store->max_parcel && $store->min_parcel_price && $store->cep && $store->district && $store->street && $store->number) {
+        $districts_count = District::count();
+
+        if ($status == 0 || $status == 1 && $store->freights->count() == $districts_count && $store->phone && $store->cnpj && $store->max_product_unit && $store->max_parcel && $store->min_parcel_price && $store->cep && $store->district && $store->street && $store->number) {
             $store->status = $status;
 
             $store->save();
