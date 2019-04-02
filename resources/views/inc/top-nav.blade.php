@@ -1,10 +1,12 @@
 <header>
     <div class="container">
         <a href="{{ url('/') }}" id="logo-naslojas">
-            <img src="{{ asset('images/logo-naslojas.png') }}" />
+            <img src="{{ asset('images/logo-naslojas.png') }}" alt="Logo naslojas" class="logo-desktop" />
+
+            <img src="{{ asset('images/icon-logo-naslojas.png') }}" alt="Logo naslojas" class="logo-mobile" />
         </a>
 
-        @if (isset($store))
+        <?php /*@if (isset($store))
             {!! Form::open(['method' => 'GET', 'route' => 'form-search-store', 'id' => 'form-search']) !!}
                 {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que voce procura na loja ' . $store->name]) !!}
 
@@ -17,118 +19,31 @@
             {!! Form::close() !!}
         @else
             {!! Form::open(['method' => 'GET', 'route' => 'form-search', 'id' => 'form-search']) !!}
-                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => Cookie::get('sessao_cidade_title') ? 'Digite aqui o produto que voce procura nas lojas de ' . Cookie::get('sessao_cidade_title') : 'Digite aqui o produto que voce procura nas lojas de Pelotas']) !!}
+                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que voce procura nas lojas de Pelotas']) !!}
 
                 {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
                 {!! Form::hidden('gender', $search_gender ?? 'todos', ['id' => 'search-gender']) !!}
 
                 {!! Form::submit('') !!}
             {!! Form::close() !!}
-        @endif
+        @endif*/ ?>
 
-        <!--<nav>
-            <ul>
-                @if (Auth::guard('client')->check())
-                    <li>
-                        <a href="{{ route('bag-products') }}" class="open-bag bag-logged">{{ $count_bag }}</a>
-                    </li>
-                @endif
+        {!! Form::open(['method' => 'GET', 'route' => (isset($store) ? 'form-search-store' : 'form-search'), 'id' => 'form-search']) !!}
+            {!! Form::text('keyword', $keyword ?? '', ['placeholder' => (isset($store) ? 'Digite aqui o produto que voce procura na loja ' . $store->name : 'Digite aqui o produto que voce procura nas lojas de Pelotas')]) !!}
 
-                @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
-                    <li>
-                        <a href="#" class="logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span>{{ Auth::guard('store')->check() ? Auth::guard('store')->user()->store->name : 'Admin' }}</span>
+            @isset ($store)
+                {!! Form::hidden('store_slug', $store->slug) !!}
+            @endisset
 
-                            <img src="{{ asset('images/icon-profile.png') }}" alt="Foto de perfil de {{ Auth::guard('store')->check() ? Auth::guard('store')->user()->store->name : 'Admin' }}" />
-                        </a>
+            {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
+            {!! Form::hidden('gender', $search_gender ?? 'todos', ['id' => 'search-gender']) !!}
 
-                        <ul class="dropdown-menu dropdown-store">
-                            @if (Auth::guard('store')->check() && Auth::guard('store')->user()->store->status || Auth::guard('superadmin')->check() && Session::has('superadmin_store_id'))
-                                <li>
-                                    <a href="{{ route('show-store', Auth::guard('store')->check() ? Auth::guard('store')->user()->store->slug : session('superadmin_store_slug')) }}">Minha loja</a>
-                                </li>
-                            @endif
-
-                            <li>
-                                <a href="{{ route('product-images') }}">Adicionar produtos</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('edit-products') }}">Editar produtos</a>
-                            </li>
-
-                            @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check() && Auth::guard('superadmin')->user()->type == 1)
-                                <li>
-                                    <a href="{{ route('list-store-orders') }}">Pedidos</a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ route('list-store-messages') }}">Mensagens</a>
-                                </li>
-                            @endif
-
-                            <li>
-                                <a href="{{ route('get-store-config') }}">Configurações</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('logout') }}">Sair</a>
-                            </li>
-                        </ul>
-                    </li>
-                @elseif (Auth::guard('client')->check())
-                    <li>
-                        <a href="#" class="logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span>{{ Auth::guard('client')->user()->name }}</span>
-
-                            <img src="{{ asset('images/icon-profile.png') }}" alt="Foto de perfil de {{ Auth::guard('client')->user()->name }}" />
-                        </a>
-
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{ route('get-client-config') }}" class="icon-account show-client-config">Minha conta</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('list-client-orders') }}" class="icon-check">Meus pedidos</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('list-client-messages') }}" class="icon-messages">Mensagens</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('logout') }}" class="icon-logout">Sair</a>
-                            </li>
-                        </ul>
-                    </li>
-                @else
-                    <li>
-                        <a href="#" class="open-how-works">Como funciona</a>
-                    </li>
-
-                    <li>
-                        <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">Baixe nosso app</a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('client-register-get') }}">Cadastrar</a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('client-login-get') }}">Entrar</a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('bag-products') }}" class="open-bag">{{ $count_bag }}</a>
-                    </li>
-                @endif
-            </ul>
-        </nav>-->
+            {!! Form::submit('') !!}
+        {!! Form::close() !!}
 
         <nav>
             @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
-                <button class="open-menu store-logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <button class="open-menu logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     {{ Auth::guard('store')->check() ? Auth::guard('store')->user()->store->name : 'Admin' }}
                 </button>
 
@@ -160,8 +75,8 @@
                     </li>
                 </ul>
             @elseif (Auth::guard('client')->check())
-                <button class="open-menu client-logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    {{ Auth::guard('client')->user()->name }}
+                <button class="open-menu logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span>{{ Auth::guard('client')->user()->name }} iooasido aisdb iasbdio basi boisab ibsai biaosb dibsa iodbia sbiob asid iobiodb ib</span>
                 </button>
 
                 <ul class="dropdown-menu">
@@ -203,7 +118,7 @@
                 </ul>
             @endif
 
-            <a href="{{ route('bag-products') }}" class="open-bag">{{ $count_bag }}</a>
+            <a href="{{ route('bag-products') }}" class="open-bag {{ Auth::guard('client')->check() ? 'bag-logged' : '' }}">{{ $count_bag }}</a>
         </nav>
     </div>
 </header>
