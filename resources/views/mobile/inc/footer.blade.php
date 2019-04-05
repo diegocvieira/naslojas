@@ -77,6 +77,8 @@
             </script>
         @endif
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+
         <script>
             @if (Auth::guard('client')->check())
                 var client_logged = true;

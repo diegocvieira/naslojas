@@ -1,6 +1,21 @@
 $(function() {
     $('body').css('opacity', '1');
 
+    var rand = Math.floor(Math.random() * $('.slick-home .item').length);
+    $('.slick-home').slick({
+        initialSlide: rand,
+        slidesToShow: 1,
+        centerMode: true,
+        infinite: true,
+        arrows: false,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 4000,
+        //cssEase: 'linear',
+        variableWidth: true,
+        //variableHeight: true
+    }).slickGoTo(rand);
+
     // City
     $(document).on('click', '.show-city-modal', function(e) {
         e.preventDefault();
