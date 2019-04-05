@@ -28,6 +28,19 @@ $(function() {
         }
     });
 
+    $('.slick-home').slick({
+        slidesToShow: 1,
+        centerMode: true,
+        infinite: true,
+        arrows: true,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 4000,
+        //cssEase: 'linear',
+        variableWidth: true,
+        //variableHeight: true
+    });
+
     // Alert app
     $(document).on('click', '.show-app', function(e) {
         e.preventDefault();

@@ -62,6 +62,8 @@
             @endif
         @endif
 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+
         <link rel="stylesheet" type="text/css" href="{{ mix('css/global.css') }}">
 
         @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())

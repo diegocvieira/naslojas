@@ -6,24 +6,50 @@
 
 @section('content')
     <div class="container page-home">
+        <div class="banner-home">
+            <div class="slick-home">
+                <div class="item">
+                    <img src="{{ asset('images/banner-desktop/1.jpg') }}" />
+                </div>
+
+                <div class="item">
+                    <img src="{{ asset('images/banner-desktop/2.jpg') }}" />
+                </div>
+
+                <div class="item">
+                    <img src="{{ asset('images/banner-desktop/3.jpg') }}" />
+                </div>
+
+                <div class="item">
+                    <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">
+                        <img src="{{ asset('images/banner-desktop/4.jpg') }}" />
+                    </a>
+                </div>
+
+                <div class="item">
+                    <img src="{{ asset('images/banner-desktop/5.jpg') }}" />
+                </div>
+            </div>
+        </div>
+
         <div class="container">
             <div class="know">
                 <div class="col-xs-4">
                     <img src="{{ asset('images/know/shirt.png') }}" class="img-shirt" />
 
-                    <p>Confira as ofertas<br>das lojas de Pelotas</p>
+                    <span>Confira as ofertas<br>das lojas de Pelotas</span>
                 </div>
 
                 <div class="col-xs-4">
                     <img src="{{ asset('images/know/calendar.png') }}" />
 
-                    <p>Receba seu pedido<br>em até 24 horas</p>
+                    <span>Receba seu pedido<br>em até 24 horas</span>
                 </div>
 
                 <div class="col-xs-4">
                     <img src="{{ asset('images/know/card.png') }}" class="img-card" />
 
-                    <p>Pague somente ao<br>receber o produto</p>
+                    <span>Pague somente ao<br>receber o produto</span>
                 </div>
             </div>
 
