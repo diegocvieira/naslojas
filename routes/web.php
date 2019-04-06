@@ -147,6 +147,8 @@ Route::group(['prefix' => 'loja'], function () {
 			Route::post('delete', 'ProductController@delete')->name('product-delete');
 
 			Route::post('delete-images/{image}', 'ProductController@deleteImages');
+
+			Route::post('free-freight', 'ProductController@freeFreight')->name('product-free-freight');
 		});
 
 		Route::group(['prefix' => 'mensagens'], function () {

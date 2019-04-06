@@ -652,6 +652,20 @@ class ProductController extends Controller
         return json_encode($return);
     }
 
+    public function freeFreight(Request $request)
+    {
+        $product = Product::withoutGlobalScopes(['active', 'active-store'])
+            ->where('store_id', $this->store_id)
+            ->where('id', $request->id)
+            ->first();
+
+        $product->free_freight = $request->free_freight;
+
+        $return['status'] = $product->save() ? true : false;
+
+        return json_encode($return);
+    }
+
     public function colorVariation(Request $request)
     {
         foreach ($request->ids as $id) {

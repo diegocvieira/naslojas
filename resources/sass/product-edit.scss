@@ -217,6 +217,7 @@
                         //color: rgb(255, 23, 68);
                         //font-size: 12.5px;
                         margin-right: 15px;
+                        margin-left: 15px;
                         display: none;
 
                         &.selected {
@@ -239,6 +240,34 @@
                             height: 25px;
                             position: relative;
                             bottom: 2px;
+                        }
+                    }
+
+                    &.free-freight {
+                        font-size: 14.5px;
+                        color: rgb(122, 184, 236);
+                        position: relative;
+                        width: auto;
+                        padding-left: 27px;
+                        margin-right: 20px;
+
+                        &:after {
+                            content: '';
+                            position: absolute;
+                            left: 0;
+                            top: 1px;
+                            border: 2px solid rgb(122, 184, 236);
+                            border-radius: 50%;
+                            width: 20px;
+                            height: 20px;
+                        }
+
+                        &.free-freight-selected:after {
+                            background-image: url('../images/icon-check5.png');
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            background-size: contain;
+                            border: none;
                         }
                     }
 

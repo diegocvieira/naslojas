@@ -12,7 +12,7 @@ class Product extends Model
     use SoftDeletes;
 
     protected $table = 'products';
-    protected $fillable = ['store_id', 'title', 'slug', 'description', 'price', 'old_price', 'status', 'gender', 'related'];
+    protected $fillable = ['store_id', 'title', 'slug', 'description', 'price', 'old_price', 'status', 'gender', 'related', 'free_freight'];
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     protected $searchable = ['title', 'identifier'];
 

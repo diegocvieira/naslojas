@@ -103,6 +103,34 @@ $(function() {
         });
     });
 
+    // Enable/Disable free freight
+    $(document).on('click', '.free-freight', function() {
+        var btn = $(this),
+            val = btn.hasClass('free-freight-selected') ? 0 : 1;
+
+        btn.toggleClass('free-freight-selected');
+
+        $.ajax({
+            url: btn.data('url'),
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                id : btn.parents('form').find('input[name=product_id]').val(),
+                free_freight : val
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                if (!data.status) {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+
+                    btn.toggleClass('free-freight-selected');
+                }
+            }
+        });
+    });
+
     if ($('.page-product-edit').length) {
         variation();
     }

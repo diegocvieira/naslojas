@@ -221,7 +221,13 @@ class BagController extends Controller
             foreach ($store['products'] as $p) {
                 $product = Product::select('price', 'store_id')->find($p['id']);
 
-                $bag_data[$store_key]['freight'] = $client->district_id ? $product->store->freights->where('district_id', $client->district_id)->first()->price : null;
+                if ($product->free_freight || $product->store->free_freight) {
+                    $freight = 0;
+                } else {
+                    $freight = $client->district_id ? $product->store->freights->where('district_id', $client->district_id)->first()->price : null;
+                }
+
+                $bag_data[$store_key]['freight'] = $freight;
                 $bag_data[$store_key]['subtotal'] += $product->price * $p['qtd'];
                 $bag_data[$store_key]['min_parcel_price'] = $product->store->min_parcel_price;
                 $bag_data[$store_key]['max_parcel'] = $product->store->max_parcel;
@@ -312,7 +318,7 @@ class BagController extends Controller
                     foreach ($store['products'] as $product) {
                         $p = Product::find($product['id']);
 
-                        $freight = $p->store->freights->where('district_id', $client->district_id)->first();
+                        $freight = $p->free_freight || $p->store->free_freight ? 0.00 : $p->store->freights->where('district_id', $client->district_id)->first();
 
                         $order->products()->create([
                             'size' => $product['size'],
