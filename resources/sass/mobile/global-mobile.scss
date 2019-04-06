@@ -297,6 +297,20 @@ a, a:hover, a:active, a:focus {
     }
 }
 
+.banner-home {
+    padding-top: 50px;
+    width: 100%;
+    float: left;
+
+    img {
+		width: 100%;
+	}
+
+    &+ .container {
+        padding-top: 0;
+    }
+}
+
 @import 'top-nav.scss';
 @import 'footer.scss';
 @import 'list-products.scss';

@@ -9,25 +9,25 @@
         <div class="banner-home">
             <div class="slick-home">
                 <div class="item">
-                    <img src="{{ asset('images/banner-desktop/1.jpg') }}" />
+                    <img src="{{ asset('images/banner-desktop/1.jpg') }}" alt="Banner 1" />
                 </div>
 
                 <div class="item">
-                    <img src="{{ asset('images/banner-desktop/2.jpg') }}" />
+                    <img src="{{ asset('images/banner-desktop/2.jpg') }}" alt="Banner 2" />
                 </div>
 
                 <div class="item">
-                    <img src="{{ asset('images/banner-desktop/3.jpg') }}" />
+                    <img src="{{ asset('images/banner-desktop/3.jpg') }}" alt="Banner 3" />
                 </div>
 
                 <div class="item">
                     <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">
-                        <img src="{{ asset('images/banner-desktop/4.jpg') }}" />
+                        <img src="{{ asset('images/banner-desktop/4.jpg') }}" alt="Banner 4" />
                     </a>
                 </div>
 
                 <div class="item">
-                    <img src="{{ asset('images/banner-desktop/5.jpg') }}" />
+                    <img src="{{ asset('images/banner-desktop/5.jpg') }}" alt="Banner 5" />
                 </div>
             </div>
         </div>

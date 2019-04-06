@@ -32,14 +32,14 @@ $(function() {
     $('.slick-home').slick({
         initialSlide: rand,
         slidesToShow: 1,
-        centerMode: true,
+        //centerMode: true,
         infinite: true,
         arrows: true,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 4000,
         //cssEase: 'linear',
-        variableWidth: true,
+        //variableWidth: true,
         //variableHeight: true
     }).slickGoTo(rand);
 

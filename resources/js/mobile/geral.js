@@ -5,16 +5,16 @@ $(function() {
     $('.slick-home').slick({
         initialSlide: rand,
         slidesToShow: 1,
-        centerMode: true,
+        //centerMode: true,
         infinite: true,
         arrows: false,
         slidesToScroll: 1,
-        autoplay: true,
+        //autoplay: true,
         autoplaySpeed: 4000,
         //cssEase: 'linear',
-        variableWidth: true,
-        //variableHeight: true
-    }).slickGoTo(rand);
+        //variableWidth: true,
+        //variableHeight: true,
+    });//.slickGoTo(rand);
 
     // City
     $(document).on('click', '.show-city-modal', function(e) {

@@ -10,6 +10,14 @@
         width: 100%;
         float: left;
 
+        &:hover .slick-arrow {
+            opacity: 1;
+        }
+
+        img {
+    		width: 100%;
+    	}
+
         .slick-arrow {
             border-radius: 50%;
             background-color: rgb(255, 255, 255);
@@ -21,10 +29,22 @@
             border: none;
             font-size: 0;
             z-index: 1;
-            background-image: url('../images/icon-arrow3.png');
-            background-position: center;
-            background-size: 10px;
-            background-repeat: no-repeat;
+            opacity: 0;
+            transition: .5s;
+            transform: translateY(-50%);
+
+            &:after {
+                content: '';
+                position: absolute;
+                background-image: url('../images/icon-arrow3.png');
+                background-position: center;
+                background-size: 10px;
+                background-repeat: no-repeat;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+            }
 
             &.slick-prev {
                 left: 2%;
@@ -32,7 +52,10 @@
 
             &.slick-next {
                 right: 2%;
-                transform: rotate(180deg);
+
+                &:after {
+                    transform: rotate(180deg);
+                }
             }
         }
     }

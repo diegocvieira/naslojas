@@ -6,33 +6,33 @@
 @extends('mobile.base')
 
 @section('content')
-    <div class="container">
-        <div class="banner-home">
-            <div class="slick-home">
-                <div class="item">
-                    <img src="{{ asset('images/banner-mobile/1.jpg') }}" />
-                </div>
+    <div class="banner-home">
+        <div class="slick-home">
+            <div class="item">
+                <img src="{{ asset('images/banner-mobile/1.jpg') }}" alt="Banner 1" />
+            </div>
 
-                <div class="item">
-                    <img src="{{ asset('images/banner-mobile/2.jpg') }}" />
-                </div>
+            <div class="item">
+                <img src="{{ asset('images/banner-mobile/2.jpg') }}" alt="Banner 2" />
+            </div>
 
-                <div class="item">
-                    <img src="{{ asset('images/banner-mobile/3.jpg') }}" />
-                </div>
+            <div class="item">
+                <img src="{{ asset('images/banner-mobile/3.jpg') }}" alt="Banner 3" />
+            </div>
 
-                <div class="item">
-                    <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">
-                        <img src="{{ asset('images/banner-mobile/4.jpg') }}" />
-                    </a>
-                </div>
+            <div class="item">
+                <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">
+                    <img src="{{ asset('images/banner-mobile/4.jpg') }}" alt="Banner 4" />
+                </a>
+            </div>
 
-                <div class="item">
-                    <img src="{{ asset('images/banner-mobile/5.jpg') }}" />
-                </div>
+            <div class="item">
+                <img src="{{ asset('images/banner-mobile/5.jpg') }}" alt="Banner 5" />
             </div>
         </div>
+    </div>
 
+    <div class="container">
         <div class="list-products">
             @foreach ($products as $product)
                 <div class="product">
