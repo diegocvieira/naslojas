@@ -28,9 +28,8 @@ $(function() {
         }
     });
 
-    var rand = Math.floor(Math.random() * $('.slick-home .item').length);
     $('.slick-home').slick({
-        initialSlide: rand,
+        initialSlide: Math.floor(Math.random() * $('.slick-home .item').length),
         slidesToShow: 1,
         //centerMode: true,
         infinite: true,
@@ -41,7 +40,7 @@ $(function() {
         //cssEase: 'linear',
         //variableWidth: true,
         //variableHeight: true
-    }).slickGoTo(rand);
+    });
 
     // Alert app
     $(document).on('click', '.show-app', function(e) {
