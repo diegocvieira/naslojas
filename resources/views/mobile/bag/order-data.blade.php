@@ -107,7 +107,15 @@
                             <div class="right">
                                 <span class="item">R$ {{ number_format($data['subtotal'], 2, ',', '.') }}</span>
 
-                                <span class="item update-freight">{{ $data['freight'] ? number_format($data['freight'], 2, ',', '.') : '-----' }}</span>
+                                <span class="item update-freight" data-freefreight="{{ $data['free_freight'] }}">
+                                    @if (is_numeric($data['freight']) && $data['freight'] == 0)
+                                        grátis
+                                    @elseif (is_numeric($data['freight']) && $data['freight'] > 0)
+                                        {{ number_format($data['freight'], 2, ',', '.') }}
+                                    @else
+                                        '-----'
+                                    @endif
+                                </span>
 
                                 <span class="item update-subtotal" data-subtotal="{{ $data['subtotal'] }}">R$ {{ number_format($data['subtotal'] + $data['freight'], 2, ',', '.') }}</span>
                             </div>

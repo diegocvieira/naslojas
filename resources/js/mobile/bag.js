@@ -274,22 +274,26 @@ function updateBagInfos() {
 }
 
 function updateParcels() {
-    $('.order').each(function() {
-        var parcels_div = $(this).find('.parcels'),
-            parcels = 0,
-            price = parseFloat($(this).find('.update-subtotal').data('subtotal'));
-            freight = parseFloat($('.update-freight').text().replace('R$', '').replace('.', '').replace(',', '.')),
-            subtotal = freight ? price + freight : price;
+    var payment = $('.page-bag-order-data input[name=payment]:checked');
 
-        if ($('.page-bag-order-data input[name=payment]:checked').val() == 1) {
-            for (i = 2; i <= parcels_div.data('maxparcel'); i++) {
+    if (payment.length) {
+        $('.order').each(function() {
+            var parcels_div = $(this).find('.parcels'),
+                parcels = 0,
+                price = parseFloat($(this).find('.update-subtotal').data('subtotal'));
+                freight = parseFloat($('.update-freight').text().replace('R$', '').replace('.', '').replace(',', '.')),
+                subtotal = freight ? price + freight : price;
 
-                if ((subtotal / i) >= parcels_div.data('minparcelprice')) {
-                    parcels = i;
+            if (payment.val() == 1) {
+                for (i = 2; i <= parcels_div.data('maxparcel'); i++) {
+
+                    if ((subtotal / i) >= parcels_div.data('minparcelprice')) {
+                        parcels = i;
+                    }
                 }
             }
-        }
 
-        parcels_div.text(parcels ? 'em até ' + parcels + 'x de R$ ' + number_format(subtotal / parcels, 2, ',', '.') + ' sem juros' : 'à vista');
-    });
+            parcels_div.text(parcels ? 'em até ' + parcels + 'x de R$ ' + number_format(subtotal / parcels, 2, ',', '.') + ' sem juros' : 'à vista');
+        });
+    }
 }

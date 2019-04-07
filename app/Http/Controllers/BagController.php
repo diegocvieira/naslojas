@@ -221,13 +221,8 @@ class BagController extends Controller
             foreach ($store['products'] as $p) {
                 $product = Product::select('price', 'store_id')->find($p['id']);
 
-                if ($product->free_freight || $product->store->free_freight) {
-                    $freight = 0;
-                } else {
-                    $freight = $client->district_id ? $product->store->freights->where('district_id', $client->district_id)->first()->price : null;
-                }
-
-                $bag_data[$store_key]['freight'] = $freight;
+                $bag_data[$store_key]['free_freight'] = ($product->free_freight || $product->store->free_freight) ? true : false;
+                $bag_data[$store_key]['freight'] = $client->district_id ? $product->store->freights->where('district_id', $client->district_id)->first()->price : null;
                 $bag_data[$store_key]['subtotal'] += $product->price * $p['qtd'];
                 $bag_data[$store_key]['min_parcel_price'] = $product->store->min_parcel_price;
                 $bag_data[$store_key]['max_parcel'] = $product->store->max_parcel;
