@@ -9,7 +9,7 @@
 
     	<base href="{{ url('/') }}">
 
-    	<title>{{ $header_title ?? 'naslojas - As melhores lojas de Pelotas em um só lugar' }}</title>
+    	<title>{{ $header_title ?? 'naslojas - Compre nas lojas de Pelotas e receba seu pedido em 24hs' }}</title>
 
     	<link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
 
@@ -26,14 +26,14 @@
 
     	<link rel="canonical" href="{{ $header_canonical ?? url()->current() }}" />
 
-    	<meta name="description" content="{{ $header_desc ?? 'Confira as ofertas e promoções das lojas físicas de Pelotas. Faça seu pedido e receba em até 24 horas. Realize o pagamento somente ao receber o produto.' }}" />
+    	<meta name="description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas de Pelotas. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
     	<meta itemprop="name" content="{{ $header_title ?? 'naslojas' }}" />
-    	<meta itemprop="description" content="{{ $header_desc ?? 'Confira as ofertas e promoções das lojas físicas de Pelotas. Faça seu pedido e receba em até 24 horas. Realize o pagamento somente ao receber o produto.' }}" />
+    	<meta itemprop="description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas de Pelotas. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
     	<meta itemprop="image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
 
     	<meta name="twitter:card" content="summary_large_image" />
     	<meta name="twitter:title" content="{{ $header_title ?? 'naslojas' }}" />
-    	<meta name="twitter:description" content="{{ $header_desc ?? 'Confira as ofertas e promoções das lojas físicas de Pelotas. Faça seu pedido e receba em até 24 horas. Realize o pagamento somente ao receber o produto.' }}" />
+    	<meta name="twitter:description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas de Pelotas. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
     	<!-- imagens largas para o Twitter Summary Card precisam ter pelo menos 280x150px  -->
     	<meta name="twitter:image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
 
@@ -41,7 +41,7 @@
     	<meta property="og:type" content="website" />
     	<meta property="og:url" content="{{ url()->current() }}" />
     	<meta property="og:image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
-    	<meta property="og:description" content="{{ $header_desc ?? 'Confira as ofertas e promoções das lojas físicas de Pelotas. Faça seu pedido e receba em até 24 horas. Realize o pagamento somente ao receber o produto.' }}" />
+    	<meta property="og:description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas de Pelotas. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
     	<meta property="og:site_name" content="naslojas" />
 
         <style>body{opacity:0;}</style>
