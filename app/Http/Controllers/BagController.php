@@ -338,20 +338,20 @@ class BagController extends Controller
                     }
                 }
 
-                /*Mail::send('emails.order', [], function ($q) use ($emails) {
+                Mail::send('emails.order', [], function ($q) use ($emails) {
                     $q->from('no-reply@naslojas.com', 'naslojas');
                     $q->to($emails);
                     $q->subject('Novo pedido de reserva');
-                });*/
+                });
 
-                //Session::pull('bag');
+                Session::pull('bag');
 
                 $return['status'] = true;
                 $return['route'] = route('bag-success', $order->id);
             }
         }
 
-        //return json_encode($return);
+        return json_encode($return);
     }
 
     public function success($id)
