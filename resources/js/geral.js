@@ -561,12 +561,12 @@ $(function() {
                  modalAlert(data.msg);
 
                 if (data.status) {
-                    var row = $this.parents('.order');
+                    var row = $this.parents('.product').find('.col-xs-7');
 
                     if ($this.hasClass('confirm-order')) {
-                        row.find('.status').addClass('green').text('PEDIDO CONFIRMADO');
+                        row.append("<span class='item'><span class='green'><b>PEDIDO CONFIRMADO</b></span></span>");
                     } else {
-                        row.find('.status').addClass('red').text('PEDIDO RECUSADO');
+                        row.append("<span class='item'><span class='red'><b>PEDIDO CANCELADO</b></span></span>");
                     }
 
                     row.find('.confirm-order, .refuse-order').remove();

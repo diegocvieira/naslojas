@@ -23,7 +23,6 @@ class CreateOrderProductsTable extends Migration
             $table->string('title', 255);
             $table->integer('qtd');
             $table->decimal('price', 8, 2);
-            $table->decimal('freight_price', 8, 2);
             $table->string('size', 5);
             $table->string('image', 300)->nullable();
             $table->timestamps();

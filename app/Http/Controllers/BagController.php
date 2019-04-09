@@ -292,64 +292,66 @@ class BagController extends Controller
             $client->street = $request->street;
             $client->number = $request->number;
             $client->complement = $request->complement;
+            $client->save();
 
-            $order = new Order;
-            $order->client_id = $client_id;
-            $order->client_name = $request->name;
-            $order->client_phone = $request->phone;
-            $order->client_cpf = $request->cpf;
-            $order->payment = $request->payment == '0' ? '0-0' : $request->payment_card;
-            $order->client_city_id = $city->id;
-            $order->client_district_id = $request->district;
-            $order->client_cep = $request->cep;
-            $order->client_street = $request->street;
-            $order->client_number = $request->number;
-            $order->client_complement = $request->complement;
+            foreach (session('bag')['stores'] as $store) {
+                foreach ($store['products'] as $product) {
+                    $products_id[] = $product['id'];
+                }
 
-            if ($client->save() && $order->save()) {
+                $products = Product::find($products_id);
+
+                $order = new Order;
+                $order->store_id = $store['store_id'];
+                $order->client_id = $client_id;
+                $order->client_name = $request->name;
+                $order->client_phone = $request->phone;
+                $order->client_cpf = $request->cpf;
+                $order->payment = $request->payment == '0' ? '0-0' : $request->payment_card;
+                $order->client_city_id = $city->id;
+                $order->client_district_id = $request->district;
+                $order->client_cep = $request->cep;
+                $order->client_street = $request->street;
+                $order->client_number = $request->number;
+                $order->client_complement = $request->complement;
+                $order->freight = ($products->first()->store->free_freight || !$products->where('free_freight', 0)->count()) ? 0.00 : $products->first()->store->freights->where('district_id', $request->district)->first()->price;
+                $order->save();
+
                 $emails = [];
 
-                foreach (session('bag')['stores'] as $store) {
-                    foreach ($store['products'] as $product) {
-                        $p = Product::find($product['id']);
+                foreach ($store['products'] as $product) {
+                    $p = Product::find($product['id']);
 
-                        $freight = $p->free_freight || $p->store->free_freight ? 0.00 : $p->store->freights->where('district_id', $client->district_id)->first();
+                    $order->products()->create([
+                        'size' => $product['size'],
+                        'qtd' => $product['qtd'],
+                        'image' => $p->images()->first()->image,
+                        'price' => $p->price,
+                        'title' => $p->title,
+                        'product_id' => $p->id
+                    ]);
 
-                        $order->products()->create([
-                            'size' => $product['size'],
-                            'qtd' => $product['qtd'],
-                            'image' => $p->images()->first()->image,
-                            'price' => $p->price,
-                            'title' => $p->title,
-                            'product_id' => $p->id,
-                            'freight_price' => $freight->price
-                        ]);
+                    $email = $p->store->user->first()->email;
 
-                        $email = $p->store->user->first()->email;
-
-                        if (!in_array($email, $emails)) {
-                            array_push($emails, $email);
-                        }
+                    if (!in_array($email, $emails)) {
+                        array_push($emails, $email);
                     }
                 }
 
-                Mail::send('emails.order', [], function ($q) use ($emails) {
+                /*Mail::send('emails.order', [], function ($q) use ($emails) {
                     $q->from('no-reply@naslojas.com', 'naslojas');
                     $q->to($emails);
                     $q->subject('Novo pedido de reserva');
-                });
+                });*/
 
-                Session::pull('bag');
+                //Session::pull('bag');
 
                 $return['status'] = true;
                 $return['route'] = route('bag-success', $order->id);
-            } else {
-                $return['status'] = false;
-                $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
             }
         }
 
-        return json_encode($return);
+        //return json_encode($return);
     }
 
     public function success($id)

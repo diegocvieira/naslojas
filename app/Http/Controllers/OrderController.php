@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\OrderProducts;
+use App\Order;
 use App\ProductSize;
 use App\Product;
 use Auth;
@@ -31,14 +32,12 @@ class OrderController extends Controller
 
         $section = 'order';
 
-        $products = OrderProducts::whereHas('order', function ($query) {
-                $query->where('client_id', Auth::guard('client')->user()->id);
-            })
-            ->whereHas('product', function ($query) {
+        $orders = Order::where('client_id', Auth::guard('client')->user()->id)
+            ->whereHas('products.product', function ($query) {
                 $query->withTrashed()
                     ->withoutGlobalScopes(['active', 'active-store']);
             })
-            ->with(['product' => function($query) {
+            ->with(['products.product' => function($query) {
                 $query->withTrashed()
                     ->withoutGlobalScopes(['active', 'active-store']);
             }])
@@ -46,9 +45,9 @@ class OrderController extends Controller
             ->paginate(20);
 
         if (Agent::isDesktop()) {
-            return view('client.orders', compact('products', 'header_title'));
+            return view('client.orders', compact('orders', 'header_title'));
         } else {
-            return view('mobile.client.orders', compact('products', 'header_title', 'section'));
+            return view('mobile.client.orders', compact('orders', 'header_title', 'section'));
         }
     }
 
@@ -58,12 +57,12 @@ class OrderController extends Controller
 
         $section = 'order';
 
-        $products = OrderProducts::whereHas('product', function ($query) {
-                $query->where('store_id', $this->store_id)
-                    ->withTrashed()
+        $orders = Order::where('store_id', $this->store_id)
+            ->whereHas('products.product', function ($query) {
+                $query->withTrashed()
                     ->withoutGlobalScopes(['active', 'active-store']);
             })
-            ->with(['product' => function($query) {
+            ->with(['products.product' => function($query) {
                 $query->withTrashed()
                     ->withoutGlobalScopes(['active', 'active-store']);
             }])
@@ -71,9 +70,9 @@ class OrderController extends Controller
             ->paginate(20);
 
         if (Agent::isDesktop()) {
-            return view('store.orders', compact('products', 'header_title', 'section'));
+            return view('store.orders', compact('orders', 'header_title', 'section'));
         } else {
-            return view('mobile.store.orders', compact('products', 'header_title', 'section'));
+            return view('mobile.store.orders', compact('orders', 'header_title', 'section'));
         }
     }
 

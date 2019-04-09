@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container page-admin">
-        @if ($products->count())
+        @if ($orders->count())
             <div class="page-header">
                 <h1>Pedidos</h1>
 
@@ -14,154 +14,172 @@
             </div>
 
             <div class="list-orders">
-                @foreach ($products as $product)
+                @foreach ($orders as $order)
                     <div class="row order">
-                        <div class="resume-infos">
-                            <div class="col-xs-1 image">
-                                <img src="{{ asset('uploads/' . $product->product->store_id . '/products/' . $product->image) }}" alt="{{ $product->title }}" />
-                            </div>
+                        <div class="col-xs-12 resume-infos">
+                            <div class="row">
+                                <div class="col-xs-9 line">
+                                    @foreach ($order->products as $product)
+                                        <div class="row product">
+                                            <div class="col-xs-2">
+                                                <img src="{{ asset('uploads/' . $product->product->store_id . '/products/' . $product->image) }}" alt="{{ $product->title }}" class="product-image img-responsive" />
+                                            </div>
 
-                            <div class="col-xs-7">
-                                <h3>{{ $product->title }}</h3>
+                                            <div class="col-xs-7">
+                                                <h3>{{ $product->title }}</h3>
 
-                                <span class="item">
-                                    Tamanho selecionado:
+                                                <span class="item">
+                                                    Tamanho selecionado:
 
-                                    <span>{{ $product->size }}</span>
-                                </span>
+                                                    <span>{{ $product->size }}</span>
+                                                </span>
 
-                                <span class="item">
-                                    @if ($product->status == 0 || $product->status == 3)
-                                        <span class="status red">PEDIDO CANCELADO</span>
-                                    @elseif ($product->status == 1)
-                                        <span class="status green">PEDIDO CONFIRMADO</span>
-                                    @else
-                                        <span class="status pending">PEDIDO PENDENTE</span>
-                                    @endif
-                                </span>
-                            </div>
+                                                @if ($product->status == 2)
+                                                    <div class="btns">
+                                                        <button data-url="{{ route('confirm-order', $product->id) }}" class="confirm-order" type="button">CONFIRMAR PEDIDO</button>
 
-                            <div class="col-xs-2 text-center">
-                                <span class="item">
-                                    Quantidade:
+                                                        <button data-url="{{ route('refuse-order', $product->id) }}" class="refuse-order" type="button">CANCELAR PEDIDO</button>
+                                                    </div>
+                                                @else
+                                                    <span class="item">
+                                                        @if ($product->status == 0 || $product->status == 3)
+                                                            <span class="red"><b>PEDIDO CANCELADO</b></span>
+                                                        @else
+                                                            <span class="green"><b>PEDIDO CONFIRMADO</b></span>
+                                                        @endif
+                                                    </span>
+                                                @endif
+                                            </div>
 
-                                    <span>{{ $product->qtd }}</span>
-                                </span>
-                            </div>
+                                            <div class="col-xs-3 text-center">
+                                                <span class="item">
+                                                    Quantidade:
 
-                            <div class="col-xs-2 text-center">
-                                <span class="item">
-                                    <span>R$ {{ number_format(($product->price + $product->freight_price) * $product->qtd, 2, ',', '.') }}</span>
-                                </span>
+                                                    <span>{{ $product->qtd }}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <div class="col-xs-3 prices">
+                                    @php
+                                        $subtotal = 0;
+                                    @endphp
+
+                                    @foreach ($order->products as $key => $product)
+                                        <span class="item">
+                                            <span>{{ $order->products->count() > 1 ? 'produto ' . ($key + 1) : 'produto' }}</span>
+
+                                            @if ($product->status == 0 || $product->status == 3)
+                                                <b>CANCELADO</b>
+                                            @else
+                                                R$ {{ number_format($product->price, 2, ',', '.') }}
+
+                                                @php
+                                                    $subtotal += $product->price * $product->qtd;
+                                                @endphp
+                                            @endif
+                                        </span>
+                                    @endforeach
+
+                                    <span class="item">
+                                        <span>frete</span>
+
+                                        {{ $order->freight != 0.00 ? 'R$ ' . number_format($order->freight, 2, ',', '.') : 'grátis' }}
+                                    </span>
+
+                                    <span class="item total">
+                                        <span>total</span>
+
+                                        R$ {{ number_format($subtotal + $order->freight, 2, ',', '.') }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="complete-infos">
-                            <div class="col-xs-10 col-xs-offset-1">
+                        <div class="col-xs-12 complete-infos">
+                            @foreach ($order->products as $key => $product)
                                 <div class="group">
                                     <span class="item">
-                                        <span>Produto:</span>
+                                        <span>{{ $order->products->count() > 1 ? 'Produto ' . ($key + 1) : 'Produto' }}:</span>
 
                                         #{{ $product->product->identifier }}
                                     </span>
 
                                     <span class="item">
-                                        <span>Data do pedido:</span>
-
-                                        {{ date('d/m/Y', strtotime($product->order->created_at)) . ' às ' . date('H:i', strtotime($product->order->created_at)) }}
-                                    </span>
-                                </div>
-
-                                <div class="group">
-                                    <span class="item">
-                                        <span>Cliente:</span>
-
-                                        {{ $product->order->client_name }}
-                                    </span>
-
-                                    <span class="item">
-                                        <span>Telefone:</span>
-
-                                        {{ $product->order->client_phone }}
-                                    </span>
-
-                                    <span class="item">
-                                        <span>CPF:</span>
-
-                                        {{ $product->order->client_cpf }}
-                                    </span>
-                                </div>
-
-                                <div class="group">
-                                    <span class="item">
-                                        <span>Forma de pagamento:</span>
-
-                                        {{ _getPaymentMethod($product->order->payment) }}
-                                    </span>
-
-                                    <span class="item">
-                                        <span>Endereço:</span>
-
-                                        {{ $product->order->client_street }}, {{ $product->order->client_number }}
-
-                                        @if ($product->order->client_complement)
-                                            - {{ $product->order->client_complement }}
-                                        @endif
-
-                                        - {{ $product->order->district->name }}
-
-                                        - {{ $product->order->city->title }}/{{ $product->order->city->state->letter }}
-                                    </span>
-
-                                    <span class="item">
-                                        <span>Entrega:</span>
-
-                                        {{ _businessDay($product->order->created_at) }}
-                                    </span>
-                                </div>
-
-                                <div class="group">
-                                    <span class="item">
                                         <span>Informação:</span>
 
                                         @if ($product->status == 0 || $product->status == 3)
-                                            O cliente foi notificado e o tamanho {{ $product->size }} do produto foi removido do naslojas.
-                                            <br>
-                                            Mantenha os produtos atualizados para não perder relevância no site.
-                                            <br>
-                                            Se isso for recorrente todos os seus produtos serão removidos.
-                                        @elseif ($product->status == 1 && $product->order->freight_type == 1)
-                                            Reserve o pedido na loja até a data e horário indicado acima.
-                                            <br>
-                                            O cliente irá até a loja para finalizar a compra.
-                                        @elseif ($product->status == 1 && $product->order->freight_type == 0)
-                                            Chame um entregador e o oriente com as informações necessárias para
-                                            <br>
-                                            realizar a entrega do pedido no endereço e horário indicado acima.
+                                            Mantenha os produtos atualizados para não perder relevância nas buscas
+                                        @elseif ($product->status == 1)
+                                            Contate o(a) cliente antes de enviar o produto
                                         @else
-                                            Certifique-se que o produto foi separado antes de confirmar a solicitação.
+                                            Certifique-se que o produto foi separado antes de confirmar o pedido.
                                         @endif
                                     </span>
                                 </div>
+                            @endforeach
 
-                                <div class="group btns">
-                                    @if ($product->status == 2)
-                                        <button data-url="{{ route('confirm-order', $product->id) }}" class="confirm-order" type="button">CONFIRMAR ENTREGA</button>
+                            <div class="group">
+                                <span class="item">
+                                    <span>Cliente:</span>
 
-                                        <button data-url="{{ route('refuse-order', $product->id) }}" class="refuse-order" type="button">CANCELAR ENTREGA</button>
+                                    {{ $order->client_name }}
+                                </span>
+
+                                <span class="item">
+                                    <span>CPF:</span>
+
+                                    {{ $order->client_cpf }}
+                                </span>
+
+                                <span class="item">
+                                    <span>Telefone:</span>
+
+                                    {{ $order->client_phone }}
+                                </span>
+                            </div>
+
+                            <div class="group">
+                                <span class="item">
+                                    <span>Data do pedido:</span>
+
+                                    {{ date('d/m/Y', strtotime($order->created_at)) . ' às ' . date('H:i', strtotime($order->created_at)) }}
+                                </span>
+
+                                <span class="item">
+                                    <span>Entrega:</span>
+
+                                    {{ _businessDay($order->created_at) }}
+                                </span>
+
+                                <span class="item">
+                                    <span>Endereço:</span>
+
+                                    {{ $order->client_street }}, {{ $order->client_number }}
+
+                                    @if ($order->client_complement)
+                                        - {{ $order->client_complement }}
                                     @endif
 
-                                    @if (!$product->product->deleted_at && $product->product->status == 1)
-                                        <a href="{{ route('show-product', $product->product->slug) }}" target="_blank">ver produto</a>
-                                    @endif
-                                </div>
+                                    - {{ $order->district->name }}
+
+                                    - {{ $order->city->title }}/{{ $order->city->state->letter }}
+                                </span>
+
+                                <span class="item">
+                                    <span>Forma de pagamento:</span>
+
+                                    {{ _getPaymentMethod($order->payment) }}
+                                </span>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
 
-            @include('pagination', ['paginator' => $products])
+            @include('pagination', ['paginator' => $orders])
         @else
             <div class="no-results">
                 <img src="{{ asset('images/icon-box.png') }}" />

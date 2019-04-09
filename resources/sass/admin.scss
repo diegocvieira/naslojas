@@ -86,65 +86,117 @@
     }
 
     .list-orders {
-        background-color: #fff;
         float: left;
         width: 100%;
 
         .order {
-            border-bottom: 1px solid rgb(230, 230, 230);
-            margin: 30px 0 0 0;
-            padding: 0 30px 30px 30px;
+            margin-top: 20px;
 
-            &:last-child {
-                border: none;
+            background-color: #fff;
+
+            &:first-child {
+                margin-top: 0;
             }
 
             .resume-infos {
-                float: left;
-                width: 100%;
+                padding: 30px;
 
-                .image {
-                    padding: 0;
+                .line {
+                    border-right: 1px solid rgb(230, 230, 230);
+                }
 
-                    img {
+                .product {
+                    margin-top: 20px;
+
+                    &:first-child {
+                        margin-top: 0;
+                    }
+
+                    .btns {
+                        margin-top: 15px;
+
+                        button {
+                            font-size: 14.5px;
+                            color: #fff;
+                            background-color: rgb(255, 23, 68);
+                            width: 220px;
+                            height: 45px;
+                            display: inline-block;
+                            border-radius: 25px;
+                            border: none;
+                            margin-right: 25px;
+                        }
+
+                        a {
+                            font-size: 14.5px;
+                            color: rgb(122, 184, 236);
+                        }
+                    }
+
+                    .product-image {
                         object-position: center;
                         object-fit: cover;
                         border-radius: 5px;
                         background-color: rgb(245, 245, 245);
                         box-shadow: 0.5px 0.866px 2.97px 0.03px rgba(98, 98, 98, 0.118);
-                        width: 100%;
-                        height: 100px;
+                    }
+
+                    h3 {
+                        font-size: 16.6px;
+                        color: #000;
+                        line-height: 1.5;
+                        display: block;
+                        margin: 0;
+                    }
+
+                    .item {
+                        font-size: 14.5px;
+                        color: rgb(150, 150, 150);
+                        margin-top: 10px;
+                        display: block;
+
+                        span {
+                            font-weight: 700;
+                            color: #000;
+
+                            &.green {
+                                color: rgb(112, 202, 124) !important;
+                            }
+
+                            &.red {
+                                color: rgb(255, 23, 68) !important;
+                            }
+
+                            &.pending {
+                                color: rgb(150, 150, 150);
+                            }
+                        }
                     }
                 }
 
-                h3 {
-                    font-size: 16.6px;
-                    color: #000;
-                    line-height: 1.5;
-                    display: block;
-                    margin: 0;
-                }
+                .prices {
+                    padding-left: 60px;
 
-                .item {
-                    font-size: 14.5px;
-                    color: rgb(150, 150, 150);
-                    margin-top: 10px;
-                    display: block;
+                    .item {
+                        display: block;
+                        font-size: 14.5px;
+                        color: rgb(50, 50, 50);
+                        margin-top: 10px;
 
-                    span {
-                        font-weight: 700;
-                        color: #000;
-
-                        &.green {
-                            color: rgb(112, 202, 124) !important;
+                        &.total {
+                            font-weight: 700;
+                            font-size: 16.6px;
                         }
 
-                        &.red {
-                            color: rgb(255, 23, 68) !important;
+                        span {
+                            width: 100px;
+                            display: inline-block;
+                            text-align: right;
+                            padding-right: 20px;
                         }
 
-                        &.pending {
-                            color: rgb(150, 150, 150);
+                        b {
+                            color: rgb(255, 23, 68);
                         }
                     }
                 }
@@ -153,8 +205,10 @@
             .complete-infos {
                 float: left;
                 width: 100%;
-                margin-top: 30px;
                 display: none;
+                background-color: #f5f5f5;
+                padding-left: 200px;
+                padding-top: 30px;
 
                 .group {
                     margin-bottom: 30px;
@@ -179,25 +233,6 @@
                             padding-left: 25px;
                             display: inline;
                             margin-left: 20px;
-                        }
-                    }
-
-                    &.btns {
-                        button {
-                            font-size: 14.5px;
-                            color: #fff;
-                            background-color: rgb(255, 23, 68);
-                            width: 220px;
-                            height: 45px;
-                            display: inline-block;
-                            border-radius: 25px;
-                            border: none;
-                            margin-right: 25px;
-                        }
-
-                        a {
-                            font-size: 14.5px;
-                            color: rgb(122, 184, 236);
                         }
                     }
                 }

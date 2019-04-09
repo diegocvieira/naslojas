@@ -175,12 +175,12 @@ $(function() {
                  modalAlert(data.msg);
 
                 if (data.status) {
-                    var row = $this.parents('.order');
+                    var row = $this.parents('.product');
 
                     if ($this.hasClass('confirm-order')) {
-                        row.find('.status').addClass('green').text('PEDIDO CONFIRMADO');
+                        row.append("<span class='item'><span class='green'><b>PEDIDO CONFIRMADO</b></span></span>");
                     } else {
-                        row.find('.status').addClass('red').text('PEDIDO RECUSADO');
+                        row.append("<span class='item'><span class='red'><b>PEDIDO CANCELADO</b></span></span>");
                     }
 
                     row.find('.confirm-order, .refuse-order').remove();
@@ -189,14 +189,23 @@ $(function() {
         });
     });
 
-    $(document).on('click', '.page-admin .show-more-infos', function () {
+    // Page orders
+    $(document).on('click', '.page-admin .order .resume-infos', function () {
+        var div = $(this).parents('.order');
+
+        $('.page-admin').find('.order').not(div).find('.complete-infos').hide();
+
+        div.find('.complete-infos').toggle();
+    });
+
+    /*$(document).on('click', '.page-admin .show-more-infos', function () {
         var div = $(this).parents('.order');
 
         $('.page-admin').find('.order').not(div).find('.complete-infos').hide();
 
         div.find('.complete-infos').is(':visible') ? $(this).text('ver mais') : $(this).text('ver menos');
         div.find('.complete-infos').toggle();
-    });
+    });*/
 
     $('#form-client-config').validate({
         rules: {

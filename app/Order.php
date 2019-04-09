@@ -19,10 +19,16 @@ class Order extends Model
         'client_cep',
         'client_street',
         'client_number',
-        'client_complement'
+        'client_complement',
+        'freight'
     ];
 
     protected $dates = ['created_at', 'updated_at'];
+
+    public function store()
+    {
+        return $this->belongsTo('App\Store', 'store_id', 'id');
+    }
 
     public function client()
     {
