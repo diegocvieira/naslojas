@@ -202,7 +202,8 @@ function _paymentMethods()
                 '3' => 'American Express',
                 '4' => 'Dinners Club',
                 '5' => 'Hipercard',
-                '6' => 'Banricompras'
+                '6' => 'Banricompras',
+                '7' => 'VerdeCard'
             ]
         ],
         '2' => [
@@ -213,7 +214,8 @@ function _paymentMethods()
                 '3' => 'American Express',
                 '4' => 'Dinners Club',
                 '5' => 'Hipercard',
-                '6' => 'Banricompras'
+                '6' => 'Banricompras',
+                '7' => 'VerdeCard'
             ]
         ]
     ];
@@ -262,6 +264,9 @@ function _getPaymentMethod($value)
             break;
         case '6':
             $payment = 'Banricompras';
+            break;
+        case '7':
+            $payment = 'VerdeCard';
             break;
         default:
             $payment = '';
