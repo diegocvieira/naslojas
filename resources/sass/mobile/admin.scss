@@ -122,6 +122,17 @@
                         margin-top: 0;
                     }
 
+                    .show-product {
+                        float: left;
+                        width: 25px;
+                        height: 25px;
+                        background-image: url('../../images/icon-show-product.png');
+                        background-position: center;
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        margin: 5px 0 0 10px;
+                    }
+
                     .btns {
                         button {
                             font-size: 12.5px;
@@ -172,17 +183,6 @@
                         padding: 0;
                     }
                 }
-
-                /*.show-product {
-                    float: right;
-                    width: 25px;
-                    height: 25px;
-                    background-image: url('../../images/icon-show-product.png');
-                    background-position: center;
-                    background-size: contain;
-                    background-repeat: no-repeat;
-                    margin: 12px 15px 0 0;
-                }*/
 
                 .item {
                     font-size: 14.5px;

@@ -91,7 +91,6 @@
 
         .order {
             margin-top: 20px;
-
             background-color: #fff;
 
             &:first-child {
@@ -112,6 +111,11 @@
                         margin-top: 0;
                     }
 
+                    .show-product {
+                        font-size: 14.5px;
+                        color: rgb(122, 184, 236);
+                    }
+
                     .btns {
                         margin-top: 15px;
 
@@ -124,7 +128,7 @@
                             display: inline-block;
                             border-radius: 25px;
                             border: none;
-                            margin-right: 25px;
+                            margin-right: 20px;
                         }
 
                         a {
@@ -175,7 +179,7 @@
                 }
 
                 .prices {
-                    padding-left: 60px;
+                    padding-left: 50px;
 
                     .item {
                         display: block;

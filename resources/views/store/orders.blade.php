@@ -25,7 +25,7 @@
                                                 <img src="{{ asset('uploads/' . $product->product->store_id . '/products/' . $product->image) }}" alt="{{ $product->title }}" class="product-image img-responsive" />
                                             </div>
 
-                                            <div class="col-xs-7">
+                                            <div class="col-xs-8">
                                                 <h3>{{ $product->title }}</h3>
 
                                                 <span class="item">
@@ -39,6 +39,10 @@
                                                         <button data-url="{{ route('confirm-order', $product->id) }}" class="confirm-order" type="button">CONFIRMAR PEDIDO</button>
 
                                                         <button data-url="{{ route('refuse-order', $product->id) }}" class="refuse-order" type="button">CANCELAR PEDIDO</button>
+
+                                                        @if (!$product->product->deleted_at && $product->product->status == 1)
+                                                            <a href="{{ route('show-product', $product->product->slug) }}" class="show-product" target="_blank">ver produto</a>
+                                                        @endif
                                                     </div>
                                                 @else
                                                     <span class="item">
@@ -51,7 +55,7 @@
                                                 @endif
                                             </div>
 
-                                            <div class="col-xs-3 text-center">
+                                            <div class="col-xs-2 text-left">
                                                 <span class="item">
                                                     Quantidade:
 

@@ -34,6 +34,10 @@
                                             <button data-url="{{ route('confirm-order', $product->id) }}" class="confirm-order" type="button">CONFIRMAR</button>
 
                                             <button data-url="{{ route('refuse-order', $product->id) }}" class="refuse-order" type="button">CANCELAR</button>
+
+                                            @if (!$product->product->deleted_at && $product->product->status == 1)
+                                                <a href="{{ route('show-product', $product->product->slug) }}" class="show-product" target="_blank"></a>
+                                            @endif
                                         </div>
                                     @else
                                         <span class="item">
