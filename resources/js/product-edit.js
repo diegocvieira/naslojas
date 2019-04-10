@@ -98,6 +98,9 @@ $(function() {
                 $('.page-product-edit').find('.pagination').remove();
                 $('.page-product-edit').find('.forms').append(data.products);
 
+                $('.mask-money').mask('000.000.000.000.000,00', {reverse: true});
+                $('.selectpicker').selectpicker('refresh');
+
                 variation();
             }
         });
@@ -396,6 +399,8 @@ $(function() {
             } else {
                 modalAlert('Cada produto deve ter no mínimo uma imagem.');
             }
+        } else {
+            modalAlert('É necessário preencher todos os campos obrigatórios.');
         }
     });
 
