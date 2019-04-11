@@ -105,27 +105,12 @@
                     {!! Form::text('old_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
                     {!! Form::label('', 'Preço anterior') !!}
                 </div>
-
-                <div class="form-group">
-                    {!! Form::text('reserve_discount', null, ['placeholder' => ' ', 'class' => 'mask-percent field']) !!}
-                    {!! Form::label('', 'Desconto na reserva') !!}
-                </div>
             </div>
 
             <div class="section">
                 <div class="form-group gender">
                     {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker field']) !!}
                     {!! Form::label('', 'Gênero *', ['style' => (isset($product) && $product->gender) ? 'display: block;' : '']) !!}
-                </div>
-
-                <div class="form-group">
-                    {!! Form::text('installment', null, ['placeholder' => ' ', 'class' => 'mask-x field']) !!}
-                    {!! Form::label('', 'Parcelamento') !!}
-                </div>
-
-                <div class="form-group">
-                    {!! Form::text('installment_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
-                    {!! Form::label('', 'Valor da parcela') !!}
                 </div>
             </div>
 
