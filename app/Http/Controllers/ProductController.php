@@ -262,7 +262,7 @@ class ProductController extends Controller
         if ($validation->fails()) {
             return Response::make($validation->errors->first(), 400);
         } else {
-            $file_name = _uploadImage($request->file('image'), $this->store_id);
+            $file_name = _uploadImageProduct($request->file('image'), $this->store_id);
 
             if ($file_name) {
                 return Response::json($file_name, 200);
@@ -360,7 +360,7 @@ class ProductController extends Controller
 
                            foreach ($request->images as $image) {
                                if(!empty($image)) {
-                                   $image_name = _uploadImage($image, $this->store_id);
+                                   $image_name = _uploadImageProduct($image, $this->store_id);
 
                                    foreach ($request->images_position as $key_position => $image_position) {
                                         if ($key_position == $key_image) {
@@ -506,7 +506,7 @@ class ProductController extends Controller
 
                    foreach ($request->image as $image) {
                        if (!empty($image)) {
-                           $image_name = _uploadImage($image, $this->store_id);
+                           $image_name = _uploadImageProduct($image, $this->store_id);
 
                            foreach ($request->image_position as $key_position => $image_position) {
                                 if ($key_position == $key_image) {

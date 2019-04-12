@@ -127,6 +127,76 @@
             }
         }
 
+        .image-cover {
+            margin-top: 30px;
+            float: left;
+            width: 100%;
+
+            &.image-cover-mobile {
+                label {
+                    background-image: url('../images/image-cover-mobile.jpg');
+                    height: 250px;
+                }
+            }
+
+            .title {
+                font-size: 14.5px;
+                color: #000;
+                font-weight: 700;
+                float: left;
+                width: 100%;
+                padding-left: 20px;
+            }
+
+            .desc {
+                font-size: 12.5px;
+                color: rgb(150, 150, 150);
+                float: left;
+                width: 100%;
+                padding-left: 20px;
+            }
+
+            input {
+                display: none;
+            }
+
+            label {
+                width: 100%;
+                height: 100px;
+                float: left;
+                background-image: url('../images/image-cover-desktop.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                border-radius: 5px;
+                margin-top: 10px;
+                cursor: pointer;
+                position: relative;
+
+                &:after {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    border-radius: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 50px;
+                    height: 50px;
+                    background-color: #fff;
+                    opacity: 0;
+                    transition: .5s;
+                    background-image: url('../images/icon-image-cover.png');
+                    background-position: center;
+                    background-size: 30px;
+                    background-repeat: no-repeat;
+                }
+
+                &:hover:after {
+                    opacity: 1;
+                }
+            }
+        }
+
         .cep a {
             position: absolute;
             right: -80px;

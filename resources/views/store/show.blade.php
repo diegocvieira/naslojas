@@ -1,11 +1,18 @@
 <?php
     $top_nav = true;
+    $body_class = 'page-show-store';
 ?>
 
 @extends('base')
 
 @section('content')
-    <div class="container page-show-store">
+    @if ($products->count() && $store->image_cover_desktop)
+        <div class="store-cover">
+            <img src="{{ asset('uploads/' . $store->id . '/' . $store->image_cover_desktop) }}" alt="{{ $store->name }}" />
+        </div>
+    @endif
+
+    <div class="container">
         @if ($products->count())
             <div class="store-infos">
                 <a href="{{ route('show-store', $store->slug) }}">
