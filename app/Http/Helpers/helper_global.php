@@ -73,7 +73,7 @@ function _dateFormat($date)
     return $date_format;
 }
 
-function _uploadImage($file, $store_id)
+function _uploadImageProduct($file, $store_id)
 {
     $microtime = microtime(true) . RAND(111111, 999999);
 
@@ -138,6 +138,64 @@ function _uploadImage($file, $store_id)
     }
 
     return $images[248];
+}
+
+function _uploadImage($file, $store_id)
+{
+    $image_name = microtime(true) . RAND(111111, 999999);
+
+    $image = new \Imagick($file->path());
+
+    if ($image->getImageAlphaChannel()) {
+        $image->setImageAlphaChannel(11);
+    }
+
+    $image->setImageBackgroundColor('#ffffff');
+    $image->setColorspace(\Imagick::COLORSPACE_SRGB);
+    $image->setImageFormat('jpg');
+    $image->stripImage();
+    $image->setImageCompressionQuality(75);
+    $image->setSamplingFactors(array('2x2', '1x1', '1x1'));
+    $image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
+    $image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
+
+    switch ($image->getImageOrientation()) {
+    case \Imagick::ORIENTATION_TOPLEFT:
+        break;
+    case \Imagick::ORIENTATION_TOPRIGHT:
+        $image->flopImage();
+        break;
+    case \Imagick::ORIENTATION_BOTTOMRIGHT:
+        $image->rotateImage("#fff", 180);
+        break;
+    case \Imagick::ORIENTATION_BOTTOMLEFT:
+        $image->flopImage();
+        $image->rotateImage("#fff", 180);
+        break;
+    case \Imagick::ORIENTATION_LEFTTOP:
+        $image->flopImage();
+        $image->rotateImage("#fff", -90);
+        break;
+    case \Imagick::ORIENTATION_RIGHTTOP:
+        $image->rotateImage("#fff", 90);
+        break;
+    case \Imagick::ORIENTATION_RIGHTBOTTOM:
+        $image->flopImage();
+        $image->rotateImage("#fff", 90);
+        break;
+    case \Imagick::ORIENTATION_LEFTBOTTOM:
+        $image->rotateImage("#fff", -90);
+        break;
+    default: // Invalid orientation
+        break;
+    }
+    $image->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
+
+    $image->writeImage(public_path('uploads/' . $store_id . '/' . $image_name));
+
+    $image->destroy();
+
+    return $image_name;
 }
 
 function _businessDay($date = null, $check = null)

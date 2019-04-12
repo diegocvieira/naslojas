@@ -274,6 +274,14 @@ class StoreController extends Controller
                 $store->phone = $request->phone;
                 $store->min_parcel_price = $request->min_parcel_price ? number_format(str_replace(['.', ','], ['', '.'], $request->min_parcel_price), 2, '.', '') : null;
 
+                if ($request->image_cover_desktop) {
+                    $store->image_cover_desktop = _uploadImage($request->image_cover_desktop, $this->store_id);
+                }
+
+                if ($request->image_cover_mobile) {
+                    $store->image_cover_mobile = _uploadImage($request->image_cover_mobile, $this->store_id);
+                }
+
                 // Delete and insert new payments
                 $store->payments()->delete();
                 if ($request->payment) {

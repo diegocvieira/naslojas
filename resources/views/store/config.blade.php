@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container page-store-config">
-        {!! Form::model($user->store, ['method' => 'POST', 'route' => 'set-store-config', 'id' => 'form-store-config']) !!}
+        {!! Form::model($user->store, ['method' => 'POST', 'route' => 'set-store-config', 'id' => 'form-store-config', 'files' => true]) !!}
             <div class="row header-config">
                 <div class="col-xs-4">
                     <span class="description">Mantenha os dados da loja sempre atualizados</span>
@@ -80,6 +80,22 @@
                         <div class="form-group">
                             {!! Form::text('cnpj', null, ['placeholder' => ' ', 'class' => 'mask-cnpj']) !!}
                             {!! Form::label('', 'CNPJ') !!}
+                        </div>
+
+                        <div class="image-cover">
+                            <span class="title">Imagem de capa (computador)</span>
+                            <span class="desc">Tamanho ideal 1920 x 350 pixels</span>
+
+                            {!! Form::file('image_cover_desktop', ['id' => 'image_cover_desktop']) !!}
+                            {!! Form::label('image_cover_desktop', ' ', ['style' => $user->store->image_cover_desktop ? 'background-image: url(uploads/' . $user->store_id . '/' . $user->store->image_cover_desktop . ')' : '']) !!}
+                        </div>
+
+                        <div class="image-cover image-cover-mobile">
+                            <span class="title">Imagem de capa (celular)</span>
+                            <span class="desc">Tamanho ideal 1080 x 600 pixels</span>
+
+                            {!! Form::file('image_cover_mobile', ['id' => 'image_cover_mobile']) !!}
+                            {!! Form::label('image_cover_mobile', ' ', ['style' => $user->store->image_cover_mobile ? 'background-image: url(uploads/' . $user->store_id . '/' . $user->store->image_cover_mobile . ')' : '']) !!}
                         </div>
                     </div>
 

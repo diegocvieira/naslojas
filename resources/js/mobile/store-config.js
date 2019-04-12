@@ -21,6 +21,21 @@ $(function() {
         });
     });
 
+    $(document).on('change', '.page-store-config .image-cover input[type=file]', function() {
+        var reader = new FileReader(),
+            $this = $(this);
+
+        if($(this)[0].files[0].size > 5100000) {
+            modalAlert('A imagem tem que ter no máximo 5mb.');
+        } else {
+            reader.onload = function(e) {
+                $this.next().css('background-image', 'url(' + e.target.result + ')');
+            }
+
+            reader.readAsDataURL($(this)[0].files[0]);
+        }
+    });
+
     $('#form-store-config').validate({
         rules: {
             name: {
@@ -121,7 +136,10 @@ $(function() {
                     url: $(form).attr('action'),
                     method: 'POST',
                     dataType: 'json',
-                    data: $(form).serialize(),
+                    //data: $(form).serialize(),
+                    data: new FormData(form),
+                    processData: false,
+                    contentType: false,
                     success: function (data) {
                         modal.find('.modal-footer .invalid-field').remove();
 
