@@ -89,12 +89,12 @@
 
             <div class="step ml">
                 <img src="{{ asset('images/advise/camera.png') }}" class="img-camera" />
-                <p>Tiramos fotos lindas e<br>cadastramos no site</p>
+                <p>Tiramos fotos lindas<br>para cadastrar no site</p>
             </div>
 
             <div class="step ml">
                 <img src="{{ asset('images/advise/truck.png') }}" class="img-truck" />
-                <p>Devolvemos para<br>a loja em 1 dia útil</p>
+                <p>Devolvemos para a<br>loja em 2 dias úteis</p>
             </div>
         </div>
 
@@ -107,11 +107,11 @@
         </div>
 
         <div class="price">
-            <p>SEM MENSALIDADE E SEM COMISSÃO NAS VENDAS<br>Até 30 produtos por mês é</p>
+            <p>SEM MENSALIDADE E SEM COMISSÃO NAS VENDAS<br>Os primeiros 50 produtos são</p>
 
             <h3>TOTALMENTE GRÁTIS</h3>
 
-            <p class="taxe">Depois o custo é de apenas R$ 0,50 por oferta + taxa única de R$ 5,00 do transporte</p>
+            <p class="taxe">Depois o custo é de apenas R$ 1,00 por produto + taxa única de R$ 10,00 do transporte</p>
         </div>
 
         <div class="race">
@@ -123,7 +123,7 @@
         </div>
 
         <div class="test">
-            <p>Faça um teste sem compromisso<br>Até <b>30 ofertas</b> por mês é</p>
+            <p>Faça um teste sem compromisso<br>Os primeiros <b>50 produtos</b> são</p>
 
             <h3>TOTALMENTE GRÁTIS</h3>
 
