@@ -548,30 +548,42 @@ $(function() {
     $(document).on('click', '.confirm-order, .refuse-order', function(e) {
         e.preventDefault();
 
-        var $this = $(this);
+        var $this = $(this),
+            message = $this.hasClass('confirm-order') ? 'Você confirma que o produto já foi separado para envio?' : 'O produto será removido e o cliente notificado que ele não está mais disponível. Deseja cancelar?';
 
-        $.ajax({
-            url: $this.data('url'),
-            method: 'POST',
-            dataType: 'json',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (data) {
-                 modalAlert(data.msg);
+        modalAlert(message, 'SIM');
 
-                if (data.status) {
-                    var row = $this.parents('.product').find('.col-xs-7');
+        var modal = $('#modal-alert');
 
-                    if ($this.hasClass('confirm-order')) {
-                        row.append("<span class='item'><span class='green'><b>PEDIDO CONFIRMADO</b></span></span>");
-                    } else {
-                        row.append("<span class='item'><span class='red'><b>PEDIDO CANCELADO</b></span></span>");
+        modal.find('.btn-default').addClass('btn-confirm');
+        modal.find('.modal-footer').append("<button type='button' class='btn btn-back invert-color' data-dismiss='modal'>NÃO</button>");
+
+        modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
+            $.ajax({
+                url: $this.data('url'),
+                method: 'POST',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    setTimeout(function() {
+                        modalAlert(data.msg);
+                    }, 1000);
+
+                    if (data.status) {
+                        var row = $this.parents('.product').find('.col-xs-8');
+
+                        if ($this.hasClass('confirm-order')) {
+                            row.append("<span class='item'><span class='green'><b>PEDIDO CONFIRMADO</b></span></span>");
+                        } else {
+                            row.append("<span class='item'><span class='red'><b>PEDIDO CANCELADO</b></span></span>");
+                        }
+
+                        row.find('.confirm-order, .refuse-order').remove();
                     }
-
-                    row.find('.confirm-order, .refuse-order').remove();
                 }
-            }
+            });
         });
     });
 
