@@ -24,7 +24,7 @@
                 <div class="col-xs-6 fields">
                     <div class="row">
                         <div class="col-xs-12">
-                            <span class="warning">TROCA FÁCIL DIRETAMENTE NA LOJA</span>
+                            <span class="warning"></span>
                         </div>
                     </div>
 
