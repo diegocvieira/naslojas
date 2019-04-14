@@ -21,6 +21,20 @@ $(function() {
         });
     });
 
+    $(document).on('click', '.page-store-config .image-cover .delete-image-cover', function() {
+        $(this).hide();
+        $(this).prev().prop('checked', true);
+        $(this).prev().prev().prev().val('');
+
+        var image = $(this).hasClass('mobile') ? 'image-cover-mobile' : 'image-cover-desktop';
+
+        $(this).prev().prev().find('img').attr('src', '/images/' + image + '.jpg');
+    });
+
+    $(document).on('click', '.page-store-config .image-cover .image', function() {
+        $(this).prev().trigger('click');
+    });
+
     $(document).on('change', '.page-store-config .image-cover input[type=file]', function() {
         var reader = new FileReader(),
             $this = $(this);
@@ -29,7 +43,8 @@ $(function() {
             modalAlert('A imagem tem que ter no máximo 5mb.');
         } else {
             reader.onload = function(e) {
-                $this.next().css('background-image', 'url(' + e.target.result + ')');
+                $this.next().next().next().show();
+                $this.next().find('img').attr('src', e.target.result);
             }
 
             reader.readAsDataURL($(this)[0].files[0]);

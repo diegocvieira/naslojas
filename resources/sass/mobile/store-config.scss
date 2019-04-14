@@ -95,13 +95,7 @@
             margin-top: 30px;
             float: left;
             width: 100%;
-
-            &.image-cover-mobile {
-                label {
-                    background-image: url('../../images/image-cover-mobile.jpg');
-                    height: 165px;
-                }
-            }
+            position: relative;
 
             .title {
                 font-size: 14.5px;
@@ -109,7 +103,6 @@
                 font-weight: 700;
                 float: left;
                 width: 100%;
-                padding-left: 20px;
             }
 
             .desc {
@@ -117,25 +110,17 @@
                 color: rgb(150, 150, 150);
                 float: left;
                 width: 100%;
-                padding-left: 20px;
+                margin-bottom: 20px;
             }
 
             input {
                 display: none;
             }
 
-            label {
-                width: 100%;
-                height: 55px;
-                float: left;
-                background-image: url('../../images/image-cover-desktop.jpg');
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                border-radius: 5px;
-                margin-top: 10px;
-                cursor: pointer;
+            .image {
                 position: relative;
+                width: 100%;
+                display: inline-block;
 
                 &:after {
                     content: '';
@@ -144,20 +129,34 @@
                     left: 50%;
                     border-radius: 50%;
                     transform: translate(-50%, -50%);
-                    width: 38px;
-                    height: 38px;
+                    width: 40px;
+                    height: 40px;
                     background-color: #fff;
-                    //opacity: 0;
-                    transition: .5s;
                     background-image: url('../../images/icon-image-cover.png');
                     background-position: center;
-                    background-size: 23px;
+                    background-size: 25px;
                     background-repeat: no-repeat;
                 }
 
-                //&:hover:after {
-                    //opacity: 1;
-                //}
+                img {
+                    width: 100%;
+                }
+            }
+
+            .delete-image-cover {
+                background-color: transparent;
+                border: none;
+                width: 25px;
+                height: 25px;
+                background-image: url('../../images/icon-delete.png');
+                background-position: center;
+                background-size: contain;
+                background-repeat: no-repeat;
+                position: absolute;
+                top: 5px;
+                right: 0;
+                filter: grayscale(100%);
+                cursor: pointer;
             }
         }
 

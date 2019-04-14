@@ -131,13 +131,7 @@
             margin-top: 30px;
             float: left;
             width: 100%;
-
-            &.image-cover-mobile {
-                label {
-                    background-image: url('../images/image-cover-mobile.jpg');
-                    height: 250px;
-                }
-            }
+            position: relative;
 
             .title {
                 font-size: 14.5px;
@@ -154,24 +148,14 @@
                 float: left;
                 width: 100%;
                 padding-left: 20px;
+                margin-bottom: 20px;
             }
 
-            input {
-                display: none;
-            }
-
-            label {
-                width: 100%;
-                height: 100px;
-                float: left;
-                background-image: url('../images/image-cover-desktop.jpg');
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                border-radius: 5px;
-                margin-top: 10px;
-                cursor: pointer;
+            .image {
                 position: relative;
+                width: 100%;
+                display: inline-block;
+                cursor: pointer;
 
                 &:after {
                     content: '';
@@ -194,6 +178,30 @@
                 &:hover:after {
                     opacity: 1;
                 }
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            .delete-image-cover {
+                background-color: transparent;
+                border: none;
+                width: 25px;
+                height: 25px;
+                background-image: url('../images/icon-delete.png');
+                background-position: center;
+                background-size: contain;
+                background-repeat: no-repeat;
+                position: absolute;
+                top: 5px;
+                right: 0;
+                filter: grayscale(100%);
+                cursor: pointer;
+            }
+
+            input {
+                display: none;
             }
         }
 

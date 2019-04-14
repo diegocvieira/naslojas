@@ -274,8 +274,28 @@ class StoreController extends Controller
                 $store->phone = $request->phone;
                 $store->min_parcel_price = $request->min_parcel_price ? number_format(str_replace(['.', ','], ['', '.'], $request->min_parcel_price), 2, '.', '') : null;
 
+                if ($request->delete_image_cover_desktop || $request->image_cover_desktop && $store->image_cover_desktop) {
+                    $image_path = public_path('uploads/' . $this->store_id . '/' . $store->image_cover_desktop);
+
+                    if (file_exists($image_path)) {
+                        unlink($image_path);
+                    }
+
+                    $store->image_cover_desktop = null;
+                }
+
                 if ($request->image_cover_desktop) {
                     $store->image_cover_desktop = _uploadImage($request->image_cover_desktop, $this->store_id);
+                }
+
+                if ($request->delete_image_cover_mobile || $request->image_cover_mobile && $store->image_cover_mobile) {
+                    $image_path = public_path('uploads/' . $this->store_id . '/' . $store->image_cover_mobile);
+
+                    if (file_exists($image_path)) {
+                        unlink($image_path);
+                    }
+
+                    $store->image_cover_mobile = null;
                 }
 
                 if ($request->image_cover_mobile) {
