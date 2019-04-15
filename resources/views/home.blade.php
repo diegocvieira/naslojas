@@ -8,11 +8,11 @@
     <div class="container page-home">
         <div class="banner-home">
             <div class="slick-home">
-                <?php /*<div class="item">
+                <div class="item">
                     <a href="{{ route('show-store', 'krause') }}">
                         <img src="{{ asset('images/banner-desktop/krause.jpg') }}" alt="Banner Krause" />
                     </a>
-                </div>*/ ?>
+                </div>
 
                 <div class="item">
                     <img src="{{ asset('images/banner-desktop/1.jpg') }}" alt="Banner 1" />
