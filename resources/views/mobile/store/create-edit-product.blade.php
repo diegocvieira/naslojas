@@ -27,6 +27,12 @@
                                     @endif
 
                                     <li>
+                                        <a href="{{ route('product-free-freight') }}" data-type="free-freight" class="option free-freight {{ $product->free_freight == 1 ? 'hidden' : '' }}" data-productid="{{ $product->id }}">Ativar frete grátis</button>
+
+                                        <a href="{{ route('product-free-freight') }}" data-type="free-freight" class="option free-freight free-freight-selected {{ $product->free_freight == 0 ? 'hidden' : '' }}" data-productid="{{ $product->id }}">Desativar frete grátis</a>
+                                    </li>
+
+                                    <li>
                                         <a href="#" data-type="copy-data" class="option">Copiar dados</a>
                                     </li>
                                 @endisset
