@@ -2,7 +2,7 @@ $(function() {
     $('body').css('opacity', '1');
 
     $('.slick-home').slick({
-        initialSlide: Math.floor(Math.random() * $('.slick-home .item').length),
+        //initialSlide: Math.floor(Math.random() * $('.slick-home .item').length),
         slidesToShow: 1,
         //centerMode: true,
         infinite: true,

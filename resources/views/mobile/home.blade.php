@@ -8,6 +8,12 @@
 @section('content')
     <div class="banner-home">
         <div class="slick-home">
+            <?php /*<div class="item">
+                <a href="{{ route('show-store', 'krause') }}">
+                    <img src="{{ asset('images/banner-mobile/krause.jpg') }}" alt="Banner Krause" />
+                </a>
+            </div>*/ ?>
+
             <div class="item">
                 <img src="{{ asset('images/banner-mobile/1.jpg') }}" alt="Banner 1" />
             </div>
