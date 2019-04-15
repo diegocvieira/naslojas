@@ -52,6 +52,20 @@
             margin-top: 2px;
         }
 
+        .free-freight {
+            float: left;
+            width: 100%;
+            margin-bottom: 10px;
+
+            span {
+                font-size: 10.4px;
+                color: rgb(112, 202, 124);
+                font-weight: 700;
+                border: 1px solid rgb(112, 202, 124);
+                padding: 0 4px;
+            }
+        }
+
         .price {
             font-family: "KeepCalm";
             color: rgb(50, 50, 50);

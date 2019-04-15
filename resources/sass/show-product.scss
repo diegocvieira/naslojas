@@ -293,6 +293,14 @@
         position: relative;
         margin-top: 20px;
 
+        .free-freight {
+            font-size: 10.4px;
+            color: rgb(112, 202, 124);
+            font-weight: 700;
+            border: 1px solid rgb(112, 202, 124);
+            padding: 0 4px;
+        }
+
         .freight-selected {
             font-size: 14.5px;
             color: rgb(50, 50, 50);
