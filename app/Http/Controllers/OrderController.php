@@ -78,10 +78,6 @@ class OrderController extends Controller
 
     public function confirm($id)
     {
-        $return['status'] = true;
-        $return['msg'] = 'Lembre-se de ligar para o cliente para combinar o melhor horário para a entrega.';
-        return json_encode($return);
-
         $order = OrderProducts::whereHas('product', function ($query) {
                 $query->withoutGlobalScopes(['active', 'active-store'])
                     ->withTrashed()
