@@ -6,6 +6,12 @@
 
         <div class="infos">
             <a href="{{ route('show-product', $rp->slug) }}" class="show-product">
+                @if ($rp->free_freight)
+                    <div class="free-freight">
+                        <span>FRETE GRÁTIS</span>
+                    </div>
+                @endif
+
                 @if ($rp->old_price)
                     <span class="old-price">de <span>{{ number_format($rp->old_price, 2, ',', '.') }}</span></span>
                 @endif

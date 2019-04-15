@@ -27,6 +27,7 @@ class CreateProductsTable extends Migration
             $table->string('description', 2000)->nullable();
             $table->integer('gender')->nullable();
             $table->string('related', 200)->nullable();
+            $table->boolean('free_freight')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

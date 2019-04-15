@@ -12,7 +12,7 @@
 
             <p>Informe como deseja receber o produto e a forma de pagamento</p>
 
-            <span class="warning">TROCA FÁCIL DIRETAMENTE NA LOJA</span>
+            <span class="warning"></span>
         </div>
 
             {!! Form::model($client, ['method' => 'POST', 'route' => 'bag-finish', 'id' => 'form-bag-finish']) !!}

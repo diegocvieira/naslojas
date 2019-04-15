@@ -30,6 +30,8 @@ class CreateStoresTable extends Migration
             $table->integer('max_product_unit')->nullable();
             $table->char('cnpj', 18)->nullable();
             $table->string('phone', 15)->nullable();
+            $table->string('image_cover_desktop', 300)->nullable();
+            $table->string('image_cover_mobile', 300)->nullable();
             $table->timestamps();
         });
 

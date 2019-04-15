@@ -217,11 +217,15 @@ class BagController extends Controller
 
         foreach (session('bag')['stores'] as $store_key => $store) {
             $bag_data[$store_key]['subtotal'] = 0;
+            $bag_data[$store_key]['free_freight'] = true;
 
             foreach ($store['products'] as $p) {
-                $product = Product::select('price', 'store_id')->find($p['id']);
+                $product = Product::select('price', 'free_freight', 'store_id')->find($p['id']);
 
-                $bag_data[$store_key]['free_freight'] = ($product->free_freight || $product->store->free_freight) ? true : false;
+                if (!$product->free_freight) {
+                    $bag_data[$store_key]['free_freight'] = false;
+                }
+
                 $bag_data[$store_key]['freight'] = $client->district_id ? $product->store->freights->where('district_id', $client->district_id)->first()->price : null;
                 $bag_data[$store_key]['subtotal'] += $product->price * $p['qtd'];
                 $bag_data[$store_key]['min_parcel_price'] = $product->store->min_parcel_price;
@@ -237,6 +241,10 @@ class BagController extends Controller
                 foreach ($product->store->payments as $payment) {
                     $payments[] = $payment->method . '-' . $payment->payment;
                 }
+            }
+
+            if ($bag_data[$store_key]['free_freight']) {
+                $bag_data[$store_key]['freight'] = 0.00;
             }
         }
 
@@ -314,7 +322,7 @@ class BagController extends Controller
                 $order->client_street = $request->street;
                 $order->client_number = $request->number;
                 $order->client_complement = $request->complement;
-                $order->freight = ($products->first()->store->free_freight || !$products->where('free_freight', 0)->count()) ? 0.00 : $products->first()->store->freights->where('district_id', $request->district)->first()->price;
+                $order->freight = !$products->where('free_freight', 0)->count() ? 0.00 : $products->first()->store->freights->where('district_id', $request->district)->first()->price;
                 $order->save();
 
                 $emails = [];

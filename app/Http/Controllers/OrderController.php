@@ -141,6 +141,37 @@ class OrderController extends Controller
                 $product->save();
             }
 
+            // Calculate free freight
+            $ffs = OrderProducts::whereHas('product', function ($query) {
+                    $query->withTrashed()
+                        ->withoutGlobalScopes(['active', 'active-store']);
+                })
+                ->with(['product' => function($query) {
+                    $query->withTrashed()
+                        ->withoutGlobalScopes(['active', 'active-store']);
+                }])
+                ->where(function($q) {
+                    $q->where('status', 2)
+                        ->orWhere('status', 1);
+                })
+                ->where('order_id', $order->order_id)
+                ->get();
+
+            $free_freight_count = 0;
+
+            foreach ($ffs as $ff) {
+                if ($ff->product->free_freight) {
+                    $free_freight_count++;
+                }
+            }
+
+            if ($free_freight_count == $ffs->count()) {
+                $o = Order::find($order->order_id);
+                $o->freight = 0.00;
+                $o->save();
+            }
+            // End calculate free freight
+
             $return['status'] = true;
             $return['msg'] = 'Mantenha seus produtos atualizados. <br> Isso evita que sua loja perca pontos de relevância e seus produtos caiam de posição nas buscas.';
 

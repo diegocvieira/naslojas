@@ -54,7 +54,7 @@
 </div>
 
 <div class="col-xs-5">
-    <span class="advice">TROCA FÁCIL DIRETAMENTE NA LOJA</span>
+    <span class="advice"></span>
 
     <span class="identifier">Produto #{{ $product->identifier }}</span>
 
@@ -87,13 +87,17 @@
     </div>
 
     <div class="freights-container">
-        <span class="freight-selected">Entrega em até 24 horas</span>
+        @if ($product->free_freight)
+            <span class="free-freight">FRETE GRÁTIS</span>
+        @else
+            <span class="freight-selected">Entrega em até 24 horas</span>
 
-        <select title="Calcular frete" class="freights selectpicker" autocomplete="off" data-live-search="true" data-live-search-placeholder="Pesquise aqui">
-            @foreach (_freights($product->store_id) as $store_freight)
-                <option value="{{ $store_freight->price }}">{{ $store_freight->name }}</option>
-            @endforeach
-        </select>
+            <select title="Calcular frete" class="freights selectpicker" autocomplete="off" data-live-search="true" data-live-search-placeholder="Pesquise aqui">
+                @foreach (_freights($product->store_id) as $store_freight)
+                    <option value="{{ $store_freight->price }}">{{ $store_freight->name }}</option>
+                @endforeach
+            </select>
+        @endif
     </div>
 
     <div class="qtd-container">

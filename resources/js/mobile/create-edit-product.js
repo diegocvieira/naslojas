@@ -144,6 +144,28 @@ $(function() {
                      $(this).attr('checked', false);
                  }
             });
+        } else if (type == 'free-freight') {
+            $('.free-freight').toggleClass(`hidden`);
+
+            $.ajax({
+                url: $(this).attr('href'),
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    id : $(this).data('productid'),
+                    free_freight : ($(this).hasClass('free-freight-selected') ? 0 : 1)
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    if (!data.status) {
+                        modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+
+                        $('.free-freight').toggleClass('hidden');
+                    }
+                }
+            });
         } else {
             var url = $(this).attr('href'),
                 product_id = $(this).data('productid');

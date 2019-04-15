@@ -86,16 +86,28 @@
                             <span class="title">Imagem de capa (computador)</span>
                             <span class="desc">Tamanho ideal 1920 x 350 pixels</span>
 
-                            {!! Form::file('image_cover_desktop', ['id' => 'image_cover_desktop']) !!}
-                            {!! Form::label('image_cover_desktop', ' ', ['style' => $user->store->image_cover_desktop ? 'background-image: url(uploads/' . $user->store_id . '/' . $user->store->image_cover_desktop . ')' : '']) !!}
+                            {!! Form::file('image_cover_desktop', ['autocomplete' => 'off']) !!}
+
+                            <div class="image">
+                                <img src="{{ asset($user->store->image_cover_desktop ? 'uploads/' . $user->store_id . '/' . $user->store->image_cover_desktop : 'images/image-cover-desktop.jpg')  }}" title="Adicionar ou alterar imagem de capa" alt="Imagem de capa do desktop" />
+                            </div>
+
+                            {!! Form::radio('delete_image_cover_desktop', 1, null, ['autocomplete' => 'off']) !!}
+                            <button type="button" class="delete-image-cover" title="Remover image de capa" @if (!$user->store->image_cover_desktop) style="display: none;" @endif></button>
                         </div>
 
-                        <div class="image-cover image-cover-mobile">
+                        <div class="image-cover">
                             <span class="title">Imagem de capa (celular)</span>
                             <span class="desc">Tamanho ideal 1080 x 600 pixels</span>
 
-                            {!! Form::file('image_cover_mobile', ['id' => 'image_cover_mobile']) !!}
-                            {!! Form::label('image_cover_mobile', ' ', ['style' => $user->store->image_cover_mobile ? 'background-image: url(uploads/' . $user->store_id . '/' . $user->store->image_cover_mobile . ')' : '']) !!}
+                            {!! Form::file('image_cover_mobile', ['autocomplete' => 'off']) !!}
+
+                            <div class="image">
+                                <img src="{{ asset($user->store->image_cover_mobile ? 'uploads/' . $user->store_id . '/' . $user->store->image_cover_mobile : 'images/image-cover-mobile.jpg')  }}" title="Adicionar ou alterar imagem de capa" alt="Imagem de capa do mobile" />
+                            </div>
+
+                            {!! Form::radio('delete_image_cover_mobile', 1, null, ['autocomplete' => 'off']) !!}
+                            <button type="button" class="delete-image-cover mobile" title="Remover image de capa" @if (!$user->store->image_cover_mobile) style="display: none;" @endif></button>
                         </div>
                     </div>
 

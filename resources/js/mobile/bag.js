@@ -148,14 +148,16 @@ $(function() {
             dataType: 'json',
             success: function (data) {
                 $('.update-freight').each(function(index) {
-                    var freight = parseFloat(data.freights[index].price),
-                        subtotal = parseFloat($(this).parent().find('.update-subtotal').data('subtotal'));
+                    if ($(this).attr('data-freefreight') == false) {
+                        var freight = parseFloat(data.freights[index].price),
+                            subtotal = parseFloat($(this).parent().find('.update-subtotal').data('subtotal'));
 
-                    // Freight
-                    $(this).text(freight > 0 ? 'R$ ' + number_format(freight, 2, ',', '.') : 'grátis');
+                        // Freight
+                        $(this).text(freight > 0 ? 'R$ ' + number_format(freight, 2, ',', '.') : 'grátis');
 
-                    // Subtotal
-                    $(this).parent().find('.update-subtotal').text('R$ ' + number_format(subtotal + freight, 2, ',', '.'));
+                        // Subtotal
+                        $(this).parent().find('.update-subtotal').text('R$ ' + number_format(subtotal + freight, 2, ',', '.'));
+                    }
                 });
 
                 updateParcels();

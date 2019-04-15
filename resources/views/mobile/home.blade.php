@@ -8,6 +8,12 @@
 @section('content')
     <div class="banner-home">
         <div class="slick-home">
+            <?php /*<div class="item">
+                <a href="{{ route('show-store', 'krause') }}">
+                    <img src="{{ asset('images/banner-mobile/krause.jpg') }}" alt="Banner Krause" />
+                </a>
+            </div>*/ ?>
+
             <div class="item">
                 <img src="{{ asset('images/banner-mobile/1.jpg') }}" alt="Banner 1" />
             </div>
@@ -42,6 +48,12 @@
 
                     <div class="infos">
                         <a href="{{ route('show-product', $product->slug) }}" class="show-product">
+                            @if ($product->free_freight)
+                                <div class="free-freight">
+                                    <span>FRETE GRÁTIS</span>
+                                </div>
+                            @endif
+
                             @if ($product->old_price)
                                 <span class="old-price">de <span>{{ number_format($product->old_price, 2, ',', '.') }}</span></span>
                             @endif

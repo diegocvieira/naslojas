@@ -47,7 +47,13 @@
 
                         <div class="infos">
                             <a href="{{ route('show-product', $product->slug) }}" class="show-product">
-                                @if($product->old_price)
+                                @if ($product->free_freight)
+                                    <div class="free-freight">
+                                        <span>FRETE GRÁTIS</span>
+                                    </div>
+                                @endif
+
+                                @if ($product->old_price)
                                     <span class="old-price">de <span>{{ number_format($product->old_price, 2, ',', '.') }}</span></span>
                                 @endif
 
