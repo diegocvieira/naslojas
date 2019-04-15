@@ -18,6 +18,8 @@
             </div>
         </div>
 
+        <span class="advice"></span>
+
         <span class="identifier">Produto #{{ $product->identifier }}</span>
 
         <div class="store-container">
