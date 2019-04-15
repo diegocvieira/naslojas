@@ -111,7 +111,7 @@
 
             <h3>TOTALMENTE GRÁTIS</h3>
 
-            <p class="taxe">Depois o custo é de apenas R$ 1,00 por produto + taxa única de R$ 10,00 do transporte<br>Ou cadastre você mesmo sem nenhum custo e sem limite de produtos</p>
+            <p class="taxe">Depois o custo é de apenas R$ 1,00 por produto + taxa única de R$ 10,00 do transporte<br><b>Ou cadastre você mesmo sem nenhum custo e sem limite de produtos</b></p>
         </div>
 
         <div class="race">
