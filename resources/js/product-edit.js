@@ -290,7 +290,7 @@ $(function() {
     });
 
     // Scroll sizes
-    $('.arrow').on('click', function() {
+    $(document).on('click', '.arrow', function() {
         var div = $(this).parents('.sizes-container').find('.sizes');
 
         div.animate({
