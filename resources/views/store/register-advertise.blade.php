@@ -94,7 +94,7 @@
 
             <div class="step ml">
                 <img src="{{ asset('images/advise/truck.png') }}" class="img-truck" />
-                <p>Devolvemos para a<br>loja em 2 dias úteis</p>
+                <p>Devolvemos para a<br>loja em 48 horas</p>
             </div>
         </div>
 
@@ -111,7 +111,7 @@
 
             <h3>TOTALMENTE GRÁTIS</h3>
 
-            <p class="taxe">Depois o custo é de apenas R$ 1,00 por produto + taxa única de R$ 10,00 do transporte</p>
+            <p class="taxe">Depois o custo é de apenas R$ 1,00 por produto + taxa única de R$ 10,00 do transporte<br>Ou cadastre você mesmo sem nenhum custo e sem limite de produtos</p>
         </div>
 
         <div class="race">
