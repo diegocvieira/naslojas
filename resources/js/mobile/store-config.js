@@ -37,17 +37,33 @@ $(function() {
 
     $(document).on('change', '.page-store-config .image-cover input[type=file]', function() {
         var reader = new FileReader(),
-            $this = $(this);
+            $this = $(this),
+            file = $(this)[0].files[0],
+            img = new Image();
 
-        if($(this)[0].files[0].size > 5100000) {
-            modalAlert('A imagem tem que ter no máximo 5mb.');
+        if ($this.attr('name') == 'image_cover_desktop') {
+            width = 1920;
+            height = 350;
         } else {
-            reader.onload = function(e) {
-                $this.next().next().next().show();
-                $this.next().find('img').attr('src', e.target.result);
-            }
+            width = 1080;
+            height = 600;
+        }
 
-            reader.readAsDataURL($(this)[0].files[0]);
+        img.src = (window.URL || window.webkitURL).createObjectURL(file);
+
+        img.onload = function() {
+            if (file.size > 5100000) {
+                modalAlert('A imagem tem que ter no máximo 5mb.');
+            } else if (this.width < (width - 30) || this.width > (width + 30) && this.height < (height - 30) || this.height > (height + 30)) {
+                modalAlert('A imagem não possui o tamanho recomendado, por favor observe o tamanho ideal da imagem.');
+            } else {
+                reader.onload = function(e) {
+                    $this.next().next().next().show();
+                    $this.next().find('img').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(file);
+            }
         }
     });
 
