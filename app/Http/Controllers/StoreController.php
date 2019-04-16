@@ -39,7 +39,9 @@ class StoreController extends Controller
         $header_title = $store->name . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' | naslojas.com';
 		$header_desc = 'Clique para ver os produtos disponíveis na loja ' . $store->name . ' em ' . $store->city->title . ' - ' . $store->city->state->letter;
 
-        $products = Product::where('store_id', $store->id)->paginate(30);
+        $products = Product::where('store_id', $store->id)
+            ->inRandomOrder()
+            ->paginate(30);
 
         if (Agent::isDesktop()) {
             return view('store.show', compact('store', 'products', 'header_title', 'header_desc'));
@@ -274,7 +276,7 @@ class StoreController extends Controller
                 $store->phone = $request->phone;
                 $store->min_parcel_price = $request->min_parcel_price ? number_format(str_replace(['.', ','], ['', '.'], $request->min_parcel_price), 2, '.', '') : null;
 
-                if ($request->delete_image_cover_desktop || $request->image_cover_desktop && $store->image_cover_desktop) {
+                if ($request->delete_image_cover_desktop && $store->image_cover_desktop || $request->image_cover_desktop && $store->image_cover_desktop) {
                     $image_path = public_path('uploads/' . $this->store_id . '/' . $store->image_cover_desktop);
 
                     if (file_exists($image_path)) {
@@ -288,7 +290,7 @@ class StoreController extends Controller
                     $store->image_cover_desktop = _uploadImage($request->image_cover_desktop, $this->store_id);
                 }
 
-                if ($request->delete_image_cover_mobile || $request->image_cover_mobile && $store->image_cover_mobile) {
+                if ($request->delete_image_cover_mobile && $store->image_cover_mobile || $request->image_cover_mobile && $store->image_cover_mobile) {
                     $image_path = public_path('uploads/' . $this->store_id . '/' . $store->image_cover_mobile);
 
                     if (file_exists($image_path)) {

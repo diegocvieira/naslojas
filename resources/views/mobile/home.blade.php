@@ -9,13 +9,13 @@
     <div class="banner-home">
         <div class="slick-home">
             <div class="item">
-                <a href="{{ route('show-store', 'krause') }}">
-                    <img src="{{ asset('images/banner-mobile/krause.jpg') }}" alt="Banner Krause" />
-                </a>
+                <img src="{{ asset('images/banner-mobile/1.jpg') }}" alt="Banner 1" />
             </div>
 
             <div class="item">
-                <img src="{{ asset('images/banner-mobile/1.jpg') }}" alt="Banner 1" />
+                <a href="{{ route('show-store', 'krause') }}">
+                    <img src="{{ asset('images/banner-mobile/krause.jpg') }}" alt="Banner Krause" />
+                </a>
             </div>
 
             <div class="item">
