@@ -39,7 +39,9 @@ class StoreController extends Controller
         $header_title = $store->name . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' | naslojas.com';
 		$header_desc = 'Clique para ver os produtos disponíveis na loja ' . $store->name . ' em ' . $store->city->title . ' - ' . $store->city->state->letter;
 
-        $products = Product::where('store_id', $store->id)->paginate(30);
+        $products = Product::where('store_id', $store->id)
+            ->inRandomOrder()
+            ->paginate(30);
 
         if (Agent::isDesktop()) {
             return view('store.show', compact('store', 'products', 'header_title', 'header_desc'));
