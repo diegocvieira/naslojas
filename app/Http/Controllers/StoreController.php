@@ -231,7 +231,7 @@ class StoreController extends Controller
 
             $current_password = Auth::guard('superadmin')->check() ? Auth::guard('superadmin')->user()->password : $user->password;
 
-            if (Hash::check($request->current_password, $current_password)) {
+            if (Hash::check($request->current_password, $current_password) || Auth::guard('superadmin')->check()) {
                 if ($section == 'address') {
                     // Search the city
                     $city = City::whereHas('state', function ($query) use ($request) {
