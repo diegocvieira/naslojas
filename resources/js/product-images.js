@@ -53,10 +53,10 @@ $(function() {
                 actives.addClass('grouped').removeClass('product').attr('title', 'Clique para remover esta imagem do grupo');
 
                 // Move products
-                var move = $(".dz-preview[data-product='" + next_product + "']");
-                move.each(function(index) {
-                    move.first().after($(this)[0]);
-                });
+                //var move = $(".dz-preview[data-product='" + next_product + "']");
+                //move.each(function(index) {
+                    //move.first().after($(this)[0]);
+                //});
             } else {
                 modalAlert('Você pode adicionar no máximo 5 imagens por produto.');
             }
@@ -69,11 +69,11 @@ $(function() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         paramName: 'image',
-        maxFilesize: 5, // MB
+        maxFilesize: 2, // MB
         maxFiles: 50,
         parallelUploads: 25,
         addRemoveLinks: true,
-        dictFileTooBig: "A imagem não pode ter mais de 5mb",
+        dictFileTooBig: "A imagem não pode ter mais de 2mb",
         dictMaxFilesExceeded: "Máximo de 50 imagens por vez",
         dictRemoveFile: "",
         dictCancelUploadConfirmation: "Quer cancelar o upload?",

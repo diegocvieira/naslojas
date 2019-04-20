@@ -294,7 +294,7 @@ $(function() {
         var div = $(this).parents('.sizes-container').find('.sizes');
 
         div.animate({
-            'scrollLeft': $(this).data('direction') == 'right' ? div.scrollLeft() + 450 : div.scrollLeft() - 450
+            'scrollLeft': $(this).data('direction') == 'right' ? div.scrollLeft() + 1200 : div.scrollLeft() - 1200
         }, 200);
     });
 
@@ -314,8 +314,8 @@ $(function() {
         var reader = new FileReader(),
             $this = $(this);
 
-        if($(this)[0].files[0].size > 5100000) {
-            modalAlert('A imagem tem que ter no máximo 5mb.');
+        if($(this)[0].files[0].size > 2100000) {
+            modalAlert('A imagem tem que ter no máximo 2mb.');
         } else {
             reader.onload = function(e) {
                 $this.parent().removeClass('no-image').addClass('loaded-image').append("<label class='remove-image'></label>").find('img').attr('src', e.target.result);
