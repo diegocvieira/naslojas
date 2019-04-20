@@ -142,7 +142,7 @@ function _uploadImageProduct($file, $store_id)
 
 function _uploadImage($file, $store_id)
 {
-    $image_name = microtime(true) . RAND(111111, 999999);
+    $image_name = microtime(true) . RAND(111111, 999999) . '.jpg';
 
     $image = new \Imagick($file->path());
 

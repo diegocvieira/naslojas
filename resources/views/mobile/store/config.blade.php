@@ -52,7 +52,7 @@
                             <button type="button" class="delete-image-cover" @if (!$user->store->image_cover_desktop) style="display: none;" @endif></button>
                         </div>
 
-                        <div class="image-cover">
+                        <div class="image-cover image-cover-mobile">
                             <span class="title">Imagem de capa (celular)</span>
                             <span class="desc">Tamanho ideal 1080 x 600 pixels</span>
 
