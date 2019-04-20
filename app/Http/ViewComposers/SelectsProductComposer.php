@@ -16,9 +16,15 @@ class SelectsProductComposer
         ];
 
         // Sizes
-        for($z = 16; $z <= 54; $z++) {
-            $size_numbers[$z] = $z;
-        }
+		for ($z = 8; $z <= 88; $z++) {
+			if (!isset($next)) {
+				$next = $z;
+			}
+
+			$size_numbers[$z] = $next;
+
+			$next = is_numeric($next) ? $next . '/' . ($next + 1) : explode('/', $next)[1];
+		}
         $size_letters = [
             'Ú' => 'Ú',
             'PP' => 'PP',
