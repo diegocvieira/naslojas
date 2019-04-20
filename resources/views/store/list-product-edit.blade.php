@@ -37,7 +37,7 @@
                 <button type="button" class="paste-data" title="Colar dados"></button>
                 <button type="button" class="copy-data" title="Copiar dados"></button>
 
-                @if ($product->status == 1)
+                @if ($product->status == 1 && $product->store->status == 1)
                     <a href="{{ route('show-product', $product->slug) }}" target="_blank" title="Ver produto"></a>
                 @endif
 
