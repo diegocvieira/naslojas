@@ -225,12 +225,12 @@
 
                         <div class="form-group">
                             {!! Form::text('min_parcel_price', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
-                            {!! Form::label('', 'Valor mínimo da parcela') !!}
+                            {!! Form::label('', 'Valor da parcela mínima') !!}
                         </div>
 
                         <div class="form-group">
                             {!! Form::text('max_parcel', null, ['placeholder' => ' ', 'class' => 'mask-number']) !!}
-                            {!! Form::label('', 'Máximo de parcelas') !!}
+                            {!! Form::label('', 'Máximo de parcelas sem juros') !!}
                         </div>
 
                         <div class="form-group">
