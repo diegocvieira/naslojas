@@ -175,6 +175,11 @@
                             {!! Form::text('max_product_unit', null, ['placeholder' => ' ', 'class' => 'mask-number']) !!}
                             {!! Form::label('', 'Máximo de unidades por produto') !!}
                         </div>
+
+                        <div class="form-group">
+                            {!! Form::text('free_freight_price', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
+                            {!! Form::label('', 'Frete grátis nas compras acima de') !!}
+                        </div>
                     </div>
                 </li>
 

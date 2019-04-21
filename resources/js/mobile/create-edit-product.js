@@ -21,27 +21,15 @@ $(function() {
         }
     });
 
-    $(document).on('blur', 'input[name=installment], input[name=installment_price], input[name=price], input[name=old_price]', function() {
+    $(document).on('blur', 'input[name=price], input[name=old_price]', function() {
         var form = $(this).parents('#form-create-edit-product'),
             price = parseFloat(form.find('input[name=price]').val().replace('.', '').replace(',', '.')),
             old_price = parseFloat(form.find('input[name=old_price]').val().replace('.', '').replace(',', '.'));
-            installment = form.find('input[name=installment]').val().replace('x', '');
-            installment_price = parseFloat(form.find('input[name=installment_price]').val().replace('.', '').replace(',', '.'));
-
-        if (price && installment && !installment_price) {
-            form.find('input[name=installment_price]').val(number_format(price / installment, 2, ',', '.'));
-        }
 
         if (price && old_price && price > old_price) {
             form.find('input[name=old_price]').addClass('validate-error');
         } else {
             form.find('input[name=old_price]').removeClass('validate-error');
-        }
-
-        if (price && installment && installment_price && (installment * installment_price) < price) {
-            form.find('input[name=installment_price]').addClass('validate-error');
-        } else {
-            form.find('input[name=installment_price]').removeClass('validate-error');
         }
     });
 
@@ -107,6 +95,35 @@ $(function() {
         }
     });
 
+    $(document).on('blur', 'input[name=price]', function() {
+        var free_freight = $('input[name=free_freight_price]').val(),
+            price = parseFloat($(this).val().replace('.', '').replace(',', '.'));
+
+        if (free_freight && price >= free_freight) {
+            $('.free-freight').toggleClass(`hidden`);
+
+            $.ajax({
+                url: $('.free-freight').attr('href'),
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    id : $('input[name=product_id]').val(),
+                    free_freight : 1
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    modalAlert(data.msg);
+
+                    if (!data.status) {
+                        $('.free-freight').toggleClass(`hidden`);
+                    }
+                }
+            });
+        }
+    });
+
     $(document).on('click', '.page-create-edit-product header .option', function(e) {
         e.preventDefault();
 
@@ -160,7 +177,7 @@ $(function() {
                 },
                 success: function (data) {
                     if (!data.status) {
-                        modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                        modalAlert(data.msg);
 
                         $('.free-freight').toggleClass('hidden');
                     }

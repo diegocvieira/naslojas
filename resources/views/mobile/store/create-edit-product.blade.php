@@ -4,6 +4,8 @@
     <div class="container page-create-edit-product">
         @if (isset($product))
             {!! Form::model($product, ['method' => 'POST', 'route' => ['save-products', $product->id], 'id' => 'form-create-edit-product', 'files' => true]) !!}
+                {!! Form::hidden('free_freight_price', $product->store->free_freight_price) !!}
+                {!! Form::hidden('product_id', $product->id) !!}
         @else
             {!! Form::open(['method' => 'POST', 'route' => 'save-products', 'id' => 'form-create-edit-product', 'files' => true]) !!}
         @endif

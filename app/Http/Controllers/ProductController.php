@@ -304,6 +304,10 @@ class ProductController extends Controller
 
                         if ($product->status == 2) {
                             $product->status = 1;
+
+                            if ($store->free_freight_price && $request->price >= $store->free_freight_price) {
+                                $product->free_freight = 1;
+                            }
                         }
 
                         $product->title = $request->title;
@@ -446,6 +450,10 @@ class ProductController extends Controller
                     $product->store_id = $this->store_id;
                     $product->status = 1;
                     $product->identifier = mt_rand(1000000000, 9999990000);
+
+                    if ($store->free_freight_price && $request->price >= $store->free_freight_price) {
+                        $product->free_freight = 1;
+                    }
                 }
 
                 $product->title = $request->title;
@@ -659,9 +667,20 @@ class ProductController extends Controller
             ->where('id', $request->id)
             ->first();
 
-        $product->free_freight = $request->free_freight;
+        if ($request->free_freight == 0 && $product->price >= $product->store->free_freight_price) {
+            $return['status'] = false;
+            $return['msg'] = 'Não é possível desmarcar o frete grátis neste produto, pois o preço dele é maior que o valor de compra mínima, indicado nas configurações, para oferecer frete grátis.';
+        } else {
+            $product->free_freight = $request->free_freight;
 
-        $return['status'] = $product->save() ? true : false;
+            if ($product->save()) {
+                $return['status'] = true;
+                $return['msg'] = 'Este produto será oferecido com frete grátis, pois o preço dele é maior que o valor de compra mínima, indicado nas configurações, para oferecer frete grátis.';
+            } else {
+                $return['status'] = false;
+                $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
+            }
+        }
 
         return json_encode($return);
     }

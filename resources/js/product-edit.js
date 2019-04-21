@@ -126,12 +126,42 @@ $(function() {
             },
             success: function (data) {
                 if (!data.status) {
-                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                    modalAlert(data.msg);
 
                     btn.toggleClass('free-freight-selected');
                 }
             }
         });
+    });
+
+    $(document).on('blur', 'input[name=price]', function() {
+        var btn = $(this).parents('form').find('.free-freight'),
+            free_freight = $(this).parents('form').find('input[name=free_freight_price]').val(),
+            price = parseFloat($(this).val().replace('.', '').replace(',', '.'));
+
+        if (free_freight && price >= free_freight) {
+            btn.toggleClass('free-freight-selected');
+
+            $.ajax({
+                url: btn.data('url'),
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    id : $(this).parents('form').find('input[name=product_id]').val(),
+                    free_freight : 1
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    modalAlert(data.msg);
+
+                    if (!data.status) {
+                        btn.toggleClass('free-freight-selected');
+                    }
+                }
+            });
+        }
     });
 
     if ($('.page-product-edit').length) {
