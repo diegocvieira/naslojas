@@ -99,8 +99,9 @@ $(function() {
         var free_freight = $('input[name=free_freight_price]').val(),
             price = parseFloat($(this).val().replace('.', '').replace(',', '.'));
 
-        if (free_freight && price >= free_freight) {
-            $('.free-freight').toggleClass(`hidden`);
+        if (free_freight && price >= free_freight && $('.free-freight-selected').hasClass('hidden')) {
+            $('.free-freight').addClass('hidden');
+            $('.free-freight-selected').removeClass('hidden');
 
             $.ajax({
                 url: $('.free-freight').attr('href'),
@@ -117,7 +118,8 @@ $(function() {
                     modalAlert(data.msg);
 
                     if (!data.status) {
-                        $('.free-freight').toggleClass(`hidden`);
+                        $('.free-freight').addClass('hidden');
+                        $('.free-freight').not('.free-freight-selected').removeClass('hidden');
                     }
                 }
             });
@@ -162,7 +164,7 @@ $(function() {
                  }
             });
         } else if (type == 'free-freight') {
-            $('.free-freight').toggleClass(`hidden`);
+            $('.free-freight').toggleClass('hidden');
 
             $.ajax({
                 url: $(this).attr('href'),

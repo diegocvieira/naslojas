@@ -139,8 +139,8 @@ $(function() {
             free_freight = $(this).parents('form').find('input[name=free_freight_price]').val(),
             price = parseFloat($(this).val().replace('.', '').replace(',', '.'));
 
-        if (free_freight && price >= free_freight) {
-            btn.toggleClass('free-freight-selected');
+        if (free_freight && price >= free_freight && !btn.hasClass('free-freight-selected')) {
+            btn.addClass('free-freight-selected');
 
             $.ajax({
                 url: btn.data('url'),
@@ -157,7 +157,7 @@ $(function() {
                     modalAlert(data.msg);
 
                     if (!data.status) {
-                        btn.toggleClass('free-freight-selected');
+                        btn.removeClass('free-freight-selected');
                     }
                 }
             });
