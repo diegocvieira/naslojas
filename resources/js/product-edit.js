@@ -126,12 +126,42 @@ $(function() {
             },
             success: function (data) {
                 if (!data.status) {
-                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                    modalAlert(data.msg);
 
                     btn.toggleClass('free-freight-selected');
                 }
             }
         });
+    });
+
+    $(document).on('blur', 'input[name=price]', function() {
+        var btn = $(this).parents('form').find('.free-freight'),
+            free_freight = $(this).parents('form').find('input[name=free_freight_price]').val(),
+            price = parseFloat($(this).val().replace('.', '').replace(',', '.'));
+
+        if (free_freight && price >= free_freight && !btn.hasClass('free-freight-selected')) {
+            btn.addClass('free-freight-selected');
+
+            $.ajax({
+                url: btn.data('url'),
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    id : $(this).parents('form').find('input[name=product_id]').val(),
+                    free_freight : 1
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    modalAlert(data.msg);
+
+                    if (!data.status) {
+                        btn.removeClass('free-freight-selected');
+                    }
+                }
+            });
+        }
     });
 
     if ($('.page-product-edit').length) {
@@ -294,7 +324,7 @@ $(function() {
         var div = $(this).parents('.sizes-container').find('.sizes');
 
         div.animate({
-            'scrollLeft': $(this).data('direction') == 'right' ? div.scrollLeft() + 450 : div.scrollLeft() - 450
+            'scrollLeft': $(this).data('direction') == 'right' ? div.scrollLeft() + 1200 : div.scrollLeft() - 1200
         }, 200);
     });
 
@@ -314,8 +344,8 @@ $(function() {
         var reader = new FileReader(),
             $this = $(this);
 
-        if($(this)[0].files[0].size > 5100000) {
-            modalAlert('A imagem tem que ter no máximo 5mb.');
+        if($(this)[0].files[0].size > 2100000) {
+            modalAlert('A imagem tem que ter no máximo 2mb.');
         } else {
             reader.onload = function(e) {
                 $this.parent().removeClass('no-image').addClass('loaded-image').append("<label class='remove-image'></label>").find('img').attr('src', e.target.result);

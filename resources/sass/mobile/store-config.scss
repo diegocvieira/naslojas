@@ -96,6 +96,11 @@
             float: left;
             width: 100%;
             position: relative;
+            max-height: 350px;
+
+            &.image-cover-mobile {
+                max-height: 600px;
+            }
 
             .title {
                 font-size: 14.5px;
@@ -141,6 +146,7 @@
                 img {
                     width: 100%;
                     border-radius: 5px;
+                    height: 100%;
                 }
             }
 

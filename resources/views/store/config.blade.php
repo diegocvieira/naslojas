@@ -46,9 +46,13 @@
 
                         <li>
                             <a href="{{ route('get-store-config') }}" class="activate-profile">
-                                Perfil da loja
-
-                                <span class="switch {{ $user->store->status ? 'active-profile' : '' }}"></span>
+                                @if ($user->store->status)
+                                    <span class="title">Loja ativada</span>
+                                    <span class="switch active-profile"></span>
+                                @else
+                                    <span class="title">Loja desativada</span>
+                                    <span class="switch"></span>
+                                @endif
                             </a>
                         </li>
 
@@ -96,7 +100,7 @@
                             <button type="button" class="delete-image-cover" title="Remover image de capa" @if (!$user->store->image_cover_desktop) style="display: none;" @endif></button>
                         </div>
 
-                        <div class="image-cover">
+                        <div class="image-cover image-cover-mobile">
                             <span class="title">Imagem de capa (celular)</span>
                             <span class="desc">Tamanho ideal 1080 x 600 pixels</span>
 
@@ -225,17 +229,22 @@
 
                         <div class="form-group">
                             {!! Form::text('min_parcel_price', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
-                            {!! Form::label('', 'Valor mínimo da parcela') !!}
+                            {!! Form::label('', 'Valor da parcela mínima') !!}
                         </div>
 
                         <div class="form-group">
                             {!! Form::text('max_parcel', null, ['placeholder' => ' ', 'class' => 'mask-number']) !!}
-                            {!! Form::label('', 'Máximo de parcelas') !!}
+                            {!! Form::label('', 'Máximo de parcelas sem juros') !!}
                         </div>
 
                         <div class="form-group">
                             {!! Form::text('max_product_unit', null, ['placeholder' => ' ', 'class' => 'mask-number']) !!}
                             {!! Form::label('', 'Máximo de unidades por produto') !!}
+                        </div>
+
+                        <div class="form-group">
+                            {!! Form::text('free_freight_price', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
+                            {!! Form::label('', 'Frete grátis nas compras acima de') !!}
                         </div>
                     </div>
 

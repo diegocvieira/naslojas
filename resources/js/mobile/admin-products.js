@@ -52,10 +52,12 @@ $(function() {
 
         $('header').toggle();
 
-        if ($(this).hasClass('disabled')) {
-            $('.product-manager').find('a[data-type=show-product]').hide();
+        $('.product-manager nav').find('a[data-type=show-product]').attr('href', '/produto/' + $(this).data('slug'));
 
-            $('.product-manager nav').find('a[data-type=show-product]').attr('href', '/produto/' + $(this).data('slug'));
+        if (!$(this).hasClass('disabled') && $(this).data('storestatus') == true) {
+            $('.product-manager').find('a[data-type=show-product]').show();
+        } else {
+            $('.product-manager').find('a[data-type=show-product]').hide();
         }
     });
 

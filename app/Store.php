@@ -9,7 +9,7 @@ class Store extends Model
     use FullTextSearch;
 
     protected $table = 'stores';
-    protected $fillable = ['city_id', 'name', 'cep', 'district', 'street', 'number', 'complement', 'slug', 'status', 'min_parcel_price', 'max_parcel', 'max_product_unit', 'cnpj', 'phone', 'image_cover_desktop', 'image_cover_mobile'];
+    protected $fillable = ['city_id', 'name', 'cep', 'district', 'street', 'number', 'complement', 'slug', 'status', 'min_parcel_price', 'max_parcel', 'max_product_unit', 'cnpj', 'phone', 'image_cover_desktop', 'image_cover_mobile', 'free_freight_price'];
     protected $dates = ['created_at', 'updated_at'];
     protected $searchable = ['name'];
 

@@ -1,5 +1,5 @@
 @foreach ($products as $product)
-    <div class="product {{ $product->related ? 'product-variation' : '' }} {{ $product->status == 0 ? 'disabled' : '' }}" data-related="{{ $product->related ?? '' }}" data-slug="{{ $product->slug }}">
+    <div class="product {{ $product->related ? 'product-variation' : '' }} {{ $product->status == 0 ? 'disabled' : '' }}" data-storestatus="{{ $product->store->status == 1 ? true : false }}" data-related="{{ $product->related ?? '' }}" data-slug="{{ $product->slug }}">
         {!! Form::checkbox('id[]', $product->id, null, ['id' => 'product_' . $product->id, 'autocomplete' => 'off']) !!}
         {!! Form::label('product_' . $product->id, ' ') !!}
 

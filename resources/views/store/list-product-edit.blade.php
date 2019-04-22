@@ -1,6 +1,7 @@
 @foreach ($products as $product)
     {!! Form::model($product, ['method' => 'POST', 'route' => ['save-products', $product->id], 'class' => "form-edit-product " . ($product->related ? 'product-variation' : '') . " " . ($product->status == '0' ? 'product-disabled' : ''), 'files' => true, 'data-related' => $product->related ?? '']) !!}
         {!! Form::hidden('product_id', $product->id, ['class' => 'field']) !!}
+        {!! Form::hidden('free_freight_price', $product->store->free_freight_price) !!}
 
         <div class="row">
             <div class="col-xs-6 images">
@@ -37,17 +38,19 @@
                 <button type="button" class="paste-data" title="Colar dados"></button>
                 <button type="button" class="copy-data" title="Copiar dados"></button>
 
-                @if ($product->status == 1)
+                @if ($product->status == 1 && $product->store->status == 1)
                     <a href="{{ route('show-product', $product->slug) }}" target="_blank" title="Ver produto"></a>
                 @endif
 
                 <button type="button" class="select-color color-variation {{ !$product->related ? 'hidden' : '' }}" data-url="{{ route('color-variation') }}" title="Remover variação de cor"></button>
                 <button type="button" class="select-color {{ $product->related ? 'hidden' : '' }}" title="Selecionar variação"></button>
 
-                @if ($product->free_freight)
-                    <button type="button" class="free-freight free-freight-selected" title="Desabilitar frete grátis" data-url="{{ route('product-free-freight') }}">frete grátis</button>
-                @else
-                    <button type="button" class="free-freight" title="Habilitar frete grátis" data-url="{{ route('product-free-freight') }}">frete grátis</button>
+                @if ($section != 'add')
+                    @if ($product->free_freight)
+                        <button type="button" class="free-freight free-freight-selected" title="Desabilitar frete grátis" data-url="{{ route('product-free-freight') }}">frete grátis</button>
+                    @else
+                        <button type="button" class="free-freight" title="Habilitar frete grátis" data-url="{{ route('product-free-freight') }}">frete grátis</button>
+                    @endif
                 @endif
             </div>
         </div>

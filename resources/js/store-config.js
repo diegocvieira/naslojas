@@ -36,10 +36,9 @@ $(function() {
     });
 
     $(document).on('change', '.page-store-config .image-cover input[type=file]', function() {
-        var reader = new FileReader(),
+        var reader = new FileReader,
             $this = $(this),
-            file = $(this)[0].files[0],
-            img = new Image();
+            file = this.files[0];
 
         if ($this.attr('name') == 'image_cover_desktop') {
             width = 1920;
@@ -49,22 +48,27 @@ $(function() {
             height = 600;
         }
 
-        img.src = (window.URL || window.webkitURL).createObjectURL(file);
+        reader.onload = function() {
+            var image = new Image();
+            image.src = reader.result;
 
-        img.onload = function() {
-            if (file.size > 5100000) {
-                modalAlert('A imagem tem que ter no máximo 5mb.');
-            } else if (this.width < (width - 30) || this.width > (width + 30) && this.height < (height - 30) || this.height > (height + 30)) {
-                modalAlert('A imagem não possui o tamanho recomendado, por favor observe o tamanho ideal da imagem.');
-            } else {
-                reader.onload = function(e) {
+            image.onload = function() {
+                if (file.size > 5100000) {
+                    modalAlert('A imagem tem que ter no máximo 5mb.');
+
+                    $this.val('');
+                } else if (image.width < (width - 30) || image.width > (width + 30) && image.height < (height - 30) || image.height > (height + 30)) {
+                    modalAlert('A imagem não possui o tamanho recomendado, por favor observe o tamanho ideal da imagem.');
+
+                    $this.val('');
+                } else {
                     $this.next().next().next().show();
-                    $this.next().find('img').attr('src', e.target.result);
+                    $this.next().find('img').attr('src', reader.result);
                 }
+            };
+        };
 
-                reader.readAsDataURL(file);
-            }
-        }
+        reader.readAsDataURL(file);
     });
 
     $('#form-store-config').validate({
