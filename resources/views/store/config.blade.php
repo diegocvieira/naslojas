@@ -46,9 +46,13 @@
 
                         <li>
                             <a href="{{ route('get-store-config') }}" class="activate-profile">
-                                Perfil da loja
-
-                                <span class="switch {{ $user->store->status ? 'active-profile' : '' }}"></span>
+                                @if ($user->store->status)
+                                    <span class="title">Loja ativada</span>
+                                    <span class="switch active-profile"></span>
+                                @else
+                                    <span class="title">Loja desativada</span>
+                                    <span class="switch"></span>
+                                @endif
                             </a>
                         </li>
 
