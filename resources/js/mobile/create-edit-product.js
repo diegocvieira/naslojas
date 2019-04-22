@@ -89,7 +89,7 @@ $(function() {
                             .find('img').attr('src', data);
                             //.find('img').css('transform', rotation).attr('src', data);
                     //});
-                };
+                //};
             };
 
             fr.readAsDataURL(this.files[0]);
