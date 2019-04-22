@@ -277,12 +277,12 @@ class StoreController extends Controller
                 $store->min_parcel_price = $request->min_parcel_price ? number_format(str_replace(['.', ','], ['', '.'], $request->min_parcel_price), 2, '.', '') : null;
                 $store->free_freight_price = $request->free_freight_price ? number_format(str_replace(['.', ','], ['', '.'], $request->free_freight_price), 2, '.', '') : null;
 
-                if ($request->free_freight_price) {
+                if ($store->free_freight_price) {
                     Product::withoutGlobalScopes(['active', 'active-store'])
-                        ->where('price', '>=', $request->free_freight_price)
+                        ->where('price', '>=', $store->free_freight_price)
                         ->update(['free_freight' => 1]);
                     Product::withoutGlobalScopes(['active', 'active-store'])
-                        ->where('price', '<', $request->free_freight_price)
+                        ->where('price', '<', $store->free_freight_price)
                         ->update(['free_freight' => 0]);
                 }
 
