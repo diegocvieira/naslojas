@@ -45,7 +45,7 @@
                 <button type="button" class="select-color color-variation {{ !$product->related ? 'hidden' : '' }}" data-url="{{ route('color-variation') }}" title="Remover variação de cor"></button>
                 <button type="button" class="select-color {{ $product->related ? 'hidden' : '' }}" title="Selecionar variação"></button>
 
-                @if ($section != 'add')
+                @if (!isset($section) || $section != 'add')
                     @if ($product->free_freight)
                         <button type="button" class="free-freight free-freight-selected" title="Desabilitar frete grátis" data-url="{{ route('product-free-freight') }}">frete grátis</button>
                     @else
