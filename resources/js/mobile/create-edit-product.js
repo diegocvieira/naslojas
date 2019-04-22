@@ -62,8 +62,8 @@ $(function() {
 
             fr.onload = function() {
                 var data = fr.result,
-                    node = $this.parent(),
-                    image = new Image();
+                    node = $this.parent();
+                    /*image = new Image();
 
                 image.src = data;
 
@@ -81,13 +81,14 @@ $(function() {
                             case 8:
                                 var rotation = 'rotate(-90deg)';
                                 break;
-                        }
+                        }*/
 
                         node.removeClass('no-image')
                             .addClass('loaded-image')
                             .append("<label class='remove-image'></label><input type='hidden' name='image_position[]' value='" + $this.data('position') + "' />")
-                            .find('img').css('transform', rotation).attr('src', data);
-                    });
+                            .find('img').attr('src', data);
+                            //.find('img').css('transform', rotation).attr('src', data);
+                    //});
                 };
             };
 
