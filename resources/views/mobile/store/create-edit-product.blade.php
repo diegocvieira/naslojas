@@ -1,3 +1,7 @@
+@php
+    $top_nav = true;
+@endphp
+
 @extends('mobile.base')
 
 @section('content')
