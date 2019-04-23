@@ -1,5 +1,6 @@
 @php
     $top_nav = true;
+    $back = true;
 @endphp
 
 @extends('mobile.base')
