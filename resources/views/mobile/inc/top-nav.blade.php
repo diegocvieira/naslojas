@@ -1,5 +1,5 @@
 <header>
-    @if (isset($admin_search) && isset($keyword))
+    @if (isset($admin_search) && isset($keyword) || isset($back))
         <a href="{{ route('edit-products') }}" class="btn-back-search"></a>
     @else
         <a href="{{ url('/') }}" id="logo-naslojas">

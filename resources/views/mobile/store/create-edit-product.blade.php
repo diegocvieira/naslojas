@@ -1,8 +1,13 @@
+@php
+    $top_nav = true;
+    $back = true;
+@endphp
+
 @extends('mobile.base')
 
 @section('content')
     <div class="container page-create-edit-product">
-        @if (isset($product))
+        <?php /* @if (isset($product))
             {!! Form::model($product, ['method' => 'POST', 'route' => ['save-products', $product->id], 'id' => 'form-create-edit-product', 'files' => true]) !!}
                 {!! Form::hidden('free_freight_price', $product->store->free_freight_price) !!}
                 {!! Form::hidden('product_id', $product->id) !!}
@@ -133,6 +138,10 @@
                     {!! Form::label('size_' . $number, $number) !!}
                 @endforeach
             </div>
-        {!! Form::close() !!}
+        {!! Form::close() !!} */ ?>
+
+        <div class="mobile-disabled">
+            <h1>Para realizar o cadastro de produtos acesse de um computador ou notebook</h1>
+        </div>
     </div>
 @endsection

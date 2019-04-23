@@ -1,4 +1,21 @@
 .page-create-edit-product {
+    padding-top: 0;
+
+    .mobile-disabled {
+        padding: 0 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -70%);
+        width: 100%;
+        text-align: center;
+
+        h1 {
+            font-size: 18px;
+            color: #969696;
+        }
+    }
+
     header {
         nav {
             float: right !important;
