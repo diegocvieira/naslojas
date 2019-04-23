@@ -228,6 +228,7 @@ class StoreController extends Controller
              $return['status'] = 0;
         } else {
             $user = User::find($this->user_id);
+            $store = Store::find($user->store_id);
 
             $current_password = Auth::guard('superadmin')->check() ? Auth::guard('superadmin')->user()->password : $user->password;
 
@@ -249,97 +250,97 @@ class StoreController extends Controller
 
                         return json_encode($return);
                     }
-                }
 
-                $user->email = $request->email;
-
-                if ($request->password) {
-                    $user->password = bcrypt($request->password);
-                }
-
-                $store = Store::find($user->store_id);
-
-                if (isset($city)) {
-                    $store->city_id = $city->id;
-                }
-
-                $store->name = $request->name;
-                $store->slug = str_slug($request->slug, '-');
-                $store->cep = $request->cep;
-                $store->street = $request->street;
-                $store->number = $request->number;
-                $store->complement = $request->complement;
-                $store->district = $request->district;
-                $store->cnpj = $request->cnpj;
-                $store->max_product_unit = $request->max_product_unit;
-                $store->max_parcel = $request->max_parcel;
-                $store->phone = $request->phone;
-                $store->min_parcel_price = $request->min_parcel_price ? number_format(str_replace(['.', ','], ['', '.'], $request->min_parcel_price), 2, '.', '') : null;
-                $store->free_freight_price = $request->free_freight_price ? number_format(str_replace(['.', ','], ['', '.'], $request->free_freight_price), 2, '.', '') : null;
-
-                if ($store->free_freight_price) {
-                    Product::withoutGlobalScopes(['active', 'active-store'])
-                        ->where('price', '>=', $store->free_freight_price)
-                        ->update(['free_freight' => 1]);
-                    Product::withoutGlobalScopes(['active', 'active-store'])
-                        ->where('price', '<', $store->free_freight_price)
-                        ->update(['free_freight' => 0]);
-                }
-
-                if ($request->delete_image_cover_desktop && $store->image_cover_desktop || $request->image_cover_desktop && $store->image_cover_desktop) {
-                    $image_path = public_path('uploads/' . $this->store_id . '/' . $store->image_cover_desktop);
-
-                    if (file_exists($image_path)) {
-                        unlink($image_path);
+                    if (isset($city)) {
+                        $store->city_id = $city->id;
                     }
 
-                    $store->image_cover_desktop = null;
-                }
+                    $store->cep = $request->cep;
+                    $store->street = $request->street;
+                    $store->number = $request->number;
+                    $store->complement = $request->complement;
+                    $store->district = $request->district;
+                } else if ($section == 'store-profile') {
+                    $store->name = $request->name;
+                    $store->slug = str_slug($request->slug, '-');
+                    $store->cnpj = $request->cnpj;
+                    $store->phone = $request->phone;
 
-                if ($request->image_cover_desktop) {
-                    $store->image_cover_desktop = _uploadImage($request->image_cover_desktop, $this->store_id);
-                }
+                    if ($request->delete_image_cover_desktop && $store->image_cover_desktop || $request->image_cover_desktop && $store->image_cover_desktop) {
+                        $image_path = public_path('uploads/' . $this->store_id . '/' . $store->image_cover_desktop);
 
-                if ($request->delete_image_cover_mobile && $store->image_cover_mobile || $request->image_cover_mobile && $store->image_cover_mobile) {
-                    $image_path = public_path('uploads/' . $this->store_id . '/' . $store->image_cover_mobile);
+                        if (file_exists($image_path)) {
+                            unlink($image_path);
+                        }
 
-                    if (file_exists($image_path)) {
-                        unlink($image_path);
+                        $store->image_cover_desktop = null;
                     }
 
-                    $store->image_cover_mobile = null;
-                }
-
-                if ($request->image_cover_mobile) {
-                    $store->image_cover_mobile = _uploadImage($request->image_cover_mobile, $this->store_id);
-                }
-
-                // Delete and insert new payments
-                $store->payments()->delete();
-                if ($request->payment) {
-                    foreach ($request->payment as $payment) {
-                        $payment_split = explode('-', $payment);
-
-                        $store->payments()->create([
-                            'method' => $payment_split[0],
-                            'payment' => $payment_split[1]
-                        ]);
+                    if ($request->image_cover_desktop) {
+                        $store->image_cover_desktop = _uploadImage($request->image_cover_desktop, $this->store_id);
                     }
-                }
 
-                // Delete and insert new freights
-                $freights = array_map(function($q, $t) {
-                    return array('id' => $q, 'price' => $t);
-                }, $request->district_id, $request->freight_price);
+                    if ($request->delete_image_cover_mobile && $store->image_cover_mobile || $request->image_cover_mobile && $store->image_cover_mobile) {
+                        $image_path = public_path('uploads/' . $this->store_id . '/' . $store->image_cover_mobile);
 
-                $store->freights()->delete();
+                        if (file_exists($image_path)) {
+                            unlink($image_path);
+                        }
 
-                foreach ($freights as $freight) {
-                    if ($freight['price']) {
-                        $store->freights()->create([
-                            'price' => number_format(str_replace(array(".", ","), array("", "."), $freight['price']), 2, '.', ''),
-                            'district_id' => $freight['id']
-                        ]);
+                        $store->image_cover_mobile = null;
+                    }
+
+                    if ($request->image_cover_mobile) {
+                        $store->image_cover_mobile = _uploadImage($request->image_cover_mobile, $this->store_id);
+                    }
+                } else if ($section == 'access') {
+                    $user->email = $request->email;
+
+                    if ($request->password) {
+                        $user->password = bcrypt($request->password);
+                    }
+                } else if ($section == 'payment') {
+                    $store->max_product_unit = $request->max_product_unit;
+                    $store->max_parcel = $request->max_parcel;
+                    $store->min_parcel_price = $request->min_parcel_price ? number_format(str_replace(['.', ','], ['', '.'], $request->min_parcel_price), 2, '.', '') : null;
+                    $store->free_freight_price = $request->free_freight_price ? number_format(str_replace(['.', ','], ['', '.'], $request->free_freight_price), 2, '.', '') : null;
+
+                    if ($store->free_freight_price) {
+                        Product::withoutGlobalScopes(['active', 'active-store'])
+                            ->where('price', '>=', $store->free_freight_price)
+                            ->update(['free_freight' => 1]);
+                        Product::withoutGlobalScopes(['active', 'active-store'])
+                            ->where('price', '<', $store->free_freight_price)
+                            ->update(['free_freight' => 0]);
+                    }
+
+                    // Delete and insert new payments
+                    $store->payments()->delete();
+                    if ($request->payment) {
+                        foreach ($request->payment as $payment) {
+                            $payment_split = explode('-', $payment);
+
+                            $store->payments()->create([
+                                'method' => $payment_split[0],
+                                'payment' => $payment_split[1]
+                            ]);
+                        }
+                    }
+                } else if ($section == 'freights') {
+                    // Delete and insert new freights
+                    $freights = array_map(function($q, $t) {
+                        return array('id' => $q, 'price' => $t);
+                    }, $request->district_id, $request->freight_price);
+
+                    $store->freights()->delete();
+
+                    foreach ($freights as $freight) {
+                        if ($freight['price']) {
+                            $store->freights()->create([
+                                'price' => number_format(str_replace(array(".", ","), array("", "."), $freight['price']), 2, '.', ''),
+                                'district_id' => $freight['id']
+                            ]);
+                        }
                     }
                 }
 

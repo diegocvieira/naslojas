@@ -12,6 +12,10 @@
         margin-top: 20px;
     }
 
+    .current-password {
+        display: none;
+    }
+
     .navigation {
         float: left;
         width: 100%;
@@ -72,23 +76,14 @@
     }
 
     .fields {
-        display: none;
         float: left;
         width: 100%;
         margin: 10px 0;
-
-        &.show-fields {
-            display: block;
-        }
 
         input, textarea {
             &focus + label, &:not(:placeholder-shown) + label, &.move-placeholder + label {
                 background-color: #fff;
             }
-        }
-
-        input[name=current_password] {
-            display: none;
         }
 
         .image-cover {

@@ -1,6 +1,10 @@
 .page-store-config {
     margin-top: 50px;
 
+    .current-password {
+        display: none;
+    }
+
     .header-config {
         margin-bottom: 20px;
 
@@ -96,16 +100,11 @@
 
     .fields {
         background-color: #fff;
-        display: none;
         float: left;
         width: 100%;
         padding: 80px 200px 60px 200px;
         border-radius: 10px;
         box-shadow: 2.5px 4.33px 4.75px 0.25px rgba(200, 200, 200, 0.118);
-
-        &.show-fields {
-            display: block;
-        }
 
         &.freights-fields {
             padding: 80px 50px 60px 50px;
@@ -218,10 +217,6 @@
             top: 18px;
             font-size: 12.5px;
             color: rgb(122, 184, 236);
-        }
-
-        input[name=current_password] {
-            display: none;
         }
 
         .slug {
