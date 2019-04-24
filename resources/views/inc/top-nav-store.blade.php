@@ -53,6 +53,10 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('tutorials', 'adicionar-produtos') }}" class="{{ (isset($section) && $section == 'tutorial') ? 'active' : '' }}">Tutoriais</a>
+                </li>
+
+                <li>
                     <a href="{{ route('logout') }}">Sair</a>
                 </li>
             </ul>

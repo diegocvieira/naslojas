@@ -433,6 +433,15 @@ class StoreController extends Controller
         return json_encode($return);
     }
 
+    public function tutorials($type)
+    {
+        $header_title = 'Tutoriais | naslojas';
+
+        $section = 'tutorial';
+
+        return view('store.tutorials', compact('header_title', 'type', 'section'));
+    }
+
     private function storeProfileRules()
     {
         return [
