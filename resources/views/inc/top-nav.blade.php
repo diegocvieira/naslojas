@@ -72,6 +72,10 @@
                             </li>
 
                             <li>
+                                <a href="{{ route('tutorials', 'adicionar-produtos') }}">Tutoriais</a>
+                            </li>
+
+                            <li>
                                 <a href="{{ route('logout') }}">Sair</a>
                             </li>
                         </ul>
