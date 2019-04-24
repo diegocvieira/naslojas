@@ -23,6 +23,12 @@
             </div>
 
             <div class="item">
+                <a href="{{ route('show-store', 'clubemelissa') }}">
+                    <img src="{{ asset('images/banner-mobile/melissa.jpg') }}" alt="Banner Clube Melissa" />
+                </a>
+            </div>
+
+            <div class="item">
                 <img src="{{ asset('images/banner-mobile/3.jpg') }}" alt="Banner 3" />
             </div>
 
