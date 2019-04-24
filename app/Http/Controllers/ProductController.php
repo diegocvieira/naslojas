@@ -34,6 +34,7 @@ class ProductController extends Controller
     public function relatedProducts(Product $product, $pagination = null)
     {
         $related_products = Product::where('id', '!=', $product->id)
+            ->has('images')
             ->whereHas('store', function ($query) use ($product) {
                 $query->where('city_id', $product->store->city->id);
             })
@@ -60,7 +61,9 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = Product::where('slug', $slug)->firstOrFail();
+        $product = Product::where('slug', $slug)
+            ->has('images')
+            ->firstOrFail();
 
         $url = '/produto/' . $product->slug;
 
@@ -68,7 +71,11 @@ class ProductController extends Controller
             ->where('product_id', $product->id)
             ->first();
 
-        $more_colors = Product::whereNotNull('related')->where('related', $product->related)->where('id', '!=', $product->id)->get();
+        $more_colors = Product::whereNotNull('related')
+            ->has('images')
+            ->where('related', $product->related)
+            ->where('id', '!=', $product->id)
+            ->get();
 
         $related_products = $this->relatedProducts($product);
 
@@ -141,7 +148,9 @@ class ProductController extends Controller
 
     public function search($city_slug, $state_letter_lc, $search_gender, $search_order = null, $keyword = null)
     {
-        $products = Product::filterGender($search_gender)->filterOrder($search_order);
+        $products = Product::filterGender($search_gender)
+            ->filterOrder($search_order)
+            ->has('images');
 
         if ($keyword) {
             $keyword = urldecode($keyword);
