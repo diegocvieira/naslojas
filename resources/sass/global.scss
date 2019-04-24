@@ -350,6 +350,39 @@ a, a:hover, a:active, a:focus {
     }
 }
 
+.page-tutorials {
+    .images {
+        float: left;
+        width: 100%;
+    }
+
+    .options {
+        float: left;
+        width: 100%;
+        position: relative;
+        top: 50px;
+
+        li {
+            display: inline-block;
+            margin-right: 15px;
+
+            a {
+                font-size: 13.7px;
+                color: rgb(100, 100, 100);
+                background-color: rgb(245, 245, 245);
+                display: block;
+                border-radius: 25px;
+                padding: 6px 18px;
+
+                &.active {
+                    color: #fff;
+                    background-color: rgb(255, 23, 68);
+                }
+            }
+        }
+    }
+}
+
 @import 'top-nav.scss';
 @import 'list-products.scss';
 @import 'footer.scss';

@@ -128,6 +128,8 @@ Route::group(['prefix' => 'loja'], function () {
 
 		Route::post('delete-account', 'StoreController@deleteAccount')->name('delete-store-account');
 
+		Route::get('tutoriais/{type}', 'StoreController@tutorials')->name('tutorials');
+
 		Route::group(['prefix' => 'produtos'], function () {
 			Route::get('cadastro', 'ProductController@images')->name('product-images');
 			Route::post('dropzone', 'ProductController@uploadImages');
