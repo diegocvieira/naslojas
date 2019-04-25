@@ -75,12 +75,12 @@
 
             <div class="form-group">
                 {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
-                {!! Form::label('', 'Preço atual *') !!}
+                {!! Form::label('', 'Preço *') !!}
             </div>
 
             <div class="form-group">
-                {!! Form::text('old_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
-                {!! Form::label('', 'Preço anterior') !!}
+                {!! Form::text('off', null, ['placeholder' => ' ', 'class' => 'mask-percent field']) !!}
+                {!! Form::label('', 'OFF') !!}
             </div>
         </div>
 

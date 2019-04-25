@@ -71,14 +71,14 @@
     <h1 class="product-title">{{ $product->title }}</h1>
 
     <div class="price-container">
-        @if ($product->old_price)
-            <span class="old-price">de <span>{{ number_format($product->old_price, 2, ',', '.') }}</span></span>
+        @if ($product->off)
+            <span class="old-price">de <span>{{ number_format(_oldPrice($product->price, $product->off), 2, ',', '.') }}</span></span>
         @endif
 
         <span class="price"><span>R$</span> {{ number_format($product->price, 2, ',', '.') }}</span>
 
-        @if ($product->old_price)
-            <span class="price-off">{{ _discount($product->price, $product->old_price) }}% OFF</span>
+        @if ($product->off)
+            <span class="price-off">{{ $product->off }}% OFF</span>
         @endif
 
         <span class="parcels">

@@ -14,11 +14,11 @@ function _setCity($city, $force = false)
     }
 }
 
-function _discount($price, $old_price)
+function _oldPrice($price, $off)
 {
-	if ($old_price != 0.00) {
-		return str_replace('-', '', round(($price / $old_price - 1) * 100));
-	} else {
+	if ($off) {
+        return ($price * 100) / (100 - $off);
+    } else {
 		return false;
 	}
 }

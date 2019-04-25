@@ -314,7 +314,7 @@ class ProductController extends Controller
                         $product->title = $request->title;
                         $product->price = number_format(str_replace(['.', ','], ['', '.'], $request->price), 2, '.', '');
                         $product->gender = $request->gender;
-                        $product->old_price = $request->old_price ? number_format(str_replace(['.', ','], ['', '.'], $request->old_price), 2, '.', '') : null;
+                        $product->off = $request->off;
                         $product->slug = str_slug($product->title, '-');
                         $product->description = $request->description;
 
@@ -470,7 +470,7 @@ class ProductController extends Controller
                 $product->title = $request->title;
                 $product->price = $price;
                 $product->gender = $request->gender;
-                $product->old_price = $request->old_price ? number_format(str_replace(['.', ','], ['', '.'], $request->old_price), 2, '.', '') : null;
+                $product->off = $request->off;
                 $product->slug = str_slug($product->title, '-');
                 $product->description = $request->description;
 
