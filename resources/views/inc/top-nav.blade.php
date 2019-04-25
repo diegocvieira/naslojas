@@ -112,7 +112,7 @@
                     </li>
 
                     <li>
-                        <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">Baixe nosso app</a>
+                        <a href="{{ route('store-advertise') }}">Vender online</a>
                     </li>
 
                     <li>

@@ -79,13 +79,13 @@
                                 </li>
                             @endif
 
-                            <li>
+                            <?php /* <li>
                                 <a href="{{ route('get-create-edit-product') }}">Adicionar produtos</a>
                             </li>
 
                             <li>
                                 <a href="{{ route('edit-products') }}" class="{{ (isset($section) && $section == 'edit') ? 'active' : '' }}">Editar produtos</a>
-                            </li>
+                            </li> */ ?>
 
                             @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check() && Auth::guard('superadmin')->user()->type == 1)
                                 <li>
@@ -116,6 +116,10 @@
 
                         <li>
                             <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">Baixe nosso app</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('store-advertise') }}">Vender online</a>
                         </li>
 
                         <li>

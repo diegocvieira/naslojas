@@ -12,14 +12,14 @@
                     </div>
                 @endif
 
-                @if ($rp->old_price)
-                    <span class="old-price">de <span>{{ number_format($rp->old_price, 2, ',', '.') }}</span></span>
+                @if ($rp->off)
+                    <span class="old-price">de <span>{{ number_format(_oldPrice($rp->price, $rp->off), 2, ',', '.') }}</span></span>
                 @endif
 
                 <span class="price"><span>R$</span> {{ number_format($rp->price, 2, ',', '.') }}</span>
 
-                @if ($rp->old_price)
-                    <span class="price-off">{{ _discount($rp->price, $rp->old_price) }}% OFF</span>
+                @if ($rp->off)
+                    <span class="price-off">{{ $rp->off }}% OFF</span>
                 @endif
 
                 <span class="parcels">

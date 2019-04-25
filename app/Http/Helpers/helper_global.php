@@ -14,11 +14,11 @@ function _setCity($city, $force = false)
     }
 }
 
-function _discount($price, $old_price)
+function _oldPrice($price, $off)
 {
-	if ($old_price != 0.00) {
-		return str_replace('-', '', round(($price / $old_price - 1) * 100));
-	} else {
+	if ($off) {
+        return ($price * 100) / (100 - $off);
+    } else {
 		return false;
 	}
 }
@@ -97,6 +97,7 @@ function _uploadImageProduct($file, $store_id)
         $image->setSamplingFactors(array('2x2', '1x1', '1x1'));
         $image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
         $image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
+        //$image->resizeImage($size, $size, \imagick::FILTER_LANCZOS, 1, TRUE);
         $image->cropThumbnailImage($size, $size);
         //$image->autoOrient();
 

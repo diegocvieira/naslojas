@@ -40,6 +40,7 @@ class StoreController extends Controller
 		$header_desc = 'Clique para ver os produtos disponíveis na loja ' . $store->name . ' em ' . $store->city->title . ' - ' . $store->city->state->letter;
 
         $products = Product::where('store_id', $store->id)
+            ->has('images')
             ->inRandomOrder()
             ->paginate(30);
 
@@ -72,7 +73,10 @@ class StoreController extends Controller
     {
         $store = Store::where('slug', $store_slug)->firstOrFail();
 
-        $products = Product::where('store_id', $store->id)->filterGender($search_gender)->filterOrder($search_order);
+        $products = Product::where('store_id', $store->id)
+            ->has('images')
+            ->filterGender($search_gender)
+            ->filterOrder($search_order);
 
         if ($keyword) {
             $keyword = urldecode($keyword);
@@ -90,7 +94,10 @@ class StoreController extends Controller
         $products = $products->paginate(30);
 
         if ($keyword && $products->count() == 0) {
-            $products = Product::where('store_id', $store->id)->filterGender($search_gender)->filterOrder($search_order)
+            $products = Product::where('store_id', $store->id)
+                ->has('images')
+                ->filterGender($search_gender)
+                ->filterOrder($search_order)
                 ->where(function ($query) use ($keyword) {
                     $query->search(preg_replace('{(.)\1+}','$1', $keyword));
                     //$query->where('title', 'like', '%' . preg_replace('{(.)\1+}','$1', $keyword) . '%');
@@ -160,7 +167,7 @@ class StoreController extends Controller
     {
         if (Auth::guard('store')->attempt(['email' => $request->email, 'password' => $request->password], true)) {
             $return['status'] = true;
-            $return['url'] = Auth::guard('store')->user()->store->status ? route('show-store', Auth::guard('store')->user()->store->slug) : route('edit-products');
+            $return['url'] = Auth::guard('store')->user()->store->status ? route('show-store', Auth::guard('store')->user()->store->slug) : route('get-store-config');
         } else {
             $return['status'] = false;
             $return['msg'] = 'Não identificamos o e-mail e/ou a senha que você informou.';

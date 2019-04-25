@@ -18,7 +18,7 @@ class GlobalController extends Controller
             $this->setCity(4913);
         }
 
-        $products = Product::inRandomOrder()->paginate(30);
+        $products = Product::has('images')->inRandomOrder()->paginate(30);
 
         if (Agent::isDesktop()) {
             return view('home', compact('products'));
@@ -90,7 +90,7 @@ class GlobalController extends Controller
             'cpf.required' => 'Informe o CPF',
             'cpf.max' => 'O CPF deve ter no máximo 15 caracteres.',
             'freight.required' => 'Informe o tipo de reserva.',
-            'reserve_date' => 'Informe o horário de entrega'            
+            'reserve_date' => 'Informe o horário de entrega'
         ];
     }
 }

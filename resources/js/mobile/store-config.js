@@ -14,6 +14,8 @@ $(function() {
             success: function (data) {
                 if (data.status) {
                     status.toggleClass('active-profile');
+
+                    status.hasClass('active-profile') ? status.prev().text('Loja ativada') : status.prev().text('Loja desativada');
                 } else {
                     modalAlert('Preencha os campos obrigatórios em todas as seções.');
                 }
