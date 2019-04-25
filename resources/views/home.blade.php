@@ -8,60 +8,54 @@
     <div class="container page-home">
         <div class="banner-home">
             <div class="slick-home">
-                <div class="item">
-                    <img src="{{ asset('images/banner-desktop/1.jpg') }}" alt="Banner 1" />
-                </div>
-
-                <div class="item">
-                    <a href="{{ route('show-store', 'krause') }}">
-                        <img src="{{ asset('images/banner-desktop/krause.jpg') }}" alt="Banner Krause" />
-                    </a>
-                </div>
-
-                <div class="item">
-                    <img src="{{ asset('images/banner-desktop/2.jpg') }}" alt="Banner 2" />
-                </div>
-
-                <div class="item">
-                    <a href="{{ route('show-store', 'clubemelissa') }}">
-                        <img src="{{ asset('images/banner-desktop/melissa.jpg') }}" alt="Banner Clube Melissa" />
-                    </a>
-                </div>
-
-                <div class="item">
-                    <img src="{{ asset('images/banner-desktop/3.jpg') }}" alt="Banner 3" />
-                </div>
-
-                <div class="item">
-                    <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">
-                        <img src="{{ asset('images/banner-desktop/4.jpg') }}" alt="Banner 4" />
-                    </a>
-                </div>
-
-                <div class="item">
-                    <img src="{{ asset('images/banner-desktop/5.jpg') }}" alt="Banner 5" />
-                </div>
+                @for ($i = 1; $i <= 5; $i++)
+                    <div class="item">
+                        <img src="{{ asset('images/banner-desktop/' . $i . '.jpg') }}" alt="Banner {{ $i }}" />
+                    </div>
+                @endfor
             </div>
         </div>
 
         <div class="container">
             <div class="know">
-                <div class="col-xs-4">
+                <div class="col-xs-3">
                     <img src="{{ asset('images/know/shirt.png') }}" class="img-shirt" />
 
                     <span>Confira as ofertas<br>das lojas de Pelotas</span>
                 </div>
 
-                <div class="col-xs-4">
+                <div class="col-xs-3">
                     <img src="{{ asset('images/know/calendar.png') }}" />
 
                     <span>Receba seu pedido<br>em até 24 horas</span>
                 </div>
 
-                <div class="col-xs-4">
+                <div class="col-xs-3">
+                    <img src="{{ asset('images/know/truck.png') }}" class="img-truck" />
+
+                    <span>Frete para toda a<br>cidade por R$ 5,00</span>
+                </div>
+
+                <div class="col-xs-3">
                     <img src="{{ asset('images/know/card.png') }}" class="img-card" />
 
                     <span>Pague somente ao<br>receber o produto</span>
+                </div>
+            </div>
+
+            <div class="stores">
+                <div class="slick-stores">
+                    <div class="item">
+                        <a href="{{ route('show-store', 'krause') }}">
+                            <img src="{{ asset('images/stores/krause.png') }}" alt="Krause" />
+                        </a>
+                    </div>
+
+                    <div class="item">
+                        <a href="{{ route('show-store', 'clubemelissa') }}">
+                            <img src="{{ asset('images/stores/melissa.png') }}" alt="Clube Melissa" />
+                        </a>
+                    </div>
                 </div>
             </div>
 

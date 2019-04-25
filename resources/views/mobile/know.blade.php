@@ -20,6 +20,12 @@
         </div>
 
         <div class="item">
+            <img src="{{ asset('images/know/truck.png') }}" />
+
+            <p>Frete para toda a<br>cidade por R$ 5,00</p>
+        </div>
+
+        <div class="item">
             <img src="{{ asset('images/know/card.png') }}" class="img-card" />
 
             <p>Pague somente ao<br>receber o produto</p>
