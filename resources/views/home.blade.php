@@ -45,13 +45,13 @@
 
             <div class="stores">
                 <div class="slick-stores">
-                    <div class="item">
+                    <div class="item col-xs-6">
                         <a href="{{ route('show-store', 'krause') }}">
                             <img src="{{ asset('images/stores/krause.png') }}" alt="Krause" />
                         </a>
                     </div>
 
-                    <div class="item">
+                    <div class="item col-xs-6">
                         <a href="{{ route('show-store', 'clubemelissa') }}">
                             <img src="{{ asset('images/stores/melissa.png') }}" alt="Clube Melissa" />
                         </a>
