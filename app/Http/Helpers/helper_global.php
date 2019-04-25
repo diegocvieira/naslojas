@@ -97,8 +97,8 @@ function _uploadImageProduct($file, $store_id)
         $image->setSamplingFactors(array('2x2', '1x1', '1x1'));
         $image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
         $image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
-        //$image->resizeImage($size, $size, \imagick::FILTER_LANCZOS, 1, TRUE);
-        $image->cropThumbnailImage($size, $size);
+        $image->resizeImage($size, $size, \imagick::FILTER_LANCZOS, 1, TRUE);
+        //$image->cropThumbnailImage($size, $size);
         //$image->autoOrient();
 
         switch ($image->getImageOrientation()) {

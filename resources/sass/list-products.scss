@@ -76,7 +76,7 @@
             border-radius: 5px;
             background-color: rgb(245, 245, 245);
             height: 248px;
-            object-fit: cover;
+            object-fit: contain;
             transition: transform .2s;
             box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 20px 0px;
 

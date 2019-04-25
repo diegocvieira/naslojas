@@ -139,7 +139,7 @@
 
                     .product-image {
                         object-position: center;
-                        object-fit: cover;
+                        object-fit: contain;
                         border-radius: 5px;
                         background-color: rgb(245, 245, 245);
                         box-shadow: 0.5px 0.866px 2.97px 0.03px rgba(98, 98, 98, 0.118);
