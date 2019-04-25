@@ -80,7 +80,7 @@
 
             <div class="form-group">
                 {!! Form::text('off', null, ['placeholder' => ' ', 'class' => 'mask-percent field']) !!}
-                {!! Form::label('', 'OFF') !!}
+                {!! Form::label('', '% OFF') !!}
             </div>
         </div>
 
