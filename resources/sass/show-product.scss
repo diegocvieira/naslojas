@@ -34,7 +34,7 @@
                 display: inline-block;
                 width: 100%;
                 transition: transform .5s ease-out;
-                background-color: rgb(245, 245, 245);
+                background-color: #fff;
                 object-fit: contain;
             }
         }
@@ -47,7 +47,7 @@
         }
 
         .image-thumb {
-            background-color: rgb(245, 245, 245);
+            background-color: #fff;
             position: relative;
             float: left;
             display: inline-block;
