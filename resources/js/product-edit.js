@@ -9,18 +9,6 @@ $(function() {
         }
     });
 
-    $(document).on('blur', 'input[name=price], input[name=old_price]', function() {
-        var form = $(this).parents('.form-edit-product'),
-            price = parseFloat(form.find('input[name=price]').val().replace('.', '').replace(',', '.')),
-            old_price = parseFloat(form.find('input[name=old_price]').val().replace('.', '').replace(',', '.'));
-
-        if (price && old_price && price > old_price) {
-            form.find('input[name=old_price]').addClass('validate-error');
-        } else {
-            form.find('input[name=old_price]').removeClass('validate-error');
-        }
-    });
-
     $(document).on('change', '.form-edit-product select', function() {
         $(this).parent().next().show();
     });
