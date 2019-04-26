@@ -112,7 +112,7 @@ class ClientController extends Controller
 
                         return json_encode($return);
                     } else if ($city->id != 4913) {
-                        $return['msg'] = 'Em breve estaremos trabalhando na sua cidade.';
+                        $return['msg'] = 'Nossa entrega ainda não está disponível na sua região.';
                         $return['status'] = 0;
 
                         return json_encode($return);
