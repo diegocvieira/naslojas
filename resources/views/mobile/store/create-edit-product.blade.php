@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="container page-create-edit-product">
-        <?php /* @if (isset($product))
+        @if (isset($product))
             {!! Form::model($product, ['method' => 'POST', 'route' => ['save-products', $product->id], 'id' => 'form-create-edit-product', 'files' => true]) !!}
                 {!! Form::hidden('free_freight_price', $product->store->free_freight_price) !!}
                 {!! Form::hidden('product_id', $product->id) !!}
@@ -111,12 +111,12 @@
             <div class="section">
                 <div class="form-group">
                     {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
-                    {!! Form::label('', 'Preço atual *') !!}
+                    {!! Form::label('', 'Preço *') !!}
                 </div>
 
                 <div class="form-group">
-                    {!! Form::text('old_price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
-                    {!! Form::label('', 'Preço anterior') !!}
+                    {!! Form::text('off', null, ['placeholder' => ' ', 'class' => 'mask-percent field']) !!}
+                    {!! Form::label('', '% OFF') !!}
                 </div>
             </div>
 
@@ -138,10 +138,6 @@
                     {!! Form::label('size_' . $number, $number) !!}
                 @endforeach
             </div>
-        {!! Form::close() !!} */ ?>
-
-        <div class="mobile-disabled">
-            <h1>Para realizar o cadastro de produtos acesse de um computador ou notebook</h1>
-        </div>
+        {!! Form::close() !!}
     </div>
 @endsection

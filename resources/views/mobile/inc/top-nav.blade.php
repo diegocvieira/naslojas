@@ -79,13 +79,13 @@
                                 </li>
                             @endif
 
-                            <?php /* <li>
+                            <li>
                                 <a href="{{ route('get-create-edit-product') }}">Adicionar produtos</a>
                             </li>
 
                             <li>
                                 <a href="{{ route('edit-products') }}" class="{{ (isset($section) && $section == 'edit') ? 'active' : '' }}">Editar produtos</a>
-                            </li> */ ?>
+                            </li>
 
                             @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check() && Auth::guard('superadmin')->user()->type == 1)
                                 <li>
