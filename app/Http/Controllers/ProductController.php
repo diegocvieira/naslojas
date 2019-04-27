@@ -83,8 +83,8 @@ class ProductController extends Controller
             $client_rating = ProductRating::where('client_id', Auth::guard('client')->user()->id)->where('product_id', $product->id)->first();
         }
 
-        $header_title = $product->title . ' - ' . $product->store->name . ' - ' . $product->store->city->title . ' - ' . $product->store->city->state->letter . ' | naslojas.com';
-        $header_desc = 'Clique para ver os detalhes do produto na loja ' . $product->store->name . ' em ' . $product->store->city->title . ' - ' . $product->store->city->state->letter;
+        $header_title = 'Clique para pedir | Frete ' . ($product->free_freight ? 'grátis' : 'R$5,00') . ' | Entrega em 24hs | Pague somente ao receber';
+        $header_desc = $product->store->name . ' | ' . $product->store->city->title . '|' . $product->title;
         $header_canonical = route(\Request::route()->getName(), $product->slug);
         $header_image = url('/uploads/' . $product->store->id . '/products/' . $product->images->first()->image);
 
