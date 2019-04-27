@@ -44,8 +44,8 @@
         <meta property="og:image:secure_url" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
         <meta property="og:description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas de Pelotas. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
     	<meta property="og:site_name" content="naslojas" />
-        <meta property="og:image:width" content="200">
-        <meta property="og:image:height" content="200">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
         <meta property="fb:app_id" content="2156565304635391" />
 
         <style>body{opacity:0;}</style>
