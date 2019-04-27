@@ -383,6 +383,28 @@ a, a:hover, a:active, a:focus {
     }
 }
 
+.modal-link-share {
+    .modal-body {
+        color: #000 !important;
+
+        input {
+            position: absolute;
+            left: 0;
+            top: 75px;
+            border-top-left-radius: 25px !important;
+            border-bottom-left-radius: 25px !important;
+            font-size: 12.5px !important;
+            color: rgb(150, 150, 150) !important;
+            width: calc(100% - 100px) !important;
+        }
+    }
+
+    .modal-footer {
+        position: relative;
+        z-index: 1;
+    }
+}
+
 @import 'top-nav.scss';
 @import 'list-products.scss';
 @import 'footer.scss';

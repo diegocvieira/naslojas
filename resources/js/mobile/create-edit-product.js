@@ -174,6 +174,19 @@ $(function() {
                     }
                 }
             });
+        } else if (type == 'link-share') {
+            modalAlert("<b>Cole nas suas redes sociais</b><br>As informações do produto irão aparecer automaticamente<input type='text' value='" + $(this).attr('href') + "' readonly />", 'COPIAR');
+
+            var modal = $('#modal-alert');
+
+            modal.addClass('modal-link-share');
+            modal.find('.btn').addClass('btn-confirm');
+
+            modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
+                modal.find('input').select();
+
+                document.execCommand('copy');
+            });
         } else {
             var url = $(this).attr('href'),
                 product_id = $(this).data('productid');

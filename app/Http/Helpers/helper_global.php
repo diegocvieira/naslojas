@@ -37,6 +37,11 @@ function _taxes($parcel_qtd, $parcel_price, $product_price)
     }
 }
 
+function _socialImage($image)
+{
+    return str_replace('resize', 'social', $image);
+}
+
 function _originalImage($image)
 {
     return str_replace('_resize', '', $image);
@@ -78,8 +83,9 @@ function _uploadImageProduct($file, $store_id)
     $microtime = microtime(true) . RAND(111111, 999999);
 
     $images = [
-        '248' => $microtime . '_resize.jpg',
-        '900' => $microtime . '.jpg'
+        '248x248' => $microtime . '_resize.jpg',
+        '900x900' => $microtime . '.jpg',
+        '540x282' => $microtime . '_social.jpg'
     ];
 
     foreach($images as $size => $image_name) {
@@ -89,6 +95,10 @@ function _uploadImageProduct($file, $store_id)
             $image->setImageAlphaChannel(11);
         }
 
+        $explode = explode('x', $size);
+        $width = $explode[0];
+        $height = $explode[1];
+
         $image->setImageBackgroundColor('#ffffff');
         $image->setColorspace(\Imagick::COLORSPACE_SRGB);
         $image->setImageFormat('jpg');
@@ -97,7 +107,7 @@ function _uploadImageProduct($file, $store_id)
         $image->setSamplingFactors(array('2x2', '1x1', '1x1'));
         $image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
         $image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
-        $image->resizeImage($size, $size, \imagick::FILTER_LANCZOS, 1, TRUE);
+        $image->resizeImage($width, $height, \imagick::FILTER_LANCZOS, 1, TRUE);
         //$image->cropThumbnailImage($size, $size);
         //$image->autoOrient();
 
@@ -138,7 +148,7 @@ function _uploadImageProduct($file, $store_id)
         $image->destroy();
     }
 
-    return $images[248];
+    return $images['248x248'];
 }
 
 function _uploadImage($file, $store_id)

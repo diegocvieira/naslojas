@@ -9,6 +9,21 @@ $(function() {
         }
     });
 
+    $(document).on('click', '.link-share', function() {
+        modalAlert("<b>Cole nas suas redes sociais</b><br>As informações do produto irão aparecer automaticamente<input type='text' value='" + $(this).data('url') + "' readonly />", 'COPIAR');
+
+        var modal = $('#modal-alert');
+
+        modal.addClass('modal-link-share');
+        modal.find('.btn').addClass('btn-confirm');
+
+        modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
+            modal.find('input').select();
+
+            document.execCommand('copy');
+        });
+    });
+
     $(document).on('change', '.form-edit-product select', function() {
         $(this).parent().next().show();
     });

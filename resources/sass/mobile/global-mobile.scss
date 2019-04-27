@@ -311,6 +311,19 @@ a, a:hover, a:active, a:focus {
     }
 }
 
+.modal-link-share {
+    .modal-body {
+        color: #000 !important;
+        padding-bottom: 0;
+
+        input {
+            font-size: 12.5px !important;
+            color: rgb(150, 150, 150) !important;
+            width: 100% !important;
+        }
+    }
+}
+
 @import 'top-nav.scss';
 @import 'footer.scss';
 @import 'list-products.scss';

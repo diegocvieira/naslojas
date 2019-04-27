@@ -264,6 +264,16 @@
                         }
                     }
 
+                    &.link-share {
+                        color: #7ab8ec;
+                        width: auto;
+                        height: auto;
+                        padding: 5px 20px;
+                        margin: 25px 35px 0 0;
+                        border: 1px solid #7ab8ec;
+                        border-radius: 25px;
+                    }
+
                     &.copy-data {
                         background-image: url('../images/icon-copy.png');
                     }

@@ -27,7 +27,7 @@
 
                             <ul class="dropdown-menu">
                                 @isset ($product)
-                                    @if ($product->status == 1)
+                                    @if ($product->status == 1 && $product->store->status == 1)
                                         <li>
                                             <a href="{{ route('show-product', $product->slug) }}" target="_blank">Ver produto</a>
                                         </li>
@@ -38,6 +38,12 @@
 
                                         <a href="{{ route('product-free-freight') }}" data-type="free-freight" class="option free-freight free-freight-selected {{ $product->free_freight == 0 ? 'hidden' : '' }}" data-productid="{{ $product->id }}">Desativar frete grátis</a>
                                     </li>
+
+                                    @if ($product->status == 1 && $product->store->status == 1)
+                                        <li>
+                                            <a href="{{ route('show-product', $product->slug) }}" data-type="link-share" class="option link-share">Compartilhar</a>
+                                        </li>
+                                    @endif
 
                                     <li>
                                         <a href="#" data-type="copy-data" class="option">Copiar dados</a>
