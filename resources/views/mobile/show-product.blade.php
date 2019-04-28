@@ -23,9 +23,7 @@
         <span class="identifier">Produto #{{ $product->identifier }}</span>
 
         <div class="store-container">
-            <span>Você encontra este produto na loja</span>
-
-            <a href="{{ route('show-store', $product->store->slug) }}" class="store-show">{{ $product->store->name }}</a>
+            <span>Vendido e entregue por <a href="{{ route('show-store', $product->store->slug) }}" class="store-show">{{ $product->store->name }}</a></span>
 
             <p class="store-address">{{ $product->store->street }}, {{ $product->store->number }} - {{ $product->store->district }} - {{ $product->store->city->title }}/{{ $product->store->city->state->letter }}</p>
 
