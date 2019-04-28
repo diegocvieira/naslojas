@@ -7,6 +7,12 @@
 
 @section('content')
     <div class="container page-login-register">
+        <div class="top">
+            <a href="{{ route('client-login-get') }}">CLIENTE</a>
+
+            <a href="{{ route('store-login-get') }}" class="active">LOJA</a>
+        </div>
+
         {!! Form::open(['method' => 'POST', 'route' => 'store-login-post', 'id' => 'form-login-store']) !!}
             <h1>Admin da loja</h1>
 
@@ -25,6 +31,8 @@
             {!! Form::submit('ENTRAR') !!}
 
             <a href="#" class="password-recover" data-type="1">Recuperar senha</a>
+
+            <p class="link">Não tem uma conta? <a href="{{ route('store-register-get') }}">Cadastrar</a></p>
         {!! Form::close() !!}
     </div>
 @endsection
