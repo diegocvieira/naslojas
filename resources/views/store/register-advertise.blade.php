@@ -76,7 +76,7 @@
 
                         <span>Como seus seguidores visualizam<br><b>suas postagens hoje</b></span>
 
-                        <img src="{{ asset('images/advise/social.jpg') }}" class="img-social" alt="Divulgação" />
+                        <img src="{{ asset('images/advise/social.jpg') }}" class="img-social img-responsive" alt="Divulgação" />
                     </div>
 
                     <div class="col-xs-6">
@@ -84,7 +84,7 @@
 
                         <span>Como eles irão visualizar<br><b>com o naslojas</b></span>
 
-                        <img src="{{ asset('images/advise/social2.jpg') }}" class="img-social" alt="Divulgação" />
+                        <img src="{{ asset('images/advise/social2.jpg') }}" class="img-social img-responsive" alt="Divulgação" />
                     </div>
                 </div>
 
@@ -115,7 +115,7 @@
                     </div>
 
                     <div class="col-xs-4 step">
-                        <p>Você só precisa <b>postar</b><br>os produtos e responder<br>os<b>pedidos</b></p>
+                        <p>Você só precisa <b>postar</b><br>os produtos e responder<br>os <b>pedidos</b></p>
                     </div>
                 </div>
 
@@ -162,14 +162,17 @@
 
                 <div class="row keys">
                     <div class="col-xs-4 text-right">
+                        <span class="key">{</span>
                         <span class="item">Mantenha a sua loja<span>aberta 24hs por dia</span></span>
                     </div>
 
                     <div class="col-xs-4 text-center">
+                        <span class="key">{</span>
                         <span class="item">Sem mensalidade e<span>sem comissão nas vendas</span></span>
                     </div>
 
                     <div class="col-xs-4">
+                        <span class="key">{</span>
                         <span class="item">Nunca foi tão fácil vender<span>seus produtos online</span></span>
                     </div>
                 </div>

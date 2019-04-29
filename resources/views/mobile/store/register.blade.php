@@ -14,7 +14,7 @@
         </div>
 
         {!! Form::open(['method' => 'POST', 'route' => 'store-register-post', 'id' => 'form-register-store']) !!}
-            <h1>Divulgue suas ofertas</h1>
+            <h1>Cadastre sua loja</h1>
 
             <p class="sub">Nós fazemos o trabalho pesado</p>
 

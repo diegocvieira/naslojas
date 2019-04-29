@@ -122,7 +122,8 @@
         padding-top: 50px;
 
         .img-social {
-            width: 400px;
+            //width: 400px;
+            margin: auto;
         }
 
         .emoji {
@@ -240,6 +241,9 @@
     }
 
     .attendance {
+        float: left;
+        width: 100%;
+
         h3 {
             font-size: 16.6px;
             font-family: 'OpenSans-Regular';
@@ -344,37 +348,33 @@
         .keys {
             text-align: left;
 
-            .col-xs-4:nth-child(2) .item span {
-                padding-left: 85px;
+            .key {
+                font-size: 75px;
+                font-family: 'OpenSans-Light';
+                color: rgb(94, 255, 211);
+                display: inline-block;
+                padding-left: 30px;
             }
 
             .item {
                 font-size: 18.7px;
                 font-family: 'OpenSans-Regular';
-                line-height: 1.3;
-                position: relative;
+                line-height: 1.4;
                 color: #fff;
-                padding-left: 30px;
+                display: inline-block;
+                text-align: left;
 
                 span {
                     display: block;
-                    padding-left: 30px;
-                }
-
-                &:after {
-                    content: '{';
-                    position: absolute;
-                    left: 0;
-                    top: -30px;
-                    font-size: 75px;
-                    font-family: 'OpenSans-Light';
-                    color: rgb(94, 255, 211);
                 }
             }
         }
     }
 
     .plans {
+        float: left;
+        width: 100%;
+
         .section-title h3 {
             font-size: 16.6px;
             line-height: 2;
