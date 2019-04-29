@@ -188,6 +188,11 @@ $(function() {
                 maxlength: 100,
                 email: true
             },
+            name: {
+                required: true,
+                minlength: 1,
+                maxlength: 100
+            },
             password: {
                 required: true,
                 minlength: 8
@@ -207,17 +212,26 @@ $(function() {
         errorPlacement: function(error, element) {
         },
         submitHandler: function(form) {
+            $(form).find('input[type=submit]').val('CADASTRANDO').attr('disabled', true);
+
             $.ajax({
                 url: $(form).attr('action'),
                 method: 'POST',
                 dataType: 'json',
                 data: $(form).serialize(),
                 success: function (data) {
-                    if(data.status == true) {
-                        window.location = '/';
+                    if (data.status == true) {
+                        window.location = data.url;
                     } else {
+                        $(form).find('input[type=submit]').val('CADASTRAR').attr('disabled', false);
+
                         modalAlert(data.msg);
                     }
+                },
+                error: function (request, status, error) {
+                    $(form).find('input[type=submit]').val('CADASTRAR').attr('disabled', false);
+
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
             });
 
@@ -277,17 +291,26 @@ $(function() {
         errorPlacement: function(error, element) {
         },
         submitHandler: function(form) {
+            $(form).find('input[type=submit]').val('CADASTRANDO').attr('disabled', true);
+
             $.ajax({
                 url: $(form).attr('action'),
                 method: 'POST',
                 dataType: 'json',
                 data: $(form).serialize(),
                 success: function (data) {
-                    if(data.status == true) {
+                    if (data.status == true) {
                         window.location = '/';
                     } else {
+                        $(form).find('input[type=submit]').val('CADASTRAR').attr('disabled', false);
+
                         modalAlert(data.msg);
                     }
+                },
+                error: function (request, status, error) {
+                    $(form).find('input[type=submit]').val('CADASTRAR').attr('disabled', false);
+
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
             });
 

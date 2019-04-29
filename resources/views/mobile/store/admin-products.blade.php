@@ -64,6 +64,6 @@
             </div>
         @endif
 
-        <?php /* <a href="{{ route('get-create-edit-product') }}" class="btn-create-edit-product">+</a>*/ ?>
+        <a href="{{ route('get-create-edit-product') }}" class="btn-create-edit-product">+</a>
     </div>
 @endsection

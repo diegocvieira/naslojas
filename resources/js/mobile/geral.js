@@ -421,17 +421,26 @@ $(function() {
         errorPlacement: function(error, element) {
         },
         submitHandler: function(form) {
+            $(form).find('input[type=submit]').val('CADASTRANDO').attr('disabled', true);
+
             $.ajax({
                 url: $(form).attr('action'),
                 method: 'POST',
                 dataType: 'json',
                 data: $(form).serialize(),
                 success: function (data) {
-                    if(data.status == true) {
+                    if (data.status == true) {
                         window.location = '/';
                     } else {
+                        $(form).find('input[type=submit]').val('CADASTRAR').attr('disabled', false);
+
                         modalAlert(data.msg);
                     }
+                },
+                error: function (request, status, error) {
+                    $(form).find('input[type=submit]').val('CADASTRAR').attr('disabled', false);
+
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
             });
 
@@ -486,15 +495,26 @@ $(function() {
         errorPlacement: function(error, element) {
         },
         submitHandler: function(form) {
+            $(form).find('input[type=submit]').val('CADASTRANDO').attr('disabled', true);
+
             $.ajax({
                 url: $(form).attr('action'),
                 method: 'POST',
                 dataType: 'json',
                 data: $(form).serialize(),
                 success: function (data) {
-                    modalAlert(data.msg);
+                    if (data.status == true) {
+                        window.location = data.url;
+                    } else {
+                        $(form).find('input[type=submit]').val('CADASTRAR').attr('disabled', false);
 
-                    $(form).find('input[type=email], input[type=text]').val('');
+                        modalAlert(data.msg);
+                    }
+                },
+                error: function (request, status, error) {
+                    $(form).find('input[type=submit]').val('CADASTRAR').attr('disabled', false);
+
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
             });
 

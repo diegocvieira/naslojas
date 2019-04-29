@@ -7,6 +7,12 @@
 
 @section('content')
     <div class="container page-login-register">
+        <div class="top">
+            <a href="{{ route('client-register-get') }}" class="active">CLIENTE</a>
+
+            <a href="{{ route('store-register-get') }}">LOJA</a>
+        </div>
+
         {!! Form::open(['method' => 'POST', 'route' => 'client-register-post', 'id' => 'form-register-client']) !!}
             <h1>Bem-vindo!</h1>
 
@@ -34,7 +40,10 @@
 
             {!! Form::submit('CADASTRAR') !!}
 
-            <p class="description">Ao se cadastrar você concorda com as <a href="{{ route('rules') }}" target="_blank">regras para os anúncios</a>, os <a href="{{ route('terms-use') }}" target="_blank">termos de uso</a> e a <a href="{{ route('privacy-policy') }}" target="_blank">política de privacidade</a> do naslojas.com</p>
+            <p class="description">Concordo que li e concordo com as <a href="{{ route('rules') }}" target="_blank">regras para os anúncios</a>, os <a href="{{ route('terms-use') }}" target="_blank">termos de uso</a> e a <a href="{{ route('privacy-policy') }}" target="_blank">política de privacidade</a> do naslojas</p>
+
+            <p class="link">Já é cadastrado? <a href="{{ route('client-login-get') }}">Entrar</a></p>
+
         {!! Form::close() !!}
     </div>
 @endsection

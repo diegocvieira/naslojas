@@ -5,17 +5,39 @@
         display: none;
     }
 
+    .top {
+        display: block;
+        margin: 100px 0 15px 0;
+
+        a {
+            font-size: 13.3px;
+            font-family: "KeepCalm";
+            color: rgb(100, 100, 100);
+            display: inline-block;
+            padding: 0 5px;
+
+            &:first-child {
+                margin-right: 70px;
+            }
+
+            &.active {
+                border-bottom: 4px solid rgb(255, 23, 68);
+            }
+        }
+    }
+
     form {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        //position: absolute;
+        //top: 50%;
+        //left: 50%;
+        //transform: translate(-50%, -50%);
         border: 1px solid rgb(240, 240, 240);
         border-radius: 5px;
         background-color: rgb(255, 255, 255);
         box-shadow: 10px 17.321px 16px 4px rgba(100, 100, 100, 0.078);
         width: 538px;
-        padding: 70px;
+        padding: 70px 70px 30px 70px;
+        display: inline-block;
 
         h1 {
             font-size: 25px;
@@ -41,6 +63,17 @@
             color: rgb(150, 150, 150);
             line-height: 1.167;
             text-align: center;
+        }
+
+        .link {
+            font-size: 14.5px;
+            color: rgb(150, 150, 150);
+            display: block;
+            margin-top: 40px;
+
+            a {
+                font-size: 14.5px;
+            }
         }
 
         .half {

@@ -114,41 +114,64 @@ class StoreController extends Controller
 
     public function register(Request $request)
     {
-        /*$validator = Validator::make(
+        $validator = Validator::make(
             $request->all(),
-            ['email' => 'required|email|max:100|unique:users', 'password' => 'confirmed|min:8'],
+            [
+                'email' => 'required|email|max:100|unique:users',
+                'name' => 'required|max:200',
+                'password' => 'confirmed|min:8'
+            ],
             app('App\Http\Controllers\GlobalController')->customMessages()
         );
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $return['msg'] = $validator->errors()->first();
             $return['status'] = false;
         } else {
             $store = new Store;
-            $store->save();
+            $store->name = $request->name;
+            $store->slug = str_slug($store->name, '-');
+
+            // check if slug already exists and add dash in the end
+            $NUM_OF_ATTEMPTS = 10;
+            $attempts = 0;
+
+            do {
+                try {
+                    $store->save();
+                } catch(\Exception $e) {
+                    $attempts++;
+
+                    sleep(rand(0, 10) / 10);
+
+                    $store->slug .= '-' . uniqid();
+
+                    continue;
+                }
+
+                break;
+            } while ($attempts < $NUM_OF_ATTEMPTS);
 
             $user = new User;
             $user->password = bcrypt($request->password);
             $user->email = $request->email;
             $user->store_id = $store->id;
+            $user->save();
 
-            if($user->save()) {
-                // Create the folder if not exists (necessary to uploads images)
-                $path = public_path('uploads/' . $store->id . '/products');
-                if(!file_exists($path)) {
-                    mkdir($path, 0777, true);
-                }
-
-                session()->flash('session_flash_alert', 'Cadastro realizado com sucesso! <br> Acesse as configurações para ativar o perfil da loja e finalizar o cadastro.');
-
-                return $this->login($request);
-            } else {
-                $return['msg'] = 'Ocorreu um erro inesperado. Tente novamente.';
-                $return['status'] = false;
+            // Create the folder if not exists (necessary to upload images)
+            $path = public_path('uploads/' . $store->id . '/products');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
             }
-        }*/
 
-        Mail::send('emails.store-register', ['request' => $request], function($m) {
+            session()->flash('session_flash_alert', 'Cadastro realizado com sucesso! <br> Finalize o cadastro e ative o perfil da loja.');
+
+            return $this->login($request);
+        }
+
+        return json_encode($return);
+
+        /*Mail::send('emails.store-register', ['request' => $request], function($m) {
             $m->from('no-reply@naslojas.com', 'naslojas');
             $m->to('contato@naslojas.com');
             $m->subject('Solicitação de cadastro');
@@ -160,7 +183,7 @@ class StoreController extends Controller
             $return['msg'] = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
         }
 
-        return json_encode($return);
+        return json_encode($return);*/
     }
 
     public function login(Request $request)

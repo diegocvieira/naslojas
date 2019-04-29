@@ -52,6 +52,10 @@
                         <button type="button" class="free-freight" title="Habilitar frete grátis" data-url="{{ route('product-free-freight') }}">frete grátis</button>
                     @endif
                 @endif
+
+                @if ($product->status == 1 && $product->store->status == 1)
+                    <button type="button" class="link-share" data-url="{{ route('show-product', $product->slug) }}">COMPARTILHAR</button>
+                @endif
             </div>
         </div>
 
