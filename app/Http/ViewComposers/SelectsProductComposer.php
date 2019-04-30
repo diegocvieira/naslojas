@@ -16,7 +16,7 @@ class SelectsProductComposer
         ];
 
         // Sizes
-		for ($z = 8; $z <= 88; $z++) {
+		for ($z = 8; $z <= 112; $z++) {
 			if (!isset($next)) {
 				$next = $z;
 			}

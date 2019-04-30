@@ -50,7 +50,7 @@
                     <div class="col-xs-4">
                         <img src="{{ asset('images/advise/hw1.png') }}" />
 
-                        <p>O cliente encontra os seus produtos<br>nas redes sociais com um link para o<br><i>naslojas</i> e faz o pedido online</p>
+                        <p>O cliente encontra os seus produtos<br>nas redes sociais, com um link para o<br><i>naslojas</i>, e faz o pedido online</p>
                     </div>
 
                     <div class="col-xs-4">

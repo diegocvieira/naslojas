@@ -45,7 +45,7 @@
 
             <div class="item">
                 <img src="{{ asset('images/advise/hw1.png') }}" class="img-responsive" />
-                <p>O cliente encontra os seus produtos nas redes sociais com um link para o <i>naslojas</i> e faz o pedido online</p>
+                <p>O cliente encontra os seus produtos nas redes sociais, com um link para o <i>naslojas</i>, e faz o pedido online</p>
             </div>
 
             <div class="item">
