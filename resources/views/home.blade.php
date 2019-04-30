@@ -56,6 +56,12 @@
                             <img src="{{ asset('images/stores/melissa.png') }}" alt="Clube Melissa" />
                         </a>
                     </div>
+
+                    <div class="item col-xs-6">
+                        <a href="{{ route('show-store', 'maisonbiansini') }}">
+                            <img src="{{ asset('images/stores/mb.png') }}" alt="Maison Biansini" />
+                        </a>
+                    </div>
                 </div>
             </div>
 
