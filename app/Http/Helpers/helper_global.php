@@ -85,7 +85,8 @@ function _uploadImageProduct($file, $store_id)
     $images = [
         '248x248' => $microtime . '_resize.jpg',
         '900x900' => $microtime . '.jpg',
-        '540x282' => $microtime . '_social.jpg'
+        '500x261' => $microtime . '_social.jpg'
+        //'540x282' => $microtime . '_social.jpg'
     ];
 
     foreach($images as $size => $image_name) {
