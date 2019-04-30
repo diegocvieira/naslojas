@@ -164,7 +164,7 @@ class StoreController extends Controller
                 mkdir($path, 0777, true);
             }
 
-            session()->flash('session_flash_alert', 'Cadastro realizado com sucesso! <br> Finalize o cadastro e ative o perfil da loja.');
+            session()->flash('session_flash_alert', 'Cadastro realizado com sucesso! <br> Complete as informações e ative o perfil da loja.');
 
             return $this->login($request);
         }
