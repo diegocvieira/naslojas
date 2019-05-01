@@ -17,6 +17,28 @@
     </div>
 
     <div class="container">
+        <div class="stores-home">
+            <div class="slick-stores">
+                <div class="item col-xs-6">
+                    <a href="{{ route('show-store', 'krause') }}">
+                        <img src="{{ asset('images/stores-mobile/krause.png') }}" alt="Krause" />
+                    </a>
+                </div>
+
+                <div class="item col-xs-6">
+                    <a href="{{ route('show-store', 'clubemelissa') }}">
+                        <img src="{{ asset('images/stores-mobile/melissa.png') }}" alt="Clube Melissa" />
+                    </a>
+                </div>
+
+                <div class="item col-xs-6">
+                    <a href="{{ route('show-store', 'maisonbiansini') }}">
+                        <img src="{{ asset('images/stores-mobile/mb.png') }}" alt="Maison Biansini" />
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <div class="list-products">
             @foreach ($products as $product)
                 <div class="product">

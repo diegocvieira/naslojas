@@ -305,9 +305,16 @@ a, a:hover, a:active, a:focus {
     img {
 		width: 100%;
 	}
+}
 
-    &+ .container {
-        padding-top: 0;
+.stores-home {
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+
+    img {
+        margin: auto;
+        width: 85%;
     }
 }
 
