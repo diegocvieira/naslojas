@@ -78,7 +78,7 @@ function _dateFormat($date)
     return $date_format;
 }
 
-function _uploadImageProduct($file, $store_id)
+function _uploadImageProduct($file, $store_id, $input_file = true)
 {
     $microtime = microtime(true) . RAND(111111, 999999);
 
@@ -89,7 +89,11 @@ function _uploadImageProduct($file, $store_id)
     ];
 
     foreach($images as $size => $image_name) {
-        $image = new \Imagick($file->path());
+        if ($input_file) {
+            $image = new \Imagick($file->path());
+        } else {
+            $image = new \Imagick($file);
+        }
 
         if ($image->getImageAlphaChannel()) {
             $image->setImageAlphaChannel(11);

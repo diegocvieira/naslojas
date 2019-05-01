@@ -11,24 +11,6 @@
 |
 */
 
-/*Route::get('teste/teste', function () {
-	$dom = new DOMDocument();
-	$html = file_get_contents('https://www.hercilio.com.br/sapatilha-klin-125084-cravinho-princess-preto');
-	@$dom->loadHTML($html);
-	$dom->preserveWhiteSpace = false;
-	//$img = $dom->getElementById('ctrFotoPrincipal')->getAttribute('src');
-	$imgs = $dom->getElementsByTagName('a');
-
-	foreach ($imgs as $img) {
-		if ($img->getAttribute('urlfoto')) {
-			echo $img->getAttribute('urlfoto');
-			echo '<br>';
-		}
-	}
-
-	//file_put_contents('testeurl.jpg', file_get_contents($img));
-});*/
-
 Route::get('/', 'GlobalController@home')->name('home');
 
 Route::group(['prefix' => 'site'], function () {
@@ -169,6 +151,8 @@ Route::group(['prefix' => 'loja'], function () {
 			Route::post('delete-images/{image}', 'ProductController@deleteImages');
 
 			Route::post('free-freight', 'ProductController@freeFreight')->name('product-free-freight');
+
+			Route::post('save-excel', 'ProductController@saveExcel')->name('save-excel');
 		});
 
 		Route::group(['prefix' => 'mensagens'], function () {

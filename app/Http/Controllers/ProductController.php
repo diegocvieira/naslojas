@@ -552,6 +552,87 @@ class ProductController extends Controller
         }
     }
 
+    public function saveExcel(Request $request)
+    {
+        $file_name = $request->file->getClientOriginalName();
+        $request->file->move(public_path(), $file_name);
+
+        if (($handle = fopen(public_path() . '/' . $file_name, 'r')) !== FALSE) {
+            if (count(public_path() . '/' . $file_name) < 100) {
+                while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                    $product = new Product;
+
+                    $product->store_id = $this->store_id;
+                    $product->status = 2;
+                    $product->identifier = mt_rand(1000000000, 9999990000);
+                    $product->title = $data[0];
+                    $product->slug = str_slug($product->title, '-');
+                    $product->price = $data[1];
+                    $product->gender = $data[2];
+
+                    // Checks if identifier arent in use
+                    $NUM_OF_ATTEMPTS = 10;
+                    $attempts = 0;
+
+                    do {
+                        try {
+                            $product->save();
+                        } catch(\Exception $e) {
+                            $attempts++;
+
+                            sleep(rand(0, 10) / 10);
+
+                            $product->slug .= '-' . uniqid();
+                            $product->identifier = mt_rand(1000000000, 9999990000);
+
+                            continue;
+                        }
+
+                        break;
+                    } while ($attempts < $NUM_OF_ATTEMPTS);
+
+                    // Sizes
+                    $sizes = explode(';', $data[3]);
+                    if ($sizes) {
+                        foreach ($sizes as $size) {
+                            $product->sizes()->create(['size' => $size]);
+                        }
+                    }
+
+                    // Images
+                    $dom = new \DOMDocument();
+                    $html = file_get_contents($data[4]);
+                    @$dom->loadHTML($html);
+                    $dom->preserveWhiteSpace = false;
+                    $imgs = $dom->getElementsByTagName('a');
+
+                    $key = 1;
+                    foreach ($imgs as $img) {
+                        if ($img->getAttribute('urlfoto')) {
+                            $image = new ProductImage;
+                            $image->product_id = $product->id;
+                            $image->image = _uploadImageProduct($img->getAttribute('urlfoto'), $this->store_id, false);
+                            $image->position = $key;
+                            $image->save();
+
+                            $key++;
+                        }
+                    }
+                }
+
+                fclose($handle);
+
+                unlink(public_path() . '/' . $file_name);
+
+                //return redirect('adm/automatic');
+            } else {
+                return 'numero de linhas nao permitido';
+            }
+        } else {
+            return 'erro';
+        }
+    }
+
     public function getCreateEdit($id = null)
     {
         if ($id) {
