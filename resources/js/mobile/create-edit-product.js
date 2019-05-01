@@ -175,7 +175,12 @@ $(function() {
                 }
             });
         } else if (type == 'link-share') {
-            modalAlert("<b>Cole nas suas redes sociais</b><br>As informações do produto irão aparecer automaticamente<input type='text' value='" + $(this).attr('href') + "' readonly />", 'COPIAR');
+            modalAlert("<div class='top'><b>Cole nas suas redes sociais e whatsapp</b><br>As informações aparecerão automaticamente e o cliente poderá clicar para fazer o pedido"
+                + "<input type='text' value='" + $(this).attr('href') + "' readonly /><div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>COPIAR</button></div></div><div class='post'>"
+                + "<img src='" + $(this).data('image') + "' />"
+                + "<span class='site-title'>NASLOJAS.COM</span>"
+                + "<span class='title'>Clique para pedir | Frete " + $(this).data('freight') + " | Entrega em 24hs | Pague somente ao receber</span>"
+                + "<span class='description'>" + $(this).data('store') + " | Pelotas | " + $(this).data('title') + "</span></div>");
 
             var modal = $('#modal-alert');
 

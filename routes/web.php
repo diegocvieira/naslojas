@@ -151,6 +151,8 @@ Route::group(['prefix' => 'loja'], function () {
 			Route::post('delete-images/{image}', 'ProductController@deleteImages');
 
 			Route::post('free-freight', 'ProductController@freeFreight')->name('product-free-freight');
+
+			Route::post('save-excel', 'ProductController@saveExcel')->name('save-excel');
 		});
 
 		Route::group(['prefix' => 'mensagens'], function () {

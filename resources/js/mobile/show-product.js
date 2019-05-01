@@ -21,6 +21,34 @@ $(function() {
         });
     });
 
+    // Share product url
+    $(document).click(function(event) {
+        if ($(event.target).hasClass('link-share-open')) {
+            $('.page-show-product').find('.link-share').show();
+        } else {
+            $('.page-show-product').find('.link-share').hide();
+        }
+    });
+    $(document).on('click', '.link-share', function() {
+        modalAlert("<div class='top'><b>Cole nas suas redes sociais e whatsapp</b><br>As informações aparecerão automaticamente e o cliente poderá clicar para fazer o pedido"
+            + "<input type='text' value='" + $(this).data('url') + "' readonly /><div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>COPIAR</button></div></div><div class='post'>"
+            + "<img src='" + $(this).data('image') + "' />"
+            + "<span class='site-title'>NASLOJAS.COM</span>"
+            + "<span class='title'>Clique para pedir | Frete " + $(this).data('freight') + " | Entrega em 24hs | Pague somente ao receber</span>"
+            + "<span class='description'>" + $(this).data('store') + " | Pelotas | " + $(this).data('title') + "</span></div>");
+
+        var modal = $('#modal-alert');
+
+        modal.addClass('modal-link-share');
+        modal.find('.btn').addClass('btn-confirm');
+
+        modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
+            modal.find('input').select();
+
+            document.execCommand('copy');
+        });
+    });
+
     // Rating
     $(document).on('change', '#form-rating-product input', function() {
         if(client_logged) {
