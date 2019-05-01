@@ -154,7 +154,7 @@
 
                 <div class="row">
                     <div class="col-xs-12 text">
-                        <span class="top">Cadastre <b>100</b> produtos e ganhe <b>1</b> ano de <i>naslojas</i></span>
+                        <span class="top">Cadastre <b>100</b> produtos e ganhe <b>1 ano</b> de <i>naslojas</i></span>
                         <h3>TOTALMENTE GRÁTIS</h3>
                         <span class="bottom">Válido por tempo limitadíssimo</span>
                     </div>
