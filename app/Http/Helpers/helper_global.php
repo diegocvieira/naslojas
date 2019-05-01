@@ -85,8 +85,7 @@ function _uploadImageProduct($file, $store_id)
     $images = [
         '248x248' => $microtime . '_resize.jpg',
         '900x900' => $microtime . '.jpg',
-        '500x261' => $microtime . '_social.jpg'
-        //'540x282' => $microtime . '_social.jpg'
+        '540x282' => $microtime . '_social.jpg'
     ];
 
     foreach($images as $size => $image_name) {
@@ -109,6 +108,15 @@ function _uploadImageProduct($file, $store_id)
         $image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
         $image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
         $image->resizeImage($width, $height, \imagick::FILTER_LANCZOS, 1, TRUE);
+
+
+        if ($width == '540') {
+            $image->resizeImage(270, 141, \imagick::FILTER_LANCZOS, 1, TRUE);
+        	$offsetX = 270 - $image->getImageWidth() / 2;
+        	$offsetY = 141 - $image->getImageHeight() / 2;
+        	$image->extentImage($width, $height, -$offsetX, -$offsetY);
+        }
+
         //$image->cropThumbnailImage($size, $size);
         //$image->autoOrient();
 
