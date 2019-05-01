@@ -51,10 +51,10 @@
                     @else
                         <button type="button" class="free-freight" title="Habilitar frete grátis" data-url="{{ route('product-free-freight') }}">frete grátis</button>
                     @endif
-                @endif
 
-                @if ($product->status == 1 && $product->store->status == 1)
-                    <button type="button" class="link-share" data-url="{{ route('show-product', $product->slug) }}">COMPARTILHAR</button>
+                    @if ($product->status == 1 && $product->store->status == 1)
+                        <button type="button" class="link-share" data-url="{{ route('show-product', $product->slug) }}" data-image="{{ asset('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)) }}" data-freight="{{ $product->free_freight ? 'grátis' : 'R$5,00' }}" data-store="{{ $product->store->name }}" data-title="{{ $product->title }}">COMPARTILHAR</button>
+                    @endif
                 @endif
             </div>
         </div>
