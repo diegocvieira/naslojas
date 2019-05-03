@@ -29,14 +29,6 @@ $(function() {
         });
     });
 
-    $(document).click(function(event) {
-        if ($(event.target).hasClass('link-share-open')) {
-            $('.page-show-product').find('.link-share').show();
-        } else {
-            $('.page-show-product').find('.link-share').hide();
-        }
-    });
-
     $(document).on('change', '.page-show-product select.freights', function(e) {
         e.preventDefault();
 

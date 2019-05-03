@@ -17,7 +17,7 @@ $(function() {
 
     $('.slick-stores').slick({
         //initialSlide: Math.floor(Math.random() * $('.slick-home .item').length),
-        slidesToShow: 2,
+        slidesToShow: 3,
         //centerMode: true,
         infinite: true,
         arrows: false,

@@ -87,14 +87,17 @@
 
             <div class="shapes">
                 <div class="step">
+                    <img src="{{ asset('images/advise/shape.png') }}" />
                     <p>Nós cuidamos de toda<br>a parte <b>tech</b> para você<br>focar nas <b>vendas</b></p>
                 </div>
 
                 <div class="step">
+                    <img src="{{ asset('images/advise/shape2.png') }}" />
                     <p>Também cuidamos<br>do <b>frete</b>, das <b>fotos</b><br>e da <b>divulgação</b></p>
                 </div>
 
                 <div class="step">
+                    <img src="{{ asset('images/advise/shape3.png') }}" />
                     <p>Você só precisa <b>postar</b><br>os produtos e responder<br>os <b>pedidos</b></p>
                 </div>
             </div>
@@ -150,7 +153,7 @@
             </div>
         </div>
 
-        <div class="plans">
+        <div class="plans" id="planos">
             <div class="section-title">
                 <h2>PLANOS DE ADESÃO</h2>
                 <h3>Os planos serão aplicados quando a promoção de lançamento for encerrada<br>A QUALQUER MOMENTO</h3>
@@ -186,7 +189,7 @@
 
         <div class="attendance">
             <div class="col-xs-12">
-                <h2>Atendimento rápido e prático<span>antes e depois de cadastrar a sua loja</span></h2>
+                <h2>Atendimento rápido e prático antes e depois de cadastrar a sua loja</h2>
 
                 <h3>Se preferir, solicite a visita de um dos nossos representantes</h3>
             </div>

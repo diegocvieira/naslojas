@@ -71,13 +71,12 @@
         }
 
         .image {
-            //width: 100%;
-            width: 248px;
+            width: 100%;
             float: left;
             border-radius: 5px;
             background-color: #fff;
             height: 248px;
-            object-fit: contain;
+            object-fit: cover;
             transition: transform .2s;
             box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 20px 0px;
 

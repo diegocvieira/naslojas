@@ -1,5 +1,5 @@
 <?php
-    $top_simple = true;
+    $top_nav = true;
     $header_title = 'Login da loja | naslojas.com';
 ?>
 

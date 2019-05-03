@@ -26,7 +26,7 @@
                         <a href="{{ route('terms-use') }}" target="_blank">Termos de uso</a>
                         <a href="{{ route('privacy-policy') }}" target="_blank">Privacidade</a>
                         <a href="{{ route('store-advertise') }}">Vender online</a>
-                        <a href="{{ route('store-login-get') }}">Admin da loja</a>
+                        <a href="{{ route('store-advertise') }}#planos">Planos</a>
                     </div>
 
                     <div class="col-xs-5">

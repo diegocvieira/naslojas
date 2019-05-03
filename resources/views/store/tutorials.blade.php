@@ -35,7 +35,7 @@
                     <img src="{{ asset('images/tutorials-desktop/add-products/' . $i . '.jpg') }}" alt="Passo {{ $i }}" class="img-responsive" />
                 @endfor
             @elseif ($type == 'editar-produtos')
-                @for ($i = 1; $i <= 5; $i++)
+                @for ($i = 1; $i <= 7; $i++)
                     <img src="{{ asset('images/tutorials-desktop/edit-products/' . $i . '.jpg') }}" alt="Passo {{ $i }}" class="img-responsive" />
                 @endfor
             @elseif ($type == 'pedidos')

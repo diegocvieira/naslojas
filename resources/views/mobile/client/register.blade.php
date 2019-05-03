@@ -28,12 +28,12 @@
                 {!! Form::label('', 'E-mail') !!}
             </div>
 
-            <div class="form-group half margin">
+            <div class="form-group">
                 {!! Form::input('password', 'password', null, ['placeholder' => ' ', 'id' => 'password']) !!}
                 {!! Form::label('', 'Senha') !!}
             </div>
 
-            <div class="form-group half">
+            <div class="form-group">
                 {!! Form::input('password', 'password_confirmation', null, ['placeholder' => ' ']) !!}
                 {!! Form::label('', 'Confirmar senha') !!}
             </div>
