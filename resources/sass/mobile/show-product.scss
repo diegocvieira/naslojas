@@ -43,7 +43,7 @@
             width: 18.4%;
             //height: 40px;
             margin: 10px 0 0 2%;
-            object-fit: contain;
+            object-fit: cover;
             border-radius: 5px;
             box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 20px 0px;
 
@@ -179,9 +179,9 @@
     }
 
     .link-share {
-        background-color: #fff;
-        width: 20px;
-        height: 20px;
+        background-color: transparent;
+        width: 15px;
+        height: 15px;
         border: none;
         background-position: center;
         background-image: url('../../images/icon-share.png');
@@ -240,6 +240,7 @@
     .price-container {
         float: left;
         width: 100%;
+        margin-top: 10px;
 
         .old-price {
             font-size: 12.5px;
@@ -475,7 +476,7 @@
     .size-container {
         float: left;
         width: 100%;
-        margin-top: 30px;
+        margin-top: 20px;
 
         span {
             font-size: 14.5px;
@@ -638,7 +639,7 @@
                 border-radius: 5px;
                 background-color: rgb(245, 245, 245);
                 width: calc(33% - 5px);
-                object-fit: contain;
+                object-fit: cover;
                 margin: 10px 5px 0 0;
                 box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 20px 0px;
             }
