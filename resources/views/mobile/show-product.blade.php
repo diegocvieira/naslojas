@@ -32,6 +32,12 @@
             </a>
         </div>
 
+        <h1 class="product-title">
+            {{ $product->title }}
+
+            <button type="button" class="link-share" data-url="{{ route('show-product', $product->slug) }}" data-image="{{ asset('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)) }}" data-freight="{{ $product->free_freight ? 'grátis' : 'R$5,00' }}" data-store="{{ $product->store->name }}" data-title="{{ $product->title }}"></button>
+        </h1>
+
         <div class="price-container">
             @if ($product->off)
                 <span class="old-price">de <span>{{ number_format(_oldPrice($product->price, $product->off), 2, ',', '.') }}</span></span>
@@ -78,12 +84,6 @@
                 </div>
             @endforeach
         </div>
-
-        <h1 class="product-title">
-            {{ $product->title }}
-
-            <button type="button" class="link-share" data-url="{{ route('show-product', $product->slug) }}" data-image="{{ asset('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)) }}" data-freight="{{ $product->free_freight ? 'grátis' : 'R$5,00' }}" data-store="{{ $product->store->name }}" data-title="{{ $product->title }}"></button>
-        </h1>
 
         <div class="rating-container">
             @isset($product_rating->rating)
