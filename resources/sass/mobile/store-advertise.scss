@@ -318,19 +318,12 @@
 
         .keys {
             text-align: left;
-            width: 100%;
-            float: left;
-
-            .content {
-                width: 100%;
-                float: left;
-            }
+            display: inline-block;
 
             .key {
                 font-size: 75px;
                 color: rgb(94, 255, 211);
                 display: inline-block;
-                padding-left: 20px;
             }
 
             .item {

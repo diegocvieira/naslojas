@@ -163,18 +163,18 @@
                     </div>
                 </div>
 
-                <div class="row keys">
-                    <div class="col-xs-3 col-xs-offset-1 text-right">
+                <div class="row">
+                    <div class="col-xs-4 text-right">
                         <span class="key">{</span>
                         <span class="item">Mantenha a sua loja<span>aberta 24hs por dia</span></span>
                     </div>
 
-                    <div class="col-xs-3 text-center">
+                    <div class="col-xs-4 text-center">
                         <span class="key">{</span>
                         <span class="item">Sem mensalidade e<span>sem comissão nas vendas</span></span>
                     </div>
 
-                    <div class="col-xs-3">
+                    <div class="col-xs-4 text-left">
                         <span class="key">{</span>
                         <span class="item">Nunca foi tão fácil vender<span>seus produtos online</span></span>
                     </div>

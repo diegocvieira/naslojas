@@ -342,28 +342,23 @@
             }
         }
 
-        .keys {
+        .key {
+            font-size: 75px;
+            font-family: 'OpenSans-Light';
+            color: rgb(94, 255, 211);
+            display: inline-block;
+        }
+
+        .item {
+            font-size: 18.7px;
+            font-family: 'OpenSans-Regular';
+            line-height: 1.4;
+            color: #fff;
+            display: inline-block;
             text-align: left;
 
-            .key {
-                font-size: 75px;
-                font-family: 'OpenSans-Light';
-                color: rgb(94, 255, 211);
-                display: inline-block;
-                padding-left: 30px;
-            }
-
-            .item {
-                font-size: 18.7px;
-                font-family: 'OpenSans-Regular';
-                line-height: 1.4;
-                color: #fff;
-                display: inline-block;
-                text-align: left;
-
-                span {
-                    display: block;
-                }
+            span {
+                display: block;
             }
         }
     }
