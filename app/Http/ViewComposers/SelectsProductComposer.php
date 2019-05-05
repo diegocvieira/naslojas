@@ -33,8 +33,6 @@ class SelectsProductComposer
             'G' => 'G',
             'GG' => 'GG',
             'XG' => 'XG',
-			'2G' => '2G',
-			'3G' => '3G',
             'XGG' => 'XGG',
             'XXG' => 'XXG'
         ];
