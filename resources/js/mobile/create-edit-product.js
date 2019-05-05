@@ -175,7 +175,7 @@ $(function() {
                 }
             });
         } else if (type == 'link-share') {
-            modalAlert("<div class='top'><b>Cole nas suas redes sociais e whatsapp</b><br>As informações aparecerão automaticamente e o cliente poderá clicar para fazer o pedido"
+            modalAlert("<div class='top'><b>Cole nas suas redes sociais e whatsapp</b><br>As informações aparecerão automaticamente e o usuário poderá clicar para fazer o pedido"
                 + "<input type='text' value='" + $(this).attr('href') + "' readonly /><div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>COPIAR</button></div></div><div class='post'>"
                 + "<img src='" + $(this).data('image') + "' />"
                 + "<span class='site-title'>NASLOJAS.COM</span>"

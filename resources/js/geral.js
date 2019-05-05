@@ -65,7 +65,7 @@ $(function() {
 
     // Share product url
     $(document).on('click', '.link-share', function() {
-        modalAlert("<div class='top'><b>Cole nas suas redes sociais e whatsapp</b><br>As informações aparecerão automaticamente e o cliente poderá clicar para fazer o pedido"
+        modalAlert("<div class='top'><b>Cole nas suas redes sociais e whatsapp</b><br>As informações aparecerão automaticamente e o usuário poderá clicar para fazer o pedido"
             + "<input type='text' value='" + $(this).data('url') + "' readonly /></div><div class='post'>"
             + "<img src='" + $(this).data('image') + "' />"
             + "<span class='site-title'>NASLOJAS.COM</span>"
