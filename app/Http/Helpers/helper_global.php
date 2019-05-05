@@ -83,7 +83,7 @@ function _uploadImageProduct($file, $store_id, $input_file = true)
     $microtime = microtime(true) . RAND(111111, 999999);
 
     $images = [
-        '248x248' => $microtime . '_resize.jpg',
+        '250x250' => $microtime . '_resize.jpg',
         '900x900' => $microtime . '.jpg',
         '540x282' => $microtime . '_social.jpg'
     ];
@@ -111,8 +111,13 @@ function _uploadImageProduct($file, $store_id, $input_file = true)
         $image->setSamplingFactors(array('2x2', '1x1', '1x1'));
         $image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
         $image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
-        $image->resizeImage($width, $height, \imagick::FILTER_LANCZOS, 1, TRUE);
-        //$image->cropThumbnailImage($size, $size);
+
+        if ($width == '250') {
+            $image->cropThumbnailImage($width, $height);
+        } else {
+            $image->resizeImage($width, $height, \imagick::FILTER_LANCZOS, 1, TRUE);
+        }
+
         //$image->autoOrient();
 
         switch ($image->getImageOrientation()) {
@@ -152,7 +157,7 @@ function _uploadImageProduct($file, $store_id, $input_file = true)
         $image->destroy();
     }
 
-    return $images['248x248'];
+    return $images['250x250'];
 }
 
 function _uploadImage($file, $store_id)

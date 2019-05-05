@@ -50,7 +50,7 @@
                     <div class="col-xs-4">
                         <img src="{{ asset('images/advise/hw1.png') }}" />
 
-                        <p>O cliente encontra os seus produtos<br>nas redes sociais, com um link para o<br><i>naslojas</i>, e faz o pedido online</p>
+                        <p class="margin">O cliente encontra os seus produtos<br>nas redes sociais, com um link para o<br><i>naslojas</i>, e faz o pedido online</p>
                     </div>
 
                     <div class="col-xs-4">
@@ -62,7 +62,7 @@
                     <div class="col-xs-4">
                         <img src="{{ asset('images/advise/hw3.png') }}" />
 
-                        <p>O entregador pega o produto na loja,<br>leva para o cliente e volta na loja<br>com o pagamento</p>
+                        <p class="margin">O entregador pega o produto na loja,<br>leva para o cliente e volta na loja<br>com o pagamento</p>
                     </div>
                 </div>
             </div>
@@ -107,14 +107,17 @@
 
                 <div class="row">
                     <div class="col-xs-4 step">
+                        <img src="{{ asset('images/advise/shape.png') }}" />
                         <p>Nós cuidamos de toda<br>a parte <b>tech</b> para você<br>focar nas <b>vendas</b></p>
                     </div>
 
                     <div class="col-xs-4 step">
+                        <img src="{{ asset('images/advise/shape2.png') }}" />
                         <p>Também cuidamos<br>do <b>frete</b>, das <b>fotos</b><br>e da <b>divulgação</b></p>
                     </div>
 
                     <div class="col-xs-4 step">
+                        <img src="{{ asset('images/advise/shape3.png') }}" />
                         <p>Você só precisa <b>postar</b><br>os produtos e responder<br>os <b>pedidos</b></p>
                     </div>
                 </div>
@@ -154,13 +157,13 @@
 
                 <div class="row">
                     <div class="col-xs-12 text">
-                        <span class="top">Cadastre <b>100</b> produtos e ganhe <b>1</b> ano de <i>naslojas</i></span>
+                        <span class="top">Cadastre <b>100</b> produtos e ganhe <b>1 ano</b> de <i>naslojas</i></span>
                         <h3>TOTALMENTE GRÁTIS</h3>
                         <span class="bottom">Válido por tempo limitadíssimo</span>
                     </div>
                 </div>
 
-                <div class="row keys">
+                <div class="row">
                     <div class="col-xs-4 text-right">
                         <span class="key">{</span>
                         <span class="item">Mantenha a sua loja<span>aberta 24hs por dia</span></span>
@@ -171,7 +174,7 @@
                         <span class="item">Sem mensalidade e<span>sem comissão nas vendas</span></span>
                     </div>
 
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 text-left">
                         <span class="key">{</span>
                         <span class="item">Nunca foi tão fácil vender<span>seus produtos online</span></span>
                     </div>
@@ -179,7 +182,7 @@
             </div>
         </div>
 
-        <div class="plans">
+        <div class="plans" id="planos">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 section-title">

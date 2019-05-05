@@ -15,6 +15,20 @@ $(function() {
         //variableHeight: true,
     });
 
+    $('.slick-stores').slick({
+        //initialSlide: Math.floor(Math.random() * $('.slick-home .item').length),
+        slidesToShow: 3,
+        //centerMode: true,
+        infinite: true,
+        arrows: false,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 4000,
+        //cssEase: 'linear',
+        //variableWidth: true,
+        //variableHeight: true
+    });
+
     // City
     $(document).on('click', '.show-city-modal', function(e) {
         e.preventDefault();

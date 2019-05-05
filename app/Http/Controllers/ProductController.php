@@ -249,14 +249,20 @@ class ProductController extends Controller
             ->where('store_id', $this->store_id)
             ->where('status', 2)
             ->orderBy('id', 'DESC')
-            ->paginate(999);
+            ->paginate(100);
 
         $section = 'add';
 
         if (count($products) > 0) {
             $header_title = 'Finalizar cadastro de produtos | naslojas.com';
 
-            return view('store.product-edit', compact('products', 'section', 'header_title'));
+            if (!\Request::ajax()) {
+                return view('store.product-edit', compact('products', 'section', 'header_title'));
+            } else {
+                return response()->json([
+                    'products' => view('store.list-product-edit', compact('products'))->render()
+                ]);
+            }
         } else {
             $header_title = 'Cadastrar produtos | naslojas.com';
 
@@ -556,66 +562,107 @@ class ProductController extends Controller
     {
         $file_name = $request->file->getClientOriginalName();
         $request->file->move(public_path(), $file_name);
+        $url = null;
+        $last_title = null;
 
         if (($handle = fopen(public_path() . '/' . $file_name, 'r')) !== FALSE) {
             if (count(public_path() . '/' . $file_name) < 100) {
                 while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
-                    $product = new Product;
+                    if ($data[0] != 'link' && $url != $data[0]) {
+                        $url = $data[0];
 
-                    $product->store_id = $this->store_id;
-                    $product->status = 2;
-                    $product->identifier = mt_rand(1000000000, 9999990000);
-                    $product->title = $data[0];
-                    $product->slug = str_slug($product->title, '-');
-                    $product->price = $data[1];
-                    $product->gender = $data[2];
+                        // Access page
+                        $dom = new \DOMDocument();
+                        $html = file_get_contents('https://www.hercilio.com.br/' . $url);
+                        @$dom->loadHTML($html);
+                        $dom->preserveWhiteSpace = false;
 
-                    // Checks if identifier arent in use
-                    $NUM_OF_ATTEMPTS = 10;
-                    $attempts = 0;
+                        // Get elements
+                        $links = $dom->getElementsByTagName('a');
+                        $title = $dom->getElementsByTagName('h1')[0]->getAttribute('title'); // Title
+                        $spans = $dom->getElementsByTagName('span');
 
-                    do {
-                        try {
-                            $product->save();
-                        } catch(\Exception $e) {
-                            $attempts++;
+                        // New product
+                        $product = new Product;
+                        $product->store_id = $this->store_id;
+                        $product->status = 2;
+                        $product->identifier = mt_rand(1000000000, 9999990000);
+                        $product->title = $title;
+                        $product->slug = str_slug($product->title, '-');
+                        $product->gender = 2;
 
-                            sleep(rand(0, 10) / 10);
-
-                            $product->slug .= '-' . uniqid();
-                            $product->identifier = mt_rand(1000000000, 9999990000);
-
-                            continue;
+                        foreach ($spans as $span) {
+                            // Price
+                            if ($span->getAttribute('class') == 'ctrValorMoeda') {
+                                $product->price = number_format(str_replace(['.', ','], ['', '.'], str_replace('R$', '', $span->nodeValue)), 2, '.', '');
+                            }
                         }
 
-                        break;
-                    } while ($attempts < $NUM_OF_ATTEMPTS);
-
-                    // Sizes
-                    $sizes = explode(';', $data[3]);
-                    if ($sizes) {
-                        foreach ($sizes as $size) {
-                            $product->sizes()->create(['size' => $size]);
+                        // Variation
+                        if (!isset($variation) || $last_title != $title) {
+                            $variation = microtime(true);
                         }
-                    }
+                        if ($last_title = $title) {
+                            $product->related = $variation;
+                        }
+                        $last_title = $title;
+                        $last_variation = $variation;
 
-                    // Images
-                    $dom = new \DOMDocument();
-                    $html = file_get_contents($data[4]);
-                    @$dom->loadHTML($html);
-                    $dom->preserveWhiteSpace = false;
-                    $imgs = $dom->getElementsByTagName('a');
+                        // Checks if identifier arent in use
+                        $NUM_OF_ATTEMPTS = 10;
+                        $attempts = 0;
 
-                    $key = 1;
-                    foreach ($imgs as $img) {
-                        if ($img->getAttribute('urlfoto')) {
-                            $image = new ProductImage;
-                            $image->product_id = $product->id;
-                            $image->image = _uploadImageProduct($img->getAttribute('urlfoto'), $this->store_id, false);
-                            $image->position = $key;
-                            $image->save();
+                        do {
+                            try {
+                                $product->save();
+                            } catch(\Exception $e) {
+                                $attempts++;
 
-                            $key++;
+                                sleep(rand(0, 10) / 10);
+
+                                $product->slug .= '-' . uniqid();
+                                $product->identifier = mt_rand(1000000000, 9999990000);
+
+                                continue;
+                            }
+
+                            break;
+                        } while ($attempts < $NUM_OF_ATTEMPTS);
+
+                        $key = 1;
+                        $sizes = false;
+                        foreach ($links as $link) {
+                            // Sizes
+                            if ($link->getAttribute('codigo_tamanho') && $link->getAttribute('poucosestoque') != '0') {
+                                if ($link->nodeValue == 'Unico' || $link->nodeValue == 'U') {
+                                    $size = 'Ú';
+                                } else if ($link->nodeValue == '2G') {
+                                    $size = 'GG';
+                                } else if ($link->nodeValue == '3G') {
+                                    $size = 'XG';
+                                } else {
+                                    $size = $link->nodeValue;
+                                }
+
+                                $product->sizes()->create(['size' => $size]);
+
+                                $sizes = true;
+                            }
+
+                            // Images
+                    		if ($link->getAttribute('urlfoto')) {
+                                $image = new ProductImage;
+                                $image->product_id = $product->id;
+                                $image->image = _uploadImageProduct($link->getAttribute('urlfoto'), $this->store_id, false);
+                                $image->position = $key;
+                                $image->save();
+
+                                $key++;
+                    		}
+                    	}
+
+                        if (!$sizes) {
+                            $product->sizes()->create(['size' => 'Ú']);
                         }
                     }
                 }

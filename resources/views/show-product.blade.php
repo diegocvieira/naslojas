@@ -56,11 +56,6 @@
 <div class="col-xs-5">
     <span class="advice"></span>
 
-    <div class="link-share-container">
-        <button type="button" class="link-share-open"></button>
-        <button type="button" class="link-share" data-url="{{ route('show-product', $product->slug) }}" data-image="{{ asset('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)) }}" data-freight="{{ $product->free_freight ? 'grátis' : 'R$5,00' }}" data-store="{{ $product->store->name }}" data-title="{{ $product->title }}">Compartilhar</button>
-    </div>
-
     <span class="identifier">Produto #{{ $product->identifier }}</span>
 
     <div class="store-container">
@@ -73,7 +68,11 @@
         </a>
     </div>
 
-    <h1 class="product-title">{{ $product->title }}</h1>
+    <h1 class="product-title">
+        {{ $product->title }}
+
+        <button type="button" class="link-share" data-url="{{ route('show-product', $product->slug) }}" data-image="{{ asset('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)) }}" data-freight="{{ $product->free_freight ? 'grátis' : 'R$5,00' }}" data-store="{{ $product->store->name }}" data-title="{{ $product->title }}"></button>
+    </h1>
 
     <div class="price-container">
         @if ($product->off)

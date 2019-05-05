@@ -70,11 +70,11 @@ $(function() {
         },
         paramName: 'image',
         maxFilesize: 2, // MB
-        maxFiles: 50,
+        maxFiles: 100,
         parallelUploads: 25,
         addRemoveLinks: true,
         dictFileTooBig: "A imagem não pode ter mais de 2mb",
-        dictMaxFilesExceeded: "Máximo de 50 imagens por vez",
+        dictMaxFilesExceeded: "Máximo de 100 imagens por vez",
         dictRemoveFile: "",
         dictCancelUploadConfirmation: "Quer cancelar o upload?",
         clickable: true,
