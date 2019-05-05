@@ -634,7 +634,17 @@ class ProductController extends Controller
                         foreach ($links as $link) {
                             // Sizes
                             if ($link->getAttribute('codigo_tamanho') && $link->getAttribute('poucosestoque') != '0') {
-                                $product->sizes()->create(['size' => (($link->nodeValue == 'Unico' || $link->nodeValue == 'U') ? 'U' : $link->nodeValue)]);
+                                if ($link->nodeValue == 'Unico' || $link->nodeValue == 'U') {
+                                    $size = 'Ú';
+                                } else if ($link->nodeValue == '2G') {
+                                    $size = 'GG';
+                                } else if ($link->nodeValue == '3G') {
+                                    $size = 'XG';
+                                } else {
+                                    $size = $link->nodeValue;
+                                }
+
+                                $product->sizes()->create(['size' => $size]);
 
                                 $sizes = true;
                             }
