@@ -92,7 +92,11 @@ function _uploadImageProduct($file, $store_id, $input_file = true)
         if ($input_file) {
             $image = new \Imagick($file->path());
         } else {
-            $image = new \Imagick($file);
+            if (get_headers($file, 1)[0] == 'HTTP/1.1 200 OK') {
+                $image = new \Imagick($file);
+            } else {
+                return false;
+            }
         }
 
         if ($image->getImageAlphaChannel()) {

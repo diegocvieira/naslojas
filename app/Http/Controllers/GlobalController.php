@@ -18,10 +18,12 @@ class GlobalController extends Controller
             $this->setCity(4913);
         }
 
-        $products = Product::has('images')->inRandomOrder()->paginate(30);
+        $featured_products = Product::has('images')->inRandomOrder()->limit(20)->get();
+
+        $offers = Product::has('images')->inRandomOrder()->limit(20)->get();
 
         if (Agent::isDesktop()) {
-            return view('home', compact('products'));
+            return view('home', compact('featured_products', 'offers'));
         } else {
             return view('mobile.home', compact('products'));
         }

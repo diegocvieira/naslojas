@@ -16,7 +16,7 @@
                 {!! Form::submit('') !!}
             {!! Form::close() !!}
         @else
-            {!! Form::open(['method' => 'GET', 'route' => 'form-search', 'id' => 'form-search']) !!}
+            {!! Form::open(['method' => 'GET', 'route' => ['search-products', Cookie::get('city_slug'), Cookie::get('state_letter_lc')], 'id' => 'form-search']) !!}
                 {!! Form::text('keyword', $keyword ?? '', ['placeholder' => Cookie::get('sessao_cidade_title') ? 'Digite aqui o produto que voce procura nas lojas de ' . Cookie::get('sessao_cidade_title') : 'Digite aqui o produto que voce procura nas lojas de Pelotas']) !!}
 
                 {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}

@@ -29,31 +29,37 @@ $(function() {
     });
 
     $('.slick-home').slick({
-        //initialSlide: Math.floor(Math.random() * $('.slick-home .item').length),
         slidesToShow: 1,
-        //centerMode: true,
         infinite: true,
         arrows: true,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 4000,
-        //cssEase: 'linear',
-        //variableWidth: true,
-        //variableHeight: true
+        autoplaySpeed: 4000
     });
 
     $('.slick-stores').slick({
-        //initialSlide: Math.floor(Math.random() * $('.slick-home .item').length),
-        slidesToShow: 2,
-        //centerMode: true,
+        slidesToShow: 4,
         infinite: true,
-        arrows: false,
+        arrows: true,
         slidesToScroll: 1,
         autoplay: true,
+        autoplaySpeed: 4000
+    });
+
+    $('.slick-products').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        infinite: true,
+        arrows: true,
+        autoplay: true,
         autoplaySpeed: 4000,
-        //cssEase: 'linear',
-        //variableWidth: true,
-        //variableHeight: true
+    });
+
+    // Disabled stores
+    $(document).on('click', '.store-disabled', function(e) {
+        e.preventDefault();
+
+        modalAlert('Os produtos desta loja ainda estão sendo cadastrados. <br> Volte outra hora para conferir.');
     });
 
     // Alert app

@@ -25,7 +25,7 @@
 
                                 <button type="button" class="btn-finish">{{ $section == 'add' ? 'ADICIONAR AO SITE' : 'SALVAR ALTERAÇÕES' }}</button>
 
-                                @if (Auth::guard('superadmin')->check())
+                                @if (!Auth::guard('superadmin')->check())
                                     {!! Form::open(['method' => 'POST', 'route' => 'save-excel', 'files' => true]) !!}
                                         {!! Form::file('file') !!}
                                         {!! Form::submit('file') !!}
