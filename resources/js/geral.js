@@ -147,10 +147,6 @@ $(function() {
         $('#form-search').submit();
     });
 
-    $(document).on('submit', '#form-search', function() {
-        $(':input[value=""]').attr('disabled', true);
-    });
-
     $(document).on('click', '.password-recover', function(e) {
         e.preventDefault();
 
