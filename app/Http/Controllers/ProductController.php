@@ -150,10 +150,14 @@ class ProductController extends Controller
         $search_order = $request->order ?? null;
         $keyword = $request->keyword ?? null;
         $advanced = $request->advanced ?? null;
+        $search_max_price = $request->max_price ?? null;
+        $search_min_price = $request->min_price ?? null;
 
         $products = Product::has('images')
             ->filterGender($search_gender)
-            ->filterOrder($search_order);
+            ->filterOrder($search_order)
+            ->filterMinPrice($search_min_price)
+            ->filterMaxPrice($search_max_price);
 
         if ($keyword) {
             //$keyword = urldecode($keyword);
@@ -182,7 +186,11 @@ class ProductController extends Controller
         $products = $products->paginate(30);
 
         if ($keyword && $products->count() == 0) {
-            $products = Product::filterGender($search_gender)->filterOrder($search_order)
+            $products = Product::has('images')
+                ->filterGender($search_gender)
+                ->filterOrder($search_order)
+                ->filterMinPrice($search_min_price)
+                ->filterMaxPrice($search_max_price)
                 ->where(function ($query) use ($keyword) {
                     $query->search(preg_replace('{(.)\1+}','$1', $keyword))->orWhereHas('store', function ($query) use ($keyword) {
                         $query->search(preg_replace('{(.)\1+}','$1', $keyword));
@@ -561,7 +569,7 @@ class ProductController extends Controller
         }
     }
 
-    public function saveExcel()
+    public function saveExcel(Request $request)
     {
         /*$file_name = $request->file->getClientOriginalName();
         $request->file->move(public_path(), $file_name);
@@ -696,10 +704,9 @@ class ProductController extends Controller
             return 'erro';
         }*/
 
-        //$file_name = $request->file->getClientOriginalName();
-        //$request->file->move(public_path(), $file_name);
-        //$json = json_decode(file_get_contents(public_path() . '/' . $file_name), true);
-        $json = json_decode(file_get_contents(public_path() . '/products_upload.json'), true);
+        $file_name = $request->file->getClientOriginalName();
+        $request->file->move(public_path(), $file_name);
+        $json = json_decode(file_get_contents(public_path() . '/' . $file_name), true);
 
         $last_json_id = null;
         $last_naslojas_id = null;
@@ -717,7 +724,7 @@ class ProductController extends Controller
                     $product->identifier = mt_rand(1000000000, 9999990000);
                     $product->title = $j['titulo_produto'];
                     $product->slug = str_slug($product->title, '-');
-                    $product->price = $j['vlr_atual'];
+                    $product->price = number_format(($j['vlr_atual']/100), 2);
                     $product->description = $j['descricao_produto'];
 
                     if ($j['genero'] == '2') {
@@ -789,7 +796,7 @@ class ProductController extends Controller
             }
         }
 
-        //unlink(public_path() . '/' . $file_name);
+        unlink(public_path() . '/' . $file_name);
     }
 
     public function getCreateEdit($id = null)

@@ -65,26 +65,26 @@
 
                 <section class="row">
                     <div class="col-xs-3">
-                        <a href="#">
-                            <img src="{{ asset('images/price50.jpg') }}" alt="Produtos com até R$ 50,00" />
+                        <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=50.00' }}">
+                            <img src="{{ asset('images/price50.jpg') }}" class="img-responsive" alt="Produtos com até R$ 50,00" />
                         </a>
                     </div>
 
                     <div class="col-xs-3">
-                        <a href="#">
-                            <img src="{{ asset('images/price100.jpg') }}" alt="Produtos com até R$ 100,00" />
+                        <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=100.00' }}">
+                            <img src="{{ asset('images/price100.jpg') }}" class="img-responsive" alt="Produtos com até R$ 100,00" />
                         </a>
                     </div>
 
                     <div class="col-xs-3">
-                        <a href="#">
-                            <img src="{{ asset('images/price150.jpg') }}" alt="Produtos com até R$ 150,00" />
+                        <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=150.00' }}">
+                            <img src="{{ asset('images/price150.jpg') }}" class="img-responsive" alt="Produtos com até R$ 150,00" />
                         </a>
                     </div>
 
                     <div class="col-xs-3">
-                        <a href="#">
-                            <img src="{{ asset('images/price200.jpg') }}" alt="Produtos com até R$ 200,00" />
+                        <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=200.00' }}">
+                            <img src="{{ asset('images/price200.jpg') }}" class="img-responsive" alt="Produtos com até R$ 200,00" />
                         </a>
                     </div>
                 </section>
@@ -139,7 +139,7 @@
                             </div>
 
                             <div class="item">
-                                <a href="{{ route('show-store', 'hercilio') }}" class="store-disabled">
+                                <a href="{{ route('show-store', 'hercilio') }}">
                                     <img src="{{ asset('images/stores/hercilio.png') }}" alt="Hercílio" />
                                 </a>
                             </div>
@@ -151,8 +151,8 @@
                             </div>
 
                             <div class="item">
-                                <a href="{{ route('show-store', 'emilice') }}" class="store-disabled">
-                                    <img src="{{ asset('images/stores/emilice.png') }}" alt="Emilisse" />
+                                <a href="{{ route('show-store', 'emilice') }}">
+                                    <img src="{{ asset('images/stores/emilice.png') }}" alt="Emilice" />
                                 </a>
                             </div>
                         </div>

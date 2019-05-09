@@ -18,9 +18,11 @@ class GlobalController extends Controller
             $this->setCity(4913);
         }
 
-        $featured_products = Product::has('images')->inRandomOrder()->limit(20)->get();
+        $products = Product::has('images')->inRandomOrder()->paginate(30);
 
-        $offers = Product::has('images')->inRandomOrder()->limit(20)->get();
+        $featured_products = Product::has('images')->inRandomOrder()->limit(15)->get();
+
+        $offers = Product::has('images')->inRandomOrder()->limit(15)->get();
 
         if (Agent::isDesktop()) {
             return view('home', compact('featured_products', 'offers'));

@@ -11,132 +11,6 @@
 |
 */
 
-Route::get('teste/teste', function () {
-	$json = json_decode(file_get_contents('testando.json'), true);
-
-	$last_json_id = null;
-	$last_naslojas_id = null;
-	$last_link = null;
-
-	foreach ($json as $j) {
-		if ($j['status'] == '1') {
-			if ($last_json_id == $j['id'] && $last_link == $j['link']) {
-				$p = App\Product::withoutGlobalScopes(['active', 'active-store'])->find($last_naslojas_id);
-				$p->sizes()->create(['size' => $j['tamanho']]);
-			} else {
-				$product = new App\Product;
-				$product->store_id = 2;
-				$product->status = 2;
-				$product->identifier = mt_rand(1000000000, 9999990000);
-				$product->title = $j['titulo_produto'];
-				$product->slug = str_slug($product->title, '-');
-				$product->price = $j['vlr_atual'];
-				$product->description = $j['descricao_produto'];
-
-				if ($j['genero'] == '2') {
-					$product->gender = 2;
-				} else if ($j['genero'] == '1') {
-					$product->gender = 3;
-				} else {
-					$product->gender = 1;
-				}
-
-				// Variation
-				if (!isset($variation) || $last_json_id != $j['id']) {
-					$variation = mt_rand(1000000000, 9999990000);
-				}
-				$product->related = $variation;
-				$last_json_id = $j['id'];
-				$last_link = $j['link'];
-
-				// Checks if identifier arent in use
-				$NUM_OF_ATTEMPTS = 10;
-				$attempts = 0;
-
-				do {
-					try {
-						$product->save();
-					} catch(\Exception $e) {
-						$attempts++;
-
-						sleep(rand(0, 10) / 10);
-
-						$product->slug .= '-' . uniqid();
-						$product->identifier = mt_rand(1000000000, 9999990000);
-
-						continue;
-					}
-
-					break;
-				} while ($attempts < $NUM_OF_ATTEMPTS);
-
-				$last_naslojas_id = $product->id;
-
-				if (!$j['tamanho'] || $j['tamanho'] == 'Unico') {
-					$product->sizes()->create(['size' => 'Ú']);
-				} else {
-					$product->sizes()->create(['size' => $j['tamanho']]);
-				}
-
-				$key = 1;
-				foreach (json_decode($j['imagens'], true) as $img) {
-					if ($j['codigo_estoque'] == $img['codigo']) {
-						$image = new App\ProductImage;
-						$image->product_id = $product->id;
-						$image->image = _uploadImageProduct($img['link'], 2, false);
-						$image->position = $key;
-						$image->save();
-
-						$key++;
-					}
-				}
-			}
-		}
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-});
-
 Route::get('/', 'GlobalController@home')->name('home');
 
 Route::group(['prefix' => 'site'], function () {
@@ -189,7 +63,7 @@ Route::group(['prefix' => 'site'], function () {
 
 // Search
 Route::get('produtos/busca', 'ProductController@formSearch')->name('form-search');
-Route::get('{city}/{state}/busca', 'ProductController@search')->name('search-products');
+Route::get('busca/{city}/{state}', 'ProductController@search')->name('search-products');
 
 // Set a new city
 Route::get('cidade/set/{id}', 'GlobalController@setCity')->name('set-city');
@@ -278,7 +152,7 @@ Route::group(['prefix' => 'loja'], function () {
 
 			Route::post('free-freight', 'ProductController@freeFreight')->name('product-free-freight');
 
-			Route::get('save-excel', 'ProductController@saveExcel')->name('save-excel');
+			Route::post('save-excel', 'ProductController@saveExcel')->name('save-excel');
 		});
 
 		Route::group(['prefix' => 'mensagens'], function () {

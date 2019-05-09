@@ -26,6 +26,10 @@
         margin: 0 0 30px 10px;
     }
 
+    .slick-slider:hover .slick-arrow {
+        opacity: 1;
+    }
+
     .slick-arrow {
         border-radius: 50%;
         background-color: rgb(255, 255, 255);
@@ -39,6 +43,7 @@
         z-index: 1;
         transition: .5s;
         transform: translateY(-50%);
+        opacity: 0;
 
         &:after {
             content: '';
@@ -70,17 +75,9 @@
         width: 100%;
         float: left;
 
-        &:hover .slick-arrow {
-            opacity: 1;
-        }
-
         img {
     		width: 100%;
     	}
-
-        .slick-arrow {
-            opacity: 0;
-        }
     }
 
     .know {
@@ -119,6 +116,14 @@
 
     .slick-products, .slick-stores {
         margin-top: 0;
+
+        .item {
+            text-align: center;
+
+            a {
+                display: inline-block;
+            }
+        }
 
         .product {
             padding: 0 10px;

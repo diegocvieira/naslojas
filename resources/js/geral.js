@@ -43,7 +43,8 @@ $(function() {
         arrows: true,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 4000
+        autoplaySpeed: 4000,
+        initialSlide: Math.floor(Math.random() * $('.slick-stores a').length)
     });
 
     $('.slick-products').slick({
@@ -51,7 +52,7 @@ $(function() {
         slidesToScroll: 1,
         infinite: true,
         arrows: true,
-        autoplay: true,
+        autoplay: false,
         autoplaySpeed: 4000,
     });
 
@@ -144,6 +145,10 @@ $(function() {
         $(this).attr('name') == 'order' ? $('#search-order').val(val) : $('#search-gender').val(val);
 
         $('#form-search').submit();
+    });
+
+    $(document).on('submit', '#form-search', function() {
+        $(':input[value=""]').attr('disabled', true);
     });
 
     $(document).on('click', '.password-recover', function(e) {
