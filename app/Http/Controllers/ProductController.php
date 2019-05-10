@@ -139,51 +139,71 @@ class ProductController extends Controller
     {
         $city = Cookie::get('city_slug');
         $state = Cookie::get('state_letter_lc');
-        $gender = $request->gender;
-        $order = $request->order;
-        $keyword = urlencode($request->keyword);
+        $request->keyword = urlencode($request->keyword);
 
-        if ($keyword && !$order) {
-            $order = 'palavra-chave';
-        }
-
-        return redirect()->action('ProductController@search', [$city, $state, $gender, $order, $keyword]);
+        return redirect()->action('ProductController@search', [$city, $state, $request]);
     }
 
-    public function search($city_slug, $state_letter_lc, $search_gender, $search_order = null, $keyword = null)
+    public function search($city, $state, Request $request)
     {
-        $products = Product::filterGender($search_gender)
+        $search_gender = $request->gender ?? null;
+        $search_order = $request->order ?? null;
+        $keyword = $request->keyword ?? null;
+        $advanced = $request->advanced ?? null;
+        $search_max_price = $request->max_price ?? null;
+        $search_min_price = $request->min_price ?? null;
+
+        $products = Product::has('images')
+            ->filterGender($search_gender)
             ->filterOrder($search_order)
-            ->has('images');
+            ->filterMinPrice($search_min_price)
+            ->filterMaxPrice($search_max_price);
 
         if ($keyword) {
-            $keyword = urldecode($keyword);
+            //$keyword = urldecode($keyword);
 
             // SEO
             $header_title = $keyword .' em ' . Cookie::get('city_title') . ' - ' . Cookie::get('state_letter') . ' | naslojas.com';
             $header_desc = 'Clique para ver ' . $keyword . ' em ' . Cookie::get('city_title') . ' - ' . Cookie::get('state_letter');
 
             $products = $products->where(function ($query) use ($keyword) {
-                $query->search($keyword)->orWhereHas('store', function ($query) use ($keyword) {
+                $query->search($keyword)
+                ->orWhereHas('store', function ($query) use ($keyword) {
                     $query->search($keyword);
                 });
-                //$query->where('title', 'like', '%' . $keyword . '%')->orWhereHas('store', function ($query) use ($keyword) {
-                    //$query->where('name', 'like', '%' . $keyword . '%');
-                //});
             });
+
+            if ($advanced == 'true') {
+                if ($keyword == 'estilo') {
+                    $terms = ['sapato', 'calcado', 'salto alto', 'sapatenis', 'casual', 'colete', 'scarpin', 'jeans', 'sapatilha', 'sandalia', 'calca jeans', 'peep toe', 'bota', 'saia', 'mini saia', 'short', 'bermuda', 'calca', 'vestido', 'blusa', 'camisa', 'camiseta', 'casaco', 'jaqueta', 'blusao', 'moletom', 'moleton', 'agasalho', 'blusinha', 'sobretudo', 'mala', 'mochila', 'bolsa', 'joia', 'relogio', 'anel', 'chapeu', 'manta', 'maleta', 'carteira', 'bikini', 'biquini', 'luva', 'meia', 'carpim', 'bone', 'tiara', 'brinco', 'pochete', 'colar', 'pulseira', 'oculos', 'oculos de sol', 'oculos escuros', 'maquiagem', 'batom', 'tornozeleira', 'cinto', 'suspensorio'];
+                } else if ($keyword == 'esporte') {
+                    $terms = ['nike', 'adidas', 'olympikus', 'mizuno', 'asics', 'bola', 'esporte', 'gremio', 'inter', 'time', 'legging', 'leging', 'legin', 'penalty', 'topper', 'futebol', 'tennis', 'tenis', 'basquete', 'basket', 'volei', 'corrida', 'academia', 'treino', 'regata', 'camiseta regata', 'calcao', 'moletom', 'moleton', 'meiao', 'sunga', 'maio', 'caneleira', 'joelheira', 'cotoveleira'];
+                } else if ($keyword == 'casual') {
+                    $terms = ['sapato', 'calcado', 'salto alto', 'sapatenis', 'casual', 'colete', 'scarpin', 'jeans', 'sapatilha', 'sandalia', 'calca jeans', 'peep toe', 'bota', 'saia', 'mini saia', 'short', 'bermuda', 'calca', 'vestido', 'blusa', 'camisa', 'camiseta', 'casaco', 'jaqueta', 'blusao', 'moletom', 'moleton', 'agasalho', 'blusinha', 'sobretudo'];
+                } else if ($keyword == 'acessorios') {
+                    $terms = ['mala', 'mochila', 'bolsa', 'joia', 'relogio', 'anel', 'chapeu', 'manta', 'maleta', 'carteira', 'bikini', 'biquini', 'luva', 'meia', 'carpim', 'bone', 'tiara', 'brinco', 'pochete', 'colar', 'pulseira', 'oculos', 'oculos de sol', 'oculos escuros', 'maquiagem', 'batom', 'tornozeleira', 'cinto', 'suspensorio'];
+                }
+
+                foreach ($terms as $t) {
+                    $products = $products->orWhere(function ($q) use ($t) {
+                        $q->search($t);
+                    });
+                }
+            }
         }
 
         $products = $products->paginate(30);
 
         if ($keyword && $products->count() == 0) {
-            $products = Product::filterGender($search_gender)->filterOrder($search_order)
+            $products = Product::has('images')
+                ->filterGender($search_gender)
+                ->filterOrder($search_order)
+                ->filterMinPrice($search_min_price)
+                ->filterMaxPrice($search_max_price)
                 ->where(function ($query) use ($keyword) {
                     $query->search(preg_replace('{(.)\1+}','$1', $keyword))->orWhereHas('store', function ($query) use ($keyword) {
                         $query->search(preg_replace('{(.)\1+}','$1', $keyword));
                     });
-                    //$query->where('title', 'like', '%' . preg_replace('{(.)\1+}','$1', $keyword) . '%')->orWhereHas('store', function ($query) use ($keyword) {
-                        //$query->where('name', 'like', '%' . preg_replace('{(.)\1+}','$1', $keyword) . '%');
-                    //});
                 })
                 ->paginate(30);
         }
@@ -562,122 +582,114 @@ class ProductController extends Controller
     {
         $file_name = $request->file->getClientOriginalName();
         $request->file->move(public_path(), $file_name);
-        $url = null;
-        $last_title = null;
+        $json = json_decode(file_get_contents(public_path() . '/' . $file_name), true);
 
-        if (($handle = fopen(public_path() . '/' . $file_name, 'r')) !== FALSE) {
-            if (count(public_path() . '/' . $file_name) < 100) {
-                while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
-                    if ($data[0] != 'link' && $url != $data[0]) {
-                        $url = $data[0];
+        $last_json_id = null;
+        $last_naslojas_id = null;
+        $last_link = null;
 
-                        // Access page
-                        $dom = new \DOMDocument();
-                        $html = file_get_contents('https://www.hercilio.com.br/' . $url);
-                        @$dom->loadHTML($html);
-                        $dom->preserveWhiteSpace = false;
+        foreach ($json as $j) {
+            if ($j['status'] == '1') {
+                if ($last_json_id == $j['id'] && $last_link == $j['link']) {
+                    $p = Product::withoutGlobalScopes(['active', 'active-store'])->find($last_naslojas_id);
+                    $p->sizes()->create(['size' => $j['tamanho']]);
+                } else {
+                    $product = new Product;
+                    $product->store_id = $this->store_id;
+                    $product->status = 2;
+                    $product->identifier = mt_rand(1000000000, 9999990000);
+                    $product->title = $j['titulo_produto'];
+                    $product->slug = str_slug($product->title, '-');
+                    $product->price = number_format(($j['vlr_atual']/100), 2);
+                    $product->description = $j['descricao_produto'];
 
-                        // Get elements
-                        $links = $dom->getElementsByTagName('a');
-                        $title = $dom->getElementsByTagName('h1')[0]->getAttribute('title'); // Title
-                        $spans = $dom->getElementsByTagName('span');
-
-                        // New product
-                        $product = new Product;
-                        $product->store_id = $this->store_id;
-                        $product->status = 2;
-                        $product->identifier = mt_rand(1000000000, 9999990000);
-                        $product->title = $title;
-                        $product->slug = str_slug($product->title, '-');
+                    if ($j['genero'] == '2') {
                         $product->gender = 2;
+                    } else if ($j['genero'] == '1') {
+                        $product->gender = 3;
+                    } else {
+                        $product->gender = 1;
+                    }
 
-                        foreach ($spans as $span) {
-                            // Price
-                            if ($span->getAttribute('class') == 'ctrValorMoeda') {
-                                $product->price = number_format(str_replace(['.', ','], ['', '.'], str_replace('R$', '', $span->nodeValue)), 2, '.', '');
-                            }
+                    // Variation
+                    if (!isset($variation) || $last_json_id != $j['id']) {
+                        $variation = mt_rand(1000000000, 9999990000);
+                    }
+                    $product->related = $variation;
+                    $last_json_id = $j['id'];
+                    $last_link = $j['link'];
+
+                    // Checks if identifier arent in use
+                    $NUM_OF_ATTEMPTS = 10;
+                    $attempts = 0;
+
+                    do {
+                        try {
+                            $product->save();
+                        } catch(\Exception $e) {
+                            $attempts++;
+
+                            sleep(rand(0, 10) / 10);
+
+                            $product->slug .= '-' . uniqid();
+                            $product->identifier = mt_rand(1000000000, 9999990000);
+
+                            continue;
                         }
 
-                        // Variation
-                        if (!isset($variation) || $last_title != $title) {
-                            $variation = microtime(true);
+                        break;
+                    } while ($attempts < $NUM_OF_ATTEMPTS);
+
+                    $last_naslojas_id = $product->id;
+
+                    if (!$j['tamanho'] || $j['tamanho'] == 'Unico') {
+                        $product->sizes()->create(['size' => 'Ú']);
+                    } else {
+                        if ($j['tamanho'] == '2G') {
+                            $size = 'GG';
+                        } else if ($j['tamanho'] == '3G') {
+                            $size = 'XG';
+                        } else {
+                            $size = $j['tamanho'];
                         }
-                        if ($last_title = $title) {
-                            $product->related = $variation;
-                        }
-                        $last_title = $title;
-                        $last_variation = $variation;
 
-                        // Checks if identifier arent in use
-                        $NUM_OF_ATTEMPTS = 10;
-                        $attempts = 0;
+                        $product->sizes()->create(['size' => $size]);
+                    }
 
-                        do {
-                            try {
-                                $product->save();
-                            } catch(\Exception $e) {
-                                $attempts++;
+                    $key = 1;
+                    foreach (json_decode($j['imagens'], true) as $img) {
+                        if ($j['codigo_estoque'] == $img['codigo']) {
+                            $image = new ProductImage;
+                            $image->product_id = $product->id;
+                            $image->image = _uploadImageProduct($img['link'], $this->store_id, false);
+                            $image->position = $key;
+                            $image->save();
 
-                                sleep(rand(0, 10) / 10);
-
-                                $product->slug .= '-' . uniqid();
-                                $product->identifier = mt_rand(1000000000, 9999990000);
-
-                                continue;
-                            }
-
-                            break;
-                        } while ($attempts < $NUM_OF_ATTEMPTS);
-
-                        $key = 1;
-                        $sizes = false;
-                        foreach ($links as $link) {
-                            // Sizes
-                            if ($link->getAttribute('codigo_tamanho') && $link->getAttribute('poucosestoque') != '0') {
-                                if ($link->nodeValue == 'Unico' || $link->nodeValue == 'U') {
-                                    $size = 'Ú';
-                                } else if ($link->nodeValue == '2G') {
-                                    $size = 'GG';
-                                } else if ($link->nodeValue == '3G') {
-                                    $size = 'XG';
-                                } else {
-                                    $size = $link->nodeValue;
-                                }
-
-                                $product->sizes()->create(['size' => $size]);
-
-                                $sizes = true;
-                            }
-
-                            // Images
-                    		if ($link->getAttribute('urlfoto')) {
-                                $image = new ProductImage;
-                                $image->product_id = $product->id;
-                                $image->image = _uploadImageProduct($link->getAttribute('urlfoto'), $this->store_id, false);
-                                $image->position = $key;
-                                $image->save();
-
-                                $key++;
-                    		}
-                    	}
-
-                        if (!$sizes) {
-                            $product->sizes()->create(['size' => 'Ú']);
+                            $key++;
                         }
                     }
                 }
-
-                fclose($handle);
-
-                unlink(public_path() . '/' . $file_name);
-
-                //return redirect('adm/automatic');
-            } else {
-                return 'numero de linhas nao permitido';
             }
-        } else {
-            return 'erro';
         }
+
+        unlink(public_path() . '/' . $file_name);
+
+        /*$file_name = $request->file->getClientOriginalName();
+        $request->file->move(public_path(), $file_name);
+        $json = json_decode(file_get_contents(public_path() . '/' . $file_name), true);
+
+        foreach ($json as $j) {
+            $sizes = ProductSize::whereHas('product', function ($q) use ($j) {
+					$q->where('title', $j['titulo_produto'])
+						->withoutGlobalScopes(['active', 'active-store']);
+				})
+				->where('size', $j['tamanho'])
+				->delete();
+        }
+
+        Product::doesnthave('sizes')->update(['status' => 0]);
+
+        unlink(public_path() . '/' . $file_name);*/
     }
 
     public function getCreateEdit($id = null)

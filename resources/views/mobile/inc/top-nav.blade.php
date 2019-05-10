@@ -21,7 +21,7 @@
             {!! Form::text('keyword', $keyword ?? null, ['placeholder' => 'Pesquise dentro da sua loja', 'required']) !!}
         {!! Form::close() !!}
     @else
-        {!! Form::open(['method' => 'GET', 'route' => 'form-search', 'id' => 'form-search']) !!}
+        {!! Form::open(['method' => 'GET', 'route' => ['search-products', Cookie::get('city_slug'), Cookie::get('state_letter_lc')], 'id' => 'form-search']) !!}
             {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Pesquise aqui']) !!}
 
             {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}

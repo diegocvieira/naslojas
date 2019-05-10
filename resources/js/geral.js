@@ -29,31 +29,38 @@ $(function() {
     });
 
     $('.slick-home').slick({
-        //initialSlide: Math.floor(Math.random() * $('.slick-home .item').length),
         slidesToShow: 1,
-        //centerMode: true,
+        infinite: true,
+        arrows: true,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 4000
+    });
+
+    $('.slick-stores').slick({
+        slidesToShow: 4,
         infinite: true,
         arrows: true,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 4000,
-        //cssEase: 'linear',
-        //variableWidth: true,
-        //variableHeight: true
+        initialSlide: Math.floor(Math.random() * $('.slick-stores a').length)
     });
 
-    $('.slick-stores').slick({
-        //initialSlide: Math.floor(Math.random() * $('.slick-home .item').length),
-        slidesToShow: 2,
-        //centerMode: true,
-        infinite: true,
-        arrows: false,
+    $('.slick-products').slick({
+        slidesToShow: 5,
         slidesToScroll: 1,
-        autoplay: true,
+        infinite: true,
+        arrows: true,
+        autoplay: false,
         autoplaySpeed: 4000,
-        //cssEase: 'linear',
-        //variableWidth: true,
-        //variableHeight: true
+    });
+
+    // Disabled stores
+    $(document).on('click', '.store-disabled', function(e) {
+        e.preventDefault();
+
+        modalAlert('Em breve!');
     });
 
     // Alert app

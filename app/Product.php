@@ -53,6 +53,20 @@ class Product extends Model
         return $this->hasMany('App\Message', 'product_id', 'id')->orderBy('id', 'DESC');
     }
 
+    public function scopeFilterMinPrice($query, $min)
+    {
+        if ($min) {
+            return $query->where('price', '>=', $min);
+        }
+    }
+
+    public function scopeFilterMaxPrice($query, $max)
+    {
+        if ($max) {
+            return $query->where('price', '<=', $max);
+        }
+    }
+
     public function scopeFilterGender($query, $gender)
     {
         if ($gender && $gender != 'todos' && $gender != 'unissex') {

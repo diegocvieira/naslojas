@@ -63,7 +63,7 @@ Route::group(['prefix' => 'site'], function () {
 
 // Search
 Route::get('produtos/busca', 'ProductController@formSearch')->name('form-search');
-Route::get('busca/{city}/{state}/{gender}/{order?}/{keyword?}', 'ProductController@search');
+Route::get('busca/{city}/{state}', 'ProductController@search')->name('search-products');
 
 // Set a new city
 Route::get('cidade/set/{id}', 'GlobalController@setCity')->name('set-city');
