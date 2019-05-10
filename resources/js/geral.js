@@ -60,7 +60,7 @@ $(function() {
     $(document).on('click', '.store-disabled', function(e) {
         e.preventDefault();
 
-        modalAlert('Os produtos desta loja ainda estão sendo cadastrados. <br> Volte outra hora para conferir.');
+        modalAlert('Em breve!');
     });
 
     // Alert app

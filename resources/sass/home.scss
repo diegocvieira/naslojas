@@ -17,6 +17,10 @@
         width: 100%;
         float: left;
         margin-bottom: 100px;
+
+        &.section-content {
+            margin-bottom: 0;
+        }
     }
 
     .section-title {
@@ -164,6 +168,52 @@
     .banners {
         img {
             width: 100%;
+        }
+    }
+
+    .brands {
+        text-align: center;
+
+        .content {
+            //float: left;
+            //width: 16.66%;
+            display: inline-block;
+            //width: 14.5%;
+            //margin-top: 14.5%;
+            text-align: center;
+            margin: 0 10px 20px 10px;
+
+            a {
+                display: inline-block;
+            }
+        }
+    }
+
+    .trending-words {
+        .content {
+            display: block;
+        }
+
+        a {
+            font-size: 16.6px;
+            color: rgb(100, 100, 100);
+            background-color: rgb(249, 248, 247);
+            display: block;
+            border-radius: 25px;
+            padding: 15px 20px 15px 45px;
+            display: inline-block;
+            margin: 0 5px 10px 5px;
+            position: relative;
+
+            &:before {
+                content: '+';
+                color: #ff1945;
+                position: absolute;
+                left: 17px;
+                top: 4px;
+                font-size: 30px;
+            }
+
         }
     }
 

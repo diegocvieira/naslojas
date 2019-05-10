@@ -24,8 +24,14 @@ class GlobalController extends Controller
 
         $offers = Product::has('images')->inRandomOrder()->limit(15)->get();
 
+        $trending_words = ['melissa', 'krause', 'hercilio', 'emilice', 'sapato', 'calcado', 'tenis', 'sandalia', 'bota', 'salto alto', 'scarpin', 'camisa', 'camiseta', 'vestido', 'saia', 'bermuda', 'short', 'jeans', 'casaco', 'jaqueta', 'masculino', 'feminino', 'nike', 'adidas', 'mizuno', 'schutz', 'colcci', 'celular', 'livro', 'oculos de sol', 'maquiagem'];
+        shuffle($trending_words);
+
+        $brands = ['adidas', 'asics', 'bebece', 'bull-terrier', 'colcci', 'grendene', 'melissa', 'nike', 'olympikus', 'ramarim', 'schutz', 'via-marte'];
+        shuffle($brands);
+
         if (Agent::isDesktop()) {
-            return view('home', compact('featured_products', 'offers'));
+            return view('home', compact('featured_products', 'offers', 'trending_words', 'brands'));
         } else {
             return view('mobile.home', compact('products'));
         }
