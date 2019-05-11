@@ -637,11 +637,11 @@
 
             img {
                 border-radius: 5px;
-                background-color: rgb(245, 245, 245);
+                //background-color: rgb(245, 245, 245);
                 width: calc(33% - 5px);
-                object-fit: cover;
+                object-fit: contain;
                 margin: 10px 5px 0 0;
-                box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 20px 0px;
+                //box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 20px 0px;
             }
         }
     }

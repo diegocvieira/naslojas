@@ -2,10 +2,8 @@
     <div class="product">
         <a href="{{ route('show-product', $rp->slug) }}" class="show-product">
             <img src="{{ asset('uploads/' . $rp->store->id . '/products/' . $rp->images->first()->image) }}" class="image" alt="{{ $rp->title }}" />
-        </a>
 
-        <div class="infos">
-            <a href="{{ route('show-product', $rp->slug) }}" class="show-product">
+            <div class="infos">
                 @if ($rp->free_freight)
                     <div class="free-freight">
                         <span>FRETE GRÁTIS</span>
@@ -27,10 +25,8 @@
                 </span>
 
                 <p class="title" title="{{ $rp->title }}">{{ $rp->title }}</p>
-            </a>
-
-            <a href="{{ route('show-store', $rp->store->slug) }}" class="store-name">{{ $rp->store->name }}</a>
-        </div>
+            </div>
+        </a>
     </div>
 @endforeach
 
