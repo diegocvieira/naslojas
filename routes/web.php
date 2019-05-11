@@ -11,6 +11,86 @@
 |
 */
 
+Route::get('images/thumb', function () {
+	$images = \App\ProductImage::whereHas('product', function ($q) {
+			$q->withoutGlobalScopes(['active', 'active-store']);
+		})
+		->get();
+
+	$store_id = 18;
+
+	foreach ($images as $img) {
+		//if (file_exists(public_path('uploads/' . $store_id . '/products/' . $img->image))) {
+			//$image_name = $img->image;
+
+			$image = new \Imagick(public_path('uploads/' . $store_id . '/products/' . _originalImage($img->image)));
+
+			if ($image->getImageAlphaChannel()) {
+				$image->setImageAlphaChannel(11);
+			}
+
+			$image->setImageBackgroundColor('#ffffff');
+			$image->setColorspace(\Imagick::COLORSPACE_SRGB);
+			$image->setImageFormat('jpg');
+			$image->stripImage();
+			$image->setImageCompressionQuality(100);
+			$image->setSamplingFactors(array('2x2', '1x1', '1x1'));
+			$image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
+			$image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
+
+			$image->resizeImage('248', '248', \imagick::FILTER_LANCZOS, 1, TRUE);
+
+			switch ($image->getImageOrientation()) {
+				case \Imagick::ORIENTATION_TOPLEFT:
+					break;
+				case \Imagick::ORIENTATION_TOPRIGHT:
+					$image->flopImage();
+					break;
+				case \Imagick::ORIENTATION_BOTTOMRIGHT:
+					$image->rotateImage("#fff", 180);
+					break;
+				case \Imagick::ORIENTATION_BOTTOMLEFT:
+					$image->flopImage();
+					$image->rotateImage("#fff", 180);
+					break;
+				case \Imagick::ORIENTATION_LEFTTOP:
+					$image->flopImage();
+					$image->rotateImage("#fff", -90);
+					break;
+				case \Imagick::ORIENTATION_RIGHTTOP:
+					$image->rotateImage("#fff", 90);
+					break;
+				case \Imagick::ORIENTATION_RIGHTBOTTOM:
+					$image->flopImage();
+					$image->rotateImage("#fff", 90);
+					break;
+				case \Imagick::ORIENTATION_LEFTBOTTOM:
+					$image->rotateImage("#fff", -90);
+					break;
+				default: // Invalid orientation
+					break;
+			}
+
+			$image->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
+
+			$image->writeImage(public_path('uploads/' . $store_id . '/products/' . $img->image));
+
+			$image->destroy();
+
+			//unlink(public_path('uploads/' . $store_id . '/products/' . $img->image));
+
+			//$i = \App\ProductImage::find($img->id);
+			//$i->image = $image_name;
+			//$i->save();
+
+			//$img->image = $image_name;
+			//$img->save();
+		//}
+
+		//return $image_name;
+	}
+});
+
 Route::get('/', 'GlobalController@home')->name('home');
 
 Route::group(['prefix' => 'site'], function () {

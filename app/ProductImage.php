@@ -9,4 +9,9 @@ class ProductImage extends Model
     protected $table = 'product_images';
     protected $fillable = ['product_id', 'image', 'position'];
     public $timestamps = false;
+
+    public function product()
+    {
+        return $this->hasOne('App\Product', 'id', 'product_id');
+    }
 }
