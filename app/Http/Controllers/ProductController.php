@@ -273,7 +273,7 @@ class ProductController extends Controller
             ->where('store_id', $this->store_id)
             ->where('status', 2)
             ->orderBy('id', 'DESC')
-            ->paginate(100);
+            ->paginate(50);
 
         $section = 'add';
 
