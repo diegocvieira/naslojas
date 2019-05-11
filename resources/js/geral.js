@@ -138,6 +138,33 @@ $(function() {
         modalAlert('Em breve você poderá ver os produtos das lojas de outras cidades.');
     });
 
+    // Newsletter register
+    $(document).on('submit', '#form-newsletter-register', function () {
+        var form = $(this);
+
+        form.find('input[type=submit]').val('ENVIANDO').attr('disabled', true);
+
+        $.ajax({
+            url: form.attr('action'),
+            method: 'POST',
+            dataType: 'json',
+            data: form.serialize(),
+            success: function (data) {
+                form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
+                form.find('input[type=email]').val('');
+
+                modalAlert('E-mail enviado com sucesso!');
+            },
+            error: function (request, status, error) {
+                form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
+
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+
+        return false;
+    });
+
     // Filters product
     $(document).on('change', '.product-filter select', function() {
         var val = $(this).val();

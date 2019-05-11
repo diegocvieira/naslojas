@@ -11,18 +11,23 @@
 |
 */
 
-Route::get('images/thumb', function () {
+/*Route::get('images/thumb', function () {
 	$images = \App\ProductImage::whereHas('product', function ($q) {
 			$q->withoutGlobalScopes(['active', 'active-store']);
 		})
+		->with(['product' => function($query) {
+                $query->withoutGlobalScopes(['active', 'active-store']);
+        }])
+		->orderBy('id', 'ASC')
+		->offset(0)->limit(500)
 		->get();
 
 	$store_id = 18;
 
 	foreach ($images as $img) {
-		if (file_exists(public_path('uploads/' . $store_id . '/products/' . _originalImage($img->image)))) {
-			//$image_name = $img->image;
+		$store_id = $img->product->store_id;
 
+		if (file_exists(public_path('uploads/' . $store_id . '/products/' . _originalImage($img->image)))) {
 			$image = new \Imagick(public_path('uploads/' . $store_id . '/products/' . _originalImage($img->image)));
 
 			if ($image->getImageAlphaChannel()) {
@@ -76,24 +81,15 @@ Route::get('images/thumb', function () {
 			$image->writeImage(public_path('uploads/' . $store_id . '/products/' . $img->image));
 
 			$image->destroy();
-
-			//unlink(public_path('uploads/' . $store_id . '/products/' . $img->image));
-
-			//$i = \App\ProductImage::find($img->id);
-			//$i->image = $image_name;
-			//$i->save();
-
-			//$img->image = $image_name;
-			//$img->save();
 		}
-
-		//return $image_name;
 	}
-});
+});*/
 
 Route::get('/', 'GlobalController@home')->name('home');
 
 Route::group(['prefix' => 'site'], function () {
+	Route::post('newsletter/register', 'NewsletterController@register')->name('newsletter-register');
+
 	Route::get('regras', function() {
 		if (Agent::isDesktop()) {
 			return view('rules');

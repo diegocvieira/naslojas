@@ -248,6 +248,22 @@
                         </a>
                     </div>
                 </section>
+
+                <section class="row newsletter text-center">
+                    <div class="col-xs-12">
+                        <h2>1 e-mail por semana</h2>
+                        <h3>Com as maiores ofertas, promoções e novidades das lojas de Pelotas</h3>
+                        <span>CANCELE QUANDO QUISER</span>
+                    </div>
+
+                    <div class="col-xs-12">
+                        {!! Form::open(['method' => 'POST', 'route' => 'newsletter-register', 'id' => 'form-newsletter-register']) !!}
+                            {!! Form::email('email', null, ['placeholder' => 'Seu e-mail']) !!}
+
+                            {!! Form::submit('ENVIAR') !!}
+                        {!! Form::close() !!}
+                    </div>
+                </section>
             </div>
 
             <div class="app-mobile col-xs-12">
