@@ -20,7 +20,7 @@ Route::get('images/thumb', function () {
 	$store_id = 18;
 
 	foreach ($images as $img) {
-		//if (file_exists(public_path('uploads/' . $store_id . '/products/' . $img->image))) {
+		if (file_exists(public_path('uploads/' . $store_id . '/products/' . _originalImage($img->image)))) {
 			//$image_name = $img->image;
 
 			$image = new \Imagick(public_path('uploads/' . $store_id . '/products/' . _originalImage($img->image)));
@@ -85,7 +85,7 @@ Route::get('images/thumb', function () {
 
 			//$img->image = $image_name;
 			//$img->save();
-		//}
+		}
 
 		//return $image_name;
 	}
