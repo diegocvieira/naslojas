@@ -85,7 +85,7 @@ class GlobalController extends Controller
         $trending_words = ['melissa', 'krause', 'hercílio', 'emilice', 'sapato', 'tênis', 'sandália', 'bota', 'salto alto', 'scarpin', 'camisa', 'camiseta', 'vestido', 'saia', 'short', 'jeans', 'casaco', 'jaqueta', 'masculino', 'feminino', 'nike', 'adidas', 'schutz', 'colcci', 'livro', 'óculos de sol', 'maquiagem'];
         shuffle($trending_words);
 
-        $brands = ['adidas', 'asics', 'bebece', 'bull-terrier', 'colcci', 'grendene', 'melissa', 'nike', 'olympikus', 'ramarim', 'schutz', 'via-marte'];
+        $brands = ['adidas', 'asics', 'bebece', 'bull terrier', 'colcci', 'grendene', 'melissa', 'nike', 'olympikus', 'ramarim', 'schutz', 'via marte'];
         shuffle($brands);
 
         if (Agent::isDesktop()) {
