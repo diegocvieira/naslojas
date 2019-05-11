@@ -163,17 +163,14 @@ class ProductController extends Controller
             //$keyword = urldecode($keyword);
 
             // SEO
-            $header_title = $keyword .' em ' . Cookie::get('city_title') . ' - ' . Cookie::get('state_letter') . ' | naslojas.com';
+            $header_title = $keyword . ' em ' . Cookie::get('city_title') . ' - ' . Cookie::get('state_letter') . ' | naslojas.com';
             $header_desc = 'Clique para ver ' . $keyword . ' em ' . Cookie::get('city_title') . ' - ' . Cookie::get('state_letter');
 
-            $products = $products->where(function ($query) use ($keyword) {
-                $query->search($keyword)
-                ->orWhereHas('store', function ($query) use ($keyword) {
+            if ($advanced == 'true') {
+                $products = $products->where(function ($query) use ($keyword) {
                     $query->search($keyword);
                 });
-            });
 
-            if ($advanced == 'true') {
                 if ($keyword == 'estilo') {
                     $terms = ['sapato', 'calcado', 'salto alto', 'sapatenis', 'casual', 'colete', 'scarpin', 'jeans', 'sapatilha', 'sandalia', 'calca jeans', 'peep toe', 'bota', 'saia', 'mini saia', 'short', 'bermuda', 'calca', 'vestido', 'blusa', 'camisa', 'camiseta', 'casaco', 'jaqueta', 'blusao', 'moletom', 'moleton', 'agasalho', 'blusinha', 'sobretudo', 'mala', 'mochila', 'bolsa', 'joia', 'relogio', 'anel', 'chapeu', 'manta', 'maleta', 'carteira', 'bikini', 'biquini', 'luva', 'meia', 'carpim', 'bone', 'tiara', 'brinco', 'pochete', 'colar', 'pulseira', 'oculos', 'oculos de sol', 'oculos escuros', 'maquiagem', 'batom', 'tornozeleira', 'cinto', 'suspensorio'];
                 } else if ($keyword == 'esporte') {
@@ -189,6 +186,13 @@ class ProductController extends Controller
                         $q->search($t);
                     });
                 }
+            } else {
+                $products = $products->where(function ($query) use ($keyword) {
+                    $query->search($keyword)
+                        ->orWhereHas('store', function ($query) use ($keyword) {
+                            $query->search($keyword);
+                        });
+                });
             }
         }
 
