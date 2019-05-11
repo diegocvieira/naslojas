@@ -1,5 +1,6 @@
 @php
     $top_nav = true;
+    $body_class = 'bg-white';
 @endphp
 
 @extends('mobile.base')

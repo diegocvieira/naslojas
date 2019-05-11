@@ -40,7 +40,7 @@ $(function() {
     $('.slick-stores').slick({
         slidesToShow: 4,
         infinite: true,
-        arrows: true,
+        arrows: false,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 4000,

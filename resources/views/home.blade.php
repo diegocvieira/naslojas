@@ -92,7 +92,7 @@
 
                     <section class="row">
                         <div class="col-xs-12">
-                            <h2 class="section-title">MAIORES OFERTAS</h2>
+                            <h2 class="section-title">OFERTAS EM DESTAQUE</h2>
                         </div>
 
                         <div class="col-xs-12">
@@ -230,7 +230,7 @@
                         @foreach ($trending_words as $key => $trending_word)
                             <a href="{{ ($trending_word == 'masculino' || $trending_word == 'feminino') ? route('search-products', ['pelotas', 'rs']) . '?gender=' . $trending_word : route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?keyword=' . $trending_word }}">{{ $trending_word }}</a>
 
-                            @if ($key == 8 || $key == 18 || $key == 25)
+                            @if ($key == 6 || $key == 14 || $key == 21)
                                 <br>
                             @endif
                         @endforeach
