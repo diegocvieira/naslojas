@@ -165,7 +165,7 @@ $(function() {
         return false;
     });
 
-    // Filters product
+    // START FILTER PRODUCTS
     $(document).on('change', '.product-filter select', function() {
         var val = $(this).val();
 
@@ -173,6 +173,38 @@ $(function() {
 
         $('#form-search').submit();
     });
+
+    $(document).on('change', '.filter-products input[type=radio]', function() {
+        if ($(this).attr('name') == 'price') {
+            var split = $(this).val().split('-');
+
+            $('#search-min-price').val(split[0]);
+            $('#search-max-price').val(split[1]);
+        } else {
+            $('#' + $(this).data('id')).val($(this).val());
+        }
+
+        $('#form-search').submit();
+    });
+
+    $(document).on('click', '.filter-products .filter-price button', function() {
+        $('#search-min-price').val(parseFloat($('.filter-products .filter-price input[name=min_price]').val().replace('.', '').replace(',', '.')).toFixed(2));
+        $('#search-max-price').val(parseFloat($('.filter-products .filter-price input[name=max_price]').val().replace('.', '').replace(',', '.')).toFixed(2));
+
+        $('#form-search').submit();
+    });
+
+    $(document).on('click', '.clear-filter, .clear-all-filters', function() {
+        if ($(this).hasClass('clear-filter')) {
+            $('#' + $(this).data('id')).val('');
+        } else {
+            $('#form-search').find('input[type=hidden]').not("input[name='store_slug']").val('');
+        }
+
+        $('#form-search').submit();
+    });
+
+    // END FILTER PRODUCTS
 
     $(document).on('click', '.password-recover', function(e) {
         e.preventDefault();

@@ -376,3 +376,249 @@ function _freights($store_id)
 
     return $freights;
 }
+
+function _filterOrder()
+{
+    return [
+        'populares' => 'Populares',
+        'menor_preco' => 'Menor preço',
+        'maior_preco' => 'Maior preço'
+    ];
+}
+
+function _filterGender()
+{
+    return [
+        'unissex' => 'unissex',
+        'masculino' => 'masculino',
+        'feminino' => 'feminino'
+    ];
+}
+
+function _filterColor()
+{
+    return [
+        'preto' => 'preto',
+        'branco' => 'branco',
+        'cinza' => 'cinza',
+        'marrom' => 'marrom',
+        'bege' => 'bege',
+        'azul' => 'azul',
+        'azul-claro' => 'azul claro',
+        'verde' => 'verde',
+        'verde-claro' => 'verde claro',
+        'amarelo' => 'amarelo',
+        'vermelho' => 'vermelho',
+        'laranja' => 'laranja',
+        'roxo' => 'roxo',
+        'rosa' => 'rosa',
+        'lilas' => 'lilás'
+    ];
+}
+
+function _filterInstallment()
+{
+    return [
+        '3' => '3x',
+        '6' => '6x',
+        '10' => '10x',
+        '12' => '12x',
+        '15' => '15x'
+    ];
+}
+
+function _filterOff()
+{
+    return [
+        '10' => '10%',
+        '20' => '20%',
+        '30' => '30%',
+        '40' => '40%',
+        '50' => '50%'
+    ];
+}
+
+function _filterPrice()
+{
+    return [
+        '0-50.00' => 'até R$50',
+        '50.00-75.00' => 'R$50 a R$75',
+        '75.00-100.00' => 'R$75 a R$100',
+        '100.00-150.00' => 'R$100 a R$150',
+        '150.00-200.00' => 'R$150 a R$200',
+        '200.00-0' => 'mais de R$200'
+    ];
+}
+
+function _filterBrand()
+{
+    return [
+        'adidas',
+        'all star',
+        'animal print',
+        'asics',
+        'azille',
+        'bebecê',
+        'beira rio',
+        'bibi',
+        'bonton',
+        'bottero',
+        'bull terrier',
+        'carrano',
+        'cavaliery',
+        'chaville',
+        'colcci',
+        'columbia',
+        'comfortflex',
+        'confortgel',
+        'cravo e canela',
+        'cristófoli',
+        'crysalis',
+        'dakota',
+        'divalesi',
+        'd moon',
+        'doce trama',
+        'farm',
+        'ferracini',
+        'fiever',
+        'fila',
+        'fleet body',
+        'franchini',
+        'freeday',
+        'fuzulla',
+        'gang',
+        'grendene',
+        'grendha',
+        'hering',
+        'hocks',
+        'invoice',
+        'jota pe',
+        'kidy',
+        'kildare',
+        'klin',
+        'lacoste',
+        'lez a lez',
+        'lhombre',
+        'malarrara',
+        'melissa',
+        'mizuno',
+        'moikana',
+        'moleca',
+        'neon',
+        'nike',
+        'olympikus',
+        'orcade',
+        'ortopé',
+        'osklen',
+        'palterm',
+        'pampili',
+        'pegada',
+        'penalty',
+        'petite jolie',
+        'piccadilly',
+        'polo',
+        'quiz',
+        'ramarim',
+        'reserva',
+        'sapri',
+        'schutz',
+        'skechers',
+        'sweet chic',
+        'thuha',
+        'timberland',
+        'tommy',
+        'topper',
+        'umbro',
+        'usaflex',
+        'uza',
+        'valentina',
+        'vans',
+        'verofatto',
+        'via marte',
+        'via pina',
+        'via uno',
+        'vicenza',
+        'vizzano',
+        'werner',
+        'west coast',
+        'whoop'
+    ];
+}
+
+function _filterCategory()
+{
+    return [
+        'agasalho',
+        'anel',
+        'basquete',
+        'batom',
+        'bermuda',
+        'bikini',
+        'biquini',
+        'blusa',
+        'blusão',
+        'bola',
+        'bolsa',
+        'boné',
+        'botas',
+        'brinco',
+        'calça',
+        'calçado',
+        'calção',
+        'camisa',
+        'camiseta',
+        'camiseta regata',
+        'caneleira',
+        'carpim',
+        'carteira',
+        'casaco',
+        'chapéu',
+        'chinelos',
+        'cinto',
+        'colar',
+        'colete',
+        'cotoveleira',
+        'futebol',
+        'jaqueta',
+        'jeans',
+        'joelheira',
+        'jóia',
+        'legging',
+        'luva',
+        'maiô',
+        'mala',
+        'maleta',
+        'manta',
+        'maquiagem',
+        'meia',
+        'meião',
+        'mini saia',
+        'mochila',
+        'moletom',
+        'mules',
+        'óculos',
+        'óculos de sol',
+        'oxfords',
+        'peep toe',
+        'pochete',
+        'pulseira',
+        'regata',
+        'relógio',
+        'saia',
+        'salto alto',
+        'sandália',
+        'sapatênis',
+        'sapatilha',
+        'sapato',
+        'scarpin',
+        'short',
+        'sobretudo',
+        'sunga',
+        'suspensório',
+        'tamanco',
+        'tênis',
+        'tiara',
+        'tornozeleira',
+        'vestido'
+    ];
+}

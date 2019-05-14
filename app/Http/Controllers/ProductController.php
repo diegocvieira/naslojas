@@ -152,12 +152,26 @@ class ProductController extends Controller
         $advanced = $request->advanced ?? null;
         $search_max_price = $request->max_price ?? null;
         $search_min_price = $request->min_price ?? null;
+        $search_size = $request->size ?? null;
+        $search_off = $request->off ?? null;
+        $search_installment = $request->installment ?? null;
+        $search_brand = $request->brand ?? null;
+        $search_freight = $request->freight ?? null;
+        $search_category = $request->category ?? null;
+        $search_color = $request->color ?? null;
 
         $products = Product::has('images')
             ->filterGender($search_gender)
             ->filterOrder($search_order)
             ->filterMinPrice($search_min_price)
-            ->filterMaxPrice($search_max_price);
+            ->filterMaxPrice($search_max_price)
+            ->filterSize($search_size)
+            ->filterOff($search_off)
+            ->filterInstallment($search_installment)
+            ->filterBrand($search_brand)
+            ->filterFreight($search_freight)
+            ->filterCategory($search_category)
+            ->filterColor($search_color);
 
         if ($keyword) {
             //$keyword = urldecode($keyword);
@@ -204,6 +218,13 @@ class ProductController extends Controller
                 ->filterOrder($search_order)
                 ->filterMinPrice($search_min_price)
                 ->filterMaxPrice($search_max_price)
+                ->filterSize($search_size)
+                ->filterOff($search_off)
+                ->filterInstallment($search_installment)
+                ->filterBrand($search_brand)
+                ->filterFreight($search_freight)
+                ->filterCategory($search_category)
+                ->filterColor($search_color)
                 ->where(function ($query) use ($keyword) {
                     $query->search(preg_replace('{(.)\1+}','$1', $keyword))->orWhereHas('store', function ($query) use ($keyword) {
                         $query->search(preg_replace('{(.)\1+}','$1', $keyword));
@@ -212,8 +233,80 @@ class ProductController extends Controller
                 ->paginate(30);
         }
 
+        // FILTERS //
+
+        $genders = _filterGender();
+		foreach ($genders as $key => $gender) {
+			$p = Product::filterGender($gender)->select('id')->first();
+
+			if (!$p) {
+				unset($genders[$key]);
+			}
+		}
+
+		$offs = _filterOff();
+		foreach ($offs as $key => $off) {
+			$p = Product::filterOff($key)->select('id')->first();
+
+			if (!$p) {
+				unset($offs[$key]);
+			}
+		}
+
+		$installments = _filterInstallment();
+		foreach ($installments as $key => $installment) {
+			$p = Product::filterInstallment($key)->select('id')->first();
+
+			if (!$p) {
+				unset($installments[$key]);
+			}
+		}
+
+        $colors = _filterColor();
+		foreach ($colors as $key => $color) {
+			$p = Product::filterColor($color)->select('id')->first();
+
+			if (!$p) {
+				unset($colors[$key]);
+			}
+		}
+
+		$brands = _filterBrand();
+		foreach ($brands as $key => $brand) {
+			$p = Product::filterBrand($brand)->select('id')->first();
+
+			if (!$p) {
+				unset($brands[$key]);
+			}
+		}
+
+		$categories = _filterCategory();
+		foreach ($categories as $key => $category) {
+			$p = Product::filterCategory($category)->select('id')->first();
+
+			if (!$p) {
+				unset($categories[$key]);
+			}
+		}
+
+        $prices = _filterPrice();
+		/*foreach ($prices as $key => $price) {
+			$p = Product::where('title', 'LIKE', '%' . $brand . '%')->select('id')->first();
+
+			if (!$p) {
+				unset($brands[$key]);
+			}
+		}*/
+
+        $sizes = ProductSize::select('size')
+			->distinct()
+			->orderBy('size', 'ASC')
+			->get();
+
+        $orderby = _filterOrder();
+
         if (Agent::isDesktop()) {
-            return view('search', compact('products', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));
+            return view('search', compact('products', 'orderby', 'keyword', 'prices', 'genders', 'offs', 'sizes', 'installments', 'colors', 'categories', 'brands', 'search_color', 'search_category', 'search_freight', 'search_brand', 'search_installment', 'search_gender', 'search_off', 'search_size', 'search_order', 'search_min_price', 'search_max_price', 'header_title', 'header_desc'));
         } else {
             return view('mobile.search', compact('products', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));
         }

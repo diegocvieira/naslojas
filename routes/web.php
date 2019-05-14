@@ -153,7 +153,7 @@ Route::get('related-products/{product}/{pagination?}', 'ProductController@relate
 
 // Search store products
 Route::get('loja/produtos/busca', 'StoreController@formSearch')->name('form-search-store');
-Route::get('{store}/busca/{gender}/{order?}/{keyword?}', 'StoreController@search');
+Route::get('{store}/busca', 'StoreController@search')->name('search-store-products');
 
 Route::group(['prefix' => 'recuperar-senha'], function () {
 	Route::post('request', 'PasswordResetController@request');
