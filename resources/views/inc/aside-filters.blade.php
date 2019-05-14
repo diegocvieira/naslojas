@@ -48,29 +48,33 @@
         </div>
     @endif
 
-    <div class="section-filter">
-        <h4 class="filter-title">departamento</h4>
+    @if ($genders)
+        <div class="section-filter">
+            <h4 class="filter-title">departamento</h4>
 
-        @foreach ($genders as $key_gender => $gender)
-            <div class="item">
-                {!! Form::radio('gender', $key_gender, (isset($search_gender) && $search_gender == $key_gender), ['id' => 'gender' . $key_gender, 'data-id' => 'search-gender']) !!}
-                {!! Form::label('gender' . $key_gender, $gender) !!}
-            </div>
-        @endforeach
-    </div>
-
-    <div class="section-filter">
-        <h4 class="filter-title">categoria</h4>
-
-        <div class="list">
-            @foreach ($categories as $category)
+            @foreach ($genders as $key_gender => $gender)
                 <div class="item">
-                    {!! Form::radio('category', $category, (isset($search_category) && $search_category == $category), ['id' => 'category' . $category, 'data-id' => 'search-category']) !!}
-                    {!! Form::label('category' . $category, $category) !!}
+                    {!! Form::radio('gender', $key_gender, (isset($search_gender) && $search_gender == $key_gender), ['id' => 'gender' . $key_gender, 'data-id' => 'search-gender']) !!}
+                    {!! Form::label('gender' . $key_gender, $gender) !!}
                 </div>
             @endforeach
         </div>
-    </div>
+    @endif
+
+    @if ($categories)
+        <div class="section-filter">
+            <h4 class="filter-title">categoria</h4>
+
+            <div class="list">
+                @foreach ($categories as $category)
+                    <div class="item">
+                        {!! Form::radio('category', $category, (isset($search_category) && $search_category == $category), ['id' => 'category' . $category, 'data-id' => 'search-category']) !!}
+                        {!! Form::label('category' . $category, $category) !!}
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
 
     <div class="section-filter filter-price">
         <h4 class="filter-title">preço</h4>
@@ -108,62 +112,72 @@
         </div>
     </div>
 
-    <div class="section-filter filter-size">
-        <h4 class="filter-title">tamanho</h4>
+    @if ($sizes)
+        <div class="section-filter filter-size">
+            <h4 class="filter-title">tamanho</h4>
 
-        <div class="list">
-            @foreach ($sizes as $size)
+            <div class="list">
+                @foreach ($sizes as $size)
+                    <div class="item">
+                        {!! Form::radio('size', $size->size, (isset($search_size) && $search_size == $size->size), ['id' => 'size' . $size->size, 'data-id' => 'search-size']) !!}
+                        {!! Form::label('size' . $size->size, $size->size) !!}
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    @if ($brands)
+        <div class="section-filter">
+            <h4 class="filter-title">marca</h4>
+
+            <div class="list">
+                @foreach ($brands as $brand)
+                    <div class="item">
+                        {!! Form::radio('brand', $brand, (isset($search_brand) && $search_brand == $brand), ['id' => 'brand' . $brand, 'data-id' => 'search-brand']) !!}
+                        {!! Form::label('brand' . $brand, $brand) !!}
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    @if ($offs)
+        <div class="section-filter filter-off">
+            <h4 class="filter-title">oferta</h4>
+
+            @foreach ($offs as $key_off => $off)
                 <div class="item">
-                    {!! Form::radio('size', $size->size, (isset($search_size) && $search_size == $size->size), ['id' => 'size' . $size->size, 'data-id' => 'search-size']) !!}
-                    {!! Form::label('size' . $size->size, $size->size) !!}
+                    {!! Form::radio('off', $key_off, (isset($search_off) && $search_off == $key_off), ['id' => 'off' . $key_off, 'data-id' => 'search-off']) !!}
+                    {!! Form::label('off' . $key_off, $off) !!}
                 </div>
             @endforeach
         </div>
-    </div>
+    @endif
 
-    <div class="section-filter">
-        <h4 class="filter-title">marca</h4>
+    @if ($installments)
+        <div class="section-filter filter-installment">
+            <h4 class="filter-title">parcelamento</h4>
 
-        <div class="list">
-            @foreach ($brands as $brand)
+            @foreach ($installments as $key_installment => $installment)
                 <div class="item">
-                    {!! Form::radio('brand', $brand, (isset($search_brand) && $search_brand == $brand), ['id' => 'brand' . $brand, 'data-id' => 'search-brand']) !!}
-                    {!! Form::label('brand' . $brand, $brand) !!}
+                    {!! Form::radio('installment', $key_installment, (isset($search_installment) && $search_installment == $key_installment), ['id' => 'installment' . $key_installment, 'data-id' => 'search-installment']) !!}
+                    {!! Form::label('installment' . $key_installment, $installment) !!}
                 </div>
             @endforeach
         </div>
-    </div>
+    @endif
 
-    <div class="section-filter filter-off">
-        <h4 class="filter-title">oferta</h4>
+    @if ($colors)
+        <div class="section-filter filter-color">
+            <h4 class="filter-title">cor</h4>
 
-        @foreach ($offs as $key_off => $off)
-            <div class="item">
-                {!! Form::radio('off', $key_off, (isset($search_off) && $search_off == $key_off), ['id' => 'off' . $key_off, 'data-id' => 'search-off']) !!}
-                {!! Form::label('off' . $key_off, $off) !!}
-            </div>
-        @endforeach
-    </div>
-
-    <div class="section-filter filter-installment">
-        <h4 class="filter-title">parcelamento</h4>
-
-        @foreach ($installments as $key_installment => $installment)
-            <div class="item">
-                {!! Form::radio('installment', $key_installment, (isset($search_installment) && $search_installment == $key_installment), ['id' => 'installment' . $key_installment, 'data-id' => 'search-installment']) !!}
-                {!! Form::label('installment' . $key_installment, $installment) !!}
-            </div>
-        @endforeach
-    </div>
-
-    <div class="section-filter filter-color">
-        <h4 class="filter-title">cor</h4>
-
-        @foreach ($colors as $key_color => $color)
-            <div class="item">
-                {!! Form::radio('color', $color, (isset($search_color) && $search_color == $color), ['id' => 'color' . $key_color, 'data-id' => 'search-color']) !!}
-                {!! Form::label('color' . $key_color, ' ', ['class' => $key_color]) !!}
-            </div>
-        @endforeach
-    </div>
+            @foreach ($colors as $key_color => $color)
+                <div class="item">
+                    {!! Form::radio('color', $color, (isset($search_color) && $search_color == $color), ['id' => 'color' . $key_color, 'data-id' => 'search-color']) !!}
+                    {!! Form::label('color' . $key_color, ' ', ['class' => $key_color]) !!}
+                </div>
+            @endforeach
+        </div>
+    @endif
 </div>
