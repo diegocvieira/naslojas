@@ -16,7 +16,7 @@ class ComposerServiceProvider extends ServiceProvider
         // Using class based composers...
         //view()->composer(['inc/footer'], 'App\Http\ViewComposers\CitiesComposer');
 
-        view()->composer(['home', 'store.show', 'search', 'mobile.inc.top-nav'], 'App\Http\ViewComposers\FiltersComposer');
+        view()->composer(['mobile.inc.top-nav'], 'App\Http\ViewComposers\FiltersComposer');
 
         view()->composer(['store.list-product-edit', 'mobile.store.create-edit-product'], 'App\Http\ViewComposers\SelectsProductComposer');
 

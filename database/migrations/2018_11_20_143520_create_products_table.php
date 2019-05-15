@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('title', 255)->nullable();
             $table->string('slug', 255)->unique()->nullable();
             $table->decimal('price', 8, 2)->nullable();
-            $table->decimal('old_price', 8, 2)->nullable();
+            $table->integer('off')->nullable();
             $table->integer('pageviews')->default(1);
             $table->integer('status')->default(2);
             $table->string('description', 2000)->nullable();

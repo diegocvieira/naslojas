@@ -138,7 +138,34 @@ $(function() {
         modalAlert('Em breve você poderá ver os produtos das lojas de outras cidades.');
     });
 
-    // Filters product
+    // Newsletter register
+    $(document).on('submit', '#form-newsletter-register', function () {
+        var form = $(this);
+
+        form.find('input[type=submit]').val('ENVIANDO').attr('disabled', true);
+
+        $.ajax({
+            url: form.attr('action'),
+            method: 'POST',
+            dataType: 'json',
+            data: form.serialize(),
+            success: function (data) {
+                form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
+                form.find('input[type=email]').val('');
+
+                modalAlert('E-mail enviado com sucesso!');
+            },
+            error: function (request, status, error) {
+                form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
+
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+
+        return false;
+    });
+
+    // START FILTER PRODUCTS
     $(document).on('change', '.product-filter select', function() {
         var val = $(this).val();
 
@@ -146,6 +173,38 @@ $(function() {
 
         $('#form-search').submit();
     });
+
+    $(document).on('change', '.filter-products input[type=radio]', function() {
+        if ($(this).attr('name') == 'price') {
+            var split = $(this).val().split('-');
+
+            $('#search-min-price').val(split[0]);
+            $('#search-max-price').val(split[1]);
+        } else {
+            $('#' + $(this).data('id')).val($(this).val());
+        }
+
+        $('#form-search').submit();
+    });
+
+    $(document).on('click', '.filter-products .filter-price button', function() {
+        $('#search-min-price').val(parseFloat($('.filter-products .filter-price input[name=min_price]').val().replace('.', '').replace(',', '.')).toFixed(2));
+        $('#search-max-price').val(parseFloat($('.filter-products .filter-price input[name=max_price]').val().replace('.', '').replace(',', '.')).toFixed(2));
+
+        $('#form-search').submit();
+    });
+
+    $(document).on('click', '.clear-filter, .clear-all-filters', function() {
+        if ($(this).hasClass('clear-filter')) {
+            $('#' + $(this).data('id')).val('');
+        } else {
+            $('#form-search').find('input[type=hidden]').not("input[name='store_slug']").val('');
+        }
+
+        $('#form-search').submit();
+    });
+
+    // END FILTER PRODUCTS
 
     $(document).on('click', '.password-recover', function(e) {
         e.preventDefault();

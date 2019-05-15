@@ -62,7 +62,7 @@
         <div class="row">
             <div class="form-group title">
                 {!! Form::text('title', null, ['class' => 'field', 'placeholder' => ' ']) !!}
-                {!! Form::label('', 'Título do produto * (A busca é feita com base nas palavras escritas aqui)') !!}
+                {!! Form::label('', 'Título do produto * (ESTE É O CAMPO MAIS IMPORTANTE - ESCREVA A CATEGORIA, A MARCA E A COR NESTE CAMPO - Ex: Camiseta adidas preta)') !!}
             </div>
 
             <div class="form-group gender">

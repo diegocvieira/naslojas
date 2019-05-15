@@ -4,14 +4,23 @@
             <img src="{{ asset('images/logo-naslojas.png') }}" />
         </a>
 
-        @if (isset($store))
-            {!! Form::open(['method' => 'GET', 'route' => 'form-search-store', 'id' => 'form-search']) !!}
+        <?php /* @if (isset($store))
+            {!! Form::open(['method' => 'GET', 'route' => ['search-store-products', $store->slug], 'id' => 'form-search']) !!}
                 {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que voce procura na loja ' . $store->name]) !!}
 
-                {!! Form::hidden('store_slug', $store->slug) !!}
+                <?php /* {!! Form::hidden('store_slug', $store->slug) !!} */ ?>
 
-                {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
-                {!! Form::hidden('gender', $search_gender ?? 'todos', ['id' => 'search-gender']) !!}
+                <?php /*{!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
+                {!! Form::hidden('gender', $search_gender ?? '', ['id' => 'search-gender']) !!}
+                {!! Form::hidden('min_price', $search_min_price ?? '', ['id' => 'search-min-price']) !!}
+                {!! Form::hidden('max_price', $search_max_price ?? '', ['id' => 'search-max-price']) !!}
+                {!! Form::hidden('size', $search_size ?? '', ['id' => 'search-size']) !!}
+                {!! Form::hidden('off', $search_off ?? '', ['id' => 'search-off']) !!}
+                {!! Form::hidden('installment', $search_installment ?? '', ['id' => 'search-installment']) !!}
+                {!! Form::hidden('brand', $search_brand ?? '', ['id' => 'search-brand']) !!}
+                {!! Form::hidden('freight', $search_freight ?? '', ['id' => 'search-freight']) !!}
+                {!! Form::hidden('category', $search_category ?? '', ['id' => 'search-category']) !!}
+                {!! Form::hidden('color', $search_color ?? '', ['id' => 'search-color']) !!}
 
                 {!! Form::submit('') !!}
             {!! Form::close() !!}
@@ -20,11 +29,44 @@
                 {!! Form::text('keyword', $keyword ?? '', ['placeholder' => Cookie::get('sessao_cidade_title') ? 'Digite aqui o produto que voce procura nas lojas de ' . Cookie::get('sessao_cidade_title') : 'Digite aqui o produto que voce procura nas lojas de Pelotas']) !!}
 
                 {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
-                {!! Form::hidden('gender', $search_gender ?? 'todos', ['id' => 'search-gender']) !!}
+                {!! Form::hidden('gender', $search_gender ?? '', ['id' => 'search-gender']) !!}
+                {!! Form::hidden('min_price', $search_min_price ?? '', ['id' => 'search-min-price']) !!}
+                {!! Form::hidden('max_price', $search_max_price ?? '', ['id' => 'search-max-price']) !!}
+                {!! Form::hidden('size', $search_size ?? '', ['id' => 'search-size']) !!}
+                {!! Form::hidden('off', $search_off ?? '', ['id' => 'search-off']) !!}
+                {!! Form::hidden('installment', $search_installment ?? '', ['id' => 'search-installment']) !!}
+                {!! Form::hidden('brand', $search_brand ?? '', ['id' => 'search-brand']) !!}
+                {!! Form::hidden('freight', $search_freight ?? '', ['id' => 'search-freight']) !!}
+                {!! Form::hidden('category', $search_category ?? '', ['id' => 'search-category']) !!}
+                {!! Form::hidden('color', $search_color ?? '', ['id' => 'search-color']) !!}
 
                 {!! Form::submit('') !!}
             {!! Form::close() !!}
+        @endif */ ?>
+
+        @if (isset($store))
+            {!! Form::open(['method' => 'GET', 'route' => ['search-store-products', $store->slug], 'id' => 'form-search']) !!}
+                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que voce procura na loja ' . $store->name]) !!}
+        @else
+            {!! Form::open(['method' => 'GET', 'route' => ['search-products', Cookie::get('city_slug'), Cookie::get('state_letter_lc')], 'id' => 'form-search']) !!}
+                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que voce procura nas lojas de Pelotas']) !!}
         @endif
+
+                {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
+                {!! Form::hidden('gender', $search_gender ?? '', ['id' => 'search-gender']) !!}
+                {!! Form::hidden('min_price', $search_min_price ?? '', ['id' => 'search-min-price']) !!}
+                {!! Form::hidden('max_price', $search_max_price ?? '', ['id' => 'search-max-price']) !!}
+                {!! Form::hidden('size', $search_size ?? '', ['id' => 'search-size']) !!}
+                {!! Form::hidden('off', $search_off ?? '', ['id' => 'search-off']) !!}
+                {!! Form::hidden('installment', $search_installment ?? '', ['id' => 'search-installment']) !!}
+                {!! Form::hidden('brand', $search_brand ?? '', ['id' => 'search-brand']) !!}
+                {!! Form::hidden('freight', $search_freight ?? '', ['id' => 'search-freight']) !!}
+                {!! Form::hidden('category', $search_category ?? '', ['id' => 'search-category']) !!}
+                {!! Form::hidden('color', $search_color ?? '', ['id' => 'search-color']) !!}
+
+                {!! Form::submit('') !!}
+            {!! Form::close() !!}
+
 
         <nav class="nav navbar-nav nav-menu">
             <ul>

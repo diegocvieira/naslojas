@@ -20,31 +20,7 @@
 
             <div class="container-fluid bg-grey">
                 <div class="container">
-                    <section class="row know">
-                        <div class="col-xs-3">
-                            <img src="{{ asset('images/know/shirt.png') }}" class="img-shirt" />
-
-                            <span>Confira as ofertas<br>das lojas de Pelotas</span>
-                        </div>
-
-                        <div class="col-xs-3">
-                            <img src="{{ asset('images/know/calendar.png') }}" />
-
-                            <span>Receba seu pedido<br>em até 24 horas</span>
-                        </div>
-
-                        <div class="col-xs-3">
-                            <img src="{{ asset('images/know/truck.png') }}" class="img-truck" />
-
-                            <span>Frete para toda a<br>cidade por R$ 5,00</span>
-                        </div>
-
-                        <div class="col-xs-3">
-                            <img src="{{ asset('images/know/card.png') }}" class="img-card" />
-
-                            <span>Pague somente ao<br>receber o produto</span>
-                        </div>
-                    </section>
+                    @include('inc.know')
 
                     <section class="row">
                         <div class="col-xs-12">
@@ -239,13 +215,29 @@
 
                 <section class="row banners">
                     <div class="col-xs-12">
-                        <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?keyword=nike' }}">
+                        <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?brand=nike' }}">
                             <img src="{{ asset('images/banner-nike.jpg') }}" alt="Nike" class="img-responsive" />
                         </a>
 
                         <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?advanced=true&keyword=estilo' }}">
                             <img src="{{ asset('images/banner-shoes.jpg') }}" alt="Sapatos" class="img-responsive" />
                         </a>
+                    </div>
+                </section>
+
+                <section class="row newsletter text-center">
+                    <div class="col-xs-12">
+                        <h2>1 e-mail por semana</h2>
+                        <h3>Com as maiores ofertas, promoções e novidades das lojas de Pelotas</h3>
+                        <span>CANCELE QUANDO QUISER</span>
+                    </div>
+
+                    <div class="col-xs-12">
+                        {!! Form::open(['method' => 'POST', 'route' => 'newsletter-register', 'id' => 'form-newsletter-register']) !!}
+                            {!! Form::email('email', null, ['placeholder' => 'Seu e-mail']) !!}
+
+                            {!! Form::submit('ENVIAR') !!}
+                        {!! Form::close() !!}
                     </div>
                 </section>
             </div>
