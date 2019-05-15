@@ -37,6 +37,16 @@
             </div>
         </div>
 
+        @if ($products->count())
+            <div class="row">
+                <div class="col-12">
+                    <div class="product-filter-orderby">
+                        {!! Form::select('order', $orderby, $search_order ?? null, ['class' => 'selectpicker', 'title' => 'Ordenar']) !!}
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="row">
             <div class="col-xs-3">
                 @include('inc.aside-filters')
@@ -44,10 +54,6 @@
 
             <div class="col-xs-9">
                 @if ($products->count())
-                    <div class="product-filter-orderby">
-                        {!! Form::select('order', $orderby, $search_order ?? null, ['class' => 'selectpicker', 'title' => 'Ordenar']) !!}
-                    </div>
-
                     <div class="list-products">
                         @foreach($products as $product)
                             <div class="product">

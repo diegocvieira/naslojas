@@ -215,7 +215,7 @@
 
                 <section class="row banners">
                     <div class="col-xs-12">
-                        <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?keyword=nike' }}">
+                        <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?brand=nike' }}">
                             <img src="{{ asset('images/banner-nike.jpg') }}" alt="Nike" class="img-responsive" />
                         </a>
 

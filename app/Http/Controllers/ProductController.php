@@ -193,6 +193,10 @@ class ProductController extends Controller
                     $terms = ['sapato', 'calcado', 'salto alto', 'sapatenis', 'casual', 'colete', 'scarpin', 'jeans', 'sapatilha', 'sandalia', 'calca jeans', 'peep toe', 'bota', 'saia', 'mini saia', 'short', 'bermuda', 'calca', 'vestido', 'blusa', 'camisa', 'camiseta', 'casaco', 'jaqueta', 'blusao', 'moletom', 'moleton', 'agasalho', 'blusinha', 'sobretudo'];
                 } else if ($keyword == 'acessorios') {
                     $terms = ['mala', 'mochila', 'bolsa', 'joia', 'relogio', 'anel', 'chapeu', 'manta', 'maleta', 'carteira', 'bikini', 'biquini', 'luva', 'meia', 'carpim', 'bone', 'tiara', 'brinco', 'pochete', 'colar', 'pulseira', 'oculos', 'oculos de sol', 'oculos escuros', 'maquiagem', 'batom', 'tornozeleira', 'cinto', 'suspensorio'];
+                } else if ($keyword == 'roupas') {
+                    $terms = ['agasalho', 'bermuda', 'bikini', 'biquini', 'blusa', 'blusão', 'calça', 'calção', 'camisa', 'camiseta', 'camiseta regata', 'casaco', 'colete', 'jaqueta', 'jeans', 'legging', 'maiô', 'mini saia', 'moletom', 'regata', 'saia', 'short', 'sobretudo', 'sunga', 'suspensório', 'vestido'];
+                } else if ($keyword == 'calcados') {
+                    $terms = ['botas', 'calçado', 'oxford', 'peep toe', 'salto alto', 'sandália', 'sapatênis', 'sapatilha', 'sapato', 'scarpin', 'tamanco', 'tênis'];
                 }
 
                 foreach ($terms as $t) {

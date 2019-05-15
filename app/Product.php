@@ -68,12 +68,14 @@ class Product extends Model
             if ($color == 'preto') {
                 return $query->where(function ($q) {
                     $q->where('title', 'LIKE', '%preto%')
-                        ->orWhere('title', 'LIKE', '%black%');
+                        ->orWhere('title', 'LIKE', '%black%')
+                        ->orWhere('title', 'LIKE', '%preta%');
                 });
             } else if ($color == 'branco') {
                 return $query->where(function ($q) {
                     $q->where('title', 'LIKE', '%branco%')
-                        ->orWhere('title', 'LIKE', '%white%');
+                        ->orWhere('title', 'LIKE', '%white%')
+                        ->orWhere('title', 'LIKE', '%branca%');
                 });
             } else if ($color == 'cinza') {
                 return $query->where(function ($q) {
@@ -137,7 +139,8 @@ class Product extends Model
                 return $query->where(function ($q) {
                     $q->where('title', 'LIKE', '%amarelo%')
                         ->orWhere('title', 'LIKE', '%amarelo ouro%')
-                        ->orWhere('title', 'LIKE', '%yellow%');
+                        ->orWhere('title', 'LIKE', '%yellow%')
+                        ->orWhere('title', 'LIKE', '%amarela%');
                 });
             } else if ($color == 'vermelho') {
                 return $query->where(function ($q) {
@@ -147,7 +150,8 @@ class Product extends Model
                         ->orWhere('title', 'LIKE', '%vermelho fraco%')
                         ->orWhere('title', 'LIKE', '%vermelho forte%')
                         ->orWhere('title', 'LIKE', '%vermelho escuro%')
-                        ->orWhere('title', 'LIKE', '%vermelho claro%');
+                        ->orWhere('title', 'LIKE', '%vermelho claro%')
+                        ->orWhere('title', 'LIKE', '%vermelha%');
                 });
             } else if ($color == 'laranja') {
                 return $query->where(function ($q) {
@@ -166,7 +170,8 @@ class Product extends Model
                         ->orWhere('title', 'LIKE', '%roxo forte%')
                         ->orWhere('title', 'LIKE', '%roxo claro%')
                         ->orWhere('title', 'LIKE', '%roxo escuro%')
-                        ->orWhere('title', 'LIKE', '%purple%');
+                        ->orWhere('title', 'LIKE', '%purple%')
+                        ->orWhere('title', 'LIKE', '%roxa%');
                 });
             } else if ($color == 'rosa') {
                 return $query->where(function ($q) {
