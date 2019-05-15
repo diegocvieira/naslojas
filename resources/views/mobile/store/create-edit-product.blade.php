@@ -105,7 +105,7 @@
             <div class="section">
                 <div class="form-group">
                     {!! Form::text('title', null, ['placeholder' => ' ', 'class' => 'field']) !!}
-                    {!! Form::label('', 'Título * (ESCREVA A CATEGORIA, A MARCA E A COR NESTE CAMPO)') !!}
+                    {!! Form::label('', 'Título * (Escreva a categoria, a marca e a cor)') !!}
                 </div>
 
                 <div class="form-group description">
