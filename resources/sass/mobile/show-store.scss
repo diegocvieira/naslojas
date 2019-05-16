@@ -14,6 +14,11 @@
     .store-infos {
         float: left;
         margin-top: 20px;
+        padding: 0 10px;
+
+        &+ .show-filter-products, &+ .active-filter-products {
+            margin-top: 30px;
+        }
 
         h1 {
             font-size: 16.6px;

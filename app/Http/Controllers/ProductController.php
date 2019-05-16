@@ -312,7 +312,7 @@ class ProductController extends Controller
         if (Agent::isDesktop()) {
             return view('search', compact('products', 'orderby', 'keyword', 'prices', 'genders', 'offs', 'sizes', 'installments', 'colors', 'categories', 'brands', 'search_color', 'search_category', 'search_freight', 'search_brand', 'search_installment', 'search_gender', 'search_off', 'search_size', 'search_order', 'search_min_price', 'search_max_price', 'header_title', 'header_desc'));
         } else {
-            return view('mobile.search', compact('products', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));
+            return view('mobile.search', compact('products', 'orderby', 'keyword', 'prices', 'genders', 'offs', 'sizes', 'installments', 'colors', 'categories', 'brands', 'search_color', 'search_category', 'search_freight', 'search_brand', 'search_installment', 'search_gender', 'search_off', 'search_size', 'search_order', 'search_min_price', 'search_max_price', 'header_title', 'header_desc'));
         }
     }
 
