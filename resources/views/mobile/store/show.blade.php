@@ -13,26 +13,28 @@
         </div>
     @endif
 
+    <div class="store-infos">
+        <a href="{{ route('show-store', $store->slug) }}">
+            <h1>{{ $store->name }}</h1>
+
+            <p>
+                {{ $store->street }}, {{ $store->number }}
+                @if ($store->complement)
+                    {{ $store->complement }}
+                @endif
+                - {{ $store->district }} - {{ $store->city->title }}/{{ $store->city->state->letter }}
+            </p>
+        </a>
+
+        <a href="//maps.google.com/?q={{ $store->street }}, {{ $store->number }}, {{ $store->district }}, {{ $store->city->title }}, {{ $store->city->state->letter }}" target="_blank" class="map">
+			ver no mapa
+		</a>
+    </div>
+
+    @include('mobile.inc.filter-products')
+
     <div class="container">
         @if ($products->count())
-            <div class="store-infos">
-                <a href="{{ route('show-store', $store->slug) }}">
-                    <h1>{{ $store->name }}</h1>
-
-                    <p>
-                        {{ $store->street }}, {{ $store->number }}
-                        @if ($store->complement)
-                            {{ $store->complement }}
-                        @endif
-                        - {{ $store->district }} - {{ $store->city->title }}/{{ $store->city->state->letter }}
-                    </p>
-                </a>
-
-                <a href="//maps.google.com/?q={{ $store->street }}, {{ $store->number }}, {{ $store->district }}, {{ $store->city->title }}, {{ $store->city->state->letter }}" target="_blank" class="map">
-    				ver no mapa
-    			</a>
-            </div>
-
             <div class="list-products">
                 @foreach($products as $product)
                     <div class="product">
@@ -72,11 +74,7 @@
              <div class="no-results">
                  <img src="{{ asset('images/icon-box.png') }}" />
 
-                 @if ($products->count() == 0 && (isset($keyword) || isset($search_gender)))
-                     <p>Não encontramos resultados. <br> Tente palavras-chave diferentes</p>
-                 @else
-                     <p>Nenhum produto cadastrado</p>
-                 @endif
+                 <p>Não encontramos resultados. <br> Tente palavras-chave diferentes</p>
              </div>
          @endif
     </div>

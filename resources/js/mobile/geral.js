@@ -44,7 +44,7 @@ $(function() {
         $('.close-menu').remove();
     });
 
-    $(document).on('click', 'nav .options', function(e) {
+    $(document).on('click', 'nav .options, .show-filter-products', function(e) {
         e.preventDefault();
 
         $('.close-menu').remove();
@@ -58,7 +58,7 @@ $(function() {
         filter.is(':visible') ? $('body').css('overflow', 'hidden') : $('body').css('overflow', 'auto');
     });
 
-    $(document).on('click', '.filter-products a', function(e) {
+    /*$(document).on('click', '.filter-products a', function(e) {
         e.preventDefault();
 
         var val = $(this).data('value');
@@ -66,7 +66,40 @@ $(function() {
         $(this).data('type') == 'order' ? $('#search-order').val(val) : $('#search-gender').val(val);
 
         $('#form-search').submit();
+    });*/
+
+    // START FILTER PRODUCTS
+    $(document).on('change', '.filter-products input[type=radio]', function() {
+        if ($(this).attr('name') == 'price') {
+            var split = $(this).val().split('-');
+
+            $('#search-min-price').val(split[0]);
+            $('#search-max-price').val(split[1]);
+        } else {
+            $('#' + $(this).data('id')).val($(this).val());
+        }
+
+        $('#form-search').submit();
     });
+
+    $(document).on('click', '.filter-products .filter-price button', function() {
+        $('#search-min-price').val(parseFloat($('.filter-products .filter-price input[name=min_price]').val().replace('.', '').replace(',', '.')).toFixed(2));
+        $('#search-max-price').val(parseFloat($('.filter-products .filter-price input[name=max_price]').val().replace('.', '').replace(',', '.')).toFixed(2));
+
+        $('#form-search').submit();
+    });
+
+    $(document).on('click', '.clear-filter, .clear-all-filters', function() {
+        if ($(this).hasClass('clear-filter')) {
+            $('#' + $(this).data('id')).val('');
+        } else {
+            $('#form-search').find('input[type=hidden]').not("input[name='store_slug']").val('');
+        }
+
+        $('#form-search').submit();
+    });
+
+    // END FILTER PRODUCTS
 
     $(document).on('click', '.password-recover', function(e) {
         e.preventDefault();

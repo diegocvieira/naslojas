@@ -127,7 +127,7 @@ class StoreController extends Controller
                 $section = 'store';
             }
 
-            return view('mobile.store.show', compact('store', 'products', 'header_title', 'header_desc', 'section'));
+            return view('mobile.store.show', compact('store', 'products', 'section', 'orderby', 'prices', 'genders', 'offs', 'sizes', 'installments', 'colors', 'categories', 'brands', 'header_title', 'header_desc'));
         }
     }
 
@@ -315,7 +315,7 @@ class StoreController extends Controller
         if (Agent::isDesktop()) {
             return view('store.show', compact('products', 'store', 'keyword', 'orderby', 'genders', 'prices', 'sizes', 'offs', 'installments', 'colors', 'categories', 'brands', 'search_color', 'search_category', 'search_freight', 'search_brand', 'search_installment', 'search_gender', 'search_off', 'search_size', 'search_order', 'search_min_price', 'search_max_price', 'header_title', 'header_desc'));
         } else {
-            return view('mobile.store.show', compact('products', 'store', 'keyword', 'search_gender', 'search_order', 'header_title', 'header_desc'));
+            return view('mobile.store.show', compact('products', 'store', 'keyword', 'orderby', 'genders', 'prices', 'sizes', 'offs', 'installments', 'colors', 'categories', 'brands', 'search_color', 'search_category', 'search_freight', 'search_brand', 'search_installment', 'search_gender', 'search_off', 'search_size', 'search_order', 'search_min_price', 'search_max_price', 'header_title', 'header_desc'));
         }
     }
 
