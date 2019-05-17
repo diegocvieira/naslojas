@@ -68,6 +68,10 @@ $(function() {
         $('#form-search').submit();
     });*/
 
+    $(document).on('click', '.close-filter-products', function() {
+        $('.filter-products').hide();
+    });
+
     // START FILTER PRODUCTS
     $(document).on('change', '.filter-products input[type=radio]', function() {
         if ($(this).attr('name') == 'price') {

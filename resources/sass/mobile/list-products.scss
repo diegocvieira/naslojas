@@ -108,6 +108,20 @@
         padding-top: 0;
     }
 
+    .close-filter-products {
+        width: 30px;
+        height: 30px;
+        background-image: url('../../images/icon-remove.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        border: none;
+        background-color: transparent;
+        position: absolute;
+        right: 20px;
+        top: 70px;
+    }
+
     .section-filter {
         float: left;
         width: 100%;

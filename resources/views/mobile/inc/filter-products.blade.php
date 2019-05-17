@@ -55,6 +55,8 @@
 @endif
 
 <div class="filter-products">
+    <button class="close-filter-products"></button>
+
     @if ($orderby)
         <div class="section-filter">
             <h4 class="filter-title">ordenar</h4>
