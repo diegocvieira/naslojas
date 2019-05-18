@@ -1,0 +1,224 @@
+.page-home {
+    .section-title {
+        font-size: 16.6px;
+        font-family: "KeepCalm";
+        color: rgb(100, 100, 100);
+        margin: 0 0 10px 10px;
+    }
+
+    .bg-grey {
+        width: 100%;
+        float: left;
+        background-color: #fafafa;
+        padding-bottom: 50px;
+    }
+
+    section {
+        margin-top: 50px;
+        width: 100%;
+        float: left;
+    }
+
+    .banner-home {
+        img {
+    		width: 100%;
+    	}
+    }
+
+    .know {
+        .content {
+            margin: 0 20px;
+        }
+
+        img {
+              width: 57px;
+              display: inline-block;
+
+              &.img-card {
+                  width: 60px;
+              }
+
+              &.img-shirt {
+                  width: 66px;
+              }
+
+              &.img-truck {
+                  width: 62px;
+              }
+        }
+
+        span {
+            display: inline-block;
+            font-size: 16.6px;
+            color: rgb(62, 60, 71);
+            line-height: 1.3;
+            margin-left: 15px;
+            vertical-align: middle;
+            text-align: left;
+        }
+    }
+
+    .prices {
+        .item {
+            padding-left: 10px;
+
+            img {
+                width: 255px;
+            }
+        }
+    }
+
+    .stores-home {
+        .item {
+            padding-left: 10px;
+
+            img {
+                width: 185px;
+            }
+        }
+    }
+
+    .brands {
+        margin-top: 100px;
+        padding: 0 5px;
+
+        .content {
+            padding: 0 5px;
+        }
+    }
+
+    .trending-words {
+        margin-top: 100px;
+
+        .item {
+            width: auto !important;
+            margin: 0 5px 10px 5px;
+        }
+
+        a {
+            font-size: 16.6px;
+            color: rgb(100, 100, 100);
+            background-color: rgb(249, 248, 247);
+            display: inline-block;
+            border-radius: 25px;
+            padding: 15px 20px 15px 45px;
+            position: relative;
+
+            &:before {
+                content: '+';
+                color: #ff1945;
+                position: absolute;
+                left: 17px;
+                top: 4px;
+                font-size: 30px;
+            }
+        }
+    }
+
+    .banners {
+        margin-top: 100px;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .newsletter {
+        margin: 100px 0 80px 0;
+        padding: 0 10px;
+
+        h2 {
+            font-size: 25px;
+            font-family: 'KeepCalm';
+            color: rgb(50, 50, 50);
+        }
+
+        h3 {
+            font-size: 16.6px;
+            color: rgb(150, 150, 150);
+            margin-top: 0;
+        }
+
+        span {
+            font-size: 12.5px;
+            color: rgb(150, 150, 150);
+        }
+
+        form {
+            display: block;
+            width: 100%;
+            height: 50px;
+            position: relative;
+            margin-top: 15px;
+
+            input[type=email] {
+                background-color: rgb(245, 245, 245);
+                width: 100%;
+                height: 100%;
+                font-size: 16.6px;
+                color: rgb(150, 150, 150);
+                border-radius: 25px;
+                padding-left: 20px;
+                border: none;
+            }
+
+            input[type=submit] {
+                background-color: rgb(150, 150, 150);
+                width: 100px;
+                height: 100%;
+                position: absolute;
+                right: 0;
+                top: 0;
+                font-size: 14.5px;
+                color: #fff;
+                font-weight: 700;
+                border-radius: 25px;
+                border: none;
+            }
+        }
+    }
+
+    .products-home {
+        .list-products {
+            margin-top: 10px;
+
+            .product {
+                padding-left: 10px;
+                margin-bottom: 0;
+
+                .image {
+                    width: 150px;
+                    background-color: #fff;
+                    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 20px 0px;
+                }
+            }
+        }
+    }
+
+    .images-filter {
+        padding: 0 5px;
+
+        .section-title {
+            font-size: 12.5px;
+            margin-left: 0;
+        }
+
+        .content {
+            width: 50%;
+            float: left;
+            padding: 0 5px;
+            margin-top: 30px;
+            text-align: center;
+
+            img {
+                width: 145px;
+                max-width: 100%;
+                display: inline-block;
+            }
+
+            &:last-child {
+                width: 100%;
+            }
+        }
+    }
+}

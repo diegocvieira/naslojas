@@ -1,32 +1,89 @@
 $(function() {
     $('body').css('opacity', '1');
 
-    $('.slick-home').slick({
-        //initialSlide: Math.floor(Math.random() * $('.slick-home .item').length),
+    $('.slick-home-banner').slick({
         slidesToShow: 1,
-        //centerMode: true,
         infinite: true,
         arrows: false,
         slidesToScroll: 1,
-        //autoplay: true,
         autoplaySpeed: 4000,
-        //cssEase: 'linear',
-        //variableWidth: true,
-        //variableHeight: true,
+        autoplay: true
     });
 
-    $('.slick-stores').slick({
-        //initialSlide: Math.floor(Math.random() * $('.slick-home .item').length),
-        slidesToShow: 3,
-        //centerMode: true,
+    $('.slick-home-know, .slick-home-prices').slick({
+        slidesToShow: 1,
+        variableWidth: true,
+        infinite: false,
+        arrows: false,
+        slidesToScroll: 1
+    });
+
+    $('.slick-home-products').slick({
+        slidesToShow: 1,
+        variableWidth: true,
+        infinite: true,
+        arrows: false,
+        slidesToScroll: 1
+    });
+
+    $('.slick-home-stores').slick({
+        slidesToShow: 1,
+        variableWidth: true,
         infinite: true,
         arrows: false,
         slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 4000,
-        //cssEase: 'linear',
-        //variableWidth: true,
-        //variableHeight: true
+        initialSlide: Math.floor(Math.random() * $('.slick-home-stores a').length)
+    });
+
+    $('.slick-home-brands').slick({
+        infinite: true,
+        arrows: false,
+        slidesPerRow: 2,
+        rows: 2
+    });
+
+    $('.slick-trending-words').slick({
+        slidesToShow: 1,
+        variableWidth: true,
+        infinite: true,
+        arrows: false,
+        slidesToScroll: 1,
+        slidesPerRow: 3,
+        rows: 3
+    });
+
+    // Newsletter register
+    $(document).on('submit', '#form-newsletter-register', function () {
+        var form = $(this);
+
+        form.find('input[type=submit]').val('ENVIANDO').attr('disabled', true);
+
+        $.ajax({
+            url: form.attr('action'),
+            method: 'POST',
+            dataType: 'json',
+            data: form.serialize(),
+            success: function (data) {
+                form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
+                form.find('input[type=email]').val('');
+
+                modalAlert('E-mail enviado com sucesso!');
+            },
+            error: function (request, status, error) {
+                form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
+
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+
+        return false;
+    });
+
+    // Disabled stores
+    $(document).on('click', '.store-disabled', function(e) {
+        e.preventDefault();
+
+        modalAlert('Em breve!');
     });
 
     // City
@@ -44,7 +101,7 @@ $(function() {
         $('.close-menu').remove();
     });
 
-    $(document).on('click', 'nav .options, .show-filter-products', function(e) {
+    $(document).on('click', 'nav .options', function(e) {
         e.preventDefault();
 
         $('.close-menu').remove();
@@ -58,17 +115,21 @@ $(function() {
         filter.is(':visible') ? $('body').css('overflow', 'hidden') : $('body').css('overflow', 'auto');
     });
 
-    /*$(document).on('click', '.filter-products a', function(e) {
+    // START FILTER PRODUCTS
+    $(document).on('click', '.show-filter-products', function(e) {
         e.preventDefault();
 
-        var val = $(this).data('value');
+        var filter = $('.filter-products');
 
-        $(this).data('type') == 'order' ? $('#search-order').val(val) : $('#search-gender').val(val);
+        filter.addClass('active');
 
-        $('#form-search').submit();
-    });*/
+        filter.is(':visible') ? $('body').css('overflow', 'hidden') : $('body').css('overflow', 'auto');
+    });
 
-    // START FILTER PRODUCTS
+    $(document).on('click', '.close-filter-products', function() {
+        $('.filter-products').removeClass('active');
+    });
+
     $(document).on('change', '.filter-products input[type=radio]', function() {
         if ($(this).attr('name') == 'price') {
             var split = $(this).val().split('-');

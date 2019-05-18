@@ -150,6 +150,7 @@ a, a:hover, a:active, a:focus {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100%;
 
     p {
         font-size: 14.5px;
@@ -269,55 +270,6 @@ a, a:hover, a:active, a:focus {
     }
 }
 
-.page-know {
-    .item {
-        width: 100%;
-        float: left;
-        text-align: center;
-        margin-top: 50px;
-
-        &:last-child p {
-            margin-top: 0;
-        }
-
-        img {
-            width: 100px;
-
-            &.img-card {
-                margin-bottom: 10px;
-            }
-        }
-
-        p {
-            margin-top: 10px;
-            font-size: 18.7px;
-            color: rgb(62, 60, 71);
-            line-height: 1.3;
-        }
-    }
-}
-
-.banner-home {
-    padding-top: 50px;
-    width: 100%;
-    float: left;
-
-    img {
-		width: 100%;
-	}
-}
-
-.stores-home {
-    float: left;
-    width: 100%;
-    margin-top: 20px;
-
-    img {
-        width: 95%;
-        margin: auto;
-    }
-}
-
 .modal-link-share {
     .modal-body {
         padding-bottom: 0;
@@ -390,6 +342,7 @@ a, a:hover, a:active, a:focus {
 
 @import 'top-nav.scss';
 @import 'footer.scss';
+@import 'home';
 @import 'list-products.scss';
 @import 'pagination.scss';
 @import 'show-product.scss';
