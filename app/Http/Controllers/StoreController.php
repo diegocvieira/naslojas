@@ -43,7 +43,7 @@ class StoreController extends Controller
         $products = Product::where('store_id', $store->id)
             ->has('images')
             ->inRandomOrder()
-            ->paginate(30);
+            ->paginate(32);
 
         // FILTERS //
 
@@ -214,7 +214,7 @@ class StoreController extends Controller
             }
         }
 
-        $products = $products->paginate(30);
+        $products = $products->paginate(32);
 
         if ($keyword && $products->count() == 0) {
             $products = Product::has('images')

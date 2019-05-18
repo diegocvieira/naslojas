@@ -214,7 +214,7 @@ class ProductController extends Controller
             }
         }
 
-        $products = $products->paginate(30);
+        $products = $products->paginate(32);
 
         if ($keyword && $products->count() == 0) {
             $products = Product::has('images')
@@ -234,7 +234,7 @@ class ProductController extends Controller
                         $query->search(preg_replace('{(.)\1+}','$1', $keyword));
                     });
                 })
-                ->paginate(30);
+                ->paginate(32);
         }
 
         // FILTERS //

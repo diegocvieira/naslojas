@@ -86,10 +86,6 @@ class GlobalController extends Controller
         $brands = ['adidas', 'asics', 'bebece', 'bull terrier', 'colcci', 'grendene', 'melissa', 'nike', 'olympikus', 'ramarim', 'schutz', 'via marte'];
         shuffle($brands);
 
-
-        $offers = Product::get();
-        $featured_products = $offers;
-
         if (Agent::isDesktop()) {
             return view('home', compact('featured_products', 'offers', 'trending_words', 'brands'));
         } else {
