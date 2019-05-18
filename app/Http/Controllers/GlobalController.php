@@ -18,8 +18,6 @@ class GlobalController extends Controller
             $this->setCity(4913);
         }
 
-        $products = Product::has('images')->inRandomOrder()->paginate(30);
-
         $featured_products = Product::has('images')
             ->where(function($q) {
                 $q->where('identifier', '1369251634')
@@ -88,10 +86,14 @@ class GlobalController extends Controller
         $brands = ['adidas', 'asics', 'bebece', 'bull terrier', 'colcci', 'grendene', 'melissa', 'nike', 'olympikus', 'ramarim', 'schutz', 'via marte'];
         shuffle($brands);
 
+
+        $offers = Product::get();
+        $featured_products = $offers;
+
         if (Agent::isDesktop()) {
             return view('home', compact('featured_products', 'offers', 'trending_words', 'brands'));
         } else {
-            return view('mobile.home', compact('products'));
+            return view('mobile.home', compact('featured_products', 'offers', 'trending_words', 'brands'));
         }
     }
 

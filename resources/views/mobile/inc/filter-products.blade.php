@@ -1,6 +1,6 @@
 @if (isset($search_order) || isset($search_gender) || isset($search_category) || isset($search_min_price) || isset($search_max_price) || isset($search_freight) || isset($search_size) || isset($search_brand) || isset($search_off) || isset($search_installment) || isset($search_color))
     <div class="active-filter-products">
-        <button type="button" class="show-filter-products" data-type="filter-products">Filtrar produtos</button>
+        <button type="button" class="show-filter-products">Filtrar produtos</button>
 
         <button type="button" class="clear-all-filters">limpar</button>
 
@@ -51,7 +51,7 @@
         </div>
     </div>
 @else
-    <button type="button" class="show-filter-products" data-type="filter-products">Filtrar produtos</button>
+    <button type="button" class="show-filter-products">Filtrar produtos</button>
 @endif
 
 <div class="filter-products">

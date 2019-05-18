@@ -297,27 +297,6 @@ a, a:hover, a:active, a:focus {
     }
 }
 
-.banner-home {
-    padding-top: 50px;
-    width: 100%;
-    float: left;
-
-    img {
-		width: 100%;
-	}
-}
-
-.stores-home {
-    float: left;
-    width: 100%;
-    margin-top: 20px;
-
-    img {
-        width: 95%;
-        margin: auto;
-    }
-}
-
 .modal-link-share {
     .modal-body {
         padding-bottom: 0;
@@ -390,6 +369,7 @@ a, a:hover, a:active, a:focus {
 
 @import 'top-nav.scss';
 @import 'footer.scss';
+@import 'home';
 @import 'list-products.scss';
 @import 'pagination.scss';
 @import 'show-product.scss';

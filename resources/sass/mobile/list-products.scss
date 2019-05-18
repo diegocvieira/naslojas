@@ -98,11 +98,18 @@
     width: 100%;
     background-color: #fff;
     padding: 50px 10px 0 10px;
-    display: none;
+    opacity: 0;
+    visibility: hidden;
     z-index: 1000;
     overflow: auto;
     left: 0;
     top: 0;
+    transition: .2s;
+
+    &.active {
+        opacity: 1;
+        visibility: visible;
+    }
 
     &+ .container {
         padding-top: 0;
