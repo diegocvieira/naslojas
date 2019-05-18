@@ -6,10 +6,19 @@ $(function() {
         infinite: true,
         arrows: false,
         slidesToScroll: 1,
-        autoplaySpeed: 4000
+        autoplaySpeed: 4000,
+        autoplay: true
     });
 
-    $('.slick-home-slider').slick({
+    $('.slick-home-know, .slick-home-prices').slick({
+        slidesToShow: 1,
+        variableWidth: true,
+        infinite: false,
+        arrows: false,
+        slidesToScroll: 1
+    });
+
+    $('.slick-home-products').slick({
         slidesToShow: 1,
         variableWidth: true,
         infinite: true,

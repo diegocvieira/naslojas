@@ -114,16 +114,6 @@ Route::group(['prefix' => 'site'], function () {
 		}
 	})->name('privacy-policy');
 
-	Route::get('entenda', function () {
-		if (Agent::isDesktop()) {
-			return view('know');
-		} else {
-			$section = 'know';
-
-			return view('mobile.know', compact('section'));
-		}
-	})->name('know');
-
 	Route::get('como-funciona', function () {
 		if (Agent::isDesktop()) {
 			session()->flash('session_flash_how_works', 'true');

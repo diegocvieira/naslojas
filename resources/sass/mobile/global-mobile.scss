@@ -150,6 +150,7 @@ a, a:hover, a:active, a:focus {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100%;
 
     p {
         font-size: 14.5px;
@@ -266,34 +267,6 @@ a, a:hover, a:active, a:focus {
         font-size: 14.5px;
         color: rgb(255, 23, 68);
         margin-right: 25px;
-    }
-}
-
-.page-know {
-    .item {
-        width: 100%;
-        float: left;
-        text-align: center;
-        margin-top: 50px;
-
-        &:last-child p {
-            margin-top: 0;
-        }
-
-        img {
-            width: 100px;
-
-            &.img-card {
-                margin-bottom: 10px;
-            }
-        }
-
-        p {
-            margin-top: 10px;
-            font-size: 18.7px;
-            color: rgb(62, 60, 71);
-            line-height: 1.3;
-        }
     }
 }
 

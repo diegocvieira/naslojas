@@ -113,35 +113,12 @@
 
                     <div class="col-xs-4 step">
                         <img src="{{ asset('images/advise/shape2.png') }}" />
-                        <p>Também cuidamos<br>do <b>frete</b>, das <b>fotos</b><br>e da <b>divulgação</b></p>
+                        <p>Oferecemos <b>frete</b><br>para toda a cidade<br>por apenas <b>R$5</b></p>
                     </div>
 
                     <div class="col-xs-4 step">
                         <img src="{{ asset('images/advise/shape3.png') }}" />
                         <p>Você só precisa <b>postar</b><br>os produtos e responder<br>os <b>pedidos</b></p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="lines">
-                            <span class="line vertical"></span>
-                            <span class="line horizontal"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row opcionais">
-                    <div class="col-xs-2 col-xs-offset-3">
-                        <p>Frete para toda a<br>cidade por R$5<br><b>(OPCIONAL)</b></p>
-                    </div>
-
-                    <div class="col-xs-2">
-                        <p>Fotos por apenas<br>R$1 por produto<br><b>(OPCIONAL)</b></p>
-                    </div>
-
-                    <div class="col-xs-2">
-                        <p>Material impresso a<br>preços imperdíveis<br><b>(OPCIONAL)</b></p>
                     </div>
                 </div>
             </div>

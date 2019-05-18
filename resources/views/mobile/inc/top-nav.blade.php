@@ -124,10 +124,6 @@
                         </li>
                     @else
                         <li>
-                            <a href="{{ route('know') }}" class="{{ (isset($section) && $section == 'know') ? 'active' : '' }}">Entenda</a>
-                        </li>
-
-                        <li>
                             <a href="{{ route('how-works') }}" class="{{ (isset($section) && $section == 'how-works') ? 'active' : '' }}">Como funciona</a>
                         </li>
 

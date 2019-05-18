@@ -20,7 +20,7 @@
             </section>
 
             <section class="know">
-                <div class="slick-home-slider">
+                <div class="slick-home-know">
                     <div class="content">
                         <img src="{{ asset('images/know/shirt.png') }}" class="img-shirt" />
 
@@ -51,7 +51,7 @@
             <section class="products-home">
                 <h2 class="section-title">PRODUTOS EM DESTAQUE</h2>
 
-                <div class="slick-home-slider list-products">
+                <div class="slick-home-products list-products">
                     @foreach ($featured_products as $featured_product)
                         <div class="product">
                             <a href="{{ route('show-product', $featured_product->slug) }}" class="show-product">
@@ -63,7 +63,7 @@
             </section>
 
             <section class="prices">
-                <div class="slick-home-slider">
+                <div class="slick-home-prices">
                     <div class="item">
                         <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=50.00' }}">
                             <img src="{{ asset('images/price50.jpg') }}" class="img-responsive" alt="Produtos com até R$ 50,00" />
@@ -93,7 +93,7 @@
             <section class="products-home">
                 <h2 class="section-title">OFERTAS EM DESTAQUE</h2>
 
-                <div class="slick-home-slider list-products">
+                <div class="slick-home-products list-products">
                     @foreach ($offers as $offer)
                         <div class="product">
                             <a href="{{ route('show-product', $offer->slug) }}" class="show-product">

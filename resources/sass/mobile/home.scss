@@ -31,19 +31,19 @@
         }
 
         img {
-              width: 72px;
+              width: 57px;
               display: inline-block;
 
               &.img-card {
-                  width: 74px;
+                  width: 60px;
               }
 
               &.img-shirt {
-                  width: 83px;
+                  width: 66px;
               }
 
               &.img-truck {
-                  width: 78px;
+                  width: 62px;
               }
         }
 
@@ -200,6 +200,7 @@
 
         .section-title {
             font-size: 12.5px;
+            margin-left: 0;
         }
 
         .content {
