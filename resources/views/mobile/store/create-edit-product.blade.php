@@ -108,13 +108,6 @@
                     {!! Form::label('', 'Título * (Escreva a categoria, a marca e a cor)') !!}
                 </div>
 
-                <div class="form-group description">
-                    {!! Form::textarea('description', null, ['placeholder' => ' ', 'class' => 'field']) !!}
-                    {!! Form::label('', 'Descrição do produto') !!}
-                </div>
-            </div>
-
-            <div class="section">
                 <div class="form-group">
                     {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
                     {!! Form::label('', 'Preço *') !!}
@@ -124,12 +117,15 @@
                     {!! Form::text('off', null, ['placeholder' => ' ', 'class' => 'mask-percent field']) !!}
                     {!! Form::label('', '% OFF') !!}
                 </div>
-            </div>
 
-            <div class="section">
                 <div class="form-group gender">
-                    {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker field']) !!}
-                    {!! Form::label('', 'Gênero *', ['style' => (isset($product) && $product->gender) ? 'display: block;' : '']) !!}
+                    {!! Form::select('gender', $genders, null, ['title' => 'Departamento *', 'class' => 'selectpicker field']) !!}
+                    {!! Form::label('', 'Departamento *', ['style' => (isset($product) && $product->gender) ? 'display: block;' : '']) !!}
+                </div>
+
+                <div class="form-group description">
+                    {!! Form::textarea('description', null, ['placeholder' => ' ', 'class' => 'field']) !!}
+                    {!! Form::label('', 'Descrição do produto') !!}
                 </div>
             </div>
 

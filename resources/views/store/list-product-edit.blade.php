@@ -65,9 +65,9 @@
                 {!! Form::label('', 'Título do produto * (ESTE É O CAMPO MAIS IMPORTANTE - ESCREVA A CATEGORIA, A MARCA E A COR NESTE CAMPO - Ex: Camiseta adidas preta)') !!}
             </div>
 
-            <div class="form-group gender">
-                {!! Form::select('gender', $genders, null, ['title' => 'Gênero *', 'class' => 'selectpicker field']) !!}
-                {!! Form::label('', 'Gênero *', ['style' => (isset($product) && $product->gender) ? 'display: block;' : '']) !!}
+            <div class="form-group">
+                {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
+                {!! Form::label('', 'Preço *') !!}
             </div>
         </div>
 
@@ -78,13 +78,13 @@
             </div>
 
             <div class="form-group">
-                {!! Form::text('price', null, ['placeholder' => ' ', 'class' => 'mask-money field']) !!}
-                {!! Form::label('', 'Preço *') !!}
-            </div>
-
-            <div class="form-group">
                 {!! Form::text('off', null, ['placeholder' => ' ', 'class' => 'mask-percent field']) !!}
                 {!! Form::label('', '% OFF') !!}
+            </div>
+
+            <div class="form-group gender">
+                {!! Form::select('gender', $genders, null, ['title' => 'Departamento', 'class' => 'selectpicker field']) !!}
+                {!! Form::label('', 'Departamento', ['style' => (isset($product) && $product->gender) ? 'display: block;' : '']) !!}
             </div>
         </div>
 
