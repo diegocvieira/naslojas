@@ -119,8 +119,8 @@
                 </div>
 
                 <div class="form-group gender">
-                    {!! Form::select('gender', $genders, null, ['title' => 'Departamento *', 'class' => 'selectpicker field']) !!}
-                    {!! Form::label('', 'Departamento *', ['style' => (isset($product) && $product->gender) ? 'display: block;' : '']) !!}
+                    {!! Form::select('gender', $genders, null, ['title' => 'Departamento', 'class' => 'selectpicker field']) !!}
+                    {!! Form::label('', 'Departamento', ['style' => (isset($product) && $product->gender) ? 'display: block;' : '']) !!}
                 </div>
 
                 <div class="form-group description">
