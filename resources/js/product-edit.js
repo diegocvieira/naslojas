@@ -436,11 +436,6 @@ $(function() {
                     required: true,
                     minlength: 1
                 },
-                gender: {
-                    required: true,
-                    minlength: 1,
-                    min: 1
-                },
                 description: {
                     maxlength: 2000
                 }
