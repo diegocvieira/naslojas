@@ -9,11 +9,15 @@
             width: 100%;
             height: 100%;
         }
+
+        &+ .store-infos {
+            margin-top: 20px;
+        }
     }
 
     .store-infos {
         float: left;
-        margin-top: 20px;
+        margin-top: 80px;
         padding: 0 10px;
 
         &+ .show-filter-products, &+ .active-filter-products {
