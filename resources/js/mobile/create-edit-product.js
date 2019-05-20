@@ -42,8 +42,8 @@ $(function() {
 
     // Preview images
     $(document).on('change', '.page-create-edit-product .image input:file', function() {
-        if($(this)[0].files[0].size > 2100000) {
-            msgGeral('A imagem tem que ter no máximo 2mb.');
+        if ($(this)[0].files[0].size > 5100000) {
+            modalAlert('Esta imagem é muito grande, por favor utilize imagens de até 5MB.');
         } else {
             var $this = $(this),
                 fr = new FileReader;
