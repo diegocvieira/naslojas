@@ -39,6 +39,8 @@
             height: 40px;
             border: none;
             background-color: transparent;
+            display: inline-block;
+            margin-left: 20px;
 
             &.btn-finish {
                 border-radius: 25px;
@@ -52,27 +54,33 @@
         }
 
         .btns-color-variation {
+            position: relative;
+            display: inline-block;
+            margin-right: 20px;
+
+            button {
+                width: auto;
+                margin: 0;
+            }
+
             .open-color-variation:hover + .color-variation-tooltip {
                 display: block;
             }
 
-            button {
-                margin-right: 25px;
+            .color-variation-tooltip {
+                font-size: 12.5px;
+                color: rgb(100, 100, 100);
+                border-radius: 5px;
+                background-color: rgb(255, 255, 255);
+                box-shadow: 1px 1.732px 1.96px 0.04px rgba(100, 100, 100, 0.118);
+                position: absolute;
+                left: -300px;
+                width: 300px;
+                top: 0;
+                padding: 10px;
+                display: none;
+                text-align: left;
             }
-        }
-
-        .color-variation-tooltip {
-            font-size: 12.5px;
-            color: rgb(100, 100, 100);
-            border-radius: 5px;
-            background-color: rgb(255, 255, 255);
-            box-shadow: 1px 1.732px 1.96px 0.04px rgba(100, 100, 100, 0.118);
-            position: absolute;
-            left: -10px;
-            top: 0;
-            padding: 5px;
-            display: none;
-            text-align: left;
         }
     }
 
