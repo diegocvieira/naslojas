@@ -69,11 +69,11 @@ $(function() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         paramName: 'image',
-        maxFilesize: 2, // MB
+        maxFilesize: 5, // MB
         maxFiles: 100,
         parallelUploads: 25,
         addRemoveLinks: true,
-        dictFileTooBig: "A imagem não pode ter mais de 2mb",
+        dictFileTooBig: "A imagem não pode ter mais de 5mb",
         dictMaxFilesExceeded: "Máximo de 100 imagens por vez",
         dictRemoveFile: "",
         dictCancelUploadConfirmation: "Quer cancelar o upload?",

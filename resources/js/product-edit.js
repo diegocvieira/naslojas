@@ -332,8 +332,8 @@ $(function() {
         var reader = new FileReader(),
             $this = $(this);
 
-        if($(this)[0].files[0].size > 2100000) {
-            modalAlert('A imagem tem que ter no máximo 2mb.');
+        if ($(this)[0].files[0].size > 5100000) {
+            modalAlert('Esta imagem é muito grande, por favor utilize imagens de até 5MB.');
         } else {
             reader.onload = function(e) {
                 $this.parent().removeClass('no-image').addClass('loaded-image').append("<label class='remove-image'></label>").find('img').attr('src', e.target.result);
@@ -350,7 +350,8 @@ $(function() {
 
         var data = new FormData(),
             errors = false,
-            images = true;
+            images = true,
+            btn = $(this);
 
         $('.form-edit-product').each(function() {
             if (!$(this).valid() || $(this).find('.validate-error').length) {
@@ -369,10 +370,20 @@ $(function() {
         });
 
         if (errors == false) {
+            /*if (images == false && !btn.hasClass('add')) {
+                modalAlert('Cada produto deve ter no mínimo uma imagem.');
+
+                return false;
+            }*/
+
             if (images == true) {
                 $('.btn-finish').text('SALVANDO').attr('disabled', true);
 
                 $('.form-edit-product').each(function(index) {
+                    if (btn.hasClass('add')) {
+                        data.append('products[' + index + '][status]', btn.data('status'));
+                    }
+
                     $(this).find('.field').each(function() {
                         data.append('products[' + index + '][' + $(this).attr('name') + ']', $(this).val());
                     });
@@ -435,11 +446,6 @@ $(function() {
                 price: {
                     required: true,
                     minlength: 1
-                },
-                gender: {
-                    required: true,
-                    minlength: 1,
-                    min: 1
                 },
                 description: {
                     maxlength: 2000
