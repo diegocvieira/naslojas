@@ -591,7 +591,7 @@ class ProductController extends Controller
                 $product->status = !$request->status ? 2 : 1;
             }
 
-            if ($product->status == 1) {
+            if ($product->status == 1 || $request->status && $request->status == 1) {
                 if ($validation->fails()) {
                     $return['status'] = false;
                     $return['msg'] = $validation->errors()->first();
