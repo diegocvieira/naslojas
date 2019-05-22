@@ -597,7 +597,7 @@ class ProductController extends Controller
                     $return['msg'] = $validation->errors()->first();
 
                     return json_encode($return);
-                } else if (!isset($request->sizes)) {
+                } else if (!isset($request->size)) {
                     $return['status'] = false;
                     $return['msg'] = 'Informe pelo menos um tamanho';
 
