@@ -434,7 +434,7 @@ class ProductController extends Controller
                         app('App\Http\Controllers\GlobalController')->customMessages()
                     );
 
-                    if ($product->status != 2) {
+                    if ($product->status != 2 || $product->status == 2 && $request->status == 1) {
                         if ($validation->fails()) {
                             $return['status'] = false;
                             $return['msg'] = $validation->errors()->first();

@@ -369,7 +369,7 @@ $(function() {
             }
         });
 
-        if (errors == false && !btn.hasClass('add')) {
+        if (errors == true && !btn.hasClass('add')) {
             modalAlert('É necessário preencher todos os campos obrigatórios.');
 
             return false;
