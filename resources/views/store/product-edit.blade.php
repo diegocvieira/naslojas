@@ -23,15 +23,12 @@
                                     <button type="button" title="Clique para agrupar as variações de cor selecionadas" class="generate-color-variation" data-url="{{ route('color-variation') }}">AGRUPAR VARIAÇÃO</button>
                                 </span>
 
-                                <?php /*
                                 @if ($section == 'add')
                                     <button type="button" class="btn-finish add" data-status="2">SALVAR</button>
                                     <button type="button" class="btn-finish add" data-status="1">ENVIAR AO SITE</button>
                                 @else
                                     <button type="button" class="btn-finish">SALVAR</button>
-                                @endif */ ?>
-
-                                <button type="button" class="btn-finish">{{ $section == 'add' ? 'ADICIONAR AO SITE' : 'SALVAR ALTERAÇÕES' }}</button>
+                                @endif
 
                                 <?php /* @if (Auth::guard('superadmin')->check())
                                     {!! Form::open(['method' => 'POST', 'route' => 'save-excel', 'files' => true]) !!}

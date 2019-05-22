@@ -140,6 +140,14 @@
                 height: 165px;
                 float: left;
                 object-fit: cover;
+
+                &.no-image {
+                    background-image: url('../../images/icon-camera.png');
+                    background-position: center;
+                    background-size: 30px;
+                    background-repeat: no-repeat;
+                    background-color: #f0f0f0;
+                }
             }
         }
     }

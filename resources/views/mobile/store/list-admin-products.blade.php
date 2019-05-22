@@ -4,12 +4,16 @@
         {!! Form::label('product_' . $product->id, ' ') !!}
 
         <a href="{{ route('get-create-edit-product', $product->id) }}">
-            <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $product->images->first()->image) }}" class="image" alt="{{ $product->title }}" />
+            @if ($product->images->count())
+                <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $product->images->first()->image) }}" class="image" alt="{{ $product->title }}" />
+            @else
+                <div class="image no-image"></div>
+            @endif
         </a>
     </div>
 @endforeach
 
-@if($products->lastPage() > 1 && $products->currentPage() < $products->lastPage())
+@if ($products->lastPage() > 1 && $products->currentPage() < $products->lastPage())
     <div class="pagination">
         <a href="{{ $products->nextPageUrl() }}">Exibir mais</a>
     </div>

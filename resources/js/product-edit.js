@@ -362,116 +362,116 @@ $(function() {
                 images = false;
             }
 
-            if (!$(this).find('.sizes input').is(':checked')) {
+            if (!$(this).find('.sizes input').is(':checked') && !btn.hasClass('add')) {
                 errors = true;
 
                 $(this).find('.sizes input').addClass('error');
             }
         });
 
-        if (errors == false) {
-            /*if (images == false && !btn.hasClass('add')) {
-                modalAlert('Cada produto deve ter no mínimo uma imagem.');
-
-                return false;
-            }*/
-
-            if (images == true) {
-                $('.btn-finish').text('SALVANDO').attr('disabled', true);
-
-                $('.form-edit-product').each(function(index) {
-                    if (btn.hasClass('add')) {
-                        data.append('products[' + index + '][status]', btn.data('status'));
-                    }
-
-                    $(this).find('.field').each(function() {
-                        data.append('products[' + index + '][' + $(this).attr('name') + ']', $(this).val());
-                    });
-
-                    $(this).find("input[name='size[]']:checked").each(function() {
-                        data.append('products[' + index + '][sizes][]', $(this).val());
-                    });
-
-                    $(this).find("input[name='image_remove[]']:checked").each(function() {
-                        data.append('products[' + index + '][images_remove][]', $(this).val());
-                    });
-
-                    $(this).find('input:file').each(function(index2, element) {
-                        if (element.files[0]) {
-                            data.append('products[' + index + '][images][]', element.files[0]);
-                            data.append('products[' + index + '][images_position][]', $(this).data('position'));
-                        }
-                    });
-                });
-
-                $.ajax({
-                    url: $('.form-edit-product:first').attr('action'),
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (data) {
-                        $('.btn-finish').text('SALVAR ALTERAÇÕES').attr('disabled', false);
-
-                        if (data.status) {
-                            window.location.reload(true);
-                        } else {
-                            modalAlert(data.msg);
-                        }
-                    }
-                });
-            } else {
-                modalAlert('Cada produto deve ter no mínimo uma imagem.');
-            }
-        } else {
+        if (errors == false && !btn.hasClass('add')) {
             modalAlert('É necessário preencher todos os campos obrigatórios.');
+
+            return false;
         }
-    });
 
-    $.each($('.form-edit-product'), function(index, val) {
-        $.validator.setDefaults({ ignore: ':hidden:not(.selectpicker)' });
+        if (images == false && !btn.hasClass('add')) {
+            modalAlert('Cada produto deve ter no mínimo uma imagem.');
 
-        $(val).validate({
-            rules: {
-                title: {
-                    required: true,
-                    minlength: 1,
-                    maxlength: 255
-                },
-                price: {
-                    required: true,
-                    minlength: 1
-                },
-                description: {
-                    maxlength: 2000
+            return false;
+        }
+
+        $('.btn-finish').text('SALVANDO').attr('disabled', true);
+
+        $('.form-edit-product').each(function(index) {
+            if (btn.hasClass('add')) {
+                data.append('products[' + index + '][status]', btn.data('status'));
+            }
+
+            $(this).find('.field').each(function() {
+                data.append('products[' + index + '][' + $(this).attr('name') + ']', $(this).val());
+            });
+
+            $(this).find("input[name='size[]']:checked").each(function() {
+                data.append('products[' + index + '][sizes][]', $(this).val());
+            });
+
+            $(this).find("input[name='image_remove[]']:checked").each(function() {
+                data.append('products[' + index + '][images_remove][]', $(this).val());
+            });
+
+            $(this).find('input:file').each(function(index2, element) {
+                if (element.files[0]) {
+                    data.append('products[' + index + '][images][]', element.files[0]);
+                    data.append('products[' + index + '][images_position][]', $(this).data('position'));
                 }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass(errorClass).removeClass(validClass);
+            });
+        });
 
-                if ($(element).hasClass('selectpicker')) {
-                    $(element).prev().prev().addClass('error');
-                }
+        $.ajax({
+            url: $('.form-edit-product:first').attr('action'),
+            method: 'POST',
+            dataType: 'json',
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).removeClass(errorClass).addClass(validClass);
+            success: function (data) {
+                $('.btn-finish').text((!btn.hasClass('add') || btn.hasClass('add') && btn.data('status') == '2') ? 'SALVAR' : 'ENVIAR AO SITE').attr('disabled', false);
 
-                if ($(element).hasClass('selectpicker')) {
-                    $(element).prev().prev().removeClass('error');
+                if (data.status) {
+                    window.location.reload(true);
+                } else {
+                    modalAlert(data.msg);
                 }
-            },
-            errorPlacement: function(error, element) {
-            },
-            submitHandler: function(form) {
-                return false;
             }
         });
     });
+
+    if ($('.page-product-edit.page-edit').length) {
+        $.each($('.form-edit-product'), function(index, val) {
+            $.validator.setDefaults({ ignore: ':hidden:not(.selectpicker)' });
+
+            $(val).validate({
+                rules: {
+                    title: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 255
+                    },
+                    price: {
+                        required: true,
+                        minlength: 1
+                    },
+                    description: {
+                        maxlength: 2000
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass(errorClass).removeClass(validClass);
+
+                    if ($(element).hasClass('selectpicker')) {
+                        $(element).prev().prev().addClass('error');
+                    }
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass(errorClass).addClass(validClass);
+
+                    if ($(element).hasClass('selectpicker')) {
+                        $(element).prev().prev().removeClass('error');
+                    }
+                },
+                errorPlacement: function(error, element) {
+                },
+                submitHandler: function(form) {
+                    return false;
+                }
+            });
+        });
+    }
 });
 
 // Format dollar to real

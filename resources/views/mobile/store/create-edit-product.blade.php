@@ -72,7 +72,8 @@
                     </ul>
                 </nav>
 
-                {!! Form::submit('SALVAR') !!}
+                <button type="button" class="btn-finish" data-status="1">ENVIAR AO SITE</button>
+                <button type="button" class="btn-finish" data-status="">SALVAR</button>
             </header>
 
             <span class="advice">* indica item obrigatório</span>
