@@ -259,7 +259,7 @@ $(function() {
         }
     });
 
-    $('#form-create-edit-product').validate({
+    /*$('#form-create-edit-product').validate({
         rules: {
             title: {
                 required: true,
@@ -332,7 +332,95 @@ $(function() {
 
             return false;
         }
+    });*/
+
+    $('#form-create-edit-product .btn-finish').on('click', function(e) {
+        e.preventDefault();
+
+        var form = $('#form-create-edit-product'),
+            btn = $(this);
+
+        if (!form.find('.sizes input').is(':checked') && btn.data('status') == '1') {
+            form.find('.sizes input').addClass('error');
+
+            return false;
+        }
+
+        if (form.find('.validate-error').length && btn.data('status') == '1') {
+            return false;
+        }
+
+        var images = $('.image.loaded-image').length > 0 ? true : false;
+
+        if (!images && btn.data('status') == '1') {
+            modalAlert('Selecione no mínimo uma imagem.');
+
+            return false;
+        }
+
+        form.append("<input type='hidden' name='status' value='" + btn.data('status') + "' />");
+
+        btn.text('SALVANDO').attr('disabled', true);
+
+        $.ajax({
+            url: form.attr('action'),
+            method: 'POST',
+            dataType: 'json',
+            data: new FormData(form[0]),
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data) {
+                btn.text(btn.data('status') == '1' ? 'ENVIAR AO SITE' : 'SALVAR').attr('disabled', false);
+
+                if (data.status) {
+                    window.location = '/loja/admin/produtos';
+                } else {
+                    modalAlert(data.msg);
+                }
+            }
+        });
     });
+
+    /*if ($('#form-create-edit-product input[name=product_id]').length) {
+        $.validator.setDefaults({ ignore: ':hidden:not(.selectpicker)' });
+
+        $('#form-create-edit-product').validate({
+            rules: {
+                title: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 255
+                },
+                price: {
+                    required: true,
+                    minlength: 1
+                },
+                description: {
+                    maxlength: 2000
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass(errorClass).removeClass(validClass);
+
+                if ($(element).hasClass('selectpicker')) {
+                    $(element).prev().prev().addClass('error');
+                }
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass(errorClass).addClass(validClass);
+
+                if ($(element).hasClass('selectpicker')) {
+                    $(element).prev().prev().removeClass('error');
+                }
+            },
+            errorPlacement: function(error, element) {
+            },
+            submitHandler: function(form) {
+                return false;
+            }
+        });
+    }*/
 });
 
 // Format dollar to real
