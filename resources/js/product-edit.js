@@ -381,7 +381,7 @@ $(function() {
             return false;
         }
 
-        $('.btn-finish').text('SALVANDO').attr('disabled', true);
+        btn.text('SALVANDO').attr('disabled', true);
 
         $('.form-edit-product').each(function(index) {
             if (btn.hasClass('add')) {
@@ -420,7 +420,7 @@ $(function() {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                $('.btn-finish').text((!btn.hasClass('add') || btn.hasClass('add') && btn.data('status') == '2') ? 'SALVAR' : 'ENVIAR AO SITE').attr('disabled', false);
+                btn.text((!btn.hasClass('add') || btn.hasClass('add') && btn.data('status') == '2') ? 'SALVAR' : 'ENVIAR AO SITE').attr('disabled', false);
 
                 if (data.status) {
                     window.location.reload(true);
