@@ -434,6 +434,8 @@ class ProductController extends Controller
                         app('App\Http\Controllers\GlobalController')->customMessages()
                     );
 
+                    $price = $request->price ? number_format(str_replace(['.', ','], ['', '.'], $request->price), 2, '.', '') : null;
+
                     if ($product->status != 2 || $product->status == 2 && $request->status == 1) {
                         if ($validation->fails()) {
                             $return['status'] = false;
@@ -446,16 +448,18 @@ class ProductController extends Controller
 
                             return json_encode($return);
                         }
-                    } else {
-                        $product->status = $request->status;
 
-                        if ($store->free_freight_price && $product->price >= $store->free_freight_price) {
+                        if ($request->status) {
+                            $product->status = $request->status;
+                        }
+
+                        if ($store->free_freight_price && $price && $price >= $store->free_freight_price) {
                             $product->free_freight = 1;
                         }
                     }
 
                     $product->title = $request->title;
-                    $product->price = $request->price ? number_format(str_replace(['.', ','], ['', '.'], $request->price), 2, '.', '') : null;
+                    $product->price = $price;
                     $product->gender = $request->gender;
                     $product->off = $request->off ? str_replace('%', '', $request->off) : null;
                     $product->slug = str_slug($product->title, '-');
