@@ -591,7 +591,7 @@ class ProductController extends Controller
                 $product->status = !$request->status ? 2 : 1;
             }
 
-            if ($product->status == 1 || $request->status && $request->status == 1) {
+            if ($product->status != 2 || $request->status && $request->status != 2) {
                 if ($validation->fails()) {
                     $return['status'] = false;
                     $return['msg'] = $validation->errors()->first();
@@ -862,6 +862,8 @@ class ProductController extends Controller
 
     public function enable(Request $request)
     {
+        $status_pending = false;
+
         if (is_array($request->id)) {
             foreach ($request->id as $i) {
                 $product = Product::withoutGlobalScopes(['active', 'active-store'])
@@ -869,8 +871,13 @@ class ProductController extends Controller
                     ->where('id', $i)
                     ->first();
 
-                $product->status = 1;
-                $save = $product->save();
+                if ($product->status != 2) {
+                    $product->status = 1;
+
+                    $product->save();
+                } else {
+                    $status_pending = true;
+                }
             }
         } else {
             $product = Product::withoutGlobalScopes(['active', 'active-store'])
@@ -878,21 +885,26 @@ class ProductController extends Controller
                 ->where('id', $request->id)
                 ->first();
 
-            $product->status = 1;
-            $save = $product->save();
+            if ($product->status != 2) {
+                $product->status = 1;
+
+                $product->save();
+            } else {
+                $status_pending = true;
+            }
         }
 
-        if ($save) {
-            $return['status'] = true;
+        if ($status_pending) {
+            return json_encode(['msg' => 'Não foi possível ativar todos os produtos, pois algum campo obrigatório não foi informado.']);
         } else {
-            $return['status'] = false;
+            return json_encode(true);
         }
-
-        return json_encode($return);
     }
 
     public function disable(Request $request)
     {
+        $status_pending = false;
+
         if (is_array($request->id)) {
             foreach ($request->id as $i) {
                 $product = Product::withoutGlobalScopes(['active', 'active-store'])
@@ -900,8 +912,11 @@ class ProductController extends Controller
                     ->where('id', $i)
                     ->first();
 
-                $product->status = 0;
-                $save = $product->save();
+                if ($product->status != 2) {
+                    $product->status = 0;
+
+                    $product->save();
+                }
             }
         } else {
             $product = Product::withoutGlobalScopes(['active', 'active-store'])
@@ -909,17 +924,17 @@ class ProductController extends Controller
                 ->where('id', $request->id)
                 ->first();
 
-            $product->status = 0;
-            $save = $product->save();
+            if ($product->status != 2) {
+                $product->status = 0;
+                $product->save();
+            }
         }
 
-        if ($save) {
-            $return['status'] = true;
+        if ($status_pending) {
+            return json_encode(['msg' => 'Não foi possível ativar todos os produtos, pois algum campo obrigatório não foi informado.']);
         } else {
-            $return['status'] = false;
+            return json_encode(true);
         }
-
-        return json_encode($return);
     }
 
     public function freeFreight(Request $request)

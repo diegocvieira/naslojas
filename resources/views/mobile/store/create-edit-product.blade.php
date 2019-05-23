@@ -55,13 +55,15 @@
                                 </li>
 
                                 @isset ($product)
-                                    <li class="{{ $product->status == 1 ? 'hidden' : '' }}">
-                                        <a href="{{ route('product-enable') }}" data-type="product-enable" class="option" data-productid="{{ $product->id }}">Ativar</a>
-                                    </li>
+                                    @if ($product->status != 2)
+                                        <li class="{{ $product->status == 1 ? 'hidden' : '' }}">
+                                            <a href="{{ route('product-enable') }}" data-type="product-enable" class="option" data-productid="{{ $product->id }}">Ativar</a>
+                                        </li>
 
-                                    <li class="{{ $product->status == 0 ? 'hidden' : '' }}">
-                                        <a href="{{ route('product-disable') }}" data-type="product-disable" class="option" data-productid="{{ $product->id }}">Desativar</a>
-                                    </li>
+                                        <li class="{{ $product->status == 0 ? 'hidden' : '' }}">
+                                            <a href="{{ route('product-disable') }}" data-type="product-disable" class="option" data-productid="{{ $product->id }}">Desativar</a>
+                                        </li>
+                                    @endif
 
                                     <li>
                                         <a href="{{ route('product-delete') }}" data-type="delete" class="option" data-productid="{{ $product->id }}">Excluir</a>

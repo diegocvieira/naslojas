@@ -181,42 +181,49 @@ $(function() {
             dataType: 'json',
             data: form.serialize(),
             success: function (data) {
-                if (data.status) {
-                    var selected = form.find('.product.selected');
+                var selected = form.find('.product.selected');
 
-                    if (type == 'product-enable') {
-                        selected.removeClass('disabled');
+                if (type == 'product-enable') {
+                    selected.not('.pending').removeClass('disabled');
 
-                        var msg = 'Os produtos selecionados foram ativados.';
-                    } else if (type == 'product-disable') {
-                        selected.addClass('disabled');
+                    var msg = 'Os produtos selecionados foram ativados.';
 
-                        var msg = 'Os produtos selecionados foram desativados.';
-                    } else if (type == 'delete') {
-                        selected.remove();
+                    if (data.msg) {
+                        msg = data.msg;
+                    }
+                } else if (type == 'product-disable') {
+                    selected.not('.pending').addClass('disabled');
 
-                        var msg = 'Os produtos selecionados foram excluídos.';
+                    var msg = 'Os produtos selecionados foram desativados.';
 
-                        if (form.find('.product').length == 0) {
-                            setTimeout(function() {
-                                window.location.reload(true);
-                            }, 100);
-                        }
+                    if (data.msg) {
+                        msg = data.msg;
+                    }
+                } else if (type == 'delete') {
+                    selected.remove();
 
-                        variation();
-                    } else {
-                        var msg = 'Informações salvas com sucesso!'; // Just for precaution
+                    var msg = 'Os produtos selecionados foram excluídos.';
+
+                    if (form.find('.product').length == 0) {
+                        setTimeout(function() {
+                            window.location.reload(true);
+                        }, 100);
                     }
 
-                    selected.removeClass('selected').find('input[type=checkbox]').attr('checked', false);
-                    form.find('.product').removeClass('prepare-select').find('label').hide();
-
-                    $('header').toggle();
-
-                    modalAlert(msg);
+                    variation();
                 } else {
-                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                    var msg = 'Informações salvas com sucesso!'; // Just for precaution
                 }
+
+                selected.removeClass('selected').find('input[type=checkbox]').attr('checked', false);
+                form.find('.product').removeClass('prepare-select').find('label').hide();
+
+                $('header').toggle();
+
+                modalAlert(msg);
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
             }
         });
 

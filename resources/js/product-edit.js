@@ -27,12 +27,11 @@ $(function() {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                if (data.status) {
-                    $this.parent().find('.enable-product, .disable-product').toggleClass('hidden');
-                    $this.parents('.form-edit-product').toggleClass('product-disabled');
-                } else {
-                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
-                }
+                $this.parent().find('.enable-product, .disable-product').toggleClass('hidden');
+                $this.parents('.form-edit-product').toggleClass('product-disabled');
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
             }
         });
     });
