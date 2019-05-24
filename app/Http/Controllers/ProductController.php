@@ -582,6 +582,10 @@ class ProductController extends Controller
 
             if ($id) {
                 $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($id);
+
+                if ($product->status == 2 && $request->status == 1) {
+                    $product->status = 1;
+                }
             } else {
                 $product = new Product;
 
