@@ -160,7 +160,7 @@ header {
             display: block;
             background-position: center;
             background-repeat: no-repeat;
-            background-size: 35px;
+            background-size: 30px;
             height: 100%;
             filter: grayscale(100%);
             opacity: .7;
@@ -188,7 +188,7 @@ header {
 
             &.order {
                 background-image: url('../../images/icon-bag2.png');
-                background-size: 25px;
+                background-size: 20px;
             }
         }
     }
