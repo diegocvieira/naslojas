@@ -88,19 +88,22 @@ header {
         &.nav-store {
             width: 50px;
 
-            a.active {
-                filter: invert(70%) sepia(93%) saturate(5818%) hue-rotate(339deg) brightness(101%) contrast(101%);
-            }
-        }
+            a {
+                filter: grayscale(100%);
+                opacity: .4;
+                background-image: url('../../images/icon-messages.png');
+                background-position: center;
+                background-size: 25px;
+                background-repeat: no-repeat;
+                width: 100%;
+                height: 50px;
+                float: left;
 
-        .icon-messages {
-            background-image: url('../../images/icon-message.png');
-            background-position: center;
-            background-size: 30px;
-            background-repeat: no-repeat;
-            width: 100%;
-            height: 50px;
-            float: left;
+                &.active {
+                    filter: none;
+                    opacity: 1;
+                }
+            }
         }
 
         .open > a {

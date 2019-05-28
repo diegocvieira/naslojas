@@ -34,7 +34,7 @@
         <nav class="nav navbar-nav nav-menu nav-store">
             <ul>
                 <li>
-                    <a href="{{ route('list-store-messages') }}" class="icon-messages {{ (isset($section) && $section == 'message') ? 'active' : '' }}"></a>
+                    <a href="{{ route('list-store-messages') }}" class="{{ (isset($section) && $section == 'message') ? 'active' : '' }}"></a>
                 </li>
             </ul>
         </nav>
