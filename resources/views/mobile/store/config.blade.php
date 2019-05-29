@@ -228,6 +228,10 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('logout') }}">Sair</a>
+                </li>
+
+                <li>
                     <a href="{{ route('delete-store-account') }}" id="delete-store-account">Deletar conta</a>
                 </li>
             </ul>
