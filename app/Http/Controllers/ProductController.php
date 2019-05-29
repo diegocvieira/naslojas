@@ -773,7 +773,7 @@ class ProductController extends Controller
 
                     $key = 1;
                     foreach (json_decode($j['imagens'], true) as $img) {
-                        if ($j['codigo_estoque'] == $img['codigo']) {
+                        if ($j['codigo_estoque'] == str_replace('.', '', $img['codigo'])) {
                             $image = new ProductImage;
                             $image->product_id = $product->id;
                             $image->image = _uploadImageProduct($img['link'], $this->store_id, false);
