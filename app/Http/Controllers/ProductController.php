@@ -815,9 +815,10 @@ class ProductController extends Controller
             $header_title = 'Editar ' . $product->title . ' | naslojas.com';
         } else {
             $header_title = 'Cadastrar produto | naslojas.com';
+            $section = 'add';
         }
 
-        return view('mobile.store.create-edit-product', compact('header_title', 'product'));
+        return view('mobile.store.create-edit-product', compact('section', 'header_title', 'product'));
     }
 
     public function deleteImages($image)

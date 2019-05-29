@@ -50,6 +50,10 @@ header {
         margin-top: 10px;
         width: calc(100% - 150px);
 
+        &.store-logged {
+            width: calc(100% - 100px);
+        }
+
         input[type=text] {
             background-color: rgb(245, 245, 245);
             width: 100%;
@@ -80,6 +84,27 @@ header {
         position: relative;
         width: 40px;
         margin: 0 !important;
+
+        &.nav-store {
+            width: 50px;
+
+            a {
+                filter: grayscale(100%);
+                opacity: .4;
+                background-image: url('../../images/icon-messages.png');
+                background-position: center;
+                background-size: 25px;
+                background-repeat: no-repeat;
+                width: 100%;
+                height: 50px;
+                float: left;
+
+                &.active {
+                    filter: none;
+                    opacity: 1;
+                }
+            }
+        }
 
         .open > a {
             background-color: transparent !important;
@@ -114,6 +139,59 @@ header {
 
             .active {
                 color: rgb(255, 23, 68);
+            }
+        }
+    }
+}
+
+.store-navigation {
+    background-color: #fff;
+    box-shadow: 0.5px 0.866px 4.85px 0.15px rgba(100, 100, 100, 0.118);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    z-index: 1001;
+
+    li {
+        float: left;
+        width: 20%;
+        height: 100%;
+
+        a {
+            display: block;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 30px;
+            height: 100%;
+            filter: grayscale(100%);
+            opacity: .7;
+
+            &.active {
+                filter: none;
+                opacity: 1;
+            }
+
+            &.store {
+                background-image: url('../../images/icon-home.png');
+            }
+
+            &.add {
+                background-image: url('../../images/icon-add2.png');
+            }
+
+            &.edit {
+                background-image: url('../../images/icon-edit2.png');
+            }
+
+            &.config {
+                background-image: url('../../images/icon-config2.png');
+            }
+
+            &.order {
+                background-image: url('../../images/icon-bag2.png');
+                background-size: 20px;
             }
         }
     }
