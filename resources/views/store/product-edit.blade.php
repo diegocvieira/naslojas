@@ -30,12 +30,12 @@
                                     <button type="button" class="btn-finish">SALVAR</button>
                                 @endif
 
-                                @if (Auth::guard('superadmin')->check())
+                                <?php /* @if (Auth::guard('superadmin')->check())
                                     {!! Form::open(['method' => 'POST', 'route' => 'save-excel', 'files' => true]) !!}
                                         {!! Form::file('file') !!}
                                         {!! Form::submit('file') !!}
                                     {!! Form::close() !!}
-                                @endif
+                                @endif */ ?>
                             </div>
                         </div>
                     </div>
