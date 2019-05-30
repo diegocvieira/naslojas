@@ -44,7 +44,7 @@
                                 <span class="title">Imagem de capa (computador)</span>
                                 <span class="desc">Tamanho ideal 1920 x 350 pixels</span>
 
-                                {!! Form::file('image_cover_desktop', ['autocomplete' => 'off']) !!}
+                                {!! Form::file('image_cover_desktop', ['autocomplete' => 'off', 'accept' => 'image/*']) !!}
 
                                 <div class="image">
                                     <img src="{{ asset($user->store->image_cover_desktop ? 'uploads/' . $user->store_id . '/' . $user->store->image_cover_desktop : 'images/image-cover-desktop.jpg')  }}" alt="Imagem de capa do desktop" />
@@ -58,7 +58,7 @@
                                 <span class="title">Imagem de capa (celular)</span>
                                 <span class="desc">Tamanho ideal 1080 x 600 pixels</span>
 
-                                {!! Form::file('image_cover_mobile', ['autocomplete' => 'off']) !!}
+                                {!! Form::file('image_cover_mobile', ['autocomplete' => 'off', 'accept' => 'image/*']) !!}
 
                                 <div class="image">
                                     <img src="{{ asset($user->store->image_cover_mobile ? 'uploads/' . $user->store_id . '/' . $user->store->image_cover_mobile : 'images/image-cover-mobile.jpg')  }}" alt="Imagem de capa do mobile" />
