@@ -273,7 +273,7 @@
                 <span>Pague para o <br>entregador</span>
             </div>
 
-            <h3>TROCA GRÁTIS DIRETO NA LOJA COM REEMBOLSO TOTAL</h3>
+            <h3>TROCA GRÁTIS DIRETO NA LOJA <br>COM REEMBOLSO TOTAL</h3>
 
             <button type="button" data-dismiss="modal">COMEÇAR</button>
         </div>
