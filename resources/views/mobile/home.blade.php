@@ -246,3 +246,23 @@
         </section>
     </div>
 @endsection
+
+@section('script')
+    @if (session('session_modal_home') == 'true')
+        <div class="modal fade" id="modal-home" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <button type="button" data-dismiss="modal" class="close-modal"></button>
+
+                    <img src="{{ asset('images/modal-home-mobile.png') }}" class="img-responsive" alt="Modal home" />
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(function() {
+                $('#modal-home').modal('show');
+            });
+        </script>
+    @endif
+@endsection

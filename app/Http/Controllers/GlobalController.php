@@ -18,6 +18,8 @@ class GlobalController extends Controller
             $this->setCity(4913);
         }
 
+        session(['session_modal_home' => (session('session_modal_home') ? 'false' : 'true')]);
+
         $featured_products = Product::has('images')
             ->where(function($q) {
                 $q->where('identifier', '1369251634')
