@@ -248,34 +248,15 @@
 @endsection
 
 @section('script')
-    @if (!session('session_modal_home'))
-        @php session(['session_modal_home' => true]); @endphp
+    @if (session('session_modal_home') == 'false')
+        <div class="modal fade" id="modal-home" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <button type="button" data-dismiss="modal" class="close-modal"></button>
 
-        <div class="modal fade" id="modal-home">
-            <img src="{{ asset('images/logo-naslojas.png') }}" class="logo-naslojas" alt="Naslojas" />
-
-            <h1>- Delivery das lojas de Pelotas -</h1>
-
-            <h2>É como pedir uma pizza!</h2>
-
-            <div class="step">
-                <img src="{{ asset('images/icon-phone-gradient.png') }}" alt="Fazer pedido" />
-                <span>Faça o pedido <br>online</span>
+                    <img src="{{ asset('images/modal-home-mobile.png') }}" class="img-responsive" alt="Modal home" />
+                </div>
             </div>
-
-            <div class="step">
-                <img src="{{ asset('images/icon-bag-gradient.png') }}" alt="Receber produto" />
-                <span>Receba o produto <br>em casa</span>
-            </div>
-
-            <div class="step">
-                <img src="{{ asset('images/icon-payment-gradient.png') }}" alt="Pagar entregador" />
-                <span>Pague para o <br>entregador</span>
-            </div>
-
-            <h3>TROCA GRÁTIS DIRETO NA LOJA <br>COM REEMBOLSO TOTAL</h3>
-
-            <button type="button" data-dismiss="modal">COMEÇAR</button>
         </div>
 
         <script>

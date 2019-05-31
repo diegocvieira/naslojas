@@ -1,63 +1,20 @@
 #modal-home {
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    text-align: center;
-
-    &:before {
-        display: inherit;
-        height: auto;
+    .modal-dialog {
+        width: auto;
     }
 
-    .logo-naslojas {
-        width: 150px;
-        margin-top: 20px;
-    }
-
-    h1 {
-        font-size: 17.5px;
-        color: rgb(120, 120, 120);
-    }
-
-    h2 {
-        font-size: 22.9px;
-        font-family: "KeepCalm";
-        color: rgb(50, 50, 50);
-        margin-bottom: 40px;
-    }
-
-    h3 {
-        font-size: 14.7px;
-        color: rgb(50, 50, 50);
-        font-weight: 700;
-        line-height: 1.3;
-        margin-bottom: 30px;
-    }
-
-    button {
-        font-size: 14.7px;
-        color: #fff;
-        font-weight: 700;
-        background-color: rgb(255, 23, 68);
+    .close-modal {
+        width: 20px;
+        height: 20px;
+        background-color: transparent;
         border: none;
-        padding: 10px 40px;
-        border-radius: 25px;
-        margin-bottom: 30px;
-    }
-
-    .step {
-        display: block;
-        margin-bottom: 30px;
-
-        span {
-            font-size: 14.5px;
-            color: rgb(120, 120, 120);
-            display: block;
-        }
-
-        img {
-
-        }
+        background-image: url('../../images/icon-remove.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: absolute;
+        right: 15px;
+        top: 15px;
     }
 }
 
