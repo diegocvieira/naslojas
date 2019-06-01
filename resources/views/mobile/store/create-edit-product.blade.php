@@ -39,7 +39,7 @@
                                         <a href="{{ route('product-free-freight') }}" data-type="free-freight" class="option free-freight free-freight-selected {{ $product->free_freight == 0 ? 'hidden' : '' }}" data-productid="{{ $product->id }}">Desativar frete grátis</a>
                                     </li>
 
-                                    @if ($product->status == 1 && $product->store->status == 1)
+                                    @if ($product->status == 1 && $product->store->status == 1 && $product->images->count())
                                         <li>
                                             <a href="{{ route('show-product', $product->slug) }}" data-type="link-share" class="option link-share" data-image="{{ asset('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)) }}" data-freight="{{ $product->free_freight ? 'grátis' : 'R$5,00' }}" data-store="{{ $product->store->name }}" data-title="{{ $product->title }}">Compartilhar</a>
                                         </li>

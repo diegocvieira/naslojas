@@ -449,7 +449,7 @@ class ProductController extends Controller
                             return json_encode($return);
                         }
 
-                        if ($request->status) {
+                        if (isset($request->status)) {
                             $product->status = $request->status;
                         }
 
