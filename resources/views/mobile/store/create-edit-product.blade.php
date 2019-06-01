@@ -84,11 +84,19 @@
                 @isset ($product)
                     @foreach ($product->images as $key => $image)
                         <div class="image loaded-image">
-                            <span class="remove-image"></span>
+                            <?php /* <span class="remove-image"></span>
                             {!! Form::checkbox('image_remove[]', $image->image, false, ['autocomplete' => 'off']) !!}
 
                             <span class="btn-add-image"></span>
                             {!! Form::file('image[]', ['data-position' => $key, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
+
+                            <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $image->image) }}" /> */ ?>
+
+                            {!! Form::checkbox('image_remove[]', $image->image, false, ['id' => 'image_remove_' . $product->id . '_' . $key, 'autocomplete' => 'off']) !!}
+                            {!! Form::label('image_remove_' . $product->id . '_' . $key, ' ', ['class' => 'remove-image']) !!}
+
+                            {!! Form::file('image[]', ['id' => 'image_' . $product->id . '_' . $key, 'data-position' => $key, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
+                            {!! Form::label('image_' . $product->id . '_' . $key, ' ', ['class' => 'btn-add-image']) !!}
 
                             <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $image->image) }}" />
                         </div>
@@ -97,8 +105,13 @@
 
                 @for ($i = isset($product) ? ($product->images->count()) : 0; $i <= 4; $i++)
                     <div class="image no-image">
-                        <span class="btn-add-image"></span>
+                        <?php /* <span class="btn-add-image"></span>
                         {!! Form::file('image[]', ['data-position' => $i, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
+
+                        <img src="#" /> */ ?>
+
+                        {!! Form::file('image[]', ['id' => 'image_' . $i, 'data-position' => $i, 'autocomplete' => 'off', 'accept' => 'image/*']) !!}
+                        {!! Form::label('image_' . $i, ' ', ['class' => 'btn-add-image']) !!}
 
                         <img src="#" />
                     </div>

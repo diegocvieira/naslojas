@@ -25,11 +25,11 @@ $(function() {
         $(this).parent().next().show();
     });
 
-    $(document).on('click', '.page-create-edit-product .btn-add-image, .page-create-edit-product .remove-image', function(e) {
+    /*$(document).on('click', '.page-create-edit-product .btn-add-image, .page-create-edit-product .remove-image', function(e) {
         e.preventDefault();
 
         $(this).next().trigger('click');
-    });
+    });*/
 
     // Remove images
     $(document).on('click', '.page-create-edit-product .remove-image', function() {
@@ -41,7 +41,7 @@ $(function() {
     });
 
     // Preview images
-    $(document).on('change', '.page-create-edit-product .image input:file', function() {
+    /*$(document).on('change', '.page-create-edit-product .image input:file', function() {
         if ($(this)[0].files[0].size > 5100000) {
             modalAlert('Esta imagem é muito grande, por favor utilize imagens de até 5MB.');
         } else {
@@ -71,7 +71,7 @@ $(function() {
                                 break;
                         }*/
 
-                        node.removeClass('no-image')
+                        /*node.removeClass('no-image')
                             .addClass('loaded-image')
                             .append("<label class='remove-image'></label><input type='hidden' name='image_position[]' value='" + $this.data('position') + "' />")
                             .find('img').attr('src', data);
@@ -81,6 +81,23 @@ $(function() {
             };
 
             fr.readAsDataURL(this.files[0]);
+        }
+    });*/
+
+    // Preview images
+    $(document).on('change', '.page-create-edit-product .image input[type=file]', function() {
+        var reader = new FileReader(),
+            $this = $(this);
+
+        if ($(this)[0].files[0].size > 5100000) {
+            modalAlert('Esta imagem é muito grande, por favor utilize imagens de até 5MB.');
+        } else {
+            reader.onload = function(e) {
+                $this.parent().removeClass('no-image').addClass('loaded-image').append("<label class='remove-image'></label>").find('img').attr('src', e.target.result);
+                $this.parent().append("<input type='hidden' name='image_position[]' value='" + $this.data('position') + "' />");
+            }
+
+            reader.readAsDataURL($(this)[0].files[0]);
         }
     });
 
