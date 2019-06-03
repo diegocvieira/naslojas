@@ -13,6 +13,104 @@ $(function() {
         $(this).parent().next().show();
     });
 
+    // ABRE O MODAL DE OFERTA
+    $(document).on('click', '.form-edit-product .options .btn-offtime', function() {
+        $(this).next().show();
+    });
+
+    // FECHA O MODAL DE OFERTA
+    $(document).click(function(event) {
+        if (!$(event.target).closest('.create-off').length && !$(event.target).closest('#modal-alert').length && $('.create-off .modal-offtime').is(":visible")) {
+            $('.create-off .modal-offtime').hide();
+        }
+    });
+
+    $(document).on('click', '.apply-off', function() {
+        var form = $(this).parents('.form-edit-product'),
+            price = parseFloat(form.find("input[name='price']").val().replace('.', '').replace(',', '.')),
+            off = form.find(".modal-offtime input[name='off']").val().replace('%', ''),
+            final_price = number_format((price - ((off / 100) * price)).toFixed(2), 2, ',', '.');
+
+        form.find('.modal-offtime .price').text(final_price);
+    });
+
+    // CRIA UMA OFERTA
+    $(document).on('click', '.save-off', function(e) {
+        e.preventDefault();
+
+        var form = $(this).parents('.form-edit-product'),
+            off = form.find(".modal-offtime input[name='off']").val(),
+            time = form.find(".modal-offtime input[name='time']:checked").val();
+
+        if (off && time) {
+            $.ajax({
+                url: $(this).data('route'),
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    off: off,
+                    time: time,
+                    product_id: form.find("input[name='product_id']").val()
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    if (data.status) {
+                        form.find('.btn-offtime').addClass('offtime-selected').text('EM OFERTA');
+
+                        $('.modal-offtime').hide();
+
+                        form.find('.modal-offtime .remove-off').attr('data-id', data.id).removeClass('hide');
+                    } else {
+                        modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                    }
+                },
+                error: function (request, status, error) {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
+            });
+        } else {
+            modalAlert('Informe o desconto e o tempo de duração');
+        }
+    });
+
+    // Remover uma oferta
+    $(document).on('click', '.remove-off', function(e) {
+        e.preventDefault();
+
+        var form = $(this).parents('.form-edit-product');
+
+        $.ajax({
+            url: $(this).data('route'),
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                id: $(this).attr('data-id')
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                if (data.status) {
+                    form.find('.btn-offtime').removeClass('offtime-selected').text('CRIAR OFERTA');
+
+                    $('.modal-offtime').hide();
+
+                    form.find('.modal-offtime .remove-off').addClass('hide');
+
+                    form.find(".modal-offtime input[name='off']").val('');
+                    form.find(".modal-offtime input[name='time']").prop('checked', false);
+                } else {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+    });
+
     $(document).on('click', '.disable-product, .enable-product', function(e) {
         e.preventDefault();
 

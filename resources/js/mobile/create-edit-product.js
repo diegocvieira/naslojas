@@ -11,6 +11,100 @@ $(function() {
         }
     });
 
+    // ABRE O MODAL DE OFERTA
+    $(document).on('click', '.btn-offtime', function() {
+        $(this).next().show();
+    });
+
+    // FECHA O MODAL DE OFERTA
+    $(document).click(function(event) {
+        if (!$(event.target).closest('.top-options').length && !$(event.target).closest('#modal-alert').length && $('.modal-offtime').is(":visible")) {
+            $('.modal-offtime').hide();
+        }
+    });
+
+    $(document).on('click', '.apply-off', function() {
+        var price = parseFloat($("input[name='price']").val().replace('.', '').replace(',', '.')),
+            off = $(".modal-offtime input[name='off']").val().replace('%', ''),
+            final_price = number_format((price - ((off / 100) * price)).toFixed(2), 2, ',', '.');
+
+        $('.modal-offtime .price').text(final_price);
+    });
+
+    // CRIA UMA OFERTA
+    $(document).on('click', '.save-off', function(e) {
+        e.preventDefault();
+
+        var off = $(".modal-offtime input[name='off']").val(),
+            time = $(".modal-offtime input[name='time']:checked").val();
+
+        if (off && time) {
+            $.ajax({
+                url: $(this).data('route'),
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    off: off,
+                    time: time,
+                    product_id: $("input[name='product_id']").val()
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    if (data.status) {
+                        $('.btn-offtime').addClass('offtime-selected').text('EM OFERTA');
+
+                        $('.modal-offtime').hide();
+
+                        $('.modal-offtime .remove-off').attr('data-id', data.id).removeClass('hide');
+                    } else {
+                        modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                    }
+                },
+                error: function (request, status, error) {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
+            });
+        } else {
+            modalAlert('Informe o desconto e o tempo de duração');
+        }
+    });
+
+    // Remover uma oferta
+    $(document).on('click', '.remove-off', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: $(this).data('route'),
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                id: $(this).attr('data-id')
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                if (data.status) {
+                    $('.btn-offtime').removeClass('offtime-selected').text('CRIAR OFERTA');
+
+                    $('.modal-offtime').hide();
+
+                    $('.modal-offtime .remove-off').addClass('hide');
+
+                    $(".modal-offtime input[name='off']").val('');
+                    $(".modal-offtime input[name='time']").prop('checked', false);
+                } else {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+    });
+
     $(document).on('change', '.sizes input', function() {
         $(this).parents('.sizes').find('input').removeClass('error');
 

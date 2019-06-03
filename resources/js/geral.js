@@ -730,6 +730,8 @@ $(function() {
             $('.search-stores .dropdown').hide();
         }
     });
+
+    //showOffTime('2019-06-04 10:05:00');
 });
 
 function number_format(numero, decimal, decimal_separador, milhar_separador) {
@@ -755,6 +757,33 @@ function number_format(numero, decimal, decimal_separador, milhar_separador) {
    }
 
    return s.join(dec);
+}
+
+function showOffTime(date) {
+    var end = new Date(date),
+        _second = 1000,
+        _minute = _second * 60,
+        _hour = _minute * 60,
+        timer;
+
+    function showRemaining() {
+        var distance = end - new Date();
+
+        if (distance < 0) {
+            clearInterval(timer);
+            console.log('expire');
+
+            return;
+        }
+
+        var hours = Math.floor(distance / _hour);
+        var minutes = Math.floor((distance % _hour) / _minute);
+        var seconds = Math.floor((distance % _minute) / _second);
+
+        console.log(hours + ':' + minutes + ':' + seconds);
+    }
+
+    timer = setInterval(showRemaining, 1000);
 }
 
 function modalAlert(body, btn = 'OK') {

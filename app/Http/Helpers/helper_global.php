@@ -23,6 +23,11 @@ function _oldPrice($price, $off)
 	}
 }
 
+function priceOff($price, $off)
+{
+    return $price - (($off / 100) * $price);
+}
+
 function _reservePrice($price, $discount)
 {
     return round($price - ($price * ($discount / 100)), 2);

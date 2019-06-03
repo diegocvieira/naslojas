@@ -218,6 +218,9 @@ Route::group(['prefix' => 'loja'], function () {
 
 			Route::post('free-freight', 'ProductController@freeFreight')->name('product-free-freight');
 
+			Route::post('offtime/create', 'OffTimeController@create')->name('offtime-create');
+			Route::post('offtime/remove', 'OffTimeController@remove')->name('offtime-remove');
+
 			Route::post('save-excel', 'ProductController@saveExcel')->name('save-excel');
 		});
 

@@ -33,6 +33,11 @@ class Product extends Model
         }
     }
 
+    public function offtime()
+    {
+        return $this->hasOne('App\OffTime', 'product_id', 'id');
+    }
+
     public function store()
     {
         return $this->belongsTo('App\Store', 'store_id', 'id');

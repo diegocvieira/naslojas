@@ -78,6 +78,49 @@
                 <button type="button" class="btn-finish" data-status="">SALVAR</button>
             </header>
 
+            @if (isset($product))
+                <div class="top-options">
+                    @if ($product->offtime)
+                        <button type="button" class="btn-offtime offtime-selected">EM OFERTA</button>
+                    @else
+                        <button type="button" class="btn-offtime">CRIAR OFERTA</button>
+                    @endif
+
+                    <div class="modal-offtime">
+                        <div class="top">O preço do produto voltará ao normal assim que o período em oferta acabar.</div>
+
+                        <div class="body">
+                            <span class="price-container">PREÇO EM OFERTA - <b>R$<span class="price">{{ number_format($product->price, 2, ',', '.') }}</span></b></span>
+
+                            <div class="off-container">
+                                {!! Form::text('off', $product->offtime ? $product->offtime->off : null, ['placeholder' => 'Desconto', 'class' => 'mask-percent']) !!}
+
+                                <button type="button" class="apply-off">APLICAR</button>
+                            </div>
+
+                            <div class="time-container">
+                                <span>Válido por</span>
+
+                                {!! Form::radio('time', '24', ($product->offtime && $product->offtime->time == '24') ? true : false, ['id' => '24h']) !!}
+                                {!! Form::label('24h', '24h') !!}
+
+                                {!! Form::radio('time', '48', ($product->offtime && $product->offtime->time == '48') ? true : false, ['id' => '48h']) !!}
+                                {!! Form::label('48h', '48h') !!}
+
+                                {!! Form::radio('time', '72', ($product->offtime && $product->offtime->time == '72') ? true : false, ['id' => '72h']) !!}
+                                {!! Form::label('72h', '72h') !!}
+                            </div>
+                        </div>
+
+                        <div class="bottom">
+                            <button type="button" class="save-off" data-route="{{ route('offtime-create') }}">SALVAR OFERTA</button>
+
+                            <button type="button" class="remove-off {{ !$product->offtime ? 'hide' : '' }}" data-route="{{ route('offtime-remove') }}" data-id="{{ $product->offtime ? $product->offtime->id : '' }}">Cancelar oferta</button>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <span class="advice">* indica item obrigatório</span>
 
             <div class="section images">

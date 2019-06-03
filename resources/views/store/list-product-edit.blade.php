@@ -4,7 +4,7 @@
         {!! Form::hidden('free_freight_price', $product->store->free_freight_price) !!}
 
         <div class="row">
-            <div class="col-xs-6 images">
+            <div class="col-xs-5 images">
                 @foreach ($product->images as $key => $image)
                     <div class="image loaded-image">
                         {!! Form::checkbox('image_remove[]', $image->image, false, ['id' => 'image_remove_' . $product->id . '_' . $key, 'autocomplete' => 'off']) !!}
@@ -27,7 +27,7 @@
                 @endfor
             </div>
 
-            <div class="col-xs-6 options">
+            <div class="col-xs-7 options">
                 <button type="button" class="delete-product" data-productid="{{ $product->id }}" data-url="{{ route('product-delete') }}" title="Excluir produto"></button>
 
                 @if ($product->status != 2)
@@ -55,6 +55,47 @@
                     @if ($product->status == 1 && $product->store->status == 1 && $product->images->count())
                         <button type="button" class="link-share" data-url="{{ route('show-product', $product->slug) }}" data-image="{{ asset('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)) }}" data-freight="{{ $product->free_freight ? 'grátis' : 'R$5,00' }}" data-store="{{ $product->store->name }}" data-title="{{ $product->title }}">COMPARTILHAR</button>
                     @endif
+
+                    <div class="create-off">
+                        @if ($product->offtime)
+                            <button type="button" class="btn-offtime offtime-selected">EM OFERTA</button>
+                        @else
+                            <button type="button" class="btn-offtime">CRIAR OFERTA</button>
+                        @endif
+
+                        <div class="modal-offtime">
+                            <div class="top">O preço do produto voltará ao normal assim que o período em oferta acabar.</div>
+
+                            <div class="body">
+                                <span class="price-container">PREÇO EM OFERTA - <b>R$<span class="price">{{ number_format($product->price, 2, ',', '.') }}</span></b></span>
+
+                                <div class="off-container">
+                                    {!! Form::text('off', $product->offtime ? $product->offtime->off : null, ['placeholder' => 'Desconto', 'class' => 'mask-percent']) !!}
+
+                                    <button type="button" class="apply-off">APLICAR</button>
+                                </div>
+
+                                <div class="time-container">
+                                    <span>Válido por</span>
+
+                                    {!! Form::radio('time', '24', ($product->offtime && $product->offtime->time == '24') ? true : false, ['id' => '24h']) !!}
+                                    {!! Form::label('24h', '24h') !!}
+
+                                    {!! Form::radio('time', '48', ($product->offtime && $product->offtime->time == '48') ? true : false, ['id' => '48h']) !!}
+                                    {!! Form::label('48h', '48h') !!}
+
+                                    {!! Form::radio('time', '72', ($product->offtime && $product->offtime->time == '72') ? true : false, ['id' => '72h']) !!}
+                                    {!! Form::label('72h', '72h') !!}
+                                </div>
+                            </div>
+
+                            <div class="bottom">
+                                <button type="button" class="save-off" data-route="{{ route('offtime-create') }}">SALVAR OFERTA</button>
+
+                                <button type="button" class="remove-off {{ !$product->offtime ? 'hide' : '' }}" data-route="{{ route('offtime-remove') }}" data-id="{{ $product->offtime ? $product->offtime->id : '' }}">Cancelar oferta</button>
+                            </div>
+                        </div>
+                    </div>
                 @endif
             </div>
         </div>
