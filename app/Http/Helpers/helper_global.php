@@ -23,9 +23,20 @@ function _oldPrice($price, $off)
 	}
 }
 
-function priceOff($price, $off)
+function _priceOff($price, $off)
 {
     return $price - (($off / 100) * $price);
+}
+
+function _checkDateOff($date, $time)
+{
+    $final_date = date('Y-m-d H:i:s', strtotime('+' . $time . ' hours', strtotime($date)));
+
+    if (date('Y-m-d H:i:s') < $final_date) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function _reservePrice($price, $discount)

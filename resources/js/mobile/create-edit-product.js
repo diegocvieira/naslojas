@@ -25,7 +25,7 @@ $(function() {
 
     $(document).on('click', '.apply-off', function() {
         var price = parseFloat($("input[name='price']").val().replace('.', '').replace(',', '.')),
-            off = $(".modal-offtime input[name='off']").val().replace('%', ''),
+            off = $(".modal-offtime input[name='offtime_off']").val().replace('%', ''),
             final_price = number_format((price - ((off / 100) * price)).toFixed(2), 2, ',', '.');
 
         $('.modal-offtime .price').text(final_price);
@@ -35,8 +35,8 @@ $(function() {
     $(document).on('click', '.save-off', function(e) {
         e.preventDefault();
 
-        var off = $(".modal-offtime input[name='off']").val(),
-            time = $(".modal-offtime input[name='time']:checked").val();
+        var off = $(".modal-offtime input[name='offtime_off']").val(),
+            time = $(".modal-offtime input[name='offtime_time']:checked").val();
 
         if (off && time) {
             $.ajax({

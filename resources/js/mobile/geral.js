@@ -749,7 +749,39 @@ $(function() {
              $('#cep').trigger('blur');
          }
      });
+
+     if ($('.list-products .product').length) {
+         $('.list-products .product .offtime').each(function(index, element) {
+             showOffTime($(this).attr('data-date'), $(this));
+         });
+     }
 });
+
+function showOffTime(date, div) {
+    var end = new Date(date),
+        _second = 1000,
+        _minute = _second * 60,
+        _hour = _minute * 60,
+        timer;
+
+    function showRemaining() {
+        var distance = end - new Date();
+
+        if (distance < 0) {
+            clearInterval(timer);
+
+            return;
+        }
+
+        var hours = Math.floor(distance / _hour);
+        var minutes = Math.floor((distance % _hour) / _minute);
+        var seconds = Math.floor((distance % _minute) / _second);
+
+        $(div).text(hours + 'h ' + minutes + 'm ' + seconds + 's');
+    }
+
+    timer = setInterval(showRemaining, 1000);
+}
 
 function number_format(numero, decimal, decimal_separador, milhar_separador) {
    numero = (numero + '').replace(/[^0-9+\-Ee.]/g, '');

@@ -70,7 +70,7 @@
                                 <span class="price-container">PREÇO EM OFERTA - <b>R$<span class="price">{{ number_format($product->price, 2, ',', '.') }}</span></b></span>
 
                                 <div class="off-container">
-                                    {!! Form::text('off', $product->offtime ? $product->offtime->off : null, ['placeholder' => 'Desconto', 'class' => 'mask-percent']) !!}
+                                    {!! Form::text('offtime_off', $product->offtime ? $product->offtime->off : null, ['placeholder' => 'Desconto', 'class' => 'mask-percent']) !!}
 
                                     <button type="button" class="apply-off">APLICAR</button>
                                 </div>
@@ -78,14 +78,14 @@
                                 <div class="time-container">
                                     <span>Válido por</span>
 
-                                    {!! Form::radio('time', '24', ($product->offtime && $product->offtime->time == '24') ? true : false, ['id' => '24h']) !!}
-                                    {!! Form::label('24h', '24h') !!}
+                                    {!! Form::radio('offtime_time', '24', ($product->offtime && $product->offtime->time == '24') ? true : false, ['id' => '24h_' . $product->id]) !!}
+                                    {!! Form::label('24h_' . $product->id, '24h') !!}
 
-                                    {!! Form::radio('time', '48', ($product->offtime && $product->offtime->time == '48') ? true : false, ['id' => '48h']) !!}
-                                    {!! Form::label('48h', '48h') !!}
+                                    {!! Form::radio('offtime_time', '48', ($product->offtime && $product->offtime->time == '48') ? true : false, ['id' => '48h_' . $product->id]) !!}
+                                    {!! Form::label('48h_' . $product->id, '48h') !!}
 
-                                    {!! Form::radio('time', '72', ($product->offtime && $product->offtime->time == '72') ? true : false, ['id' => '72h']) !!}
-                                    {!! Form::label('72h', '72h') !!}
+                                    {!! Form::radio('offtime_time', '72', ($product->offtime && $product->offtime->time == '72') ? true : false, ['id' => '72h_' . $product->id]) !!}
+                                    {!! Form::label('72h_' . $product->id, '72h') !!}
                                 </div>
                             </div>
 

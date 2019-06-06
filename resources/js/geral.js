@@ -166,7 +166,7 @@ $(function() {
     });
 
     // START FILTER PRODUCTS
-    $(document).on('change', '.product-filter select', function() {
+    $(document).on('change', '.product-filter-orderby select', function() {
         var val = $(this).val();
 
         $(this).attr('name') == 'order' ? $('#search-order').val(val) : $('#search-gender').val(val);
@@ -731,7 +731,11 @@ $(function() {
         }
     });
 
-    //showOffTime('2019-06-04 10:05:00');
+    if ($('.list-products .product').length) {
+        $('.list-products .product .offtime').each(function(index, element) {
+            showOffTime($(this).attr('data-date'), $(this));
+        });
+    }
 });
 
 function number_format(numero, decimal, decimal_separador, milhar_separador) {
@@ -759,7 +763,7 @@ function number_format(numero, decimal, decimal_separador, milhar_separador) {
    return s.join(dec);
 }
 
-function showOffTime(date) {
+function showOffTime(date, div) {
     var end = new Date(date),
         _second = 1000,
         _minute = _second * 60,
@@ -771,7 +775,6 @@ function showOffTime(date) {
 
         if (distance < 0) {
             clearInterval(timer);
-            console.log('expire');
 
             return;
         }
@@ -780,7 +783,7 @@ function showOffTime(date) {
         var minutes = Math.floor((distance % _hour) / _minute);
         var seconds = Math.floor((distance % _minute) / _second);
 
-        console.log(hours + ':' + minutes + ':' + seconds);
+        $(div).text(hours + 'h ' + minutes + 'm ' + seconds + 's');
     }
 
     timer = setInterval(showRemaining, 1000);
