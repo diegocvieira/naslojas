@@ -12,8 +12,8 @@ class OffTimeController extends Controller
         Offtime::where('product_id', $request->product_id)->delete();
 
         $off = OffTime::create([
-            'off' => str_replace('%', '', $request->offtime_off),
-            'time' => $request->offtime_time,
+            'off' => str_replace('%', '', $request->off),
+            'time' => $request->time,
             'product_id' => $request->product_id
         ]);
 
