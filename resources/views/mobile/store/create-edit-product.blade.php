@@ -90,7 +90,7 @@
                         <div class="top">O preço do produto voltará ao normal assim que o período em oferta acabar.</div>
 
                         <div class="body">
-                            <span class="price-container">PREÇO EM OFERTA - <b>R$<span class="price">{{ number_format($product->offtime ? _priceOff($product->price, $product->off) : $product->price, 2, ',', '.') }}</span></b></span>
+                            <span class="price-container">PREÇO EM OFERTA - <b>R$<span class="price">{{ number_format($product->offtime ? _priceOff($product->price, $product->offtime->off) : $product->price, 2, ',', '.') }}</span></b></span>
 
                             <div class="off-container">
                                 {!! Form::text('offtime_off', $product->offtime ? $product->offtime->off : null, ['placeholder' => 'Desconto', 'class' => 'mask-percent']) !!}
