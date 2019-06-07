@@ -93,8 +93,8 @@ $(function() {
 
                     $('.modal-offtime .remove-off').addClass('hide');
 
-                    $(".modal-offtime input[name='off']").val('');
-                    $(".modal-offtime input[name='time']").prop('checked', false);
+                    $(".modal-offtime input[name='offtime_off']").val('');
+                    $(".modal-offtime input[name='offtime_time']").prop('checked', false);
                 } else {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }

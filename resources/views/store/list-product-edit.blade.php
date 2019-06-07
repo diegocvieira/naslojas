@@ -67,7 +67,7 @@
                             <div class="top">O preço do produto voltará ao normal assim que o período em oferta acabar.</div>
 
                             <div class="body">
-                                <span class="price-container">PREÇO EM OFERTA - <b>R$<span class="price">{{ number_format($product->price, 2, ',', '.') }}</span></b></span>
+                                <span class="price-container">PREÇO EM OFERTA - <b>R$<span class="price">{{ number_format($product->offtime ? _priceOff($product->price, $product->off) : $product->price, 2, ',', '.') }}</span></b></span>
 
                                 <div class="off-container">
                                     {!! Form::text('offtime_off', $product->offtime ? $product->offtime->off : null, ['placeholder' => 'Desconto', 'class' => 'mask-percent']) !!}
@@ -90,6 +90,8 @@
                             </div>
 
                             <div class="bottom">
+                                <!--<span class="">TEMPO RESTANTE - <span>00h 00m 00s</span></span>-->
+
                                 <button type="button" class="save-off" data-route="{{ route('offtime-create') }}">SALVAR OFERTA</button>
 
                                 <button type="button" class="remove-off {{ !$product->offtime ? 'hide' : '' }}" data-route="{{ route('offtime-remove') }}" data-id="{{ $product->offtime ? $product->offtime->id : '' }}">Cancelar oferta</button>

@@ -99,8 +99,8 @@ $(function() {
 
                     form.find('.modal-offtime .remove-off').addClass('hide');
 
-                    form.find(".modal-offtime input[name='off']").val('');
-                    form.find(".modal-offtime input[name='time']").prop('checked', false);
+                    form.find(".modal-offtime input[name='offtime_off']").val('');
+                    form.find(".modal-offtime input[name='offtime_time']").prop('checked', false);
                 } else {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
