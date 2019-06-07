@@ -26,7 +26,7 @@ $(function() {
 
                 $('select.selectpicker').selectpicker('refresh');
 
-                showOffTime($('.page-show-product .offtime.timer-generate').attr('data-date'), '.page-show-product .offtime-timer');
+                showOffTime($('.page-show-product .offtime.timer-generate').attr('data-date'), $('.page-show-product .offtime-timer'));
 
                 // PRODUTOS RELACIONADOS
                 $('.list-products .product .offtime').each(function(index, element) {
