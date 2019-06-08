@@ -241,6 +241,20 @@
                             text-align: center;
                             padding: 10px 20px 20px 20px;
 
+                            .offtime-time {
+                                width: 100%;
+                                float: left;
+                                font-size: 14.5px;
+                                color: rgb(100, 100, 100);
+                                text-align: left;
+                                margin-bottom: 20px;
+
+                                .offtime-timer {
+                                    color: #000;
+                                    font-weight: 700;
+                                }
+                            }
+
                             .save-off {
                                 background-color: rgb(255, 23, 68);
                                 width: 100%;

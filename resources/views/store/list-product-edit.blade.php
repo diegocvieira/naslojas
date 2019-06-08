@@ -90,7 +90,9 @@
                             </div>
 
                             <div class="bottom">
-                                <!--<span class="">TEMPO RESTANTE - <span>00h 00m 00s</span></span>-->
+                                @if ($product->offtime)
+                                    <span class="offtime-time" data-date="{{ date('Y-m-d H:i:s', strtotime('+' . $product->offtime->time . ' hours', strtotime($product->offtime->created_at))) }}">TEMPO RESTANTE - <span class="offtime-timer">00h 00m 00s</span></span>
+                                @endif
 
                                 <button type="button" class="save-off" data-route="{{ route('offtime-create') }}">SALVAR OFERTA</button>
 

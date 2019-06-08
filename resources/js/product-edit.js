@@ -13,6 +13,12 @@ $(function() {
         $(this).parent().next().show();
     });
 
+    if ($('.page-product-edit .offtime-time').length) {
+        $('.page-product-edit .offtime-time').each(function(index, element) {
+            showOffTime($(this).attr('data-date'), $(this).find('.offtime-timer'));
+        });
+    }
+
     // ABRE O MODAL DE OFERTA
     $(document).on('click', '.form-edit-product .options .btn-offtime', function() {
         $(this).next().show();
@@ -101,6 +107,8 @@ $(function() {
 
                     form.find(".modal-offtime input[name='offtime_off']").val('');
                     form.find(".modal-offtime input[name='offtime_time']").prop('checked', false);
+
+                    form.find('.modal-offtime .offtime-time').remove();
                 } else {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
