@@ -57,7 +57,7 @@
                     @endif
 
                     <div class="create-off">
-                        @if ($product->offtime)
+                        @if ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time))
                             <button type="button" class="btn-offtime offtime-selected">EM OFERTA</button>
                         @else
                             <button type="button" class="btn-offtime">CRIAR OFERTA</button>
@@ -67,10 +67,10 @@
                             <div class="top">O preço do produto voltará ao normal assim que o período em oferta acabar.</div>
 
                             <div class="body">
-                                <span class="price-container">PREÇO EM OFERTA - <b>R$<span class="price">{{ number_format($product->offtime ? _priceOff($product->price, $product->offtime->off) : $product->price, 2, ',', '.') }}</span></b></span>
+                                <span class="price-container">PREÇO EM OFERTA - <b>R$<span class="price">{{ number_format($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time) ? _priceOff($product->price, $product->offtime->off) : $product->price, 2, ',', '.') }}</span></b></span>
 
                                 <div class="off-container">
-                                    {!! Form::text('offtime_off', $product->offtime ? $product->offtime->off : null, ['placeholder' => 'Desconto', 'class' => 'mask-percent']) !!}
+                                    {!! Form::text('offtime_off', ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time)) ? $product->offtime->off : null, ['placeholder' => 'Desconto', 'class' => 'mask-percent']) !!}
 
                                     <button type="button" class="apply-off">APLICAR</button>
                                 </div>
@@ -78,25 +78,25 @@
                                 <div class="time-container">
                                     <span>Válido por</span>
 
-                                    {!! Form::radio('offtime_time', '24', ($product->offtime && $product->offtime->time == '24') ? true : false, ['id' => '24h_' . $product->id]) !!}
+                                    {!! Form::radio('offtime_time', '24', ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time) && $product->offtime->time == '24') ? true : false, ['id' => '24h_' . $product->id]) !!}
                                     {!! Form::label('24h_' . $product->id, '24h') !!}
 
-                                    {!! Form::radio('offtime_time', '48', ($product->offtime && $product->offtime->time == '48') ? true : false, ['id' => '48h_' . $product->id]) !!}
+                                    {!! Form::radio('offtime_time', '48', ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time) && $product->offtime->time == '48') ? true : false, ['id' => '48h_' . $product->id]) !!}
                                     {!! Form::label('48h_' . $product->id, '48h') !!}
 
-                                    {!! Form::radio('offtime_time', '72', ($product->offtime && $product->offtime->time == '72') ? true : false, ['id' => '72h_' . $product->id]) !!}
+                                    {!! Form::radio('offtime_time', '72', ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time) && $product->offtime->time == '72') ? true : false, ['id' => '72h_' . $product->id]) !!}
                                     {!! Form::label('72h_' . $product->id, '72h') !!}
                                 </div>
                             </div>
 
                             <div class="bottom">
-                                @if ($product->offtime)
+                                @if ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time))
                                     <span class="offtime-time" data-date="{{ date('Y-m-d H:i:s', strtotime('+' . $product->offtime->time . ' hours', strtotime($product->offtime->created_at))) }}">TEMPO RESTANTE - <span class="offtime-timer">00h 00m 00s</span></span>
                                 @endif
 
                                 <button type="button" class="save-off" data-route="{{ route('offtime-create') }}">SALVAR OFERTA</button>
 
-                                <button type="button" class="remove-off {{ !$product->offtime ? 'hide' : '' }}" data-route="{{ route('offtime-remove') }}" data-id="{{ $product->offtime ? $product->offtime->id : '' }}">Cancelar oferta</button>
+                                <button type="button" class="remove-off {{ (!$product->offtime || $product->offtime && !_checkDateOff($product->offtime->created_at, $product->offtime->time)) ? 'hide' : '' }}" data-route="{{ route('offtime-remove') }}" data-id="{{ $product->offtime ? $product->offtime->id : '' }}">Cancelar oferta</button>
                             </div>
                         </div>
                     </div>
