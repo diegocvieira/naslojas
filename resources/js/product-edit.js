@@ -1,4 +1,56 @@
 $(function() {
+    // ABRIR MODAL DE DOWNLOAD POST
+    $(document).on('click', '.open-modal-post', function() {
+        $(this).next().show();
+    });
+
+    // FECHAR MODAL DE DOWNLOAD POST
+    $(document).click(function(event) {
+        if (!$(event.target).closest('.download-post').length && $('.download-post .modal-post').is(":visible")) {
+            $('.download-post .modal-post').hide();
+        }
+    });
+
+    // DOWNLOAD POST
+    $(document).on('click', '.btn-download-post', function() {
+        $.ajax({
+            url: $(this).data('route'),
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                option: $(this).data('option'),
+                product_id: $(this).data('productid')
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                if (data.status) {
+                    window.open(data.url, '_blank');
+                } else {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+    });
+
+    // COPIAR LINK DO POST
+    $(document).on('click', '.btn-copy-link-post', function() {
+        $('.btn-copy-link-post').removeClass('copied').text('COPIAR LINK DIRETO');
+        $(this).addClass('copied').text('LINK COPIADO');
+
+        $('#input-copy-link-post').remove();
+        $('body').append("<input type='text' id='input-copy-link-post' value='" + $(this).data('url') + "' style='position:absolute;left:-200%;' />");
+
+        var copyText = document.getElementById('input-copy-link-post');
+        copyText.select();
+
+        document.execCommand("copy");
+    });
+
     $(document).on('change', '.sizes input', function() {
         $(this).parents('.sizes').find('input').removeClass('error');
 

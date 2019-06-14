@@ -85,6 +85,8 @@
 	}
 });*/
 
+Route::post('post/download', 'GlobalController@pdf')->name('download-post');
+
 Route::get('/', 'GlobalController@home')->name('home');
 
 Route::group(['prefix' => 'site'], function () {

@@ -53,7 +53,25 @@
                     @endif
 
                     @if ($product->status == 1 && $product->store->status == 1 && $product->images->count())
-                        <button type="button" class="link-share" data-url="{{ route('show-product', $product->slug) }}" data-image="{{ asset('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)) }}" data-freight="{{ $product->free_freight ? 'grátis' : 'R$5,00' }}" data-store="{{ $product->store->name }}" data-title="{{ $product->title }}">COMPARTILHAR</button>
+                        <div class="download-post">
+                            <button type="button" class="open-modal-post">BAIXAR POST</button>
+
+                            <div class="modal-post">
+                                <div class="top">Baixe postagens prontas para compartilhar no instagram e no facebook.</div>
+
+                                <div class="body">
+                                    <button class="btn-download-post" data-option="1" data-productid="{{ $product->id }}" data-route="{{ route('download-post') }}">STORIES PADRÃO</button>
+
+                                    <hr>
+
+                                    <button class="btn-download-post" data-option="2" data-productid="{{ $product->id }}" data-route="{{ route('download-post') }}">STORIES COM DESLIZAR</button>
+
+                                    <button class="btn-copy-link-post" data-url="{{ route('show-product', $product->slug) }}">COPIAR LINK DIRETO</button>
+
+                                    <span>Cole o link direto junto com o post para os clientes poderem deslizar para comprar.</span>
+                                </div>
+                            </div>
+                        </div>
                     @endif
 
                     <div class="create-off">

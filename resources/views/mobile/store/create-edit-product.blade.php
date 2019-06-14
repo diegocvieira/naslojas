@@ -122,6 +122,26 @@
                             <button type="button" class="remove-off {{ (!$product->offtime || $product->offtime && !_checkDateOff($product->offtime->created_at, $product->offtime->time)) ? 'hide' : '' }}" data-route="{{ route('offtime-remove') }}" data-id="{{ $product->offtime ? $product->offtime->id : '' }}">Cancelar oferta</button>
                         </div>
                     </div>
+
+                    @if ($product->status == 1 && $product->store->status == 1 && $product->images->count())
+                        <button type="button" class="open-modal-post">BAIXAR POST</button>
+
+                        <div class="modal-post">
+                            <div class="top">Baixe postagens prontas para compartilhar no instagram e no facebook.</div>
+
+                            <div class="body">
+                                <button class="btn-download-post" data-option="1" data-productid="{{ $product->id }}" data-route="{{ route('download-post') }}">STORIES PADRÃO</button>
+
+                                <hr>
+
+                                <button class="btn-download-post" data-option="2" data-productid="{{ $product->id }}" data-route="{{ route('download-post') }}">STORIES COM DESLIZAR</button>
+
+                                <button class="btn-copy-link-post" data-url="{{ route('show-product', $product->slug) }}">COPIAR LINK DIRETO</button>
+
+                                <span>Cole o link direto junto com o post para os clientes poderem deslizar para comprar.</span>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             @endif
 
