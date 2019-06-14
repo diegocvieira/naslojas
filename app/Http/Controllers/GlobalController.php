@@ -52,6 +52,13 @@ class GlobalController extends Controller
             $image->compositeImage($image_offtime, \Imagick::COMPOSITE_OVER, 195, 1120);
         }
 
+        // IMAGEM DO PRODUTO
+        $image_product = new \Imagick(public_path('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)));
+        $image_product->resizeImage(830, 830, \imagick::FILTER_LANCZOS, 1, TRUE);
+        $image_product_width = ((830 - $image_product->getImageWidth()) / 2) + 125;
+        $image_product_height = ((830 - $image_product->getImageHeight()) / 2) + 235;
+        $image->compositeImage($image_product, \Imagick::COMPOSITE_OVER, $image_product_width, $image_product_height);
+
         // PORCENTAGEM DE DESCONTO
         if (!isset($percetage) && $product->off) {
             $percetage = $product->off;
@@ -68,13 +75,6 @@ class GlobalController extends Controller
             $image->compositeImage($image_off, \Imagick::COMPOSITE_OVER, 810, 140);
         }
 
-        // IMAGEM DO PRODUTO
-        $image_product = new \Imagick(public_path('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)));
-        $image_product->resizeImage(830, 830, \imagick::FILTER_LANCZOS, 1, TRUE);
-        $image_product_width = ((830 - $image_product->getImageWidth()) / 2) + 125;
-        $image_product_height = ((830 - $image_product->getImageHeight()) / 2) + 235;
-        $image->compositeImage($image_product, \Imagick::COMPOSITE_OVER, $image_product_width, $image_product_height);
-
         // FRETE GRATIS
         if ($product->free_freight) {
             $image_freefreight = new \Imagick(public_path('images/post/free-freight.png'));
@@ -84,11 +84,13 @@ class GlobalController extends Controller
             $image->compositeImage($image_freefreight, \Imagick::COMPOSITE_OVER, 420, 1415);
         }
 
+        $image_name = microtime(true) . '.png';
+
         $image->drawImage($draw);
-        $image->writeImage(public_path('uploads/' . $product->store_id . '/post.png'));
+        $image->writeImage(public_path('uploads/' . $product->store_id . '/' . $image_name));
 
         $return['status'] = true;
-        $return['url'] = asset('uploads/' . $product->store_id . '/post.png');
+        $return['url'] = asset('uploads/' . $product->store_id . '/' . $image_name);
 
         return json_encode($return);
     }
