@@ -155,6 +155,14 @@ Route::group(['prefix' => 'recuperar-senha'], function () {
 	Route::post('change', 'PasswordResetController@change')->name('password-change');
 });
 
+// CENTRAL DE ENTREGAS
+Route::group(['prefix' => 'central'], function () {
+	Route::get('login', 'CentralController@getLogin')->name('central-login');
+	Route::post('login', 'CentralController@postLogin')->name('central-login');
+
+	Route::get('pedidos', 'CentralController@orders')->name('central-orders');
+});
+
 // Store
 Route::group(['prefix' => 'loja'], function () {
 	Route::get('divulgar', function() {
