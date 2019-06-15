@@ -28,6 +28,19 @@ function _priceOff($price, $off)
     return $price - (($off / 100) * $price);
 }
 
+function _freightDefaultValue($id)
+{
+    if ($id == 105 || $id == 106 || $id == 51 || $id == 60 || $id == 69 || $id == 72 || $id == 87 || $id == 86 || $id == 96 || $id == 100 || $id == 102 || $id == 103) {
+        $price = '10.00';
+    } else if ($id == 107 || $id == 108) {
+        $price = '20.00';
+    } else {
+        $price = '5.00';
+    }
+
+    return $price;
+}
+
 function _checkDateOff($date, $time)
 {
     $final_date = date('Y-m-d H:i:s', strtotime('+' . $time . ' hours', strtotime($date)));
