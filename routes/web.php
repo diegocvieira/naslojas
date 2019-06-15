@@ -85,7 +85,7 @@
 	}
 });*/
 
-Route::post('post/download', 'GlobalController@pdf')->name('download-post');
+Route::post('post/download', 'PostController@create')->name('download-post');
 
 Route::get('/', 'GlobalController@home')->name('home');
 
@@ -153,6 +153,16 @@ Route::group(['prefix' => 'recuperar-senha'], function () {
 	Route::get('check/{token}', 'PasswordResetController@check')->name('password-check');
 
 	Route::post('change', 'PasswordResetController@change')->name('password-change');
+});
+
+// CENTRAL DE ENTREGAS
+Route::group(['prefix' => 'central'], function () {
+	Route::get('login', 'CentralController@getLogin')->name('central-login');
+	Route::post('login', 'CentralController@postLogin')->name('central-login');
+
+	Route::get('pedidos', 'CentralController@orders')->name('central-orders');
+
+	Route::get('logout', 'GlobalController@logout')->name('central-logout');
 });
 
 // Store
