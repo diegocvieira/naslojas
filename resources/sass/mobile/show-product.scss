@@ -309,6 +309,38 @@
         }
     }
 
+    .offtime-container {
+        float: left;
+        width: 100%;
+        margin-top: 20px;
+
+        .offtime {
+            display: inline-block;
+            border-radius: 3px;
+            background-color: rgb(240, 240, 240);
+            padding: 7px 10px 5px 10px;
+
+            .offtime-title {
+                font-size: 12.5px;
+                color: rgb(50, 50, 50);
+                display: block;
+            }
+
+            .offtime-timer {
+                display: block;
+                padding-left: 35px;
+                font-size: 20.8px;
+                font-family: "KeepCalm";
+                color: rgb(255, 23, 68);
+                background-image: url('../../images/icon-clock.png');
+                background-position: left 1px;
+                background-repeat: no-repeat;
+                background-size: 25px;
+                margin-top: 5px;
+            }
+        }
+    }
+
     .freights-container {
         width: 100%;
         float: left;

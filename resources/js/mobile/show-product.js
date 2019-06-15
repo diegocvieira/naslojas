@@ -1,4 +1,8 @@
 $(function() {
+    if ($('.page-show-product').length) {
+        showOffTime($('.offtime.timer-generate').attr('data-date'), '.offtime-timer');
+    }
+
     // Image alternate
     $(document).on('click', '.image-thumb', function() {
         $('#image-destaque').find('#photo-zoom').attr('src', $(this).attr('src').replace('_resize', ''));

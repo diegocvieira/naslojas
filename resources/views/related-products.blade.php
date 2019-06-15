@@ -10,13 +10,20 @@
                     </div>
                 @endif
 
-                @if ($rp->off)
+                @if ($rp->offtime && _checkDateOff($rp->offtime->created_at, $rp->offtime->time))
+                    <span class="old-price">de <span>{{ number_format($rp->price, 2, ',', '.') }}</span></span>
+                @elseif ($rp->off)
                     <span class="old-price">de <span>{{ number_format(_oldPrice($rp->price, $rp->off), 2, ',', '.') }}</span></span>
                 @endif
 
-                <span class="price"><span>R$</span> {{ number_format($rp->price, 2, ',', '.') }}</span>
+                <span class="price">
+                    <span>R$</span>
+                    {{ number_format(($rp->offtime && _checkDateOff($rp->offtime->created_at, $rp->offtime->time)) ? _priceOff($rp->price, $rp->offtime->off) : $rp->price, 2, ',', '.') }}
+                </span>
 
-                @if ($rp->off)
+                @if ($rp->offtime && _checkDateOff($rp->offtime->created_at, $rp->offtime->time))
+                    <span class="price-off">{{ $rp->offtime->off }}% OFF</span>
+                @elseif ($rp->off)
                     <span class="price-off">{{ $rp->off }}% OFF</span>
                 @endif
 
@@ -25,6 +32,10 @@
                 </span>
 
                 <p class="title" title="{{ $rp->title }}">{{ $rp->title }}</p>
+
+                @if ($rp->offtime && _checkDateOff($rp->offtime->created_at, $rp->offtime->time))
+                    <span class="offtime" data-date="{{ date('Y-m-d H:i:s', strtotime('+' . $rp->offtime->time . ' hours', strtotime($rp->offtime->created_at))) }}"></span>
+                @endif
             </div>
         </a>
     </div>
@@ -32,6 +43,6 @@
 
 @if ($related_products->lastPage() > 1 && $related_products->currentPage() < $related_products->lastPage())
     <div class="pagination">
-        <a href="{{ route('related-products', [$product, true]) }}?page={{ $related_products->currentPage() + 1 }}">Exibir mais</a>
+        <a href="{{ route('related-products', [$rp, true]) }}?page={{ $related_products->currentPage() + 1 }}">Exibir mais</a>
     </div>
 @endif

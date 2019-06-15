@@ -4,7 +4,7 @@
         {!! Form::hidden('free_freight_price', $product->store->free_freight_price) !!}
 
         <div class="row">
-            <div class="col-xs-6 images">
+            <div class="col-xs-5 images">
                 @foreach ($product->images as $key => $image)
                     <div class="image loaded-image">
                         {!! Form::checkbox('image_remove[]', $image->image, false, ['id' => 'image_remove_' . $product->id . '_' . $key, 'autocomplete' => 'off']) !!}
@@ -27,7 +27,7 @@
                 @endfor
             </div>
 
-            <div class="col-xs-6 options">
+            <div class="col-xs-7 options">
                 <button type="button" class="delete-product" data-productid="{{ $product->id }}" data-url="{{ route('product-delete') }}" title="Excluir produto"></button>
 
                 @if ($product->status != 2)
@@ -53,8 +53,71 @@
                     @endif
 
                     @if ($product->status == 1 && $product->store->status == 1 && $product->images->count())
-                        <button type="button" class="link-share" data-url="{{ route('show-product', $product->slug) }}" data-image="{{ asset('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)) }}" data-freight="{{ $product->free_freight ? 'grátis' : 'R$5,00' }}" data-store="{{ $product->store->name }}" data-title="{{ $product->title }}">COMPARTILHAR</button>
+                        <div class="download-post">
+                            <button type="button" class="open-modal-post">BAIXAR POST</button>
+
+                            <div class="modal-post">
+                                <div class="top">Baixe postagens prontas para compartilhar no instagram e no facebook.</div>
+
+                                <div class="body">
+                                    <button type="button" class="btn-download-post" data-option="1" data-productid="{{ $product->id }}" data-route="{{ route('download-post') }}">STORIES PADRÃO</button>
+
+                                    <hr>
+
+                                    <button type="button" class="btn-download-post" data-option="2" data-productid="{{ $product->id }}" data-route="{{ route('download-post') }}">STORIES COM DESLIZAR</button>
+
+                                    <button type="button" class="btn-copy-link-post" data-url="{{ route('show-product', $product->slug) }}">COPIAR LINK DIRETO</button>
+
+                                    <span>Cole o link direto junto com o post para os clientes poderem deslizar para comprar.</span>
+                                </div>
+                            </div>
+                        </div>
                     @endif
+
+                    <div class="create-off">
+                        @if ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time))
+                            <button type="button" class="btn-offtime offtime-selected">EM OFERTA</button>
+                        @else
+                            <button type="button" class="btn-offtime">CRIAR OFERTA</button>
+                        @endif
+
+                        <div class="modal-offtime">
+                            <div class="top">O preço do produto voltará ao normal assim que o período em oferta acabar.</div>
+
+                            <div class="body">
+                                <span class="price-container">PREÇO EM OFERTA - <b>R$<span class="price">{{ number_format($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time) ? _priceOff($product->price, $product->offtime->off) : $product->price, 2, ',', '.') }}</span></b></span>
+
+                                <div class="off-container">
+                                    {!! Form::text('offtime_off', ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time)) ? $product->offtime->off : null, ['placeholder' => 'Desconto', 'class' => 'mask-percent']) !!}
+
+                                    <button type="button" class="apply-off">APLICAR</button>
+                                </div>
+
+                                <div class="time-container">
+                                    <span>Válido por</span>
+
+                                    {!! Form::radio('offtime_time', '24', ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time) && $product->offtime->time == '24') ? true : false, ['id' => '24h_' . $product->id]) !!}
+                                    {!! Form::label('24h_' . $product->id, '24h') !!}
+
+                                    {!! Form::radio('offtime_time', '48', ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time) && $product->offtime->time == '48') ? true : false, ['id' => '48h_' . $product->id]) !!}
+                                    {!! Form::label('48h_' . $product->id, '48h') !!}
+
+                                    {!! Form::radio('offtime_time', '72', ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time) && $product->offtime->time == '72') ? true : false, ['id' => '72h_' . $product->id]) !!}
+                                    {!! Form::label('72h_' . $product->id, '72h') !!}
+                                </div>
+                            </div>
+
+                            <div class="bottom">
+                                @if ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time))
+                                    <span class="offtime-time" data-date="{{ date('Y-m-d H:i:s', strtotime('+' . $product->offtime->time . ' hours', strtotime($product->offtime->created_at))) }}">TEMPO RESTANTE - <span class="offtime-timer">00h 00m 00s</span></span>
+                                @endif
+
+                                <button type="button" class="save-off" data-route="{{ route('offtime-create') }}">SALVAR OFERTA</button>
+
+                                <button type="button" class="remove-off {{ (!$product->offtime || $product->offtime && !_checkDateOff($product->offtime->created_at, $product->offtime->time)) ? 'hide' : '' }}" data-route="{{ route('offtime-remove') }}" data-id="{{ $product->offtime ? $product->offtime->id : '' }}">Cancelar oferta</button>
+                            </div>
+                        </div>
+                    </div>
                 @endif
             </div>
         </div>

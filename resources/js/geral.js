@@ -166,7 +166,7 @@ $(function() {
     });
 
     // START FILTER PRODUCTS
-    $(document).on('change', '.product-filter select', function() {
+    $(document).on('change', '.product-filter-orderby select', function() {
         var val = $(this).val();
 
         $(this).attr('name') == 'order' ? $('#search-order').val(val) : $('#search-gender').val(val);
@@ -730,6 +730,12 @@ $(function() {
             $('.search-stores .dropdown').hide();
         }
     });
+
+    if ($('.list-products .product').length) {
+        $('.list-products .product .offtime').each(function(index, element) {
+            showOffTime($(this).attr('data-date'), $(this));
+        });
+    }
 });
 
 function number_format(numero, decimal, decimal_separador, milhar_separador) {
@@ -755,6 +761,32 @@ function number_format(numero, decimal, decimal_separador, milhar_separador) {
    }
 
    return s.join(dec);
+}
+
+function showOffTime(date, div) {
+    var end = new Date(date),
+        _second = 1000,
+        _minute = _second * 60,
+        _hour = _minute * 60,
+        timer;
+
+    function showRemaining() {
+        var distance = end - new Date();
+
+        if (distance < 0) {
+            clearInterval(timer);
+
+            return;
+        }
+
+        var hours = Math.floor(distance / _hour);
+        var minutes = Math.floor((distance % _hour) / _minute);
+        var seconds = Math.floor((distance % _minute) / _second);
+
+        $(div).text(hours + 'h ' + minutes + 'm ' + seconds + 's');
+    }
+
+    timer = setInterval(showRemaining, 1000);
 }
 
 function modalAlert(body, btn = 'OK') {

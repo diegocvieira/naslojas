@@ -160,6 +160,11 @@ class BagController extends Controller
             $subtotal = 0;
 
             foreach ($products as $key => $product) {
+                // VERIFICA SE O PRODUTO POSSUI ALGUM DESCONTO
+                if ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time)) {
+                    $product->price = _priceOff($product->price, $product->offtime->off);
+                }
+
                 foreach (session('bag')['stores'] as $bag_store) {
                     foreach ($bag_store['products'] as $bag_product) {
                         if ($bag_product['id'] == $product->id) {
@@ -220,7 +225,12 @@ class BagController extends Controller
             $bag_data[$store_key]['free_freight'] = true;
 
             foreach ($store['products'] as $p) {
-                $product = Product::select('price', 'free_freight', 'store_id')->find($p['id']);
+                $product = Product::find($p['id']);
+
+                // VERIFICA SE O PRODUTO POSSUI ALGUM DESCONTO
+                if ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time)) {
+                    $product->price = _priceOff($product->price, $product->offtime->off);
+                }
 
                 if (!$product->free_freight) {
                     $bag_data[$store_key]['free_freight'] = false;
@@ -329,6 +339,11 @@ class BagController extends Controller
 
                     foreach ($store['products'] as $product) {
                         $p = Product::find($product['id']);
+
+                        // VERIFICA SE O PRODUTO POSSUI ALGUM DESCONTO
+                        if ($p->offtime && _checkDateOff($p->offtime->created_at, $p->offtime->time)) {
+                            $p->price = _priceOff($p->price, $p->offtime->off);
+                        }
 
                         $order->products()->create([
                             'size' => $product['size'],

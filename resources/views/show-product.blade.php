@@ -75,13 +75,20 @@
     </h1>
 
     <div class="price-container">
-        @if ($product->off)
+        @if ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time))
+            <span class="old-price">de <span>{{ number_format($product->price, 2, ',', '.') }}</span></span>
+        @elseif ($product->off)
             <span class="old-price">de <span>{{ number_format(_oldPrice($product->price, $product->off), 2, ',', '.') }}</span></span>
         @endif
 
-        <span class="price"><span>R$</span> {{ number_format($product->price, 2, ',', '.') }}</span>
+        <span class="price">
+            <span>R$</span>
+            {{ number_format(($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time)) ? _priceOff($product->price, $product->offtime->off) : $product->price, 2, ',', '.') }}
+        </span>
 
-        @if ($product->off)
+        @if ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time))
+            <span class="price-off">{{ $product->offtime->off }}% OFF</span>
+        @elseif ($product->off)
             <span class="price-off">{{ $product->off }}% OFF</span>
         @endif
 
@@ -89,6 +96,15 @@
             {{ $product->showParcels($product) }}
         </span>
     </div>
+
+    @if ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time))
+        <div class="offtime-container">
+            <div class="offtime timer-generate" data-date="{{ date('Y-m-d H:i:s', strtotime('+' . $product->offtime->time . ' hours', strtotime($product->offtime->created_at))) }}">
+                <span class="offtime-title">ESTE DESCONTO TERMINA EM</span>
+                <span class="offtime-timer">00h 00m 00s</span>
+            </div>
+        </div>
+    @endif
 
     <div class="freights-container">
         @if ($product->free_freight)

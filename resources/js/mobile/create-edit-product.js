@@ -11,6 +11,163 @@ $(function() {
         }
     });
 
+    // ABRIR MODAL DE DOWNLOAD POST
+    $(document).on('click', '.open-modal-post', function() {
+        $(this).next().show();
+    });
+
+    // FECHAR MODAL DE DOWNLOAD POST
+    $(document).click(function(event) {
+        if (!$(event.target).closest('.top-options').length && $('.modal-post').is(":visible")) {
+            $('.modal-post').hide();
+        }
+    });
+
+    // DOWNLOAD POST
+    $(document).on('click', '.btn-download-post', function() {
+        $.ajax({
+            url: $(this).data('route'),
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                option: $(this).data('option'),
+                product_id: $(this).data('productid')
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                if (data.status) {
+                    var link = document.createElement('a');
+                    link.href = data.url;
+                    link.download = 'naslojas-post.png';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } else {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+    });
+
+    // COPIAR LINK DO POST
+    $(document).on('click', '.btn-copy-link-post', function() {
+        $('.btn-copy-link-post').removeClass('copied').text('COPIAR LINK DIRETO');
+        $(this).addClass('copied').text('LINK COPIADO');
+
+        $('#input-copy-link-post').remove();
+        $('body').append("<input type='text' id='input-copy-link-post' value='" + $(this).data('url') + "' style='position:absolute;left:-200%;' />");
+
+        var copyText = document.getElementById('input-copy-link-post');
+        copyText.select();
+
+        document.execCommand("copy");
+    });
+
+    if ($('.page-create-edit-product .offtime-time').length) {
+        showOffTime($('.offtime-time').attr('data-date'), $('.offtime-time .offtime-timer'));
+    }
+
+    // ABRE O MODAL DE OFERTA
+    $(document).on('click', '.btn-offtime', function() {
+        $(this).next().show();
+    });
+
+    // FECHA O MODAL DE OFERTA
+    $(document).click(function(event) {
+        if (!$(event.target).closest('.top-options').length && !$(event.target).closest('#modal-alert').length && $('.modal-offtime').is(":visible")) {
+            $('.modal-offtime').hide();
+        }
+    });
+
+    $(document).on('click', '.apply-off', function() {
+        var price = parseFloat($("input[name='price']").val().replace('.', '').replace(',', '.')),
+            off = $(".modal-offtime input[name='offtime_off']").val().replace('%', ''),
+            final_price = number_format((price - ((off / 100) * price)).toFixed(2), 2, ',', '.');
+
+        $('.modal-offtime .price').text(final_price);
+    });
+
+    // CRIA UMA OFERTA
+    $(document).on('click', '.save-off', function(e) {
+        e.preventDefault();
+
+        var off = $(".modal-offtime input[name='offtime_off']").val(),
+            time = $(".modal-offtime input[name='offtime_time']:checked").val();
+
+        if (off && time) {
+            $.ajax({
+                url: $(this).data('route'),
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    off: off,
+                    time: time,
+                    product_id: $("input[name='product_id']").val()
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    if (data.status) {
+                        $('.btn-offtime').addClass('offtime-selected').text('EM OFERTA');
+
+                        $('.modal-offtime').hide();
+
+                        $('.modal-offtime .remove-off').attr('data-id', data.id).removeClass('hide');
+                    } else {
+                        modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                    }
+                },
+                error: function (request, status, error) {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
+            });
+        } else {
+            modalAlert('Informe o desconto e o tempo de duração');
+        }
+    });
+
+    // Remover uma oferta
+    $(document).on('click', '.remove-off', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: $(this).data('route'),
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                id: $(this).attr('data-id')
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                if (data.status) {
+                    $('.btn-offtime').removeClass('offtime-selected').text('CRIAR OFERTA');
+
+                    $('.modal-offtime').hide();
+
+                    $('.modal-offtime .remove-off').addClass('hide');
+
+                    $(".modal-offtime input[name='offtime_off']").val('');
+                    $(".modal-offtime input[name='offtime_time']").prop('checked', false);
+
+                    $('.modal-offtime .offtime-time').remove();
+                } else {
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+    });
+
     $(document).on('change', '.sizes input', function() {
         $(this).parents('.sizes').find('input').removeClass('error');
 
