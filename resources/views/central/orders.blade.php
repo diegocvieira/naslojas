@@ -18,7 +18,7 @@
                                     <img src="{{ asset('uploads/' . $product->product->store_id . '/products/' . $product->image) }}" alt="{{ $product->title }}" class="product-image img-responsive" />
                                 </div>
 
-                                <div class="col-xs-10">
+                                <div class="col-xs-8">
                                     <h3>{{ $product->title }}</h3>
 
                                     <span class="item">
@@ -32,6 +32,10 @@
 
                                         <span>{{ $product->qtd }}</span>
                                     </span>
+                                </div>
+
+                                <div class="col-xs-2 text-center" style="line-height: 7; font-size: 17px; background-color: #f5f5f5; height: 141px;">
+                                    Frete <b style="font-size: 21px;">- {{ $order->freight != 0.00 ? 'R$ ' . number_format($order->freight, 2, ',', '.') : 'grátis' }}</b>
                                 </div>
                             </div>
                         @endforeach
