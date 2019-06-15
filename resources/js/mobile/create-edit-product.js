@@ -18,8 +18,8 @@ $(function() {
 
     // FECHAR MODAL DE DOWNLOAD POST
     $(document).click(function(event) {
-        if (!$(event.target).closest('.download-post').length && $('.download-post .modal-post').is(":visible")) {
-            $('.download-post .modal-post').hide();
+        if (!$(event.target).closest('.top-options').length && $('.modal-post').is(":visible")) {
+            $('.modal-post').hide();
         }
     });
 
@@ -38,7 +38,12 @@ $(function() {
             },
             success: function (data) {
                 if (data.status) {
-                    window.open(data.url, '_blank');
+                    var link = document.createElement('a');
+                    link.href = data.url;
+                    link.download = 'naslojas-post.png';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
                 } else {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }

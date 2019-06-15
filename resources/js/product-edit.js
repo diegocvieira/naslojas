@@ -26,7 +26,12 @@ $(function() {
             },
             success: function (data) {
                 if (data.status) {
-                    window.open(data.url, '_blank');
+                    var link = document.createElement('a');
+                    link.href = data.url;
+                    link.download = 'naslojas-post.png';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
                 } else {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
