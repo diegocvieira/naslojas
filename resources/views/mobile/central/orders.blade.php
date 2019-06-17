@@ -26,7 +26,7 @@
                         @endforeach
 
                         <span class="item" style="font-size: 13px;">
-                            Frete <span style="font-size: 15px; font-weight: 700;">{{ $order->freight != 0.00 ? 'R$ ' . number_format($order->freight, 2, ',', '.') : 'grátis' }}</span>
+                            Frete - <span style="font-size: 15px; font-weight: 700;">{{ $order->freight != 0.00 ? 'R$ ' . number_format($order->freight, 2, ',', '.') : 'grátis' }}</span>
                         </span>
                     </div>
 

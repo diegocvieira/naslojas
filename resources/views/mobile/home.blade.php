@@ -36,7 +36,7 @@
                     <div class="content">
                         <img src="{{ asset('images/know/truck.png') }}" class="img-truck" />
 
-                        <span>Frete para toda a<br>cidade por R$ 5,00</span>
+                        <span>Frete para Pelotas<br>a partir de R$ 5,00</span>
                     </div>
 
                     <div class="content">
@@ -46,7 +46,6 @@
                     </div>
                 </div>
             </section>
-
 
             <section class="products-home">
                 <h2 class="section-title">PRODUTOS EM DESTAQUE</h2>
