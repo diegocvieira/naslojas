@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Order;
 use Session;
+use Agent;
 
 class CentralController extends Controller
 {
@@ -13,7 +14,11 @@ class CentralController extends Controller
         $top_simple = true;
         $header_title = 'Login da central | naslojas.com';
 
-        return view('central.login', compact('header_title', 'top_simple'));
+        if (Agent::isDesktop()) {
+            return view('central.login', compact('header_title', 'top_simple'));
+        } else {
+            return view('mobile.central.login', compact('header_title', 'top_simple'));
+        }
     }
 
     public function postLogin(Request $request)
@@ -48,7 +53,13 @@ class CentralController extends Controller
                 ->orderByDesc('created_at')
                 ->paginate(20);
 
-            return view('central.orders', compact('orders', 'top_simple'));
+            if (Agent::isDesktop()) {
+                return view('central.orders', compact('orders', 'top_simple'));
+            } else {
+                $body_class = 'bg-white';
+
+                return view('mobile.central.orders', compact('orders', 'top_simple', 'body_class'));
+            }
         } else {
             return redirect()->route('central-login');
         }
