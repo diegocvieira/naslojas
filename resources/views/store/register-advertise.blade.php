@@ -113,7 +113,7 @@
 
                     <div class="col-xs-4 step">
                         <img src="{{ asset('images/advise/shape2.png') }}" />
-                        <p>Oferecemos <b>frete</b><br>para toda a cidade<br>por apenas <b>R$5</b></p>
+                        <p>Oferecemos <b>frete</b><br>para toda a cidade<br>a partir de <b>R$5</b></p>
                     </div>
 
                     <div class="col-xs-4 step">
