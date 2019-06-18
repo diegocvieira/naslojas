@@ -62,6 +62,8 @@
             </span>
         </div>
 
+        <span class="advice2">PAGUE SOMENTE AO RECEBER O PRODUTO</span>
+
         @if ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time))
             <div class="offtime-container">
                 <div class="offtime timer-generate" data-date="{{ date('Y-m-d H:i:s', strtotime('+' . $product->offtime->time . ' hours', strtotime($product->offtime->created_at))) }}">
