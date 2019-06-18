@@ -44,6 +44,8 @@ $(function() {
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
+
+                    modalAlert('Download realizado, confira na galeria do seu celular.');
                 } else {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
