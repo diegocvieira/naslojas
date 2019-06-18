@@ -60,11 +60,11 @@
                                 <div class="top">Baixe postagens prontas para compartilhar no instagram e no facebook.</div>
 
                                 <div class="body">
-                                    <button type="button" class="btn-download-post" data-option="1" data-productid="{{ $product->id }}" data-route="{{ route('download-post') }}">STORIES PADRÃO</button>
+                                    <button type="button" class="btn-download-post" data-option="1" data-productid="{{ $product->id }}" data-route="{{ route('download-post') }}">BAIXAR POST 1</button>
 
                                     <hr>
 
-                                    <button type="button" class="btn-download-post" data-option="2" data-productid="{{ $product->id }}" data-route="{{ route('download-post') }}">STORIES COM DESLIZAR</button>
+                                    <button type="button" class="btn-download-post" data-option="2" data-productid="{{ $product->id }}" data-route="{{ route('download-post') }}">BAIXAR POST 2</button>
 
                                     <button type="button" class="btn-copy-link-post" data-url="{{ route('show-product', $product->slug) }}">COPIAR LINK DIRETO</button>
 
