@@ -40,7 +40,6 @@ class ProductController extends Controller
             })
             ->where(function ($query) use ($product) {
                 $query->search($product->title);
-                //$query->where('title', 'like', '%' . $product->title . '%');
             })
             ->paginate(8);
 
@@ -64,8 +63,6 @@ class ProductController extends Controller
         $product = Product::where('slug', $slug)
             ->has('images')
             ->firstOrFail();
-
-        $url = '/produto/' . $product->slug;
 
         $product_rating = ProductRating::select(DB::raw('ROUND((SUM(rating) / COUNT(id)), 1) as rating, COUNT(id) as rating_number'))
             ->where('product_id', $product->id)
@@ -96,20 +93,14 @@ class ProductController extends Controller
             $qtd[$i] = $i;
         }
 
-        if (Agent::isDesktop()) {
-            if(\Request::ajax()) {
-                return response()->json([
-                    'body' => view('show-product', compact('product', 'more_colors', 'related_products', 'product_rating', 'client_rating', 'qtd'))->render(),
-                    'header_title' => $header_title,
-                    'url' => $url
-                ]);
-            } else {
-                session()->flash('session_flash_product_url', $url);
+        $top_nav = true;
 
-                return redirect()->route('home');
-            }
+        if (Agent::isDesktop()) {
+            $body_class = 'bg-white';
+
+            return view('show-product', compact('product', 'more_colors', 'related_products', 'product_rating', 'client_rating', 'qtd', 'body_class', 'top_nav', 'header_title', 'header_desc', 'header_canonical', 'header_image'));
         } else {
-            return view('mobile.show-product', compact('product', 'more_colors', 'related_products', 'product_rating', 'client_rating', 'header_title', 'header_desc', 'header_canonical', 'header_image', 'qtd'));
+            return view('mobile.show-product', compact('product', 'more_colors', 'related_products', 'product_rating', 'client_rating', 'qtd', 'header_title', 'header_desc', 'header_canonical', 'header_image'));
         }
     }
 

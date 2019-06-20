@@ -1,40 +1,7 @@
 $(function() {
-    $(document).on('click', '.show-product', function(e) {
-        e.preventDefault();
-
-        $.ajax({
-            url: $(this).attr('href'),
-            method: 'GET',
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                document.title = data.header_title;
-                window.history.pushState('', data.header_title, data.url);
-
-                var modal = $('#modal-default');
-
-                if (!modal.hasClass('page-show-product')) {
-                    modal.removeClass().addClass('modal fade page-show-product');
-                } else {
-                    modal.animate({
-                        'scrollTop' : 0
-                    }, 500);
-                }
-
-                modal.find('.modal-content').html(data.body);
-                modal.modal('show');
-
-                $('select.selectpicker').selectpicker('refresh');
-
-                showOffTime($('.page-show-product .offtime.timer-generate').attr('data-date'), $('.page-show-product .offtime-timer'));
-
-                // PRODUTOS RELACIONADOS
-                $('.list-products .product .offtime').each(function(index, element) {
-                    showOffTime($(this).attr('data-date'), $(this));
-                });
-            }
-        });
-    });
+    if ($('.page-show-product').length) {
+        showOffTime($('.offtime.timer-generate').attr('data-date'), $('.offtime-timer'));
+    }
 
     $(document).on('change', '.page-show-product select.freights', function(e) {
         e.preventDefault();

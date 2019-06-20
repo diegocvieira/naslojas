@@ -731,6 +731,7 @@ $(function() {
         }
     });
 
+    // CARREGAR CONTADOR DE TEMPO DE OFERTA
     if ($('.list-products .product').length) {
         $('.list-products .product .offtime').each(function(index, element) {
             showOffTime($(this).attr('data-date'), $(this));

@@ -43,6 +43,6 @@
 
 @if ($related_products->lastPage() > 1 && $related_products->currentPage() < $related_products->lastPage())
     <div class="pagination">
-        <a href="{{ route('related-products', [$rp, true]) }}?page={{ $related_products->currentPage() + 1 }}">Exibir mais</a>
+        <a href="{{ route('related-products', [$product, true]) }}?page={{ $related_products->currentPage() + 1 }}">Exibir mais</a>
     </div>
 @endif
