@@ -64,4 +64,44 @@ class CentralController extends Controller
             return redirect()->route('central-login');
         }
     }
+
+    public function searchOrders(Request $request)
+    {
+        $top_simple = true;
+
+        $keyword = $request->keyword;
+
+        $orders = Order::whereHas('products', function ($query) {
+                $query->where('status', 1);
+            })
+            ->whereHas('products.product', function ($query) {
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
+            })
+            ->with(['products.product' => function($query) {
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
+            }])
+            ->where(function($query) use ($keyword) {
+                $query->whereHas('products.product', function ($query) use ($keyword) {
+                        $query->where('title', 'LIKE', '%' . $keyword . '%');
+                    })
+                    ->orWhereHas('store', function ($query) use ($keyword) {
+                        $query->where('name', 'LIKE', '%' . $keyword . '%');
+                    })
+                    ->orWhereHas('client', function ($query) use ($keyword) {
+                        $query->where('name', 'LIKE', '%' . $keyword . '%');
+                    });
+            })
+            ->orderByDesc('created_at')
+            ->paginate(20);
+
+        if (Agent::isDesktop()) {
+            return view('central.orders', compact('orders', 'keyword', 'top_simple'));
+        } else {
+            $body_class = 'bg-white';
+
+            return view('mobile.central.orders', compact('orders', 'keyword', 'top_simple', 'body_class'));
+        }
+    }
 }

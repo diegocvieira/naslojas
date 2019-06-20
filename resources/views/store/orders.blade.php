@@ -13,6 +13,11 @@
                 <p class="page-subtitle">Confira os dados e responda as solicitações de pedidos</p>
             </div>
 
+            {!! Form::open(['method' => 'GET', 'route' => 'search-store-orders', 'id' => 'form-orders-search']) !!}
+                {!! Form::text('keyword', $keyword ?? null, ['placeholder' => 'Busque pelo nome da loja, cliente, ou produto', 'required']) !!}
+                {!! Form::submit('') !!}
+            {!! Form::close() !!}
+
             <div class="list-orders">
                 @foreach ($orders as $order)
                     <div class="row order">
