@@ -162,6 +162,9 @@ Route::group(['prefix' => 'central'], function () {
 
 	Route::get('pedidos', 'CentralController@orders')->name('central-orders');
 
+	// BUSCA
+	Route::get('pedidos/busca', 'CentralController@searchOrders')->name('central-search-orders');
+
 	Route::get('logout', 'GlobalController@logout')->name('central-logout');
 });
 
@@ -247,6 +250,9 @@ Route::group(['prefix' => 'loja'], function () {
 		Route::group(['prefix' => 'pedidos'], function () {
 			// List orders
 			Route::get('/', 'OrderController@storeOrders')->name('list-store-orders');
+
+			// BUSCA
+			Route::get('busca', 'OrderController@searchStoreOrders')->name('search-store-orders');
 
 			// Confirm order
 			Route::post('confirm/{id}', 'OrderController@confirm')->name('confirm-order');

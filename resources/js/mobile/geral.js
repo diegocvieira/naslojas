@@ -10,7 +10,7 @@ $(function() {
         autoplay: true
     });
 
-    $('.slick-home-know, .slick-home-prices').slick({
+    $('.slick-know, .slick-home-prices').slick({
         slidesToShow: 1,
         variableWidth: true,
         infinite: false,

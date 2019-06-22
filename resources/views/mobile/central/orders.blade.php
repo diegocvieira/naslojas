@@ -5,6 +5,11 @@
         <h1 class="page-title">Pedidos de entrega</h1>
         <p class="page-description">Confira as informações dos produtos e das entregas</p>
 
+        {!! Form::open(['method' => 'GET', 'route' => 'central-search-orders', 'id' => 'form-orders-search']) !!}
+            {!! Form::text('keyword', $keyword ?? null, ['placeholder' => 'Busque pelo nome da loja, cliente, ou produto', 'required']) !!}
+            {!! Form::submit('') !!}
+        {!! Form::close() !!}
+
         <div class="list-orders">
             @foreach ($orders as $order)
                 <div class="order">

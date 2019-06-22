@@ -150,15 +150,6 @@
             <script src="{{ mix('js/global-store.js') }}"></script>
         @endif
 
-        @if(session('session_flash_product_url'))
-            <script>
-                $(function() {
-                    $('body').append("<a href='{!! session('session_flash_product_url') !!}' class='show-product show-product-url' style='display:none;'></a>");
-                    $('.show-product-url').trigger('click');
-                });
-            </script>
-        @endif
-
         @yield('script')
     </body>
 </html>

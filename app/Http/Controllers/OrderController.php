@@ -76,6 +76,44 @@ class OrderController extends Controller
         }
     }
 
+    public function searchStoreOrders(Request $request)
+    {
+        $header_title = 'Pedidos | naslojas.com';
+
+        $section = 'order';
+
+        $keyword = $request->keyword;
+
+        $orders = Order::where('store_id', $this->store_id)
+            ->whereHas('products.product', function ($query) {
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
+            })
+            ->with(['products.product' => function($query) {
+                $query->withTrashed()
+                    ->withoutGlobalScopes(['active', 'active-store']);
+            }])
+            ->where(function($query) use ($keyword) {
+                $query->whereHas('products.product', function ($query) use ($keyword) {
+                        $query->where('title', 'LIKE', '%' . $keyword . '%');
+                    })
+                    ->orWhereHas('store', function ($query) use ($keyword) {
+                        $query->where('name', 'LIKE', '%' . $keyword . '%');
+                    })
+                    ->orWhereHas('client', function ($query) use ($keyword) {
+                        $query->where('name', 'LIKE', '%' . $keyword . '%');
+                    });
+            })
+            ->orderByDesc('created_at')
+            ->paginate(20);
+
+        if (Agent::isDesktop()) {
+            return view('store.orders', compact('orders', 'keyword', 'header_title', 'section'));
+        } else {
+            return view('mobile.store.orders', compact('orders', 'keyword', 'header_title', 'section'));
+        }
+    }
+
     public function confirm($id)
     {
         $order = OrderProducts::whereHas('product', function ($query) {

@@ -11,6 +11,11 @@
             <h1 class="page-title">Pedidos</h1>
             <p class="page-description">Confira os dados e responda as solicitações de pedidos</p>
 
+            {!! Form::open(['method' => 'GET', 'route' => 'search-store-orders', 'id' => 'form-orders-search']) !!}
+                {!! Form::text('keyword', $keyword ?? null, ['placeholder' => 'Busque pelo nome da loja, cliente, ou produto', 'required']) !!}
+                {!! Form::submit('') !!}
+            {!! Form::close() !!}
+
             <div class="list-orders">
                 @foreach ($orders as $order)
                     <div class="order">

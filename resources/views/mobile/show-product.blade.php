@@ -7,6 +7,8 @@
 
 @section('content')
     <div class="container page-show-product">
+        @include ('mobile.inc._know')
+
         <div id="images">
             <div id="image-destaque">
                 <img src="{{ asset('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)) }}" id="photo-zoom" />
