@@ -260,7 +260,7 @@
                         </div>
 
                         <div class="col-xs-12">
-                            <a href="#" class="ios show-app">em breve para iphone</a>
+                            <a href="https://apps.apple.com/br/app/naslojas/id1468999330" class="ios" target="_blank">baixe para iphone</a>
                         </div>
                     </div>
                 </div>
