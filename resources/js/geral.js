@@ -63,13 +63,6 @@ $(function() {
         modalAlert('Em breve!');
     });
 
-    // Alert app
-    $(document).on('click', '.show-app', function(e) {
-        e.preventDefault();
-
-        modalAlert('Em breve você poderá baixar o nosso aplicativo para ios.');
-    });
-
     // Share product url
     $(document).on('click', '.link-share', function() {
         modalAlert("<div class='top'><b>Cole nas suas redes sociais e whatsapp</b><br>As informações aparecerão automaticamente e o usuário poderá clicar para fazer o pedido"
