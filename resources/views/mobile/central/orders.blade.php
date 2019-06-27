@@ -90,6 +90,12 @@
 
                                 {{ $order->client_phone }}
                             </span>
+
+                            <span class="item">
+                                <span>IP:</span>
+
+                                {{ $order->client_ip ?? 'Não encontrado' }}
+                            </span>
                         </div>
                     </div>
                 </div>

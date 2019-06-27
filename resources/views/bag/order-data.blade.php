@@ -21,6 +21,8 @@
 
         <div class="row">
             {!! Form::model($client, ['method' => 'POST', 'route' => 'bag-finish', 'id' => 'form-bag-finish']) !!}
+                {!! Form::hidden('client_ip') !!}
+
                 <div class="col-xs-6 fields">
                     <div class="row">
                         <div class="col-xs-12">
@@ -150,7 +152,7 @@
                                     @elseif (is_numeric($data['freight']) && $data['freight'] > 0)
                                         {{ number_format($data['freight'], 2, ',', '.') }}
                                     @else
-                                        '-----'
+                                        -----
                                     @endif
                                 </span>
 
