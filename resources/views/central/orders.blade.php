@@ -105,6 +105,14 @@
 
                                 {{ $order->client_phone }}
                             </span>
+
+                            @if ($order->client_ip)
+                                <span class="item">
+                                    <span>IP:</span>
+
+                                    {{ $order->client_ip }}
+                                </span>
+                            @endif
                         </div>
                     </div>
                 </div>

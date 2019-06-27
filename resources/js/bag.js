@@ -1,4 +1,12 @@
 $(function() {
+    // CAPTURA O IP DE QUEM VAI FAZER A COMPRA
+    if ($('.page-bag-order-data').length) {
+        getIp(function (ip) {
+            console.log(ip);
+            $("input[name='client_ip']").val(ip);
+        });
+    }
+
     $(document).click(function(event) {
         if (!$(event.target).closest('header').find('.bag').length && $('header').find('.bag').is(':visible')) {
             $('header').find('.bag').remove();

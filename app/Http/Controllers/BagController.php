@@ -322,6 +322,7 @@ class BagController extends Controller
                     $order = new Order;
                     $order->store_id = $store['store_id'];
                     $order->client_id = $client_id;
+                    $order->client_ip = $request->client_ip;
                     $order->client_name = $request->name;
                     $order->client_phone = $request->phone;
                     $order->client_cpf = $request->cpf;
