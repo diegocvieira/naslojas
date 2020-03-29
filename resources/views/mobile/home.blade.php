@@ -1,144 +1,155 @@
 <?php
     $top_nav = true;
     $show_filter_products = true;
-    $body_class = 'bg-white';
 ?>
 
 @extends('mobile.base')
 
 @section('content')
     <div class="page-home">
-        <div class="bg-grey">
-            <section class="banner-home">
-                <div class="slick-home-banner">
-                    @for ($i = 1; $i <= 5; $i++)
-                        <div class="item">
-                            <img src="{{ asset('images/banner-mobile/' . $i . '.jpg') }}" alt="Banner {{ $i }}" />
-                        </div>
-                    @endfor
-                </div>
-            </section>
-
-            @include ('mobile.inc._know')
-
-            <?php /*<section class="products-home">
-                <h2 class="section-title">PRODUTOS EM DESTAQUE</h2>
-
-                <div class="slick-home-products list-products">
-                    @foreach ($featured_products as $featured_product)
-                        <div class="product">
-                            <a href="{{ route('show-product', $featured_product->slug) }}" class="show-product">
-                                <img src="{{ asset('uploads/' . $featured_product->store->id . '/products/' . $featured_product->images->first()->image) }}" class="image" alt="{{ $featured_product->title }}" />
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
-            </section>
-
-            <section class="prices">
-                <div class="slick-home-prices">
+        <section class="banner-home">
+            <div class="slick-home-banner">
+                @for ($i = 1; $i <= 5; $i++)
                     <div class="item">
-                        <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=50.00' }}">
-                            <img src="{{ asset('images/price50.jpg') }}" class="img-responsive" alt="Produtos com até R$ 50,00" />
-                        </a>
+                        <img src="{{ asset('images/banner-mobile/' . $i . '.jpg') }}" alt="Banner {{ $i }}" />
                     </div>
+                @endfor
+            </div>
+        </section>
 
-                    <div class="item">
-                        <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=100.00' }}">
-                            <img src="{{ asset('images/price100.jpg') }}" class="img-responsive" alt="Produtos com até R$ 100,00" />
-                        </a>
-                    </div>
+        @include ('mobile.inc._know')
 
-                    <div class="item">
-                        <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=150.00' }}">
-                            <img src="{{ asset('images/price150.jpg') }}" class="img-responsive" alt="Produtos com até R$ 150,00" />
-                        </a>
-                    </div>
+        <?php /*<section class="products-home">
+            <h2 class="section-title">PRODUTOS EM DESTAQUE</h2>
 
-                    <div class="item">
-                        <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=200.00' }}">
-                            <img src="{{ asset('images/price200.jpg') }}" class="img-responsive" alt="Produtos com até R$ 200,00" />
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <section class="products-home">
-                <h2 class="section-title">OFERTAS EM DESTAQUE</h2>
-
-                <div class="slick-home-products list-products">
-                    @foreach ($offers as $offer)
-                        <div class="product">
-                            <a href="{{ route('show-product', $offer->slug) }}" class="show-product">
-                                <img src="{{ asset('uploads/' . $offer->store->id . '/products/' . $offer->images->first()->image) }}" class="image" alt="{{ $offer->title }}" />
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
-            </section>
-
-            <section class="stores-home">
-                <h2 class="section-title">LOJAS EM DESTAQUE</h2>
-
-                <div class="slick-home-stores">
-                    <div class="item">
-                        <a href="{{ route('show-store', 'krause') }}">
-                            <img src="{{ asset('images/stores-mobile/krause.png') }}" alt="Krause" />
-                        </a>
-                    </div>
-
-                    <div class="item">
-                        <a href="{{ route('show-store', 'maisonbiansini') }}">
-                            <img src="{{ asset('images/stores-mobile/mb.png') }}" alt="Maison Biansini" />
-                        </a>
-                    </div>
-
-                    <div class="item">
-                        <a href="{{ route('show-store', 'clubemelissa') }}">
-                            <img src="{{ asset('images/stores-mobile/melissa.png') }}" alt="Clube Melissa" />
-                        </a>
-                    </div>
-
-                    <div class="item">
-                        <a href="{{ route('show-store', 'clubeminimelissa') }}">
-                            <img src="{{ asset('images/stores-mobile/mini-melissa.png') }}" alt="Clube Mini Melissa" />
-                        </a>
-                    </div>
-
-                    <div class="item">
-                        <a href="{{ route('show-store', 'hercilio') }}">
-                            <img src="{{ asset('images/stores-mobile/hercilio.png') }}" alt="Hercílio" />
-                        </a>
-                    </div>
-
-                    <div class="item">
-                        <a href="{{ route('show-store', 'myshoes') }}" class="store-disabled">
-                            <img src="{{ asset('images/stores-mobile/my-shoes.png') }}" alt="My Shoes" />
-                        </a>
-                    </div>
-
-                    <div class="item">
-                        <a href="{{ route('show-store', 'emilice') }}">
-                            <img src="{{ asset('images/stores-mobile/emilice.png') }}" alt="Emilice" />
-                        </a>
-                    </div>
-                </div>
-            </section>*/ ?>
-
-            <section class="stores-home">
-                <h2 class="section-title">LOJAS</h2>
-
-                @foreach ($stores as $s)
-                    <div class="item">
-                        <a href="{{ route('show-store', $s->slug) }}">
-                            <img src="{{ asset($s->image_cover_mobile ? 'uploads/' . $s->id . '/' . $s->image_cover_mobile : 'images/image-cover-mobile.jpg') }}" alt="Krause" />
-
-                            <h3>{{ $s->name }}</h3>
+            <div class="slick-home-products list-products">
+                @foreach ($featured_products as $featured_product)
+                    <div class="product">
+                        <a href="{{ route('show-product', $featured_product->slug) }}" class="show-product">
+                            <img src="{{ asset('uploads/' . $featured_product->store->id . '/products/' . $featured_product->images->first()->image) }}" class="image" alt="{{ $featured_product->title }}" />
                         </a>
                     </div>
                 @endforeach
-            </section>
-        </div>
+            </div>
+        </section>
+
+        <section class="prices">
+            <div class="slick-home-prices">
+                <div class="item">
+                    <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=50.00' }}">
+                        <img src="{{ asset('images/price50.jpg') }}" class="img-responsive" alt="Produtos com até R$ 50,00" />
+                    </a>
+                </div>
+
+                <div class="item">
+                    <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=100.00' }}">
+                        <img src="{{ asset('images/price100.jpg') }}" class="img-responsive" alt="Produtos com até R$ 100,00" />
+                    </a>
+                </div>
+
+                <div class="item">
+                    <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=150.00' }}">
+                        <img src="{{ asset('images/price150.jpg') }}" class="img-responsive" alt="Produtos com até R$ 150,00" />
+                    </a>
+                </div>
+
+                <div class="item">
+                    <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?max_price=200.00' }}">
+                        <img src="{{ asset('images/price200.jpg') }}" class="img-responsive" alt="Produtos com até R$ 200,00" />
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="products-home">
+            <h2 class="section-title">OFERTAS EM DESTAQUE</h2>
+
+            <div class="slick-home-products list-products">
+                @foreach ($offers as $offer)
+                    <div class="product">
+                        <a href="{{ route('show-product', $offer->slug) }}" class="show-product">
+                            <img src="{{ asset('uploads/' . $offer->store->id . '/products/' . $offer->images->first()->image) }}" class="image" alt="{{ $offer->title }}" />
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+
+        <section class="stores-home">
+            <h2 class="section-title">LOJAS EM DESTAQUE</h2>
+
+            <div class="slick-home-stores">
+                <div class="item">
+                    <a href="{{ route('show-store', 'krause') }}">
+                        <img src="{{ asset('images/stores-mobile/krause.png') }}" alt="Krause" />
+                    </a>
+                </div>
+
+                <div class="item">
+                    <a href="{{ route('show-store', 'maisonbiansini') }}">
+                        <img src="{{ asset('images/stores-mobile/mb.png') }}" alt="Maison Biansini" />
+                    </a>
+                </div>
+
+                <div class="item">
+                    <a href="{{ route('show-store', 'clubemelissa') }}">
+                        <img src="{{ asset('images/stores-mobile/melissa.png') }}" alt="Clube Melissa" />
+                    </a>
+                </div>
+
+                <div class="item">
+                    <a href="{{ route('show-store', 'clubeminimelissa') }}">
+                        <img src="{{ asset('images/stores-mobile/mini-melissa.png') }}" alt="Clube Mini Melissa" />
+                    </a>
+                </div>
+
+                <div class="item">
+                    <a href="{{ route('show-store', 'hercilio') }}">
+                        <img src="{{ asset('images/stores-mobile/hercilio.png') }}" alt="Hercílio" />
+                    </a>
+                </div>
+
+                <div class="item">
+                    <a href="{{ route('show-store', 'myshoes') }}" class="store-disabled">
+                        <img src="{{ asset('images/stores-mobile/my-shoes.png') }}" alt="My Shoes" />
+                    </a>
+                </div>
+
+                <div class="item">
+                    <a href="{{ route('show-store', 'emilice') }}">
+                        <img src="{{ asset('images/stores-mobile/emilice.png') }}" alt="Emilice" />
+                    </a>
+                </div>
+            </div>
+        </section>*/ ?>
+
+        <section class="stores-home">
+            <h2 class="section-title">LOJAS</h2>
+
+            @foreach ($stores as $s)
+                <div class="item">
+                    <a href="{{ route('show-store', $s->slug) }}">
+                        <img src="{{ asset($s->image_cover_mobile ? 'uploads/' . $s->id . '/' . $s->image_cover_mobile : 'images/image-cover-mobile.jpg') }}" alt="Krause" />
+
+                        <h3>{{ $s->name }}</h3>
+                    </a>
+                </div>
+            @endforeach
+        </section>
+
+        <section class="newsletter text-center">
+            <div class="text">
+                <h2>1 e-mail por semana</h2>
+                <h3>Com as maiores ofertas, promoções e novidades das lojas de Pelotas</h3>
+                <span>CANCELE QUANDO QUISER</span>
+            </div>
+
+            {!! Form::open(['method' => 'POST', 'route' => 'newsletter-register', 'id' => 'form-newsletter-register']) !!}
+                {!! Form::email('email', null, ['placeholder' => 'Seu e-mail']) !!}
+
+                {!! Form::submit('ENVIAR') !!}
+            {!! Form::close() !!}
+        </section>
 
         <?php /*<section class="images-filter">
             <div class="content">
@@ -217,20 +228,6 @@
                 <img src="{{ asset('images/banner-shoes-mobile.jpg') }}" alt="Sapatos" class="img-responsive" />
             </a>
         </section>*/ ?>
-
-        <section class="newsletter text-center">
-            <div class="text">
-                <h2>1 e-mail por semana</h2>
-                <h3>Com as maiores ofertas, promoções e novidades das lojas de Pelotas</h3>
-                <span>CANCELE QUANDO QUISER</span>
-            </div>
-
-            {!! Form::open(['method' => 'POST', 'route' => 'newsletter-register', 'id' => 'form-newsletter-register']) !!}
-                {!! Form::email('email', null, ['placeholder' => 'Seu e-mail']) !!}
-
-                {!! Form::submit('ENVIAR') !!}
-            {!! Form::close() !!}
-        </section>
     </div>
 @endsection
 

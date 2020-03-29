@@ -68,7 +68,7 @@
                 width: 100%;
                 border-radius: 10px;
                 height: 125px;
-                // object-fit: cover;
+                object-fit: cover;
             }
 
             h3 {
@@ -153,18 +153,18 @@
             margin-top: 15px;
 
             input[type=email] {
-                background-color: rgb(245, 245, 245);
+                background-color: #fff;
                 width: 100%;
                 height: 100%;
                 font-size: 16.6px;
-                color: rgb(150, 150, 150);
+                color: rgb(50, 50, 50);
                 border-radius: 25px;
                 padding-left: 20px;
-                border: none;
+                border: 1px solid rgb(219, 219, 219);
             }
 
             input[type=submit] {
-                background-color: rgb(150, 150, 150);
+                background-color: rgb(50, 50, 50);
                 width: 100px;
                 height: 100%;
                 position: absolute;

@@ -78,6 +78,8 @@ class ProductController extends Controller
 
         if (Auth::guard('client')->check()) {
             $client_rating = ProductRating::where('client_id', Auth::guard('client')->user()->id)->where('product_id', $product->id)->first();
+        } else {
+            $client_rating = null;
         }
 
         $header_title = 'Clique para pedir | Frete ' . ($product->free_freight ? 'grátis' : 'R$5,00') . ' | Entrega em 24hs | Pague somente ao receber';

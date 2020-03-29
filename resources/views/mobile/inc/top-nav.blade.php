@@ -104,17 +104,17 @@
                                 <a href="{{ route('logout') }}">Sair</a>
                             </li>
                         @else
-                            <li>
+                            <!-- <li>
                                 <a href="{{ route('how-works') }}" class="{{ (isset($section) && $section == 'how-works') ? 'active' : '' }}">Como funciona</a>
-                            </li>
+                            </li> -->
 
                             <li>
                                 <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">Baixe nosso app</a>
                             </li>
 
-                            <li>
+                            <!-- <li>
                                 <a href="{{ route('store-advertise') }}">Vender online</a>
-                            </li>
+                            </li> -->
 
                             <li>
                                 <a href="{{ route('client-register-get') }}" class="{{ (isset($section) && $section == 'client-register') ? 'active' : '' }}">Cadastrar</a>

@@ -148,13 +148,13 @@
                         </ul>
                     </li>
                 @else
-                    <li>
+                    <!-- <li>
                         <a href="#" class="open-how-works">Como funciona</a>
                     </li>
 
                     <li>
                         <a href="{{ route('store-advertise') }}">Vender online</a>
-                    </li>
+                    </li> -->
 
                     <li>
                         <a href="{{ route('client-register-get') }}">Cadastrar</a>

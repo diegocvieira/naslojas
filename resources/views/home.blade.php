@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="container page-home">
-        <section class="section-content">
+        <section class="section-content bg-grey">
             <div class="banner-home">
                 <div class="slick-home">
                     @for ($i = 1; $i <= 5; $i++)
@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <div class="container-fluid bg-grey">
+            <div class="container-fluid">
                 <div class="container">
                     @include('inc.know')
 
