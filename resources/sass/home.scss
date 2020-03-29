@@ -26,15 +26,15 @@
         margin-top: 0;
     }
 
-    .list-products .product .image {
-        background-color: #fff;
-        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 20px 0px;
-    }
+    // .list-products .product .image {
+    //     background-color: #fff;
+    //     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 20px 0px;
+    // }
 
     .bg-grey {
         background-color: #fafafa;
-        border-radius: 100% / 10%;
-        padding-bottom: 50px;
+        // border-radius: 100% / 10%;
+        // padding-bottom: 50px;
         margin-bottom: 20px;
     }
 
@@ -109,106 +109,127 @@
     	}
     }
 
-    .slick-products, .slick-stores {
-        margin-top: 0;
-
+    .stores {
         .item {
-            text-align: center;
+            margin-bottom: 50px;
 
-            a {
-                display: inline-block;
-            }
-        }
-
-        .product {
-            padding: 0 10px;
-            width: auto;
-            margin: 0;
-        }
-
-        .slick-arrow {
-            &.slick-prev {
-                left: -5%;
+            img {
+                width: 100%;
+                border-radius: 10px;
+                height: 205px;
+                // object-fit: cover;
             }
 
-            &.slick-next {
-                right: -5%;
-            }
-        }
-    }
-
-    .images-filter {
-        width: 100%;
-        float: left;
-
-        .content {
-            width: 20%;
-            float: left;
-            text-align: center;
-
-            .images-title {
+            h3 {
                 font-size: 16.6px;
-                font-family: "KeepCalm";
-                color: rgb(100, 100, 100);
-                display: inline-block;
-                margin-bottom: 30px;
+                color: rgb(150, 150, 150);
+                text-align: center;
             }
         }
     }
 
-    .banners {
-        img {
-            width: 100%;
-        }
-    }
+    // .slick-products, .slick-stores {
+    //     margin-top: 0;
 
-    .brands {
-        text-align: center;
+    //     .item {
+    //         text-align: center;
 
-        .content {
-            display: inline-block;
-            text-align: center;
-            margin: 0 10px 20px 10px;
+    //         a {
+    //             display: inline-block;
+    //         }
+    //     }
 
-            a {
-                display: inline-block;
+    //     .product {
+    //         padding: 0 10px;
+    //         width: auto;
+    //         margin: 0;
+    //     }
 
-                img {
-                    width: 180px;
-                }
-            }
-        }
-    }
+    //     .slick-arrow {
+    //         &.slick-prev {
+    //             left: -5%;
+    //         }
 
-    .trending-words {
-        .content {
-            display: block;
-        }
+    //         &.slick-next {
+    //             right: -5%;
+    //         }
+    //     }
+    // }
 
-        a {
-            font-size: 16.6px;
-            color: rgb(100, 100, 100);
-            background-color: rgb(249, 248, 247);
-            display: block;
-            border-radius: 25px;
-            padding: 15px 20px 15px 45px;
-            display: inline-block;
-            margin: 0 5px 10px 5px;
-            position: relative;
+    // .images-filter {
+    //     width: 100%;
+    //     float: left;
 
-            &:before {
-                content: '+';
-                color: #ff1945;
-                position: absolute;
-                left: 17px;
-                top: 4px;
-                font-size: 30px;
-            }
+    //     .content {
+    //         width: 20%;
+    //         float: left;
+    //         text-align: center;
 
-        }
-    }
+    //         .images-title {
+    //             font-size: 16.6px;
+    //             font-family: "KeepCalm";
+    //             color: rgb(100, 100, 100);
+    //             display: inline-block;
+    //             margin-bottom: 30px;
+    //         }
+    //     }
+    // }
+
+    // .banners {
+    //     img {
+    //         width: 100%;
+    //     }
+    // }
+
+    // .brands {
+    //     text-align: center;
+
+    //     .content {
+    //         display: inline-block;
+    //         text-align: center;
+    //         margin: 0 10px 20px 10px;
+
+    //         a {
+    //             display: inline-block;
+
+    //             img {
+    //                 width: 180px;
+    //             }
+    //         }
+    //     }
+    // }
+
+    // .trending-words {
+    //     .content {
+    //         display: block;
+    //     }
+
+    //     a {
+    //         font-size: 16.6px;
+    //         color: rgb(100, 100, 100);
+    //         background-color: rgb(249, 248, 247);
+    //         display: block;
+    //         border-radius: 25px;
+    //         padding: 15px 20px 15px 45px;
+    //         display: inline-block;
+    //         margin: 0 5px 10px 5px;
+    //         position: relative;
+
+    //         &:before {
+    //             content: '+';
+    //             color: #ff1945;
+    //             position: absolute;
+    //             left: 17px;
+    //             top: 4px;
+    //             font-size: 30px;
+    //         }
+
+    //     }
+    // }
 
     .newsletter {
+        margin-bottom: 0;
+
         h2 {
             font-size: 33.3px;
             font-family: 'KeepCalm';
@@ -234,18 +255,18 @@
             margin-top: 15px;
 
             input[type=email] {
-                background-color: rgb(245, 245, 245);
+                background-color: #fff;
                 width: 500px;
                 height: 100%;
                 font-size: 16.6px;
-                color: rgb(150, 150, 150);
+                color: rgb(50, 50, 50);
                 border-radius: 25px;
                 padding-left: 20px;
-                border: none;
+                border: 1px solid rgb(219, 219, 219);
             }
 
             input[type=submit] {
-                background-color: rgb(150, 150, 150);
+                background-color: rgb(50, 50, 50);
                 width: 120px;
                 height: 100%;
                 position: absolute;
@@ -265,7 +286,7 @@
         background-attachment: fixed;
         //padding: 90px 0;
         height: 300px;
-        margin-top: 150px;
+        margin-top: 250px;
 
         .container {
             padding: 0;

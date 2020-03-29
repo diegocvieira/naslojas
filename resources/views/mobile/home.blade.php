@@ -21,7 +21,7 @@
 
             @include ('mobile.inc._know')
 
-            <section class="products-home">
+            <?php /*<section class="products-home">
                 <h2 class="section-title">PRODUTOS EM DESTAQUE</h2>
 
                 <div class="slick-home-products list-products">
@@ -123,10 +123,24 @@
                         </a>
                     </div>
                 </div>
+            </section>*/ ?>
+
+            <section class="stores-home">
+                <h2 class="section-title">LOJAS</h2>
+
+                @foreach ($stores as $s)
+                    <div class="item">
+                        <a href="{{ route('show-store', $s->slug) }}">
+                            <img src="{{ asset($s->image_cover_mobile ? 'uploads/' . $s->id . '/' . $s->image_cover_mobile : 'images/image-cover-mobile.jpg') }}" alt="Krause" />
+
+                            <h3>{{ $s->name }}</h3>
+                        </a>
+                    </div>
+                @endforeach
             </section>
         </div>
 
-        <section class="images-filter">
+        <?php /*<section class="images-filter">
             <div class="content">
                 <h3 class="section-title">FEMININO</h3>
 
@@ -202,7 +216,7 @@
             <a href="{{ route('search-products', [Cookie::get('city_slug'), Cookie::get('state_letter_lc')]) . '?advanced=true&keyword=estilo' }}">
                 <img src="{{ asset('images/banner-shoes-mobile.jpg') }}" alt="Sapatos" class="img-responsive" />
             </a>
-        </section>
+        </section>*/ ?>
 
         <section class="newsletter text-center">
             <div class="text">

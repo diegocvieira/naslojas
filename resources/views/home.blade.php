@@ -22,7 +22,7 @@
                 <div class="container">
                     @include('inc.know')
 
-                    <section class="row">
+                    <?php /*<section class="row">
                         <div class="col-xs-12">
                             <h2 class="section-title">PRODUTOS EM DESTAQUE</h2>
                         </div>
@@ -134,11 +134,45 @@
                                 </div>
                             </div>
                         </div>
+                    </section>*/ ?>
+
+                    <section class="row stores">
+                        <div class="col-xs-12">
+                            <h2 class="section-title">LOJAS</h2>
+                        </div>
+
+                        @foreach ($stores as $s)
+                            <div class="col-xs-4">
+                                <div class="item">
+                                    <a href="{{ route('show-store', $s->slug) }}">
+                                        <img src="{{ asset($s->image_cover_desktop ? 'uploads/' . $s->id . '/' . $s->image_cover_desktop : 'images/image-cover-desktop.jpg') }}" alt="{{ $s->name }}"  />
+
+                                        <h3>{{ $s->name }}</h3>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </section>
+
+                    <section class="row newsletter text-center">
+                        <div class="col-xs-12">
+                            <h2>1 e-mail por semana</h2>
+                            <h3>Com as maiores ofertas, promoções e novidades das lojas de Pelotas</h3>
+                            <span>CANCELE QUANDO QUISER</span>
+                        </div>
+
+                        <div class="col-xs-12">
+                            {!! Form::open(['method' => 'POST', 'route' => 'newsletter-register', 'id' => 'form-newsletter-register']) !!}
+                                {!! Form::email('email', null, ['placeholder' => 'Seu e-mail']) !!}
+
+                                {!! Form::submit('ENVIAR') !!}
+                            {!! Form::close() !!}
+                        </div>
                     </section>
                 </div>
             </div>
 
-            <div class="container">
+            <?php /*<div class="container">
                 <section class="row images-filter">
                     <div class="content">
                         <h3 class="images-title">FEMININO</h3>
@@ -224,23 +258,7 @@
                         </a>
                     </div>
                 </section>
-
-                <section class="row newsletter text-center">
-                    <div class="col-xs-12">
-                        <h2>1 e-mail por semana</h2>
-                        <h3>Com as maiores ofertas, promoções e novidades das lojas de Pelotas</h3>
-                        <span>CANCELE QUANDO QUISER</span>
-                    </div>
-
-                    <div class="col-xs-12">
-                        {!! Form::open(['method' => 'POST', 'route' => 'newsletter-register', 'id' => 'form-newsletter-register']) !!}
-                            {!! Form::email('email', null, ['placeholder' => 'Seu e-mail']) !!}
-
-                            {!! Form::submit('ENVIAR') !!}
-                        {!! Form::close() !!}
-                    </div>
-                </section>
-            </div>
+            </div>*/ ?>
 
             <div class="app-mobile col-xs-12">
                 <div class="container">

@@ -291,13 +291,13 @@ class BagController extends Controller
                     $query->where('letter', $request->state);
                 })
                 ->where('title', 'LIKE', '%' . $request->city . '%')
-                ->select('id')
+                ->select('id', 'slug')
                 ->first();
 
             if (!$city) {
                 $return['status'] = false;
                 $return['msg'] = 'Não identificamos a cidade informada. Verifique a cidade e o estado e tente novamente.';
-            } else if ($city->id != 4913) {
+            } else if ($city->sug != 'pelotas') {
                 $return['status'] = false;
                 $return['msg'] = 'Nossa entrega ainda não está disponível na sua região.';
             } else {
