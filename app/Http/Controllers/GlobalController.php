@@ -28,7 +28,9 @@ class GlobalController extends Controller
 
         session(['session_modal_home' => (session('session_modal_home') ? 'false' : 'true')]);
 
-        $stores = Store::orderBy('name', 'ASC')->get();
+        $stores = Store::where('status', 1)
+            ->orderBy('name', 'ASC')
+            ->get();
 
         // $featured_products = Product::has('images')
         //     ->where(function($q) {
