@@ -4,11 +4,11 @@
     <div class="container page-show-product">
         @include('inc.know')
 
-        <div class="row">
+        <?php /*<div class="row">
             <div class="col-12">
                 @include ('inc._search-navigation')
             </div>
-        </div>
+        </div>*/ ?>
 
         <div class="row">
             <div class="col-xs-6 col-xs-offset-1">

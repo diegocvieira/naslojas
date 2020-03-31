@@ -5,12 +5,12 @@
                 <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">Baixe nosso app</a>
                 <a href="{{ route('client-register-get') }}">Cadastrar</a>
                 <a href="{{ route('client-login-get') }}">Entrar</a>
-                <a href="#" class="show-city-modal">{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</a>
+                <!-- <a href="#" class="show-city-modal">{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</a> -->
                 <a href="{{ route('rules') }}" target="_blank">Regras</a>
                 <a href="{{ route('terms-use') }}" target="_blank">Termos de uso</a>
                 <a href="{{ route('privacy-policy') }}" target="_blank">Privacidade</a>
                 <!-- <a href="{{ route('store-advertise') }}">Vender online</a> -->
-                <a href="{{ route('store-advertise') }}#planos">Planos</a>
+                <!-- <a href="{{ route('store-advertise') }}#planos">Planos</a> -->
                 <!-- <a href="mailto:naslojas.com" class="email">contato@naslojas.com</a> -->
                 <a href="https://api.whatsapp.com/send?phone=5553991786097" class="phone">whatsapp 53 9 9178 6097</a>
             </div>

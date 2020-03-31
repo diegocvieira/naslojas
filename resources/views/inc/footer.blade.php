@@ -26,11 +26,11 @@
                         <a href="{{ route('terms-use') }}" target="_blank">Termos de uso</a>
                         <a href="{{ route('privacy-policy') }}" target="_blank">Privacidade</a>
                         <!-- <a href="{{ route('store-advertise') }}">Vender online</a> -->
-                        <a href="{{ route('store-advertise') }}#planos">Planos</a>
+                        <!-- <a href="{{ route('store-advertise') }}#planos">Planos</a> -->
                     </div>
 
                     <div class="col-xs-5">
-                        <a href="#" class="city show-city-modal">{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</a>
+                        <!-- <a href="#" class="city show-city-modal">{{ Cookie::get('city_title') ? Cookie::get('city_title') . '/' . Cookie::get('state_letter') : 'Pelotas/RS' }}</a> -->
 
                         <!-- <a href="mailto:naslojas.com" class="email">contato@naslojas.com</a> -->
 

@@ -10,7 +10,7 @@
         <section class="section-content bg-grey">
             <div class="banner-home">
                 <div class="slick-home">
-                    @for ($i = 1; $i <= 5; $i++)
+                    @for ($i = 1; $i <= 4; $i++)
                         <div class="item">
                             <img src="{{ asset('images/banner-desktop/' . $i . '.jpg') }}" alt="Banner {{ $i }}" />
                         </div>
@@ -157,7 +157,7 @@
                     <section class="row newsletter text-center">
                         <div class="col-xs-12">
                             <h2>1 e-mail por semana</h2>
-                            <h3>Com as maiores ofertas, promoções e novidades das lojas de Pelotas</h3>
+                            <h3>Com as maiores ofertas, promoções e novidades das lojas da sua cidade</h3>
                             <span>CANCELE QUANDO QUISER</span>
                         </div>
 
@@ -265,7 +265,7 @@
                     <div class="col-xs-4 text text-right">
                         <span>app</span>
                         <img src="{{ asset('images/logo-naslojas.png') }}" />
-                        <p>as ofertas de Pelotas<br>sempre com você</p>
+                        <p>as ofertas da cidade<br>sempre com você</p>
                     </div>
 
                     <div class="col-xs-4 img">

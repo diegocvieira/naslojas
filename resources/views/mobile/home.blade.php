@@ -9,7 +9,7 @@
     <div class="page-home">
         <section class="banner-home">
             <div class="slick-home-banner">
-                @for ($i = 1; $i <= 5; $i++)
+                @for ($i = 1; $i <= 3; $i++)
                     <div class="item">
                         <img src="{{ asset('images/banner-mobile/' . $i . '.jpg') }}" alt="Banner {{ $i }}" />
                     </div>
@@ -140,7 +140,7 @@
         <section class="newsletter text-center">
             <div class="text">
                 <h2>1 e-mail por semana</h2>
-                <h3>Com as maiores ofertas, promoções e novidades das lojas de Pelotas</h3>
+                <h3>Com as maiores ofertas, promoções e novidades das lojas da sua cidade</h3>
                 <span>CANCELE QUANDO QUISER</span>
             </div>
 

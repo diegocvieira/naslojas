@@ -3,7 +3,7 @@
         <div class="content">
             <img src="{{ asset('images/know/shirt.png') }}" class="img-shirt" />
 
-            <span>Confira as ofertas<br>das lojas de Pelotas</span>
+            <span>Confira as ofertas<br>das lojas da cidade</span>
         </div>
 
         <div class="content">
@@ -15,7 +15,7 @@
         <div class="content">
             <img src="{{ asset('images/know/truck.png') }}" class="img-truck" />
 
-            <span>Frete para Pelotas<br>a partir de R$ 5,00</span>
+            <span>Entrega na cidade<br>a partir de R$ 5,00</span>
         </div>
 
         <div class="content">

@@ -49,7 +49,7 @@
                 {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que voce procura na loja ' . $store->name]) !!}
         @else
             {!! Form::open(['method' => 'GET', 'route' => ['search-products', Cookie::get('city_slug'), Cookie::get('state_letter_lc')], 'id' => 'form-search']) !!}
-                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que voce procura nas lojas de Pelotas']) !!}
+                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que voce procura']) !!}
         @endif
                 {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
                 {!! Form::hidden('gender', $search_gender ?? '', ['id' => 'search-gender']) !!}
