@@ -26,10 +26,9 @@ class GlobalController extends Controller
             $this->setCity($city->id);
         }
 
-        session(['session_modal_home' => (session('session_modal_home') ? 'false' : 'true')]);
+        // session(['session_modal_home' => (session('session_modal_home') ? 'false' : 'true')]);
 
         $stores = Store::where('status', 1)
-            ->orderBy('name', 'ASC')
             ->inRandomOrder()
             ->get();
 

@@ -9,11 +9,11 @@
     <div class="container">
         @include('inc.know')
 
-        <div class="row">
+        <?php /*<div class="row">
             <div class="col-12">
                 @include ('inc._search-navigation')
             </div>
-        </div>
+        </div>*/ ?>
 
         @if ($products->count())
             <div class="row">
