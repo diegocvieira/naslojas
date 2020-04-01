@@ -125,6 +125,8 @@ class StoreController extends Controller
         } else {
             if (Auth::guard('store')->check() && $store->id == Auth::guard('store')->user()->store_id) {
                 $section = 'store';
+            } else {
+                $section = null;
             }
 
             return view('mobile.store.show', compact('store', 'products', 'section', 'orderby', 'prices', 'genders', 'offs', 'sizes', 'installments', 'colors', 'categories', 'brands', 'header_title', 'header_desc'));

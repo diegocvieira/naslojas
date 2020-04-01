@@ -30,6 +30,7 @@ class GlobalController extends Controller
 
         $stores = Store::where('status', 1)
             ->orderBy('name', 'ASC')
+            ->inRandomOrder()
             ->get();
 
         // $featured_products = Product::has('images')

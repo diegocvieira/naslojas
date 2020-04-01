@@ -34,7 +34,7 @@
 
                         <!-- <a href="mailto:naslojas.com" class="email">contato@naslojas.com</a> -->
 
-                        <a href="https://api.whatsapp.com/send?phone=5553991786097" class="phone">whatsapp 53 9 9178 6097</a>
+                        <!-- <a href="https://api.whatsapp.com/send?phone=5553991786097" class="phone">whatsapp 53 9 9178 6097</a> -->
 
                         <div class="social">
                             <a href="https://www.facebook.com/naslojas" target="_blank" class="facebook"></a>

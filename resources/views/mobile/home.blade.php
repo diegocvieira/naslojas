@@ -9,7 +9,7 @@
     <div class="page-home">
         <section class="banner-home">
             <div class="slick-home-banner">
-                @for ($i = 1; $i <= 3; $i++)
+                @for ($i = 1; $i <= 5; $i++)
                     <div class="item">
                         <img src="{{ asset('images/banner-mobile/' . $i . '.jpg') }}" alt="Banner {{ $i }}" />
                     </div>
@@ -231,7 +231,7 @@
     </div>
 @endsection
 
-@section('script')
+<?php /*@section('script')
     @if (session('session_modal_home') == 'true')
         <div class="modal fade" id="modal-home" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -249,4 +249,4 @@
             });
         </script>
     @endif
-@endsection
+@endsection*/ ?>
