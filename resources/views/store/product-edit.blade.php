@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <span class="advice">* indica item obrigatorio</span>
+                <span class="advice">* indica item obrigatório</span>
             @endif
 
             @if ($section == 'edit')

@@ -116,18 +116,14 @@ $(function() {
     });
 
     // START FILTER PRODUCTS
-    $(document).on('click', '.show-filter-products', function(e) {
-        e.preventDefault();
-
-        var filter = $('.filter-products');
-
-        filter.addClass('active');
-
-        filter.is(':visible') ? $('body').css('overflow', 'hidden') : $('body').css('overflow', 'auto');
+    $(document).on('click', '.show-filter-products', function() {
+        $('.filter-products').addClass('active');
+        $('body').css('overflow', 'hidden');
     });
 
     $(document).on('click', '.close-filter-products', function() {
         $('.filter-products').removeClass('active');
+        $('body').css('overflow', 'auto');
     });
 
     $(document).on('change', '.filter-products input[type=radio]', function() {

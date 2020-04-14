@@ -172,7 +172,7 @@
                                     @endforeach
 
                                     @if (!isset($accept_districts) || !in_array($district->id, $accept_districts))
-                                        {!! Form::text('freight_price[' . $key . ']', _freightDefaultValue($district->id), ['placeholder' => ' ', 'class' => 'mask-money', 'required']) !!}
+                                        {!! Form::text('freight_price[' . $key . ']', null, ['placeholder' => ' ', 'class' => 'mask-money', 'required']) !!}
                                     @endif
 
                                     {!! Form::label('', $district->name) !!}
@@ -213,7 +213,7 @@
 
                             <div class="form-group">
                                 {!! Form::text('max_product_unit', null, ['placeholder' => ' ', 'class' => 'mask-number']) !!}
-                                {!! Form::label('', 'Máximo de unidades por produto') !!}
+                                {!! Form::label('', 'Máximo de unidades vendidas por produto') !!}
                             </div>
 
                             <div class="form-group">

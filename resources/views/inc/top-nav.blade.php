@@ -6,7 +6,7 @@
 
         <?php /* @if (isset($store))
             {!! Form::open(['method' => 'GET', 'route' => ['search-store-products', $store->slug], 'id' => 'form-search']) !!}
-                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que voce procura na loja ' . $store->name]) !!}
+                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que você procura na loja ' . $store->name]) !!}
 
                 <?php /* {!! Form::hidden('store_slug', $store->slug) !!} */ ?>
 
@@ -26,7 +26,7 @@
             {!! Form::close() !!}
         @else
             {!! Form::open(['method' => 'GET', 'route' => ['search-products', Cookie::get('city_slug'), Cookie::get('state_letter_lc')], 'id' => 'form-search']) !!}
-                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => Cookie::get('sessao_cidade_title') ? 'Digite aqui o produto que voce procura nas lojas de ' . Cookie::get('sessao_cidade_title') : 'Digite aqui o produto que voce procura nas lojas de Pelotas']) !!}
+                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => Cookie::get('sessao_cidade_title') ? 'Digite aqui o produto que você procura nas lojas de ' . Cookie::get('sessao_cidade_title') : 'Digite aqui o produto que você procura nas lojas de Pelotas']) !!}
 
                 {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
                 {!! Form::hidden('gender', $search_gender ?? '', ['id' => 'search-gender']) !!}
@@ -46,10 +46,10 @@
 
         @if (isset($store))
             {!! Form::open(['method' => 'GET', 'route' => ['search-store-products', $store->slug], 'id' => 'form-search']) !!}
-                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que voce procura na loja ' . $store->name]) !!}
+                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que você procura na loja ' . $store->name]) !!}
         @else
             {!! Form::open(['method' => 'GET', 'route' => ['search-products', Cookie::get('city_slug'), Cookie::get('state_letter_lc')], 'id' => 'form-search']) !!}
-                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que voce procura']) !!}
+                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que você procura']) !!}
         @endif
                 {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
                 {!! Form::hidden('gender', $search_gender ?? '', ['id' => 'search-gender']) !!}
