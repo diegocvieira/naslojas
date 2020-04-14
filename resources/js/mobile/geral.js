@@ -144,10 +144,15 @@ $(function() {
     });
 
     $(document).on('click', '.filter-products .filter-price button', function() {
-        $('#search-min-price').val(parseFloat($('.filter-products .filter-price input[name=min_price]').val().replace('.', '').replace(',', '.')).toFixed(2));
-        $('#search-max-price').val(parseFloat($('.filter-products .filter-price input[name=max_price]').val().replace('.', '').replace(',', '.')).toFixed(2));
+        const minPrice = $('.filter-products .filter-price input[name=min_price]').val(),
+            maxPrice = $('.filter-products .filter-price input[name=max_price]').val();
 
-        $('#form-search').submit();
+        if (minPrice || maxPrice) {
+            $('#search-min-price').val(parseFloat(minPrice.replace('.', '').replace(',', '.')).toFixed(2));
+            $('#search-max-price').val(parseFloat(maxPrice.replace('.', '').replace(',', '.')).toFixed(2));
+
+            $('#form-search').submit();
+        }
     });
 
     $(document).on('click', '.clear-filter, .clear-all-filters', function() {

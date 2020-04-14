@@ -13,11 +13,11 @@
                     <button type="button" class="clear-filter" data-id="search-category">{{ $search_category }}</button>
                 @endif
 
-                @if (isset($search_min_price))
+                @if (isset($search_min_price) && is_float($search_min_price))
                     <button type="button" class="clear-filter" data-id="search-min-price">R${{ number_format($search_min_price, 2, ',', '.') }}</button>
                 @endif
 
-                @if (isset($search_max_price))
+                @if (isset($search_max_price) && is_float($search_max_price))
                     <button type="button" class="clear-filter" data-id="search-max-price">R${{ number_format($search_max_price, 2, ',', '.') }}</button>
                 @endif
 

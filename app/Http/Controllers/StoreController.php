@@ -214,6 +214,9 @@ class StoreController extends Controller
                         });
                 });
             }
+        } else {
+            $header_title = null;
+            $header_desc = null;
         }
 
         $products = $products->paginate(32);
