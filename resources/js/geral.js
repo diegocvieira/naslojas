@@ -184,10 +184,15 @@ $(function() {
         const minPrice = $('.filter-products .filter-price input[name=min_price]').val(),
             maxPrice = $('.filter-products .filter-price input[name=max_price]').val();
 
-        if (minPrice || maxPrice) {
+        if (minPrice) {
             $('#search-min-price').val(parseFloat(minPrice.replace('.', '').replace(',', '.')).toFixed(2));
-            $('#search-max-price').val(parseFloat(maxPrice.replace('.', '').replace(',', '.')).toFixed(2));
+        }
 
+        if (maxPrice) {
+            $('#search-max-price').val(parseFloat(maxPrice.replace('.', '').replace(',', '.')).toFixed(2));
+        }
+
+        if (minPrice || maxPrice) {
             $('#form-search').submit();
         }
     });
