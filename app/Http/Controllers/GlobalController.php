@@ -10,6 +10,7 @@ use Session;
 use App\Product;
 use Agent;
 use App\Store;
+use Illuminate\Support\Facades\Cache;
 
 class GlobalController extends Controller
 {
@@ -28,9 +29,12 @@ class GlobalController extends Controller
 
         // session(['session_modal_home' => (session('session_modal_home') ? 'false' : 'true')]);
 
-        $stores = Store::where('status', 1)
-            ->inRandomOrder()
-            ->get();
+        $stores = Cache::remember('stores', 24*60*60, function () {
+            return Store::where('status', 1)
+                ->inRandomOrder()
+                ->limit(20)
+                ->get();
+        });
 
         // $featured_products = Product::has('images')
         //     ->where(function($q) {
