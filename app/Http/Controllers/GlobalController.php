@@ -15,11 +15,11 @@ class GlobalController extends Controller
 {
     public function home()
     {
-        if (!Cookie::get('city_slug') || Cookie::get('city_slug') != 'pelotas') {
+        if (!Cookie::get('city_slug') || Cookie::get('city_slug') != 'sao-paulo') {
             $city = City::whereHas('state', function ($query) {
-                    $query->where('letter', 'rs');
+                    $query->where('letter', 'sp');
                 })
-                ->where('title', 'pelotas')
+                ->where('slug', 'sao-paulo')
                 ->select('id')
                 ->first();
 

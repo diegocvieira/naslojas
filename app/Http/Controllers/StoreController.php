@@ -478,19 +478,15 @@ class StoreController extends Controller
                 if ($section == 'address') {
                     // Search the city
                     $city = City::whereHas('state', function ($query) use ($request) {
-                        $query->where('letter', $request->state);
-                    })->where('title', 'LIKE', '%' . $request->city . '%')->select('id', 'slug')->first();
+                            $query->where('letter', $request->state);
+                        })
+                        ->where('title', 'LIKE', '%' . $request->city . '%')
+                        ->select('id', 'slug')->first();
 
-                    if (!$city) {
-                        $return['msg'] = 'Não identificamos a cidade informada.';
-                        $return['status'] = 0;
-
-                        return json_encode($return);
-                    } else if ($city->slug != 'pelotas') {
-                        $return['msg'] = 'Em breve estaremos trabalhando na sua cidade.';
-                        $return['status'] = 0;
-
-                        return json_encode($return);
+                    if (!$city || !$city->isAvailable()) {
+                        $data['msg'] = 'Nossa entrega ainda não está disponível na sua região.';
+                        $data['status'] = 0;
+                        return response()->json($data);
                     }
 
                     if (isset($city)) {

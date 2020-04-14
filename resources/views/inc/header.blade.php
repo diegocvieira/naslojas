@@ -9,7 +9,7 @@
 
     	<base href="{{ url('/') }}">
 
-    	<title>{{ $header_title ?? 'naslojas - Compre nas lojas de Pelotas e receba seu pedido em 24hs' }}</title>
+    	<title>{{ $header_title ?? 'naslojas - Compre nas lojas da sua cidade e receba seu pedido em 24hs' }}</title>
 
     	<link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
 
@@ -26,14 +26,14 @@
 
     	<link rel="canonical" href="{{ $header_canonical ?? url()->current() }}" />
 
-    	<meta name="description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas de Pelotas. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
+    	<meta name="description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas da sua cidade. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
     	<meta itemprop="name" content="{{ $header_title ?? 'naslojas' }}" />
-    	<meta itemprop="description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas de Pelotas. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
+    	<meta itemprop="description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas da sua cidade. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
     	<meta itemprop="image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
 
     	<meta name="twitter:card" content="summary_large_image" />
     	<meta name="twitter:title" content="{{ $header_title ?? 'naslojas' }}" />
-    	<meta name="twitter:description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas de Pelotas. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
+    	<meta name="twitter:description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas da sua cidade. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
     	<!-- imagens largas para o Twitter Summary Card precisam ter pelo menos 280x150px  -->
     	<meta name="twitter:image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
 
@@ -42,7 +42,7 @@
     	<meta property="og:url" content="{{ url()->current() }}" />
     	<meta property="og:image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
         <meta property="og:image:secure_url" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
-        <meta property="og:description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas de Pelotas. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
+        <meta property="og:description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas da sua cidade. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
     	<meta property="og:site_name" content="naslojas" />
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">

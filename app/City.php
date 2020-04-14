@@ -19,4 +19,13 @@ class City extends Model
     {
         return $this->belongsTo('App\State', 'state_id', 'id');
     }
+
+    public function isAvailable()
+    {
+        $cities = [
+            'sao-paulo'
+        ];
+
+        return in_array($this->slug, $cities) ? true : false;
+    }
 }

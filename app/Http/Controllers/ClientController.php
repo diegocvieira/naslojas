@@ -87,66 +87,63 @@ class ClientController extends Controller
             $rules = [];
         }
 
-        $validator = Validator::make(
+        $validate = Validator::make(
             $request->all(),
             $rules,
             app('App\Http\Controllers\GlobalController')->customMessages()
         );
 
-         if ($validator->fails()) {
-             $return['msg'] = $validator->errors()->first();
-             $return['status'] = 0;
-        } else {
-            if (Hash::check($request->current_password, Auth::guard('client')->user()->password)) {
-                $client = Client::find(Auth::guard('client')->user()->id);
+         if ($validate->fails()) {
+             $data['msg'] = $validate->errors()->first();
+             $data['status'] = 0;
+             return response()->json($data);
+         }
 
-                if ($section == 'address') {
-                    // Search the city
-                    $city = City::whereHas('state', function ($query) use ($request) {
+        if (Hash::check($request->current_password, Auth::guard('client')->user()->password)) {
+            $client = Client::find(Auth::guard('client')->user()->id);
+
+            if ($section == 'address') {
+                $city = City::whereHas('state', function ($query) use ($request) {
                         $query->where('letter', $request->state);
-                    })->where('title', 'LIKE', '%' . $request->city . '%')->select('id', 'slug')->first();
+                    })
+                    ->where('title', 'LIKE', '%' . $request->city . '%')
+                    ->select('id', 'slug')
+                    ->first();
 
-                    if (!$city) {
-                        $return['msg'] = 'Não identificamos a cidade informada.';
-                        $return['status'] = 0;
-
-                        return json_encode($return);
-                    } else if ($city->slug != 'pelotas') {
-                        $return['msg'] = 'Nossa entrega ainda não está disponível na sua região.';
-                        $return['status'] = 0;
-
-                        return json_encode($return);
-                    }
-
-                    $client->city_id = $city->id;
+                if (!$city || !$city->isAvailable()) {
+                    $data['msg'] = 'Nossa entrega ainda não está disponível na sua região.';
+                    $data['status'] = false;
+                    return response()->json($data);
                 }
 
-                $client->name = $request->name;
-                $client->email = $request->email;
-                $client->phone = $request->phone;
-                $client->birthdate = $request->birthdate ? date('Y-m-d', strtotime(str_replace('/', '-', $request->birthdate))) : null;
-                $client->cpf = $request->cpf;
-                $client->cep = $request->cep;
-                $client->street = $request->street;
-                $client->district_id = $request->district;
-                $client->number = $request->number;
-                $client->complement = $request->complement;
-
-                if ($request->password) {
-                    $client->password = bcrypt($request->password);
-                }
-
-                if ($client->save()) {
-                    $return['msg'] = 'Informações atualizadas.';
-                    $return['status'] = 1;
-                } else {
-                    $return['msg'] = 'Ocorreu um erro inesperado. Tente novamente.';
-                    $return['status'] = 0;
-                }
-            } else {
-                $return['msg'] = 'A sua senha atual não confere.';
-                $return['status'] = 2;
+                $client->city_id = $city->id;
             }
+
+            $client->name = $request->name;
+            $client->email = $request->email;
+            $client->phone = $request->phone;
+            $client->birthdate = $request->birthdate ? date('Y-m-d', strtotime(str_replace('/', '-', $request->birthdate))) : null;
+            $client->cpf = $request->cpf;
+            $client->cep = $request->cep;
+            $client->street = $request->street;
+            $client->district_id = $request->district;
+            $client->number = $request->number;
+            $client->complement = $request->complement;
+
+            if ($request->password) {
+                $client->password = bcrypt($request->password);
+            }
+
+            if ($client->save()) {
+                $return['msg'] = 'Informações atualizadas.';
+                $return['status'] = 1;
+            } else {
+                $return['msg'] = 'Ocorreu um erro inesperado. Tente novamente.';
+                $return['status'] = 0;
+            }
+        } else {
+            $return['msg'] = 'A sua senha atual não confere.';
+            $return['status'] = 2;
         }
 
         return json_encode($return);
