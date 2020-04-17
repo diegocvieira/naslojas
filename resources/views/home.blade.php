@@ -141,7 +141,7 @@
                             <h2 class="section-title">LOJAS</h2>
                         </div>
 
-                        @foreach ($stores as $s)
+                        @forelse ($stores as $s)
                             <div class="col-xs-4">
                                 <div class="item">
                                     <a href="{{ route('show-store', $s->slug) }}">
@@ -151,7 +151,11 @@
                                     </a>
                                 </div>
                             </div>
-                        @endforeach
+                        @empty
+                            <div class="no-results">
+                                <p>Não foram encontradas lojas que entregam no seu bairro.</p>
+                            </div>
+                        @endforelse
                     </section>
 
                     <section class="row newsletter text-center">

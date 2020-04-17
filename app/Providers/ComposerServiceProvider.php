@@ -23,6 +23,8 @@ class ComposerServiceProvider extends ServiceProvider
         view()->composer(['inc.top-nav-store', 'mobile.inc.top-nav'], 'App\Http\ViewComposers\ListStoresComposer');
 
         view()->composer(['inc.top-nav', 'mobile.inc.top-nav'], 'App\Http\ViewComposers\CountBagComposer');
+
+        view()->composer(['inc.top-nav', 'mobile.inc.top-nav'], 'App\Http\ViewComposers\DistrictsComposer');
     }
 
     /**

@@ -58,6 +58,11 @@
     .stores-home {
         padding: 0 5px;
 
+        .no-results {
+            position: relative;
+            margin-top: 50px;
+        }
+
         .item {
             padding: 0 5px;
             width: 50%;

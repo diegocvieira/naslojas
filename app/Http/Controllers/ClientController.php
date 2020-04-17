@@ -17,8 +17,11 @@ class ClientController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make(
-            $request->all(),
-            $this->clientRegisterRules(),
+            $request->all(), [
+                'email' => 'required|email|max:100|unique:clients',
+                'password' => 'confirmed|min:8',
+                'name' => 'required|max:200'
+            ],
             app('App\Http\Controllers\GlobalController')->customMessages()
         );
 
@@ -48,6 +51,11 @@ class ClientController extends Controller
     {
         if (Auth::guard('client')->attempt(['email' => $request->email, 'password' => $request->password], true)) {
             $return['status'] = true;
+            $districtId = Auth::guard('client')->user()->district_id;
+
+            if ($districtId) {
+                $this->districtSet($districtId);
+            }
         } else {
             $return['status'] = false;
             $return['msg'] = 'Não identificamos o e-mail e/ou a senha que você informou.';
@@ -56,149 +64,13 @@ class ClientController extends Controller
         return json_encode($return);
     }
 
-    public function getConfig($navigation = null)
+    public function districtSet($districtId)
     {
-        $header_title = 'Configurações | naslojas.com';
+        $district = District::findOrFail($districtId);
 
-        $client = Client::find(Auth::guard('client')->user()->id);
+        session(['client_district_id' => $district->id]);
+        session(['client_district_name' => $district->name]);
 
-        $districts = District::orderBy('name', 'ASC')->pluck('name', 'id');
-
-        if (Agent::isDesktop()) {
-            return view('client.config', compact('client', 'header_title', 'navigation', 'districts'));
-        } else {
-            $section = 'config';
-
-            return view('mobile.client.config', compact('client', 'section', 'districts', 'navigation'));
-        }
-    }
-
-    public function setConfig(Request $request)
-    {
-        $section = $request->section;
-
-        if ($section == 'profile') {
-            $rules = $this->profileRules();
-        } else if ($section == 'address') {
-            $rules = $this->addressRules();
-        } else if ($section == 'access') {
-            $rules = $this->accessRules();
-        } else {
-            $rules = [];
-        }
-
-        $validate = Validator::make(
-            $request->all(),
-            $rules,
-            app('App\Http\Controllers\GlobalController')->customMessages()
-        );
-
-         if ($validate->fails()) {
-             $data['msg'] = $validate->errors()->first();
-             $data['status'] = 0;
-             return response()->json($data);
-         }
-
-        if (Hash::check($request->current_password, Auth::guard('client')->user()->password)) {
-            $client = Client::find(Auth::guard('client')->user()->id);
-
-            if ($section == 'address') {
-                $city = City::whereHas('state', function ($query) use ($request) {
-                        $query->where('letter', $request->state);
-                    })
-                    ->where('title', 'LIKE', '%' . $request->city . '%')
-                    ->select('id', 'slug')
-                    ->first();
-
-                if (!$city || !$city->isAvailable()) {
-                    $data['msg'] = 'Nossa entrega ainda não está disponível na sua região.';
-                    $data['status'] = false;
-                    return response()->json($data);
-                }
-
-                $client->city_id = $city->id;
-            }
-
-            $client->name = $request->name;
-            $client->email = $request->email;
-            $client->phone = $request->phone;
-            $client->birthdate = $request->birthdate ? date('Y-m-d', strtotime(str_replace('/', '-', $request->birthdate))) : null;
-            $client->cpf = $request->cpf;
-            $client->cep = $request->cep;
-            $client->street = $request->street;
-            $client->district_id = $request->district;
-            $client->number = $request->number;
-            $client->complement = $request->complement;
-
-            if ($request->password) {
-                $client->password = bcrypt($request->password);
-            }
-
-            if ($client->save()) {
-                $return['msg'] = 'Informações atualizadas.';
-                $return['status'] = 1;
-            } else {
-                $return['msg'] = 'Ocorreu um erro inesperado. Tente novamente.';
-                $return['status'] = 0;
-            }
-        } else {
-            $return['msg'] = 'A sua senha atual não confere.';
-            $return['status'] = 2;
-        }
-
-        return json_encode($return);
-    }
-
-    public function deleteAccount(Request $request)
-    {
-        if (Hash::check($request->password, Auth::guard('client')->user()->password)) {
-            Client::find(Auth::guard('client')->user()->id)->delete();
-
-            app('App\Http\Controllers\GlobalController')->logout();
-
-            $return['status'] = true;
-        } else {
-            $return['status'] = false;
-        }
-
-        return json_encode($return);
-    }
-
-    private function clientRegisterRules()
-    {
-        return [
-            'email' => 'required|email|max:100|unique:clients',
-            'password' => 'confirmed|min:8',
-            'name' => 'required|max:200'
-        ];
-    }
-
-    private function profileRules()
-    {
-        return [
-            'name' => 'required|max:200',
-            'phone' => 'required|max:15',
-            'cpf' => 'required|max:15'
-        ];
-    }
-
-    private function accessRules()
-    {
-        return [
-            'email' => 'required|email|max:65|unique:clients,email,' . Auth::guard('client')->user()->id,
-            'password' => 'confirmed'
-        ];
-    }
-
-    private function addressRules()
-    {
-        return [
-            'cep' => 'required|max:10',
-            'street' => 'required|max:200',
-            'district' => 'required|max:100',
-            'number' => 'required|max:15',
-            'city' => 'required',
-            'state' => 'required'
-        ];
+        return redirect()->back();
     }
 }

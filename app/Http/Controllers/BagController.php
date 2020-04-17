@@ -27,6 +27,12 @@ class BagController extends Controller
     {
         $p = Product::find($request->product_id);
 
+        if (!$p->store->freights->where('district_id', session('client_district_id'))->first()) {
+            $data['success'] = false;
+            $data['message'] = 'Selecione o seu bairro antes de adicionar um produto.';
+            return response()->json($data);
+        }
+
         $product_id = $p->id;
         $store_id = $p->store_id;
         $size = $request->size;
@@ -69,7 +75,7 @@ class BagController extends Controller
 
         session(['bag' => $bag]);
 
-        return json_encode(['status' => true]);
+        return json_encode(['success' => true]);
     }
 
     public function remove($product_id)
@@ -183,6 +189,9 @@ class BagController extends Controller
 
                 $product->setAttribute('store_qtd', $qtd);
             }
+        } else {
+            $products = null;
+            $subtotal = null;
         }
 
         if (\Request::ajax()) {
@@ -236,7 +245,8 @@ class BagController extends Controller
                     $bag_data[$store_key]['free_freight'] = false;
                 }
 
-                $bag_data[$store_key]['freight'] = $client->district_id ? $product->store->freights->where('district_id', $client->district_id)->first()->price : null;
+                // $bag_data[$store_key]['freight'] = $client->district_id ? $product->store->freights->where('district_id', $client->district_id)->first()->price : null;
+                $bag_data[$store_key]['freight'] = $product->store->freights->where('district_id', session('client_district_id'))->first();
                 $bag_data[$store_key]['subtotal'] += $product->price * $p['qtd'];
                 $bag_data[$store_key]['min_parcel_price'] = $product->store->min_parcel_price;
                 $bag_data[$store_key]['max_parcel'] = $product->store->max_parcel;

@@ -50,16 +50,21 @@ $(function() {
                 method: 'POST',
                 dataType: 'json',
                 success: function (data) {
+                    if (!data.success) {
+                        modalAlert(data.message);
+                        return false;
+                    }
+
                     if (redirect) {
                         window.location = '/sacola/dados';
-                    } else {
-                        $('#modal-default').modal('hide');
-
-                        $('.open-bag').trigger('click');
-
-                        var bag = $('header').find('.open-bag');
-                        bag.text(parseInt(bag.text() ? bag.text() : 0) + 1);
                     }
+
+                    $('#modal-default').modal('hide');
+
+                    $('.open-bag').trigger('click');
+
+                    var bag = $('header').find('.open-bag');
+                    bag.text(parseInt(bag.text() ? bag.text() : 0) + 1);
                 },
                 error: function (request, status, error) {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');

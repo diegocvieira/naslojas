@@ -4,46 +4,6 @@
             <img src="{{ asset('images/logo-naslojas.png') }}" />
         </a>
 
-        <?php /* @if (isset($store))
-            {!! Form::open(['method' => 'GET', 'route' => ['search-store-products', $store->slug], 'id' => 'form-search']) !!}
-                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que você procura na loja ' . $store->name]) !!}
-
-                <?php /* {!! Form::hidden('store_slug', $store->slug) !!} */ ?>
-
-                <?php /*{!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
-                {!! Form::hidden('gender', $search_gender ?? '', ['id' => 'search-gender']) !!}
-                {!! Form::hidden('min_price', $search_min_price ?? '', ['id' => 'search-min-price']) !!}
-                {!! Form::hidden('max_price', $search_max_price ?? '', ['id' => 'search-max-price']) !!}
-                {!! Form::hidden('size', $search_size ?? '', ['id' => 'search-size']) !!}
-                {!! Form::hidden('off', $search_off ?? '', ['id' => 'search-off']) !!}
-                {!! Form::hidden('installment', $search_installment ?? '', ['id' => 'search-installment']) !!}
-                {!! Form::hidden('brand', $search_brand ?? '', ['id' => 'search-brand']) !!}
-                {!! Form::hidden('freight', $search_freight ?? '', ['id' => 'search-freight']) !!}
-                {!! Form::hidden('category', $search_category ?? '', ['id' => 'search-category']) !!}
-                {!! Form::hidden('color', $search_color ?? '', ['id' => 'search-color']) !!}
-
-                {!! Form::submit('') !!}
-            {!! Form::close() !!}
-        @else
-            {!! Form::open(['method' => 'GET', 'route' => ['search-products', Cookie::get('city_slug'), Cookie::get('state_letter_lc')], 'id' => 'form-search']) !!}
-                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => Cookie::get('sessao_cidade_title') ? 'Digite aqui o produto que você procura nas lojas de ' . Cookie::get('sessao_cidade_title') : 'Digite aqui o produto que você procura nas lojas de Pelotas']) !!}
-
-                {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
-                {!! Form::hidden('gender', $search_gender ?? '', ['id' => 'search-gender']) !!}
-                {!! Form::hidden('min_price', $search_min_price ?? '', ['id' => 'search-min-price']) !!}
-                {!! Form::hidden('max_price', $search_max_price ?? '', ['id' => 'search-max-price']) !!}
-                {!! Form::hidden('size', $search_size ?? '', ['id' => 'search-size']) !!}
-                {!! Form::hidden('off', $search_off ?? '', ['id' => 'search-off']) !!}
-                {!! Form::hidden('installment', $search_installment ?? '', ['id' => 'search-installment']) !!}
-                {!! Form::hidden('brand', $search_brand ?? '', ['id' => 'search-brand']) !!}
-                {!! Form::hidden('freight', $search_freight ?? '', ['id' => 'search-freight']) !!}
-                {!! Form::hidden('category', $search_category ?? '', ['id' => 'search-category']) !!}
-                {!! Form::hidden('color', $search_color ?? '', ['id' => 'search-color']) !!}
-
-                {!! Form::submit('') !!}
-            {!! Form::close() !!}
-        @endif */ ?>
-
         @if (isset($store))
             {!! Form::open(['method' => 'GET', 'route' => ['search-store-products', $store->slug], 'id' => 'form-search']) !!}
                 {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que você procura na loja ' . $store->name]) !!}
@@ -66,6 +26,13 @@
                 {!! Form::submit('') !!}
             {!! Form::close() !!}
 
+        <div class="select-district-container">
+            <select class="selectpicker" id="select-district" title="Selecione seu bairro">
+                @foreach ($districts as $district)
+                    <option value="{{ $district->id }}" @if (session('client_district_id') == $district->id) selected @endif>{{ $district->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
         <nav class="nav navbar-nav nav-menu">
             <ul>

@@ -282,7 +282,7 @@ class Product extends Model
 
         static::addGlobalScope('active-store', function(Builder $builder) {
 	        $builder->whereHas('store', function ($builder) {
-	        	$builder->where('status', 1);
+	        	$builder->isActive();
 	        });
 	    });
 	}

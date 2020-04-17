@@ -17,24 +17,12 @@ use App\ProductSize;
 
 class StoreController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            if (Auth::guard('store')->check()) {
-                $this->store_id = Auth::guard('store')->user()->store_id;
-                $this->user_id = Auth::guard('store')->user()->id;
-            } else if (Auth::guard('superadmin')->check()) {
-                $this->store_id = session('superadmin_store_id');
-                $this->user_id = session('superadmin_user_id');
-            }
-
-            return $next($request);
-        });
-    }
-
     public function show($slug)
     {
-        $store = Store::where('slug', $slug)->where('status', 1)->firstOrFail();
+        $store = Store::where('slug', $slug)
+            ->isActive()
+            ->clientDistrict()
+            ->firstOrFail();
 
         // SEO
         $header_title = $store->name . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' | naslojas';
@@ -149,12 +137,15 @@ class StoreController extends Controller
 
     public function search($store_slug, Request $request)
     {
-        $store = Store::where('slug', $store_slug)->firstOrFail();
+        $store = Store::where('slug', $store_slug)
+            ->isActive()
+            ->clientDistrict()
+            ->firstOrFail();
 
         $search_gender = $request->gender ?? null;
         $search_order = $request->order ?? null;
         $keyword = $request->keyword ?? null;
-        $advanced = $request->advanced ?? null;
+        // $advanced = $request->advanced ?? null;
         $search_max_price = $request->max_price ?? null;
         $search_min_price = $request->min_price ?? null;
         $search_size = $request->size ?? null;
@@ -186,34 +177,34 @@ class StoreController extends Controller
             $header_title = $keyword . ' em ' . $store->name . ' - ' . $store->city->title . ' / ' . $store->city->state->letter . ' - naslojas.com';
 			$header_desc = 'Clique para ver ' . $keyword . ' na loja ' . $store->name . ' em ' . $store->city->title . ' - ' . $store->city->state->letter;
 
-            if ($advanced == 'true') {
-                $products = $products->where(function ($query) use ($keyword) {
-                    $query->search($keyword);
-                });
+            // if ($advanced == 'true') {
+            //     $products = $products->where(function ($query) use ($keyword) {
+            //         $query->search($keyword);
+            //     });
 
-                if ($keyword == 'estilo') {
-                    $terms = ['sapato', 'calcado', 'salto alto', 'sapatenis', 'casual', 'colete', 'scarpin', 'jeans', 'sapatilha', 'sandalia', 'calca jeans', 'peep toe', 'bota', 'saia', 'mini saia', 'short', 'bermuda', 'calca', 'vestido', 'blusa', 'camisa', 'camiseta', 'casaco', 'jaqueta', 'blusao', 'moletom', 'moleton', 'agasalho', 'blusinha', 'sobretudo', 'mala', 'mochila', 'bolsa', 'joia', 'relogio', 'anel', 'chapeu', 'manta', 'maleta', 'carteira', 'bikini', 'biquini', 'luva', 'meia', 'carpim', 'bone', 'tiara', 'brinco', 'pochete', 'colar', 'pulseira', 'oculos', 'oculos de sol', 'oculos escuros', 'maquiagem', 'batom', 'tornozeleira', 'cinto', 'suspensorio'];
-                } else if ($keyword == 'esporte') {
-                    $terms = ['nike', 'adidas', 'olympikus', 'mizuno', 'asics', 'bola', 'esporte', 'gremio', 'inter', 'time', 'penalty', 'topper', 'futebol', 'tenis adidas', 'tenis nike', 'tenis olympikus', 'tenis mizuno', 'tenis asics', 'tenis topper', 'tenis penalty', 'tenis corrida', 'tenis basket', 'tenis academia', 'basquete', 'basket', 'volei', 'corrida', 'academia', 'treino', 'regata', 'camiseta regata', 'calcao', 'meiao', 'sunga', 'maio', 'caneleira', 'joelheira', 'cotoveleira'];
-                } else if ($keyword == 'casual') {
-                    $terms = ['sapato', 'calcado', 'salto alto', 'sapatenis', 'casual', 'colete', 'scarpin', 'jeans', 'sapatilha', 'sandalia', 'calca jeans', 'peep toe', 'bota', 'saia', 'mini saia', 'short', 'bermuda', 'calca', 'vestido', 'blusa', 'camisa', 'camiseta', 'casaco', 'jaqueta', 'blusao', 'moletom', 'moleton', 'agasalho', 'blusinha', 'sobretudo'];
-                } else if ($keyword == 'acessorios') {
-                    $terms = ['mala', 'mochila', 'bolsa', 'joia', 'relogio', 'anel', 'chapeu', 'manta', 'maleta', 'carteira', 'bikini', 'biquini', 'luva', 'meia', 'carpim', 'bone', 'tiara', 'brinco', 'pochete', 'colar', 'pulseira', 'oculos', 'oculos de sol', 'oculos escuros', 'maquiagem', 'batom', 'tornozeleira', 'cinto', 'suspensorio'];
-                }
+            //     if ($keyword == 'estilo') {
+            //         $terms = ['sapato', 'calcado', 'salto alto', 'sapatenis', 'casual', 'colete', 'scarpin', 'jeans', 'sapatilha', 'sandalia', 'calca jeans', 'peep toe', 'bota', 'saia', 'mini saia', 'short', 'bermuda', 'calca', 'vestido', 'blusa', 'camisa', 'camiseta', 'casaco', 'jaqueta', 'blusao', 'moletom', 'moleton', 'agasalho', 'blusinha', 'sobretudo', 'mala', 'mochila', 'bolsa', 'joia', 'relogio', 'anel', 'chapeu', 'manta', 'maleta', 'carteira', 'bikini', 'biquini', 'luva', 'meia', 'carpim', 'bone', 'tiara', 'brinco', 'pochete', 'colar', 'pulseira', 'oculos', 'oculos de sol', 'oculos escuros', 'maquiagem', 'batom', 'tornozeleira', 'cinto', 'suspensorio'];
+            //     } else if ($keyword == 'esporte') {
+            //         $terms = ['nike', 'adidas', 'olympikus', 'mizuno', 'asics', 'bola', 'esporte', 'gremio', 'inter', 'time', 'penalty', 'topper', 'futebol', 'tenis adidas', 'tenis nike', 'tenis olympikus', 'tenis mizuno', 'tenis asics', 'tenis topper', 'tenis penalty', 'tenis corrida', 'tenis basket', 'tenis academia', 'basquete', 'basket', 'volei', 'corrida', 'academia', 'treino', 'regata', 'camiseta regata', 'calcao', 'meiao', 'sunga', 'maio', 'caneleira', 'joelheira', 'cotoveleira'];
+            //     } else if ($keyword == 'casual') {
+            //         $terms = ['sapato', 'calcado', 'salto alto', 'sapatenis', 'casual', 'colete', 'scarpin', 'jeans', 'sapatilha', 'sandalia', 'calca jeans', 'peep toe', 'bota', 'saia', 'mini saia', 'short', 'bermuda', 'calca', 'vestido', 'blusa', 'camisa', 'camiseta', 'casaco', 'jaqueta', 'blusao', 'moletom', 'moleton', 'agasalho', 'blusinha', 'sobretudo'];
+            //     } else if ($keyword == 'acessorios') {
+            //         $terms = ['mala', 'mochila', 'bolsa', 'joia', 'relogio', 'anel', 'chapeu', 'manta', 'maleta', 'carteira', 'bikini', 'biquini', 'luva', 'meia', 'carpim', 'bone', 'tiara', 'brinco', 'pochete', 'colar', 'pulseira', 'oculos', 'oculos de sol', 'oculos escuros', 'maquiagem', 'batom', 'tornozeleira', 'cinto', 'suspensorio'];
+            //     }
 
-                foreach ($terms as $t) {
-                    $products = $products->orWhere(function ($q) use ($t) {
-                        $q->search($t);
-                    });
-                }
-            } else {
+            //     foreach ($terms as $t) {
+            //         $products = $products->orWhere(function ($q) use ($t) {
+            //             $q->search($t);
+            //         });
+            //     }
+            // } else {
                 $products = $products->where(function ($query) use ($keyword) {
                     $query->search($keyword)
                         ->orWhereHas('store', function ($query) use ($keyword) {
                             $query->search($keyword);
                         });
                 });
-            }
+            // }
         } else {
             $header_title = null;
             $header_desc = null;
@@ -221,26 +212,27 @@ class StoreController extends Controller
 
         $products = $products->paginate(32);
 
-        if ($keyword && $products->count() == 0) {
-            $products = Product::has('images')
-                ->filterGender($search_gender)
-                ->filterOrder($search_order)
-                ->filterMinPrice($search_min_price)
-                ->filterMaxPrice($search_max_price)
-                ->filterSize($search_size)
-                ->filterOff($search_off)
-                ->filterInstallment($search_installment)
-                ->filterBrand($search_brand)
-                ->filterFreight($search_freight)
-                ->filterCategory($search_category)
-                ->filterColor($search_color)
-                ->where(function ($query) use ($keyword) {
-                    $query->search(preg_replace('{(.)\1+}','$1', $keyword))->orWhereHas('store', function ($query) use ($keyword) {
-                        $query->search(preg_replace('{(.)\1+}','$1', $keyword));
-                    });
-                })
-                ->paginate(30);
-        }
+        // if ($keyword && $products->count() == 0) {
+        //     $products = Product::has('images')
+        //         ->where('store_id', $store->id)
+        //         ->filterGender($search_gender)
+        //         ->filterOrder($search_order)
+        //         ->filterMinPrice($search_min_price)
+        //         ->filterMaxPrice($search_max_price)
+        //         ->filterSize($search_size)
+        //         ->filterOff($search_off)
+        //         ->filterInstallment($search_installment)
+        //         ->filterBrand($search_brand)
+        //         ->filterFreight($search_freight)
+        //         ->filterCategory($search_category)
+        //         ->filterColor($search_color)
+        //         ->where(function ($query) use ($keyword) {
+        //             $query->search(preg_replace('{(.)\1+}','$1', $keyword))->orWhereHas('store', function ($query) use ($keyword) {
+        //                 $query->search(preg_replace('{(.)\1+}','$1', $keyword));
+        //             });
+        //         })
+        //         ->paginate(30);
+        // }
 
         // FILTERS //
 
@@ -382,20 +374,6 @@ class StoreController extends Controller
         }
 
         return json_encode($return);
-
-        /*Mail::send('emails.store-register', ['request' => $request], function($m) {
-            $m->from('no-reply@naslojas.com', 'naslojas');
-            $m->to('contato@naslojas.com');
-            $m->subject('Solicitação de cadastro');
-        });
-
-        if (!Mail::failures()) {
-            $return['msg'] = 'Solicitação de cadastro enviada com sucesso!';
-        } else {
-            $return['msg'] = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
-        }
-
-        return json_encode($return);*/
     }
 
     public function login(Request $request)
@@ -409,313 +387,5 @@ class StoreController extends Controller
         }
 
         return json_encode($return);
-    }
-
-    public function getConfig($navigation = null)
-    {
-        $section = 'config';
-        $header_title = 'Configurações | naslojas.com';
-
-        $user = User::find($this->user_id);
-        $districts = District::orderBy('name', 'ASC')->get();
-
-        /*$weeks = [
-            '1' => 'Segunda',
-            '2' => 'Terça',
-            '3' => 'Quarta',
-            '4' => 'Quinta',
-            '5' => 'Sexta',
-            '6' => 'Sábado'
-        ];*/
-
-        $payments = [];
-
-        foreach ($user->store->payments as $payment) {
-            $payments[] = $payment->method . '-' . $payment->payment;
-        }
-
-        array_push($payments, '0-0', '1-0', '1-1', '2-0', '2-1');
-
-        if (Agent::isDesktop()) {
-            return view('store.config', compact('user', 'districts', 'payments', 'section', 'header_title', 'navigation'));
-        } else {
-            return view('mobile.store.config', compact('user', 'districts', 'payments', 'section', 'header_title', 'navigation'));
-        }
-    }
-
-    public function setConfig(Request $request)
-    {
-        $section = $request->section;
-
-        if ($section == 'store-profile') {
-            $rules = $this->storeProfileRules();
-        } else if ($section == 'address') {
-            $rules = $this->addressRules();
-        } else if ($section == 'access') {
-            $rules = $this->accessRules();
-        } else if ($section == 'payment') {
-            $rules = $this->paymentRules();
-        } else {
-            $rules = [];
-        }
-
-        $validator = Validator::make(
-            $request->all(),
-            $rules,
-            app('App\Http\Controllers\GlobalController')->customMessages()
-        );
-
-         if ($validator->fails()) {
-             $return['msg'] = $validator->errors()->first();
-             $return['status'] = 0;
-        } else {
-            $user = User::find($this->user_id);
-            $store = Store::find($user->store_id);
-
-            $current_password = Auth::guard('superadmin')->check() ? Auth::guard('superadmin')->user()->password : $user->password;
-
-            if (Hash::check($request->current_password, $current_password) || Auth::guard('superadmin')->check()) {
-                if ($section == 'address') {
-                    // Search the city
-                    $city = City::whereHas('state', function ($query) use ($request) {
-                            $query->where('letter', $request->state);
-                        })
-                        ->where('title', 'LIKE', '%' . $request->city . '%')
-                        ->select('id', 'slug')->first();
-
-                    if (!$city || !$city->isAvailable()) {
-                        $data['msg'] = 'Nossa entrega ainda não está disponível na sua região.';
-                        $data['status'] = 0;
-                        return response()->json($data);
-                    }
-
-                    if (isset($city)) {
-                        $store->city_id = $city->id;
-                    }
-
-                    $store->cep = $request->cep;
-                    $store->street = $request->street;
-                    $store->number = $request->number;
-                    $store->complement = $request->complement;
-                    $store->district = $request->district;
-                } else if ($section == 'store-profile') {
-                    $store->name = $request->name;
-                    $store->slug = str_slug($request->slug, '-');
-                    $store->cnpj = $request->cnpj;
-                    $store->phone = $request->phone;
-
-                    if ($request->delete_image_cover_desktop && $store->image_cover_desktop || $request->image_cover_desktop && $store->image_cover_desktop) {
-                        $image_path = public_path('uploads/' . $this->store_id . '/' . $store->image_cover_desktop);
-
-                        if (file_exists($image_path)) {
-                            unlink($image_path);
-                        }
-
-                        $store->image_cover_desktop = null;
-                    }
-
-                    if ($request->image_cover_desktop) {
-                        $store->image_cover_desktop = _uploadImage($request->image_cover_desktop, $this->store_id);
-                    }
-
-                    if ($request->delete_image_cover_mobile && $store->image_cover_mobile || $request->image_cover_mobile && $store->image_cover_mobile) {
-                        $image_path = public_path('uploads/' . $this->store_id . '/' . $store->image_cover_mobile);
-
-                        if (file_exists($image_path)) {
-                            unlink($image_path);
-                        }
-
-                        $store->image_cover_mobile = null;
-                    }
-
-                    if ($request->image_cover_mobile) {
-                        $store->image_cover_mobile = _uploadImage($request->image_cover_mobile, $this->store_id);
-                    }
-                } else if ($section == 'access') {
-                    $user->email = $request->email;
-
-                    if ($request->password) {
-                        $user->password = bcrypt($request->password);
-                    }
-                } else if ($section == 'payment') {
-                    $store->max_product_unit = $request->max_product_unit;
-                    $store->max_parcel = $request->max_parcel;
-                    $store->min_parcel_price = $request->min_parcel_price ? number_format(str_replace(['.', ','], ['', '.'], $request->min_parcel_price), 2, '.', '') : null;
-                    $store->free_freight_price = $request->free_freight_price ? number_format(str_replace(['.', ','], ['', '.'], $request->free_freight_price), 2, '.', '') : null;
-
-                    if ($store->free_freight_price) {
-                        Product::withoutGlobalScopes(['active', 'active-store'])
-                            ->where('price', '>=', $store->free_freight_price)
-                            ->update(['free_freight' => 1]);
-                        Product::withoutGlobalScopes(['active', 'active-store'])
-                            ->where('price', '<', $store->free_freight_price)
-                            ->update(['free_freight' => 0]);
-                    }
-
-                    // Delete and insert new payments
-                    $store->payments()->delete();
-                    if ($request->payment) {
-                        foreach ($request->payment as $payment) {
-                            $payment_split = explode('-', $payment);
-
-                            $store->payments()->create([
-                                'method' => $payment_split[0],
-                                'payment' => $payment_split[1]
-                            ]);
-                        }
-                    }
-                } else if ($section == 'freights') {
-                    // Delete and insert new freights
-                    $freights = array_map(function($q, $t) {
-                        return array('id' => $q, 'price' => $t);
-                    }, $request->district_id, $request->freight_price);
-
-                    $store->freights()->delete();
-
-                    foreach ($freights as $freight) {
-                        if ($freight['price']) {
-                            $store->freights()->create([
-                                'price' => number_format(str_replace(array(".", ","), array("", "."), $freight['price']), 2, '.', ''),
-                                'district_id' => $freight['id']
-                            ]);
-                        }
-                    }
-                }
-
-                // Delete and insert new operation hours
-                /*$hours = array_map(function($q, $t) {
-                    return array('week' => $q, 'hour' => $t);
-                }, $request->week_id, $request->operating);
-
-                $store->operatings()->delete();
-
-                foreach ($hours as $hour) {
-                    if ($hour['hour']) {
-                        if (strlen($hour['hour']) == 15) {
-                            $opening_morning = substr($hour['hour'], 0, 5);
-                            $closed_morning = null;
-                            $opening_afternoon = null;
-                            $closed_afternoon = substr($hour['hour'], 10, 5);
-                        }
-
-                        if (strlen($hour['hour']) == 33) {
-                            $opening_morning = substr($hour['hour'], 0, 5);
-                            $closed_morning = substr($hour['hour'], 10, 5);
-                            $opening_afternoon = substr($hour['hour'], 18, 5);
-                            $closed_afternoon = substr($hour['hour'], 28, 5);
-                        }
-
-                        $store->operatings()->create([
-                            'week' => $hour['week'],
-                            'opening_morning' => $opening_morning,
-                            'closed_morning' => $closed_morning,
-                            'opening_afternoon' => $opening_afternoon,
-                            'closed_afternoon' => $closed_afternoon
-                        ]);
-                    }
-                }*/
-
-                if ($store->save() && $user->save()) {
-                    if (Auth::guard('superadmin')->check()) {
-                        app('App\Http\Controllers\SuperadminController')->setStore($store->id);
-                    }
-
-                    $return['msg'] = 'Informações atualizadas.';
-                    $return['status'] = 1;
-                } else {
-                    $return['msg'] = 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
-                    $return['status'] = 0;
-                }
-            } else {
-                $return['msg'] = 'A sua senha atual não confere.';
-                $return['status'] = 2;
-            }
-        }
-
-        return json_encode($return);
-    }
-
-    public function profileStatus($status)
-    {
-        $store = Store::find($this->store_id);
-
-        $districts_count = District::count();
-
-        if ($status == 0 || $status == 1 && $store->freights->count() == $districts_count && $store->phone && $store->cnpj && $store->max_product_unit && $store->max_parcel && $store->min_parcel_price && $store->cep && $store->district && $store->street && $store->number) {
-            $store->status = $status;
-
-            $store->save();
-
-            $return['status'] = true;
-        } else {
-            $return['status'] = false;
-        }
-
-        return json_encode($return);
-    }
-
-    public function deleteAccount(Request $request)
-    {
-        $user = User::find($this->user_id);
-
-        if (Hash::check($request->password, $user->password)) {
-            Store::find($this->store_id)->delete();
-
-            app('App\Http\Controllers\GlobalController')->logout();
-
-            $return['status'] = true;
-        } else {
-            $return['status'] = false;
-        }
-
-        return json_encode($return);
-    }
-
-    public function tutorials($type)
-    {
-        $header_title = 'Tutoriais | naslojas';
-
-        $section = 'tutorial';
-
-        return view('store.tutorials', compact('header_title', 'type', 'section'));
-    }
-
-    private function storeProfileRules()
-    {
-        return [
-            'slug' => 'required|max:200|unique:stores,slug,' . $this->store_id,
-            'name' => 'required|max:200',
-            'phone' => 'required|max:15',
-            'cnpj' => 'required|max:18'
-        ];
-    }
-
-    private function paymentRules()
-    {
-        return [
-            'max_product_unit' => 'numeric',
-            'max_parcel' => 'numeric',
-            'min_parcel_price' => 'required'
-        ];
-    }
-
-    private function addressRules()
-    {
-        return [
-            'cep' => 'required|max:10',
-            'street' => 'required|max:200',
-            'district' => 'required|max:100',
-            'number' => 'required|max:15',
-            'city' => 'required',
-            'state' => 'required'
-        ];
-    }
-
-    private function accessRules()
-    {
-        return [
-            'email' => 'required|max:100|unique:users,email,' . $this->user_id,
-            'password' => 'confirmed'
-        ];
     }
 }

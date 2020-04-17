@@ -1,10 +1,10 @@
 {
-    "/css/global.css": "/css/global.css?id=9a9fed127c4da76a958f",
-    "/css/global-store.css": "/css/global-store.css?id=d87c43b7f1aa017f0427",
-    "/css/global-mobile.css": "/css/global-mobile.css?id=9a650f3d7dc96d2713c0",
-    "/css/global-store-mobile.css": "/css/global-store-mobile.css?id=231401805ed48e20ee33",
-    "/js/global-mobile.js": "/js/global-mobile.js?id=e4fced99515283e2c80f",
-    "/js/global-store-mobile.js": "/js/global-store-mobile.js?id=0bc46d906852a870a81f",
-    "/js/global.js": "/js/global.js?id=0fdbaa8266af1bc1d891",
-    "/js/global-store.js": "/js/global-store.js?id=41dd5a12578b604c5bdb"
+    "/css/global.css": "/css/global.css",
+    "/css/global-store.css": "/css/global-store.css",
+    "/css/global-mobile.css": "/css/global-mobile.css",
+    "/css/global-store-mobile.css": "/css/global-store-mobile.css",
+    "/js/global-mobile.js": "/js/global-mobile.js",
+    "/js/global-store-mobile.js": "/js/global-store-mobile.js",
+    "/js/global.js": "/js/global.js",
+    "/js/global-store.js": "/js/global-store.js"
 }

@@ -28,6 +28,10 @@ $(function() {
         }
     });
 
+    $(document).on('change', '#select-district', function() {
+        window.location.href = '/cliente/district/set/' + $(this).val();
+    });
+
     $('.slick-home').slick({
         slidesToShow: 1,
         infinite: true,
@@ -538,44 +542,28 @@ $(function() {
         errorPlacement: function(error, element) {
         },
         submitHandler: function(form) {
-            modalAlert("Confirme sua senha atual.<input type='password' name='current_password' placeholder='digite aqui' />", 'ENVIAR');
+            const button = $(form).find('input[type=submit]');
 
-            var modal = $('#modal-alert');
+            button.val('SALVANDO').attr('disabled', true);
 
-            modal.find('.btn').addClass('btn-confirm');
+            $.ajax({
+                url: $(form).attr('action'),
+                method: 'POST',
+                dataType: 'json',
+                data: $(form).serialize(),
+                success: function (data) {
+                    button.val('SALVAR ALTERAÇÕES').attr('disabled', false);
 
-            modal.find('.modal-footer .btn-confirm').unbind().on('click', function() {
-                $(form).find('input[name=current_password]').val(modal.find('input[name=current_password]').val());
+                    modalAlert(data.message);
+                },
+                error: function (request, status, error) {
+                    button.val('SALVAR ALTERAÇÕES').attr('disabled', false);
 
-                $.ajax({
-                    url: $(form).attr('action'),
-                    method: 'POST',
-                    dataType: 'json',
-                    data: $(form).serialize(),
-                    success: function (data) {
-                        modal.find('.modal-footer .invalid-field').remove();
-
-                        if(data.status == '0' || data.status == '1') {
-                            modal.find('.modal-body').html(data.msg);
-                            modal.find('.modal-footer .btn-confirm').removeClass('btn-confirm').text('OK');
-
-                            modal.find('.modal-footer .btn').unbind().on('click', function() {
-                                return true;
-                            });
-                        }
-
-                        if(data.status == '1') {
-                            $(form).find('input[type=password]').val('');
-                        }
-
-                        if(data.status == '2') {
-                            modal.find('.modal-footer').prepend("<span class='invalid-field'>Senha inválida</span>");
-                        }
-                    }
-                });
-
-                return false;
+                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                }
             });
+
+            return false;
         }
     });
 

@@ -84,8 +84,6 @@
                     <a href="{{ route('get-client-config', 'access') }}">Dados de acesso</a>
 
                     <div class="fields {{ (isset($navigation) && $navigation == 'access') ? 'show-fields' : '' }}">
-                        {!! Form::input('password', 'current_password') !!}
-
                         <div class="form-group">
                             {!! Form::email('email', null, ['placeholder' => ' ']) !!}
                             {!! Form::label('', 'E-mail') !!}

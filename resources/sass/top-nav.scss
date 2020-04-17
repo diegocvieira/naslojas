@@ -129,6 +129,43 @@ header {
         }
     }
 
+    .select-district-container {
+        margin: 13px 0 0 20px;
+        display: inline-block;
+
+        .bootstrap-select {
+            &.open {
+                .btn-default {
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                    border-top-left-radius: 25px;
+                    border-top-right-radius: 25px;
+                }
+            }
+
+            .btn-default {
+                background-color: #f5f5f5 !important;
+                border: none;
+                border-radius: 35px;
+                height: 36px;
+                padding-left: 20px;
+                font-size: 12.5px;
+                color: #969696;
+                box-shadow: none;
+                outline: none !important;
+            }
+
+            .dropdown-menu {
+                background-color: #f5f5f5;
+                margin-top: -2px;
+                border: none;
+                box-shadow: none;
+                border-bottom-left-radius: 25px;
+                border-bottom-right-radius: 25px;
+            }
+        }
+    }
+
     nav {
         float: right !important;
         position: relative;

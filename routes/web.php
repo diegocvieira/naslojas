@@ -11,80 +11,6 @@
 |
 */
 
-/*Route::get('images/thumb', function () {
-	$images = \App\ProductImage::whereHas('product', function ($q) {
-			$q->withoutGlobalScopes(['active', 'active-store']);
-		})
-		->with(['product' => function($query) {
-                $query->withoutGlobalScopes(['active', 'active-store']);
-        }])
-		->orderBy('id', 'ASC')
-		->offset(0)->limit(500)
-		->get();
-
-	$store_id = 18;
-
-	foreach ($images as $img) {
-		$store_id = $img->product->store_id;
-
-		if (file_exists(public_path('uploads/' . $store_id . '/products/' . _originalImage($img->image)))) {
-			$image = new \Imagick(public_path('uploads/' . $store_id . '/products/' . _originalImage($img->image)));
-
-			if ($image->getImageAlphaChannel()) {
-				$image->setImageAlphaChannel(11);
-			}
-
-			$image->setImageBackgroundColor('#ffffff');
-			$image->setColorspace(\Imagick::COLORSPACE_SRGB);
-			$image->setImageFormat('jpg');
-			$image->stripImage();
-			$image->setImageCompressionQuality(100);
-			$image->setSamplingFactors(array('2x2', '1x1', '1x1'));
-			$image->setInterlaceScheme(\Imagick::INTERLACE_JPEG);
-			$image->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
-
-			$image->resizeImage('248', '248', \imagick::FILTER_LANCZOS, 1, TRUE);
-
-			switch ($image->getImageOrientation()) {
-				case \Imagick::ORIENTATION_TOPLEFT:
-					break;
-				case \Imagick::ORIENTATION_TOPRIGHT:
-					$image->flopImage();
-					break;
-				case \Imagick::ORIENTATION_BOTTOMRIGHT:
-					$image->rotateImage("#fff", 180);
-					break;
-				case \Imagick::ORIENTATION_BOTTOMLEFT:
-					$image->flopImage();
-					$image->rotateImage("#fff", 180);
-					break;
-				case \Imagick::ORIENTATION_LEFTTOP:
-					$image->flopImage();
-					$image->rotateImage("#fff", -90);
-					break;
-				case \Imagick::ORIENTATION_RIGHTTOP:
-					$image->rotateImage("#fff", 90);
-					break;
-				case \Imagick::ORIENTATION_RIGHTBOTTOM:
-					$image->flopImage();
-					$image->rotateImage("#fff", 90);
-					break;
-				case \Imagick::ORIENTATION_LEFTBOTTOM:
-					$image->rotateImage("#fff", -90);
-					break;
-				default: // Invalid orientation
-					break;
-			}
-
-			$image->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
-
-			$image->writeImage(public_path('uploads/' . $store_id . '/products/' . $img->image));
-
-			$image->destroy();
-		}
-	}
-});*/
-
 Route::post('post/download', 'PostController@create')->name('download-post');
 
 Route::get('/', 'GlobalController@home')->name('home');
@@ -202,14 +128,14 @@ Route::group(['prefix' => 'loja'], function () {
 	Route::get('reservas/{type}/{token}', 'ProductReserveController@emailUrl')->name('product-reserve-email-url');
 
 	Route::group(['prefix' => 'admin', 'middleware' => 'auth-store-superadmin'], function () {
-		Route::get('config/{navigation?}', 'StoreController@getConfig')->name('get-store-config');
-		Route::post('config', 'StoreController@setConfig')->name('set-store-config');
+		Route::get('config/{navigation?}', 'Admin\StoreController@getConfig')->name('get-store-config');
+		Route::post('config', 'Admin\StoreController@setConfig')->name('set-store-config');
 
-		Route::post('profile-status/{status}', 'StoreController@profileStatus');
+		Route::post('profile-status/{status}', 'Admin\StoreController@profileStatus');
 
-		Route::post('delete-account', 'StoreController@deleteAccount')->name('delete-store-account');
+		Route::post('delete-account', 'Admin\StoreController@deleteAccount')->name('delete-store-account');
 
-		Route::get('tutoriais/{type}', 'StoreController@tutorials')->name('tutorials');
+		Route::get('tutoriais/{type}', 'Admin\StoreController@tutorials')->name('tutorials');
 
 		Route::group(['prefix' => 'produtos'], function () {
 			Route::get('cadastro', 'ProductController@images')->name('product-images');
@@ -265,6 +191,8 @@ Route::group(['prefix' => 'loja'], function () {
 
 // Client
 Route::group(['prefix' => 'cliente'], function () {
+    Route::get('district/set/{districtId}', 'ClientController@districtSet')->name('client-district-set');
+
 	Route::get('login', function () {
 		if (Agent::isDesktop()) {
 			return view('client.login');
@@ -288,10 +216,10 @@ Route::group(['prefix' => 'cliente'], function () {
 	Route::post('cadastro', 'ClientController@register')->name('client-register-post');
 
 	Route::group(['prefix' => 'admin', 'middleware' => 'auth:client'], function () {
-		Route::get('config/{navigation?}', 'ClientController@getConfig')->name('get-client-config');
-		Route::post('config', 'ClientController@setConfig')->name('set-client-config');
+		Route::get('config/{navigation?}', 'Admin\ClientController@getConfig')->name('get-client-config');
+		Route::post('config', 'Admin\ClientController@setConfig')->name('set-client-config');
 
-		Route::post('delete-account', 'ClientController@deleteAccount')->name('delete-client-account');
+		Route::post('delete-account', 'Admin\ClientController@deleteAccount')->name('delete-client-account');
 
 		// Rate product
 		Route::post('product/rating', 'ProductController@rating')->name('rating-product');

@@ -47,4 +47,18 @@ class Store extends Model
     {
         return $this->hasMany('App\User', 'store_id', 'id');
     }
+
+    public function scopeIsActive($query)
+    {
+        return $query->where('status', true);
+    }
+
+    public function scopeClientDistrict($query)
+    {
+        if (session('client_district_id')) {
+            return $query->whereHas('freights', function ($query) {
+                $query->where('district_id', session('client_district_id'));
+            });
+        }
+    }
 }

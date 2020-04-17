@@ -64,7 +64,6 @@
 
                 <div class="col-xs-8">
                     {!! Form::hidden('section', $navigation ?? 'store-profile') !!}
-                    {!! Form::input('password', 'current_password', null, ['class' => 'current-password']) !!}
 
                     @if (!isset($navigation) || isset($navigation) && $navigation == 'store-profile')
                         <div class="fields">
@@ -167,12 +166,12 @@
                                         @endphp
 
                                         @if ($store_freight->district_id == $district->id)
-                                            {!! Form::text('freight_price[' . $key . ']', $store_freight->price, ['placeholder' => ' ', 'class' => 'mask-money', 'required']) !!}
+                                            {!! Form::text('freight_price[' . $key . ']', $store_freight->price, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
                                         @endif
                                     @endforeach
 
                                     @if (!isset($accept_districts) || !in_array($district->id, $accept_districts))
-                                        {!! Form::text('freight_price[' . $key . ']', null, ['placeholder' => ' ', 'class' => 'mask-money', 'required']) !!}
+                                        {!! Form::text('freight_price[' . $key . ']', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
                                     @endif
 
                                     {!! Form::label('', $district->name) !!}

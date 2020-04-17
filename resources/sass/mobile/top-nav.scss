@@ -236,3 +236,57 @@ header {
         }
     }
 }
+
+.select-district-container {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    padding: 50px 10px 0;
+    z-index: 1000;
+    overflow: auto;
+    left: 0;
+    top: 0;
+    -webkit-transition: .2s;
+    transition: .2s;
+    opacity: 0;
+    visibility: hidden;
+
+    &.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .close-select-district {
+        width: 30px;
+        height: 30px;
+        background-image: url('../../images/icon-remove.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        border: none;
+        background-color: transparent;
+        position: absolute;
+        right: 20px;
+        top: 70px;
+    }
+
+    .select-district-title {
+        font-size: 25px;
+        color: #000;
+        display: block;
+        margin: 25px 0 15px 0;
+        padding-left: 10px;
+    }
+
+    li {
+        display: block;
+
+        a {
+            font-size: 14.5px;
+            color: rgb(150, 150, 150);
+            padding: 10px;
+            display: block;
+        }
+    }
+}

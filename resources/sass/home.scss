@@ -110,6 +110,11 @@
     }
 
     .stores {
+        .no-results {
+            position: relative;
+            margin-top: 100px;
+        }
+
         .item {
             margin-bottom: 50px;
 

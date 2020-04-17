@@ -12,7 +12,6 @@
 
         {!! Form::model($user->store, ['method' => 'POST', 'route' => 'set-store-config', 'id' => 'form-store-config']) !!}
             {!! Form::hidden('section', $navigation ?? 'store-profile') !!}
-            {!! Form::input('password', 'current_password', null, ['class' => 'current-password']) !!}
 
             <ul class="navigation">
                 <li>
@@ -129,12 +128,12 @@
                                         @endphp
 
                                         @if ($store_freight->district_id == $district->id)
-                                            {!! Form::text('freight_price[' . $key . ']', $store_freight->price, ['placeholder' => ' ', 'class' => 'mask-money', 'required']) !!}
+                                            {!! Form::text('freight_price[' . $key . ']', $store_freight->price, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
                                         @endif
                                     @endforeach
 
                                     @if (!isset($accept_districts) || !in_array($district->id, $accept_districts))
-                                        {!! Form::text('freight_price[' . $key . ']', null, ['placeholder' => ' ', 'class' => 'mask-money', 'required']) !!}
+                                        {!! Form::text('freight_price[' . $key . ']', null, ['placeholder' => ' ', 'class' => 'mask-money']) !!}
                                     @endif
 
                                     {!! Form::label('', $district->name) !!}

@@ -49,6 +49,10 @@
                     </a>
 
                     <ul class="dropdown-menu">
+                        <li style="border-bottom: 1px solid #e6e6e6;">
+                            <a href="#" class="show-select-district">{{ session('client_district_name') ?? 'Selecione seu bairro' }}</a>
+                        </li>
+
                         @if (Auth::guard('client')->check() || Auth::guard('superadmin')->check())
                             @if (Auth::guard('client')->check())
                                 <li>
@@ -130,6 +134,20 @@
         </nav>
     @endif
 </header>
+
+<div class="select-district-container">
+    <button class="close-select-district"></button>
+
+    <h4 class="select-district-title">Bairros</h4>
+
+    <ul>
+        @foreach ($districts as $district)
+            <li>
+                <a href="{{ route('client-district-set', $district->id) }}">{{ $district->name }}</a>
+            </li>
+        @endforeach
+    </ul>
+</div>
 
 @if (Auth::guard('store')->check())
     <ul class="store-navigation">

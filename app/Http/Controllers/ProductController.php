@@ -36,7 +36,8 @@ class ProductController extends Controller
         $related_products = Product::where('id', '!=', $product->id)
             ->has('images')
             ->whereHas('store', function ($query) use ($product) {
-                $query->where('city_id', $product->store->city->id);
+                $query->where('city_id', $product->store->city->id)
+                    ->clientDistrict();
             })
             ->where(function ($query) use ($product) {
                 $query->search($product->title);
@@ -62,6 +63,9 @@ class ProductController extends Controller
     {
         $product = Product::where('slug', $slug)
             ->has('images')
+            ->whereHas('store', function ($query) {
+                    $query->clientDistrict();
+                })
             ->firstOrFail();
 
         $product_rating = ProductRating::select(DB::raw('ROUND((SUM(rating) / COUNT(id)), 1) as rating, COUNT(id) as rating_number'))
@@ -142,7 +146,7 @@ class ProductController extends Controller
         $search_gender = $request->gender ?? null;
         $search_order = $request->order ?? null;
         $keyword = $request->keyword ?? null;
-        $advanced = $request->advanced ?? null;
+        // $advanced = $request->advanced ?? null;
         $search_max_price = $request->max_price ?? null;
         $search_min_price = $request->min_price ?? null;
         $search_size = $request->size ?? null;
@@ -154,6 +158,9 @@ class ProductController extends Controller
         $search_color = $request->color ?? null;
 
         $products = Product::has('images')
+            ->whereHas('store', function ($query) {
+                    $query->clientDistrict();
+                })
             ->filterGender($search_gender)
             ->filterOrder($search_order)
             ->filterMinPrice($search_min_price)
@@ -173,62 +180,62 @@ class ProductController extends Controller
             $header_title = $keyword . ' em ' . Cookie::get('city_title') . ' - ' . Cookie::get('state_letter') . ' | naslojas.com';
             $header_desc = 'Clique para ver ' . $keyword . ' em ' . Cookie::get('city_title') . ' - ' . Cookie::get('state_letter');
 
-            if ($advanced == 'true') {
-                $products = $products->where(function ($query) use ($keyword) {
-                    $query->search($keyword);
-                });
+            // if ($advanced == 'true') {
+            //     $products = $products->where(function ($query) use ($keyword) {
+            //         $query->search($keyword);
+            //     });
 
-                if ($keyword == 'estilo') {
-                    $terms = ['sapato', 'calcado', 'salto alto', 'sapatenis', 'casual', 'colete', 'scarpin', 'jeans', 'sapatilha', 'sandalia', 'calca jeans', 'peep toe', 'bota', 'saia', 'mini saia', 'short', 'bermuda', 'calca', 'vestido', 'blusa', 'camisa', 'camiseta', 'casaco', 'jaqueta', 'blusao', 'moletom', 'moleton', 'agasalho', 'blusinha', 'sobretudo', 'mala', 'mochila', 'bolsa', 'joia', 'relogio', 'anel', 'chapeu', 'manta', 'maleta', 'carteira', 'bikini', 'biquini', 'luva', 'meia', 'carpim', 'bone', 'tiara', 'brinco', 'pochete', 'colar', 'pulseira', 'oculos', 'oculos de sol', 'oculos escuros', 'maquiagem', 'batom', 'tornozeleira', 'cinto', 'suspensorio'];
-                } else if ($keyword == 'esporte') {
-                    $terms = ['nike', 'adidas', 'olympikus', 'mizuno', 'asics', 'bola', 'esporte', 'gremio', 'inter', 'time', 'penalty', 'topper', 'futebol', 'tenis adidas', 'tenis nike', 'tenis olympikus', 'tenis mizuno', 'tenis asics', 'tenis topper', 'tenis penalty', 'tenis corrida', 'tenis basket', 'tenis academia', 'basquete', 'basket', 'volei', 'corrida', 'academia', 'treino', 'regata', 'camiseta regata', 'calcao', 'meiao', 'sunga', 'maio', 'caneleira', 'joelheira', 'cotoveleira'];
-                } else if ($keyword == 'casual') {
-                    $terms = ['sapato', 'calcado', 'salto alto', 'sapatenis', 'casual', 'colete', 'scarpin', 'jeans', 'sapatilha', 'sandalia', 'calca jeans', 'peep toe', 'bota', 'saia', 'mini saia', 'short', 'bermuda', 'calca', 'vestido', 'blusa', 'camisa', 'camiseta', 'casaco', 'jaqueta', 'blusao', 'moletom', 'moleton', 'agasalho', 'blusinha', 'sobretudo'];
-                } else if ($keyword == 'acessorios') {
-                    $terms = ['mala', 'mochila', 'bolsa', 'joia', 'relogio', 'anel', 'chapeu', 'manta', 'maleta', 'carteira', 'bikini', 'biquini', 'luva', 'meia', 'carpim', 'bone', 'tiara', 'brinco', 'pochete', 'colar', 'pulseira', 'oculos', 'oculos de sol', 'oculos escuros', 'maquiagem', 'batom', 'tornozeleira', 'cinto', 'suspensorio'];
-                } else if ($keyword == 'roupas') {
-                    $terms = ['agasalho', 'bermuda', 'bikini', 'biquini', 'blusa', 'blusão', 'calça', 'calção', 'camisa', 'camiseta', 'camiseta regata', 'casaco', 'colete', 'jaqueta', 'jeans', 'legging', 'maiô', 'mini saia', 'moletom', 'regata', 'saia', 'short', 'sobretudo', 'sunga', 'suspensório', 'vestido'];
-                } else if ($keyword == 'calcados') {
-                    $terms = ['botas', 'calçado', 'oxford', 'peep toe', 'salto alto', 'sandália', 'sapatênis', 'sapatilha', 'sapato', 'scarpin', 'tamanco', 'tênis'];
-                }
+            //     if ($keyword == 'estilo') {
+            //         $terms = ['sapato', 'calcado', 'salto alto', 'sapatenis', 'casual', 'colete', 'scarpin', 'jeans', 'sapatilha', 'sandalia', 'calca jeans', 'peep toe', 'bota', 'saia', 'mini saia', 'short', 'bermuda', 'calca', 'vestido', 'blusa', 'camisa', 'camiseta', 'casaco', 'jaqueta', 'blusao', 'moletom', 'moleton', 'agasalho', 'blusinha', 'sobretudo', 'mala', 'mochila', 'bolsa', 'joia', 'relogio', 'anel', 'chapeu', 'manta', 'maleta', 'carteira', 'bikini', 'biquini', 'luva', 'meia', 'carpim', 'bone', 'tiara', 'brinco', 'pochete', 'colar', 'pulseira', 'oculos', 'oculos de sol', 'oculos escuros', 'maquiagem', 'batom', 'tornozeleira', 'cinto', 'suspensorio'];
+            //     } else if ($keyword == 'esporte') {
+            //         $terms = ['nike', 'adidas', 'olympikus', 'mizuno', 'asics', 'bola', 'esporte', 'gremio', 'inter', 'time', 'penalty', 'topper', 'futebol', 'tenis adidas', 'tenis nike', 'tenis olympikus', 'tenis mizuno', 'tenis asics', 'tenis topper', 'tenis penalty', 'tenis corrida', 'tenis basket', 'tenis academia', 'basquete', 'basket', 'volei', 'corrida', 'academia', 'treino', 'regata', 'camiseta regata', 'calcao', 'meiao', 'sunga', 'maio', 'caneleira', 'joelheira', 'cotoveleira'];
+            //     } else if ($keyword == 'casual') {
+            //         $terms = ['sapato', 'calcado', 'salto alto', 'sapatenis', 'casual', 'colete', 'scarpin', 'jeans', 'sapatilha', 'sandalia', 'calca jeans', 'peep toe', 'bota', 'saia', 'mini saia', 'short', 'bermuda', 'calca', 'vestido', 'blusa', 'camisa', 'camiseta', 'casaco', 'jaqueta', 'blusao', 'moletom', 'moleton', 'agasalho', 'blusinha', 'sobretudo'];
+            //     } else if ($keyword == 'acessorios') {
+            //         $terms = ['mala', 'mochila', 'bolsa', 'joia', 'relogio', 'anel', 'chapeu', 'manta', 'maleta', 'carteira', 'bikini', 'biquini', 'luva', 'meia', 'carpim', 'bone', 'tiara', 'brinco', 'pochete', 'colar', 'pulseira', 'oculos', 'oculos de sol', 'oculos escuros', 'maquiagem', 'batom', 'tornozeleira', 'cinto', 'suspensorio'];
+            //     } else if ($keyword == 'roupas') {
+            //         $terms = ['agasalho', 'bermuda', 'bikini', 'biquini', 'blusa', 'blusão', 'calça', 'calção', 'camisa', 'camiseta', 'camiseta regata', 'casaco', 'colete', 'jaqueta', 'jeans', 'legging', 'maiô', 'mini saia', 'moletom', 'regata', 'saia', 'short', 'sobretudo', 'sunga', 'suspensório', 'vestido'];
+            //     } else if ($keyword == 'calcados') {
+            //         $terms = ['botas', 'calçado', 'oxford', 'peep toe', 'salto alto', 'sandália', 'sapatênis', 'sapatilha', 'sapato', 'scarpin', 'tamanco', 'tênis'];
+            //     }
 
-                foreach ($terms as $t) {
-                    $products = $products->orWhere(function ($q) use ($t) {
-                        $q->search($t);
-                    });
-                }
-            } else {
+            //     foreach ($terms as $t) {
+            //         $products = $products->orWhere(function ($q) use ($t) {
+            //             $q->search($t);
+            //         });
+            //     }
+            // } else {
                 $products = $products->where(function ($query) use ($keyword) {
                     $query->search($keyword)
                         ->orWhereHas('store', function ($query) use ($keyword) {
                             $query->search($keyword);
                         });
                 });
-            }
+            // }
         }
 
         $products = $products->paginate(32);
 
-        if ($keyword && $products->count() == 0) {
-            $products = Product::has('images')
-                ->filterGender($search_gender)
-                ->filterOrder($search_order)
-                ->filterMinPrice($search_min_price)
-                ->filterMaxPrice($search_max_price)
-                ->filterSize($search_size)
-                ->filterOff($search_off)
-                ->filterInstallment($search_installment)
-                ->filterBrand($search_brand)
-                ->filterFreight($search_freight)
-                ->filterCategory($search_category)
-                ->filterColor($search_color)
-                ->where(function ($query) use ($keyword) {
-                    $query->search(preg_replace('{(.)\1+}','$1', $keyword))->orWhereHas('store', function ($query) use ($keyword) {
-                        $query->search(preg_replace('{(.)\1+}','$1', $keyword));
-                    });
-                })
-                ->paginate(32);
-        }
+        // if ($keyword && $products->count() == 0) {
+        //     $products = Product::has('images')
+        //         ->filterGender($search_gender)
+        //         ->filterOrder($search_order)
+        //         ->filterMinPrice($search_min_price)
+        //         ->filterMaxPrice($search_max_price)
+        //         ->filterSize($search_size)
+        //         ->filterOff($search_off)
+        //         ->filterInstallment($search_installment)
+        //         ->filterBrand($search_brand)
+        //         ->filterFreight($search_freight)
+        //         ->filterCategory($search_category)
+        //         ->filterColor($search_color)
+        //         ->where(function ($query) use ($keyword) {
+        //             $query->search(preg_replace('{(.)\1+}','$1', $keyword))->orWhereHas('store', function ($query) use ($keyword) {
+        //                 $query->search(preg_replace('{(.)\1+}','$1', $keyword));
+        //             });
+        //         })
+        //         ->paginate(32);
+        // }
 
         // FILTERS //
 
