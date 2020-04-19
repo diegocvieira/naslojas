@@ -29,12 +29,12 @@ class GlobalController extends Controller
 
         // session(['session_modal_home' => (session('session_modal_home') ? 'false' : 'true')]);
 
-        $stores = Cache::remember('stores' . session('client_district_id'), 24*60*60, function () {
-            return Store::isActive()
-                ->clientDistrict()
-                ->inRandomOrder()
-                ->get();
-        });
+        // $stores = Cache::remember('stores' . session('client_district_id'), 24*60*60, function () {
+        $stores = Store::isActive()
+            ->clientDistrict()
+            ->inRandomOrder()
+            ->get();
+        // });
 
         // $featured_products = Product::has('images')
         //     ->where(function($q) {
