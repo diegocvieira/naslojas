@@ -33,21 +33,41 @@ class StoreController extends Controller
 
     public function profileStatus($status)
     {
-        $store = Store::find($this->store_id);
+        $store = Store::findOrFail($this->store_id);
 
-        $districts_count = District::count();
+        $validator = Validator::make([
+                'phone' => $store->phone,
+                'cnpj' => $store->cnpj,
+                'max_product_unit' => $store->max_product_unit,
+                'max_parcel' => $store->max_parcel,
+                'min_parcel_price' => $store->min_parcel_price,
+                'cep' => $store->cep,
+                'district' => $store->district,
+                'street' => $store->street,
+                'number' => $store->number
+            ], [
+                'phone' => 'required',
+                'cnpj' => 'required',
+                'max_product_unit' => 'required',
+                'max_parcel' => 'required',
+                'min_parcel_price' => 'required',
+                'cep' => 'required',
+                'district' => 'required',
+                'street' => 'required',
+                'number' => 'required'
+            ],
+            app('App\Http\Controllers\GlobalController')->customMessages()
+        );
 
-        if ($status == 0 || $status == 1 && $store->freights->count() == $districts_count && $store->phone && $store->cnpj && $store->max_product_unit && $store->max_parcel && $store->min_parcel_price && $store->cep && $store->district && $store->street && $store->number) {
-            $store->status = $status;
-
-            $store->save();
-
-            $return['status'] = true;
-        } else {
-            $return['status'] = false;
+        if ($status == 1 && $validator->fails()) {
+            $data['success'] = false;
+            $data['message'] = $validator->errors()->first();
+            return response()->json($data);
         }
 
-        return json_encode($return);
+        $store->update(['status' => $status]);
+        $data['success'] = true;
+        return response()->json($data);
     }
 
     public function deleteAccount(Request $request)

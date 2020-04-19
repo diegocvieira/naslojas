@@ -12,12 +12,12 @@ $(function() {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                if (data.status) {
+                if (data.success) {
                     status.toggleClass('active-profile');
 
                     status.hasClass('active-profile') ? status.prev().text('Loja ativada') : status.prev().text('Loja desativada');
                 } else {
-                    modalAlert('Preencha os campos obrigatórios em todas as seções.');
+                    modalAlert(data.message);
                 }
             }
         });
