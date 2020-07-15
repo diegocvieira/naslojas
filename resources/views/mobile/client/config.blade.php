@@ -1,11 +1,8 @@
-@php
-    $top_nav = true;
-    $body_class = 'bg-white';
-@endphp
-
-@extends('mobile.base')
+@extends('app', ['body_class' => 'bg-white'])
 
 @section('content')
+    @include ('mobile.inc.header')
+
     <div class="container page-admin page-client-config">
         <h1 class="page-title">Minha conta</h1>
         <p class="page-description">Mantenha os seus dados sempre atualizados</p>
@@ -109,4 +106,6 @@
             {!! Form::submit('SALVAR ALTERAÇÕES') !!}
         {!! Form::close() !!}
     </div>
+
+    @include ('mobile.inc.footer')
 @endsection

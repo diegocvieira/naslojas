@@ -1,11 +1,8 @@
-@php
-    $top_nav = true;
-    $body_class = 'bg-white';
-@endphp
-
-@extends('base')
+@extends('app', ['body_class' => 'bg-white'])
 
 @section('content')
+    @include ('inc.header')
+
     <div class="container">
         @include('inc.know')
 
@@ -88,4 +85,6 @@
             </div>
         </div>
     </div>
+
+    @include ('inc.footer')
 @endsection

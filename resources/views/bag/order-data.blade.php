@@ -1,11 +1,8 @@
-<?php
-    $top_nav = true;
-    $body_class = 'bg-white';
-?>
-
-@extends('base')
+@extends('app', ['body_class' => 'bg-white'])
 
 @section('content')
+    @include ('inc.header')
+
     <div class="container page-bag-order-data">
         <div class="row">
             <div class="col-xs-12">
@@ -176,4 +173,6 @@
             {!! Form::close() !!}
         </div>
     </div>
+
+    @include ('inc.footer')
 @endsection

@@ -1,11 +1,8 @@
-@php
-    $top_nav = true;
-    $back = true;
-@endphp
-
-@extends('mobile.base')
+@extends('app')
 
 @section('content')
+    @include ('mobile.inc.header', ['back' => true])
+
     <div class="container page-create-edit-product">
         @if (isset($product))
             {!! Form::model($product, ['method' => 'POST', 'route' => ['save-products', $product->id], 'id' => 'form-create-edit-product', 'files' => true]) !!}
@@ -212,4 +209,6 @@
             </div>
         {!! Form::close() !!}
     </div>
+
+    @include ('mobile.inc.footer')
 @endsection

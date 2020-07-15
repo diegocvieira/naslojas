@@ -22,9 +22,6 @@ class StoreController extends Controller
             if (Auth::guard('store')->check()) {
                 $this->store_id = Auth::guard('store')->user()->store_id;
                 $this->user_id = Auth::guard('store')->user()->id;
-            } else if (Auth::guard('superadmin')->check()) {
-                $this->store_id = session('superadmin_store_id');
-                $this->user_id = session('superadmin_user_id');
             }
 
             return $next($request);
@@ -274,10 +271,6 @@ class StoreController extends Controller
         try {
             $store->save();
             $user->save();
-
-            if (Auth::guard('superadmin')->check()) {
-                app('App\Http\Controllers\SuperadminController')->setStore($store->id);
-            }
 
             $data['message'] = 'Informações atualizadas.';
         } catch (\Throwable $th) {

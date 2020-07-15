@@ -16,13 +16,16 @@ class CreateCitiesTable extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('state_id');
-            $table->foreign('state_id')->references('id')->on('states');
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
             $table->string('title', 50);
             $table->integer('iso');
-            $table->string('iso_ddd', 6);
-            $table->tinyInteger('status');
+            $table->integer('iso_ddd');
+            $table->integer('status');
             $table->string('slug', 75);
-            $table->string('order', 5);
+            $table->integer('population');
+            $table->decimal('lat', 12, 8);
+            $table->decimal('long', 12, 8);
+            $table->decimal('income_per_capita', 8, 2);
         });
     }
 

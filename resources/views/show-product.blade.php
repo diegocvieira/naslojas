@@ -1,6 +1,8 @@
-@extends('base')
+@extends('app')
 
 @section('content')
+    @include('inc.header')
+
     <div class="container page-show-product">
         @include('inc.know')
 
@@ -210,4 +212,6 @@
             @endif
         </div>
     </div>
+
+    @include ('inc.footer')
 @endsection

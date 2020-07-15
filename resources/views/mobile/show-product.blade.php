@@ -1,11 +1,8 @@
-@php
-    $top_nav = true;
-    $body_class = 'bg-white';
-@endphp
-
-@extends('mobile.base')
+@extends('app', ['body_class' => 'bg-white'])
 
 @section('content')
+    @include ('mobile.inc.header')
+
     <div class="container page-show-product">
         @include ('mobile.inc._know')
 
@@ -201,4 +198,6 @@
             </div>
         @endif
     </div>
+
+    @include ('mobile.inc.footer')
 @endsection

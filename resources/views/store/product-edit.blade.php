@@ -1,10 +1,8 @@
-<?php
-    $top_nav_store = true;
-?>
-
-@extends('base')
+@extends('app')
 
 @section('content')
+    @include ('inc.header-store')
+
     <div class="container page-product-edit {{ $section == 'add' ? 'page-add' : 'page-edit' }}">
         @if ($products->count() > 0 || $products->count() == 0 && isset($keyword))
             @if ($products->count())
@@ -28,13 +26,6 @@
                                     <button type="button" class="btn-finish add" data-status="1">ENVIAR AO SITE</button>
                                 @else
                                     <button type="button" class="btn-finish">SALVAR</button>
-                                @endif
-
-                                @if (Auth::guard('superadmin')->check())
-                                    {!! Form::open(['method' => 'POST', 'route' => 'save-excel', 'files' => true]) !!}
-                                        {!! Form::file('file') !!}
-                                        {!! Form::submit('file') !!}
-                                    {!! Form::close() !!}
                                 @endif
                             </div>
                         </div>
@@ -68,4 +59,6 @@
             </div>
         @endif
     </div>
+
+    @include ('inc.footer')
 @endsection

@@ -1,3 +1,8 @@
+@import '../../plugins/bootstrap.min.css';
+@import '../../plugins/bootstrap-select.min.css';
+@import '../../plugins/slick.min.css';
+@import '../../plugins/dropzone.min.css';
+
 @font-face {
     font-family: 'KeepCalm';
     src: url('../../fonts/KeepCalm.ttf') format('truetype');
@@ -373,7 +378,7 @@ a, a:hover, a:active, a:focus {
     }
 }
 
-@import 'top-nav.scss';
+@import 'header.scss';
 @import 'footer.scss';
 @import 'home';
 @import 'list-products.scss';
@@ -383,9 +388,10 @@ a, a:hover, a:active, a:focus {
 @import 'admin.scss';
 @import 'client-config.scss';
 @import 'login-register.scss';
-@import 'how-works.scss';
-@import 'store-advertise.scss';
 @import 'bag-preview.scss';
 @import 'bag-products.scss';
 @import 'bag-order-data.scss';
 @import 'bag-success.scss';
+@import 'store-config.scss';
+@import 'admin-products.scss';
+@import 'create-edit-product.scss';

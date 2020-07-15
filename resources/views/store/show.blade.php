@@ -1,11 +1,8 @@
-<?php
-    $top_nav = true;
-    $body_class = 'page-show-store bg-white';
-?>
-
-@extends('base')
+@extends('app', ['body_class' => 'page-show-store bg-white'])
 
 @section('content')
+    @include('inc.header')
+
     @if ($products->count() && $store->image_cover_desktop)
         <div class="store-cover">
             <img src="{{ asset('uploads/' . $store->id . '/' . $store->image_cover_desktop) }}" alt="{{ $store->name }}" />
@@ -110,4 +107,6 @@
              </div>
          </div>
     </div>
+
+    @include ('inc.footer')
 @endsection

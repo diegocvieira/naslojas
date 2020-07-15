@@ -1,10 +1,8 @@
-<?php
-    $top_nav_store = true;
-?>
-
-@extends('base')
+@extends('app')
 
 @section('content')
+    @include ('inc.header-store')
+
     <div class="container page-admin page-messages">
         @if ($messages->count())
             <div class="page-header">
@@ -54,4 +52,6 @@
             </div>
         @endif
     </div>
+
+    @include ('inc.footer')
 @endsection

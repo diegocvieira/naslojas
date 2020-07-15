@@ -1,11 +1,8 @@
-@php
-    $top_nav = true;
-    $body_class = 'bg-white';
-@endphp
-
-@extends('mobile.base')
+@extends('app', ['body_class' => 'bg-white'])
 
 @section('content')
+    @include ('mobile.inc.header')
+
     <div class="container page-bag-products bag">
         @if (isset($products))
             <div class="header-bag">
@@ -61,4 +58,6 @@
             </div>
         @endif
     </div>
+
+    @include ('mobile.inc.footer')
 @endsection

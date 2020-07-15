@@ -1,11 +1,8 @@
-<?php
-    $top_simple = true;
-    $header_title = 'Regras para os anúncios - naslojas.com';
-?>
-
-@extends('base')
+@extends('app', ['header_title' => 'Regras para os anúncios - naslojas.com'])
 
 @section('content')
+    @include ('inc.header-simple')
+
     <div class="container page-terms">
         <section>
             <h1>Regras para os anúncios</h1>
@@ -95,4 +92,6 @@
             </p>
         </section>
     </div>
+
+    @include ('inc.footer')
 @endsection

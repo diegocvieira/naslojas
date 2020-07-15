@@ -1,11 +1,8 @@
-@php
-    $top_nav = true;
-    $body_class = 'bg-white';
-@endphp
-
-@extends('mobile.base')
+@extends('app', ['body_class' => 'bg-white'])
 
 @section('content')
+    @include ('mobile.inc.header')
+
     <div class="container page-admin page-messages">
         @if ($messages->count())
             <h1 class="page-title">Mensagens</h1>
@@ -70,4 +67,6 @@
             </div>
         @endif
     </div>
+
+    @include ('mobile.inc.footer')
 @endsection

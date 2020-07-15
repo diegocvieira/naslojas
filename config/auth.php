@@ -44,10 +44,6 @@ return [
             'driver' => 'session',
             'provider' => 'clients',
         ],
-        'superadmin' => [
-            'driver' => 'session',
-            'provider' => 'superadmins',
-        ],
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -79,10 +75,6 @@ return [
         'clients' => [
             'driver' => 'eloquent',
             'model' => App\Client::class,
-        ],
-        'superadmins' => [
-            'driver' => 'eloquent',
-            'model' => App\SuperAdmin::class,
         ],
 
         // 'users' => [

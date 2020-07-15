@@ -15,8 +15,6 @@ class MessageController extends Controller
         $this->middleware(function ($request, $next) {
             if (Auth::guard('store')->check()) {
                 $this->store_id = Auth::guard('store')->user()->store_id;
-            } else if (Auth::guard('superadmin')->check()) {
-                $this->store_id = session('superadmin_store_id');
             }
 
             return $next($request);

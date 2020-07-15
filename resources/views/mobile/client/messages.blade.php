@@ -1,10 +1,8 @@
-<?php
-    $top_nav = true;
-?>
-
-@extends('mobile.base')
+@extends('app')
 
 @section('content')
+    @include ('mobile.inc.header')
+
     <div class="container page-admin page-messages">
         @if ($messages->count())
             <h1 class="page-title">Mensagens</h1>
@@ -69,4 +67,6 @@
             </div>
         @endif
     </div>
+
+    @include ('mobile.inc.footer')
 @endsection

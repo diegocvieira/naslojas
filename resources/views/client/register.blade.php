@@ -1,11 +1,8 @@
-<?php
-    $top_simple = true;
-    $header_title = 'Cadastro do cliente - naslojas.com';
-?>
-
-@extends('base')
+@extends('app', ['header_title' => 'Cadastro do cliente - naslojas.com'])
 
 @section('content')
+    @include ('inc.header')
+
     <div class="container page-login-register">
         <div class="top">
             <a href="{{ route('client-register-get') }}" class="active">CLIENTE</a>
@@ -45,4 +42,6 @@
             <p class="link">Já é cadastrado? <a href="{{ route('client-login-get') }}">Entrar</a></p>
         {!! Form::close() !!}
     </div>
+
+    @include ('inc.footer')
 @endsection

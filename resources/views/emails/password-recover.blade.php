@@ -47,7 +47,7 @@
 
                 <tr>
                     <td style="padding: 40px 50px 0 50px;">
-                        <span style="text-align: center; display: block; font-size: 12.5; color: rgb(150, 150, 150);">Copyright 2019. Todos os direitos reservados.</span>
+                        <span style="text-align: center; display: block; font-size: 12.5; color: rgb(150, 150, 150);">Copyright {{ date('Y') }}. Todos os direitos reservados.</span>
                     </td>
                 </tr>
 

@@ -1,11 +1,8 @@
-<?php
-    $top_simple = true;
-    $header_title = 'Termos e condições gerais de uso - naslojas.com';
-?>
-
-@extends('base')
+@extends('app', ['header_title' => 'Termos e condições gerais de uso - naslojas.com'])
 
 @section('content')
+    @include ('inc.header-simple')
+
     <div class="container page-terms">
         <section>
             <h1>Termos e condições gerais de uso</h1>
@@ -271,4 +268,6 @@
             </p>
         </section>
     </div>
+
+    @include ('inc.footer')
 @endsection

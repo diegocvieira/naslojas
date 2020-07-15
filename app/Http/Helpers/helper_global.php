@@ -1,4 +1,17 @@
 <?php
+
+function _generatePassword($encrypt = true)
+{
+    $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    $password = substr(str_shuffle($chars), 0, 12);
+
+    if ($encrypt) {
+        $password = bcrypt($password);
+    }
+
+    return $password;
+}
+
 function _setCity($city, $force = false)
 {
     if ($city != null && ($force == true || !Cookie::get('city_slug'))) {
@@ -9,8 +22,8 @@ function _setCity($city, $force = false)
         //Cookie::queue('state_id', $city->state->id, '525600');
         //Cookie::queue('state_title', $city->state->title, '525600');
         //Cookie::queue('state_slug', $city->state->slug, '525600');
-        Cookie::queue('state_letter', $city->state->letter, '525600');
-        Cookie::queue('state_letter_lc', $city->state->letter_lc, '525600');
+        Cookie::queue('state_letter', strlower($city->state->letter), '525600');
+        // Cookie::queue('state_letter', $city->state->letter_lc, '525600');
     }
 }
 
@@ -185,7 +198,13 @@ function _uploadImageProduct($file, $store_id, $input_file = true)
         }
         $image->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
 
-        $image->writeImage(public_path('uploads/' . $store_id . '/products/' . $image_name));
+        $imagePath = public_path() . "/uploads/{$store_id}/products";
+
+        if (!is_dir($imagePath)) {
+            mkdir($imagePath, 0777, true);
+        }
+
+        $image->writeImage($imagePath . '/' . $image_name);
 
         $image->destroy();
     }
@@ -244,7 +263,13 @@ function _uploadImage($file, $store_id)
     }
     $image->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
 
-    $image->writeImage(public_path('uploads/' . $store_id . '/' . $image_name));
+    $imagePath = public_path() . '/uploads/' . $store_id;
+
+    if (!is_dir($imagePath)) {
+        mkdir($imagePath, 0777, true);
+    }
+
+    $image->writeImage($imagePath . '/' . $image_name);
 
     $image->destroy();
 

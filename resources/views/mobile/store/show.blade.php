@@ -1,12 +1,8 @@
-<?php
-    $top_nav = true;
-    $show_filter_products = true;
-    $body_class = 'page-show-store bg-white';
-?>
-
-@extends('mobile.base')
+@extends('app', ['body_class' => 'page-show-store bg-white'])
 
 @section('content')
+    @include ('mobile.inc.header')
+
     @if ($products->count() && $store->image_cover_mobile)
         <div class="store-cover">
             <img src="{{ asset('uploads/' . $store->id . '/' . $store->image_cover_mobile) }}" alt="{{ $store->name }}" />
@@ -89,4 +85,6 @@
              </div>
          @endif
     </div>
+
+    @include ('mobile.inc.footer')
 @endsection

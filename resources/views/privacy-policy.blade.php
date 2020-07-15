@@ -1,11 +1,8 @@
-<?php
-    $top_simple = true;
-    $header_title = 'Política de privacidade - naslojas.com';
-?>
-
-@extends('base')
+@extends('app', ['header_title' => 'Política de privacidade - naslojas.com'])
 
 @section('content')
+    @include ('inc.header-simple')
+
     <div class="container page-terms">
         <section>
             <h1>Política de privacidade</h1>
@@ -198,4 +195,6 @@
             </p>
         </section>
     </div>
+
+    @include ('inc.footer')
 @endsection

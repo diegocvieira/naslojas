@@ -16,15 +16,13 @@ class ComposerServiceProvider extends ServiceProvider
         // Using class based composers...
         //view()->composer(['inc/footer'], 'App\Http\ViewComposers\CitiesComposer');
 
-        view()->composer(['mobile.inc.top-nav'], 'App\Http\ViewComposers\FiltersComposer');
+        view()->composer(['mobile.inc.header'], 'App\Http\ViewComposers\FiltersComposer');
 
         view()->composer(['store.list-product-edit', 'mobile.store.create-edit-product'], 'App\Http\ViewComposers\SelectsProductComposer');
 
-        view()->composer(['inc.top-nav-store', 'mobile.inc.top-nav'], 'App\Http\ViewComposers\ListStoresComposer');
+        view()->composer(['inc.header', 'mobile.inc.header'], 'App\Http\ViewComposers\CountBagComposer');
 
-        view()->composer(['inc.top-nav', 'mobile.inc.top-nav'], 'App\Http\ViewComposers\CountBagComposer');
-
-        view()->composer(['inc.top-nav', 'mobile.inc.top-nav'], 'App\Http\ViewComposers\DistrictsComposer');
+        view()->composer(['inc.header', 'mobile.inc.header'], 'App\Http\ViewComposers\DistrictsComposer');
     }
 
     /**

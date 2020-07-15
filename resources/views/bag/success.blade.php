@@ -1,10 +1,8 @@
-@php
-    $top_nav = true;
-@endphp
-
-@extends('base')
+@extends('app')
 
 @section('content')
+    @include ('inc.header')
+
     <div class="container page-bag-success">
         <div class="row">
             <div class="col-xs-12">
@@ -31,4 +29,6 @@
             </div>
         </div>
     </div>
+
+    @include ('inc.footer')
 @endsection

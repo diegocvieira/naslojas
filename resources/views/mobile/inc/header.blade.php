@@ -1,88 +1,130 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-    	<meta charset="UTF-8">
+<header>
+    @if (isset($admin_search) && isset($keyword) || isset($back))
+        <a href="{{ route('edit-products') }}" class="btn-back-search"></a>
+    @else
+        <a href="{{ route('home') }}" id="logo-naslojas">
+            <img src="{{ asset('images/icon-logo-naslojas.png') }}" alt="Logo naslojas.com" />
+        </a>
+    @endif
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    @if (isset($store))
+        {!! Form::open(['method' => 'GET', 'route' => ['search-store-products', $store->slug], 'id' => 'form-search', 'class' => Auth::guard('store')->check() ? 'store-logged' : '']) !!}
+            {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Pesquisar na loja']) !!}
+    @elseif (isset($admin_search))
+        {!! Form::open(['method' => 'GET', 'route' => 'form-search-admin', 'id' => 'form-search', 'class' => Auth::guard('store')->check() ? 'store-logged' : '']) !!}
+            {!! Form::text('keyword', $keyword ?? null, ['placeholder' => 'Pesquise aqui', 'required']) !!}
+    @else
+        {!! Form::open(['method' => 'GET', 'route' => ['search-products', Cookie::get('city_slug'), Cookie::get('state_letter')], 'id' => 'form-search', 'class' => Auth::guard('store')->check() ? 'store-logged' : '']) !!}
+            {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Pesquise aqui']) !!}
+    @endif
+            {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
+            {!! Form::hidden('gender', $search_gender ?? '', ['id' => 'search-gender']) !!}
+            {!! Form::hidden('min_price', $search_min_price ?? '', ['id' => 'search-min-price']) !!}
+            {!! Form::hidden('max_price', $search_max_price ?? '', ['id' => 'search-max-price']) !!}
+            {!! Form::hidden('size', $search_size ?? '', ['id' => 'search-size']) !!}
+            {!! Form::hidden('off', $search_off ?? '', ['id' => 'search-off']) !!}
+            {!! Form::hidden('installment', $search_installment ?? '', ['id' => 'search-installment']) !!}
+            {!! Form::hidden('brand', $search_brand ?? '', ['id' => 'search-brand']) !!}
+            {!! Form::hidden('freight', $search_freight ?? '', ['id' => 'search-freight']) !!}
+            {!! Form::hidden('category', $search_category ?? '', ['id' => 'search-category']) !!}
+            {!! Form::hidden('color', $search_color ?? '', ['id' => 'search-color']) !!}
+        {!! Form::close() !!}
 
-        <meta name="google-site-verification" content="iDxi3PlfFp-zPVdB0mjxWc4egmMyZxdCi8eU5zJzLS8" />
+    @if (Auth::guard('store')->check())
+        <nav class="nav navbar-nav nav-menu nav-store">
+            <ul>
+                <li>
+                    <a href="{{ route('list-store-messages') }}" class="{{ (isset($section) && $section == 'message') ? 'active' : '' }}"></a>
+                </li>
+            </ul>
+        </nav>
+    @else
+        <button class="open-bag" data-url="{{ route('bag-products') }}">{{ $count_bag }}</button>
 
-    	<base href="{{ url('/') }}">
+        <nav class="nav navbar-nav nav-menu">
+            <ul>
+                <li>
+                    <a href="#" class="open-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{ asset((Auth::guard('client')->check() || Auth::guard('store')->check()) ? 'images/icon-profile.png' : 'images/icon-menu.png') }}" alt="Menu" />
+                    </a>
 
-    	<title>{{ $header_title ?? 'naslojas - Compre nas lojas da sua cidade e receba seu pedido em 24hs' }}</title>
+                    <ul class="dropdown-menu">
+                        <li style="border-bottom: 1px solid #e6e6e6;">
+                            <a href="#" class="show-select-district">{{ session('client_district_name') ?? 'Selecione seu bairro' }}</a>
+                        </li>
 
-    	<link rel="shortcut icon" href="{{ asset('images/favicon-mobile.png') }}">
+                        @if (Auth::guard('client')->check())
+                            <li>
+                                <a href="{{ route('get-client-config') }}" class="{{ (isset($section) && $section == 'config') ? 'active' : '' }}">Minha conta</a>
+                            </li>
 
-    	<meta name="theme-color" content="#ff1744">
+                            <li>
+                                <a href="{{ route('list-client-orders') }}" class="{{ (isset($section) && $section == 'order') ? 'active' : '' }}">Meus pedidos</a>
+                            </li>
 
-    	<!-- SEO META TAGS -->
-    	<meta name="csrf-token" content="{!! csrf_token() !!}">
+                            <li>
+                                <a href="{{ route('list-client-messages') }}" class="{{ (isset($section) && $section == 'message') ? 'active' : '' }}">Mensagens</a>
+                            </li>
 
-    	@if (isset($header_keywords))
-    		<meta name="keywords" content="{{ $header_keywords }}" />
-    	@else
-    		<meta name="keywords" content="naslojas, lojas, físicas, cidade, produtos, comprar, vender, clientes, comparar, pesquisar, preço, valor" />
-    	@endif
+                            <li>
+                                <a href="{{ route('logout') }}">Sair</a>
+                            </li>
+                        @else
+                            <!-- <li>
+                                <a href="https://play.google.com/store/apps/details?id=app.naslojas" target="_blank">Baixe nosso app</a>
+                            </li> -->
 
-    	<link rel="canonical" href="{{ $header_canonical ?? url()->current() }}" />
+                            <li>
+                                <a href="{{ route('client-register-get') }}" class="{{ (isset($section) && $section == 'client-register') ? 'active' : '' }}">Cadastrar</a>
+                            </li>
 
-    	<meta name="description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas da sua cidade. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
-    	<meta itemprop="name" content="{{ $header_title ?? 'naslojas' }}" />
-    	<meta itemprop="description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas da sua cidade. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
-    	<meta itemprop="image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
+                            <li>
+                                <a href="{{ route('client-login-get') }}" class="{{ (isset($section) && $section == 'client-login') ? 'active' : '' }}">Entrar</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    @endif
+</header>
 
-    	<meta name="twitter:card" content="summary_large_image" />
-    	<meta name="twitter:title" content="{{ $header_title ?? 'naslojas' }}" />
-    	<meta name="twitter:description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas da sua cidade. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
-    	<!-- imagens largas para o Twitter Summary Card precisam ter pelo menos 280x150px  -->
-    	<meta name="twitter:image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
+<div class="select-district-container">
+    <button class="close-select-district"></button>
 
-    	<meta property="og:title" content="{{ $header_title ?? 'naslojas' }}" />
-    	<meta property="og:type" content="website" />
-    	<meta property="og:url" content="{{ url()->current() }}" />
-    	<meta property="og:image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
-        <meta property="og:image:secure_url" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
-        <meta property="og:description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas da sua cidade. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
-    	<meta property="og:site_name" content="naslojas" />
-        <meta property="og:image:width" content="1200">
-        <meta property="og:image:height" content="630">
-        <meta property="fb:app_id" content="2156565304635391" />
+    <h4 class="select-district-title">Bairros</h4>
 
-        <style>body{opacity:0;}</style>
+    <ul>
+        @foreach ($districts as $district)
+            <li>
+                <a href="{{ route('client-district-set', $district->id) }}">{{ $district->name }}</a>
+            </li>
+        @endforeach
+    </ul>
+</div>
 
-        @if ($app->environment('local'))
-            <link rel="stylesheet" href="{{ asset('offline-developer/bootstrap.min.css') }}">
-            <link rel="stylesheet" href="{{ asset('offline-developer/bootstrap-select.min.css') }}">
-        @else
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
+@if (Auth::guard('store')->check())
+    <ul class="store-navigation">
+        @if (Auth::guard('store')->check() && Auth::guard('store')->user()->store->status)
+            <li>
+                <a href="{{ route('show-store', Auth::guard('store')->user()->store->slug) }}" class="store {{ (isset($section) && $section == 'store') ? 'active' : '' }}"></a>
+            </li>
         @endif
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+        <li>
+            <a href="{{ route('edit-products') }}" class="edit {{ (isset($section) && $section == 'edit') ? 'active' : '' }}"></a>
+        </li>
 
-        <link rel="stylesheet" type="text/css" href="{{ mix('css/global-mobile.css') }}">
+        <li>
+            <a href="{{ route('get-create-edit-product') }}" class="add {{ (isset($section) && $section == 'add') ? 'active' : '' }}"></a>
+        </li>
 
-        @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
-            <link rel="stylesheet" type="text/css" href="{{ mix('css/global-store-mobile.css') }}">
-        @endif
+        <li>
+            <a href="{{ route('list-store-orders') }}" class="order {{ (isset($section) && $section == 'order') ? 'active' : '' }}"></a>
+        </li>
 
-        @if ($app->environment('production'))
-            <script>
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-96847699-1', 'auto');
-                ga('send', 'pageview');
-            </script>
-        @endif
-    </head>
-    <body class="{{ $body_class ?? '' }}">
-        @if(session('session_flash_alert'))
-            @section('script')
-                <script>
-                    modalAlert("{!! session('session_flash_alert') !!}");
-                </script>
-            @endsection
-        @endif
+        <li>
+            <a href="{{ route('get-store-config') }}" class="config {{ (isset($section) && $section == 'config') ? 'active' : '' }}"></a>
+        </li>
+    </ul>
+@endif

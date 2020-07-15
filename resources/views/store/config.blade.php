@@ -1,10 +1,8 @@
-<?php
-    $top_nav_store = true;
-?>
-
-@extends('base')
+@extends('app')
 
 @section('content')
+    @include ('inc.header-store')
+
     <div class="container page-store-config">
         {!! Form::model($user->store, ['method' => 'POST', 'route' => 'set-store-config', 'id' => 'form-store-config', 'files' => true]) !!}
             <div class="row header-config">
@@ -270,4 +268,6 @@
             </div>
         {!! Form::close() !!}
     </div>
+
+    @include ('inc.footer')
 @endsection

@@ -1,11 +1,8 @@
-<?php
-    $top_nav = true;
-    $header_title = 'Política de privacidade - naslojas.com';
-?>
-
-@extends('mobile.base')
+@extends('app', ['header_title' => 'Política de privacidade - naslojas.com'])
 
 @section('content')
+    @include ('mobile.inc.header')
+
     <div class="container page-terms">
         <section>
             <h1>Política de privacidade</h1>
@@ -198,4 +195,6 @@
             </p>
         </section>
     </div>
+
+    @include ('mobile.inc.footer')
 @endsection

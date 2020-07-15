@@ -1,10 +1,8 @@
-@php
-    $top_nav_store = true;
-@endphp
-
-@extends('base')
+@extends('app')
 
 @section('content')
+    @include ('inc.header-store')
+
     <div class="container page-admin">
         @if ($orders->count())
             <div class="page-header">
@@ -197,4 +195,6 @@
             </div>
         @endif
     </div>
+
+    @include ('inc.footer')
 @endsection

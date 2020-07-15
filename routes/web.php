@@ -41,18 +41,6 @@ Route::group(['prefix' => 'site'], function () {
 			return view('mobile.privacy-policy');
 		}
 	})->name('privacy-policy');
-
-	Route::get('como-funciona', function () {
-		if (Agent::isDesktop()) {
-			session()->flash('session_flash_how_works', 'true');
-
-        	return redirect()->route('home');
-		} else {
-			$section = 'how-works';
-
-			return view('mobile.how-works', compact('section'));
-		}
-	})->name('how-works');
 });
 
 // Search
@@ -81,29 +69,8 @@ Route::group(['prefix' => 'recuperar-senha'], function () {
 	Route::post('change', 'PasswordResetController@change')->name('password-change');
 });
 
-// CENTRAL DE ENTREGAS
-Route::group(['prefix' => 'central'], function () {
-	Route::get('login', 'CentralController@getLogin')->name('central-login');
-	Route::post('login', 'CentralController@postLogin')->name('central-login');
-
-	Route::get('pedidos', 'CentralController@orders')->name('central-orders');
-
-	// BUSCA
-	Route::get('pedidos/busca', 'CentralController@searchOrders')->name('central-search-orders');
-
-	Route::get('logout', 'GlobalController@logout')->name('central-logout');
-});
-
 // Store
 Route::group(['prefix' => 'loja'], function () {
-	Route::get('divulgar', function() {
-		if (Agent::isDesktop()) {
-			return view('store.register-advertise');
-		} else {
-			return view('mobile.store.register-advertise');
-		}
-	})->name('store-advertise');
-
 	Route::get('login', function () {
 		if (Agent::isDesktop()) {
 			return view('store.login');
@@ -124,10 +91,8 @@ Route::group(['prefix' => 'loja'], function () {
 
 	// Confirm/refuse product confirmations from email
 	Route::get('confirmacoes/{type}/{token}', 'ProductConfirmController@emailUrl')->name('product-confirm-email-url');
-	// Confirm/refuse product reserves from email
-	Route::get('reservas/{type}/{token}', 'ProductReserveController@emailUrl')->name('product-reserve-email-url');
 
-	Route::group(['prefix' => 'admin', 'middleware' => 'auth-store-superadmin'], function () {
+	Route::group(['prefix' => 'admin', 'middleware' => 'auth:store'], function () {
 		Route::get('config/{navigation?}', 'Admin\StoreController@getConfig')->name('get-store-config');
 		Route::post('config', 'Admin\StoreController@setConfig')->name('set-store-config');
 
@@ -236,39 +201,6 @@ Route::group(['prefix' => 'cliente'], function () {
 	});
 });
 
-// Superadmin
-Route::group(['prefix' => 'superadmin'], function () {
-	Route::get('login', function () {
-		if (Agent::isDesktop()) {
-			return view('superadmin.login');
-		} else {
-			return view('mobile.superadmin.login');
-		}
-	})->name('superadmin-login');
-	Route::post('login', 'SuperadminController@login')->name('superadmin-login');
-
-	Route::group(['middleware' => 'auth:superadmin'], function () {
-		Route::get('loja/cadastro', function () {
-			if (Agent::isDesktop()) {
-				return view('superadmin.store-register');
-			} else {
-				return view('mobile.superadmin.store-register');
-			}
-		})->name('superadmin-store-register');
-		Route::post('loja/cadastro', 'SuperadminController@storeRegister')->name('superadmin-store-register');
-
-		Route::get('inicio', function () {
-			if (Agent::isDesktop()) {
-				return view('superadmin.index');
-			} else {
-				return view('mobile.superadmin.index');
-			}
-		})->name('superadmin-index');
-
-		Route::get('set-store/{id}', 'SuperadminController@setStore')->name('superadmin-set-store');
-	});
-});
-
 // User logout
 Route::get('user/logout', 'GlobalController@logout')->name('logout');
 
@@ -292,4 +224,12 @@ Route::group(['prefix' => 'sacola'], function () {
 
 		Route::get('sucesso/{id}', 'BagController@success')->name('bag-success');
 	});
+});
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::get('sindilojas', 'SindilojasController@loginIndex')->name('admin.sindilojas.login');
+    Route::post('sindilojas', 'SindilojasController@login')->name('admin.sindilojas.login');
+
+    Route::get('sindilojas/lojas/cadastro', 'SindilojasController@storeRegisterIndex')->name('admin.sindilojas.store.register');
+    Route::post('sindilojas/lojas/cadastro', 'SindilojasController@storeRegister')->name('admin.sindilojas.store.register');
 });

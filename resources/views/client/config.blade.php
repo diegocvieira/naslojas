@@ -1,10 +1,8 @@
-@php
-    $top_nav = true;
-@endphp
-
-@extends('base')
+@extends('app')
 
 @section('content')
+    @include ('inc.header')
+
     <div class="container page-client-config">
         {!! Form::model($client, ['method' => 'POST', 'route' => 'set-client-config', 'id' => 'form-client-config']) !!}
             <div class="row header-config">
@@ -123,4 +121,6 @@
             </div>
         {!! Form::close() !!}
     </div>
+
+    @include ('inc.footer')
 @endsection

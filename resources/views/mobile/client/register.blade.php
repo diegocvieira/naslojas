@@ -1,11 +1,8 @@
-<?php
-    $top_nav = true;
-    $header_title = 'Cadastro do cliente - naslojas.com';
-?>
-
-@extends('mobile.base')
+@extends('app', ['header_title' => 'Cadastro do cliente - naslojas.com'])
 
 @section('content')
+    @include ('mobile.inc.header')
+
     <div class="container page-login-register">
         <div class="top">
             <a href="{{ route('client-register-get') }}" class="active">CLIENTE</a>
@@ -46,4 +43,6 @@
 
         {!! Form::close() !!}
     </div>
+
+    @include ('mobile.inc.footer')
 @endsection

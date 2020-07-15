@@ -1,3 +1,8 @@
+@import '../plugins/bootstrap.min.css';
+@import '../plugins/bootstrap-select.min.css';
+@import '../plugins/slick.min.css';
+@import '../plugins/dropzone.min.css';
+
 @font-face {
     font-family: 'KeepCalm';
     src: url('../fonts/KeepCalm.ttf') format('truetype');
@@ -287,77 +292,6 @@ a, a:hover, a:active, a:focus {
 	}
 }
 
-.modal-how-works {
-    .modal-dialog {
-        width: 70%;
-        height: 90%;
-    }
-
-    .modal-content {
-        position: relative;
-
-        img {
-            width: 100%;
-            height: 100%;
-        }
-
-        .arrow {
-            position: absolute;
-            top: 50%;
-            background-repeat: no-repeat;
-            background-position: left;
-            background-size: contain;
-            width: 50px;
-            height: 50px;
-            background-image: url('../images/icon-arrow.png');
-            filter: brightness(0) invert(1);
-
-            &.prev {
-                left: -50px;
-                display: none;
-                -webkit-transform: rotate(90deg);
-                -moz-transform: rotate(90deg);
-                -ms-transform: rotate(90deg);
-                -o-transform: rotate(90deg);
-                transform: rotate(90deg);
-            }
-
-            &.next {
-                right: -50px;
-                -webkit-transform: rotate(270deg);
-                -moz-transform: rotate(270deg);
-                -ms-transform: rotate(270deg);
-                -o-transform: rotate(270deg);
-                transform: rotate(270deg);
-            }
-        }
-
-        .position {
-            position: absolute;
-            bottom: -30px;
-            left: 0;
-            right: 0;
-
-            .advance {
-                border: 2px solid #fff;
-                border-radius: 50%;
-                width: 10px;
-                height: 10px;
-                display: inline-block;
-                margin-left: 5px;
-
-                &:first-child {
-                    margin-left: 0;
-                }
-
-                &.active {
-                    background-color: #fff;
-                }
-            }
-        }
-    }
-}
-
 .page-tutorials {
     .images {
         float: left;
@@ -503,7 +437,7 @@ a, a:hover, a:active, a:focus {
     }
 }
 
-@import 'top-nav.scss';
+@import 'header.scss';
 @import 'list-products.scss';
 @import 'footer.scss';
 @import 'pagination.scss';
@@ -512,9 +446,11 @@ a, a:hover, a:active, a:focus {
 @import 'client-config.scss';
 @import 'show-product.scss';
 @import 'admin.scss';
-@import 'store-advertise.scss';
 @import 'home.scss';
 @import 'bag-products.scss';
 @import 'bag-preview.scss';
 @import 'bag-order-data.scss';
 @import 'bag-success.scss';
+@import 'store-config.scss';
+@import 'product-images.scss';
+@import 'product-edit.scss';

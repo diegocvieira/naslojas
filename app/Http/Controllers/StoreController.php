@@ -316,65 +316,65 @@ class StoreController extends Controller
         }
     }
 
-    public function register(Request $request)
-    {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'email' => 'required|email|max:100|unique:users',
-                'name' => 'required|max:200',
-                'password' => 'confirmed|min:8'
-            ],
-            app('App\Http\Controllers\GlobalController')->customMessages()
-        );
+    // public function register(Request $request)
+    // {
+    //     $validator = Validator::make(
+    //         $request->all(),
+    //         [
+    //             'email' => 'required|email|max:100|unique:users',
+    //             'name' => 'required|max:200',
+    //             'password' => 'confirmed|min:8'
+    //         ],
+    //         app('App\Http\Controllers\GlobalController')->customMessages()
+    //     );
 
-        if ($validator->fails()) {
-            $return['msg'] = $validator->errors()->first();
-            $return['status'] = false;
-        } else {
-            $store = new Store;
-            $store->name = $request->name;
-            $store->slug = str_slug($store->name, '-');
+    //     if ($validator->fails()) {
+    //         $return['msg'] = $validator->errors()->first();
+    //         $return['status'] = false;
+    //     } else {
+    //         $store = new Store;
+    //         $store->name = $request->name;
+    //         $store->slug = str_slug($store->name, '-');
 
-            // check if slug already exists and add dash in the end
-            $NUM_OF_ATTEMPTS = 10;
-            $attempts = 0;
+    //         // check if slug already exists and add dash in the end
+    //         $NUM_OF_ATTEMPTS = 10;
+    //         $attempts = 0;
 
-            do {
-                try {
-                    $store->save();
-                } catch(\Exception $e) {
-                    $attempts++;
+    //         do {
+    //             try {
+    //                 $store->save();
+    //             } catch(\Exception $e) {
+    //                 $attempts++;
 
-                    sleep(rand(0, 10) / 10);
+    //                 sleep(rand(0, 10) / 10);
 
-                    $store->slug .= '-' . uniqid();
+    //                 $store->slug .= '-' . uniqid();
 
-                    continue;
-                }
+    //                 continue;
+    //             }
 
-                break;
-            } while ($attempts < $NUM_OF_ATTEMPTS);
+    //             break;
+    //         } while ($attempts < $NUM_OF_ATTEMPTS);
 
-            $user = new User;
-            $user->password = bcrypt($request->password);
-            $user->email = $request->email;
-            $user->store_id = $store->id;
-            $user->save();
+    //         $user = new User;
+    //         $user->password = bcrypt($request->password);
+    //         $user->email = $request->email;
+    //         $user->store_id = $store->id;
+    //         $user->save();
 
-            // Create the folder if not exists (necessary to upload images)
-            $path = public_path('uploads/' . $store->id . '/products');
-            if (!file_exists($path)) {
-                mkdir($path, 0777, true);
-            }
+    //         // Create the folder if not exists (necessary to upload images)
+    //         $path = public_path('uploads/' . $store->id . '/products');
+    //         if (!file_exists($path)) {
+    //             mkdir($path, 0777, true);
+    //         }
 
-            session()->flash('session_flash_alert', 'Cadastro realizado com sucesso! <br> Complete as informações e ative o perfil da loja.');
+    //         session()->flash('session_flash_alert', 'Cadastro realizado com sucesso! <br> Complete as informações e ative o perfil da loja.');
 
-            return $this->login($request);
-        }
+    //         return $this->login($request);
+    //     }
 
-        return json_encode($return);
-    }
+    //     return json_encode($return);
+    // }
 
     public function login(Request $request)
     {

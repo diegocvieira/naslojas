@@ -1,3 +1,5 @@
+Dropzone.autoDiscover = false;
+
 $(function() {
     $('body').css('opacity', '1');
 
@@ -412,62 +414,6 @@ $(function() {
         }
     });
 
-    // Modal how works
-    $('.open-how-works').on('click', function(e) {
-        e.preventDefault();
-
-        var modal = $('.modal-how-works');
-
-        modal.find('.arrow').data('position', 1);
-
-        modal.find('.next').show();
-        modal.find('.prev').hide();
-
-        modal.find('.advance').removeClass('active');
-        modal.find('.advance[data-position=1]').addClass('active');
-
-        modal.find('img').attr('src', '/images/how-works-desktop/1.png');
-
-        modal.modal('show');
-    });
-    // Passar imagens do modal nas flechas do teclado
-    $('.modal-how-works').on('keydown', function(e) {
-        var modal = $('.modal-how-works'),
-            position = parseInt(modal.find('.position .active').data('position'));
-
-        if(e.which == 39 && position < 6) {
-            modal.find('.next').trigger('click'); // right
-        } else if(e.which == 37 && position > 1) {
-            modal.find('.prev').trigger('click'); // left
-        }
-    });
-    $('.modal-how-works').on('click', '.arrow, .advance', function(e) {
-        e.preventDefault();
-
-        var modal = $('.modal-how-works'),
-            position = parseInt($(this).data('position'));
-
-        // Verifica se o click foi nas flechas
-        if($(this).hasClass('arrow')) {
-            // Faz o calculo para next ou prev
-            position = $(this).hasClass('next') ? position + 1 : position - 1;
-        }
-
-        // Adiciona a imagem
-        modal.find('img').attr('src', '/images/how-works-desktop/' + position + '.png');
-
-        // Atualiza a posicao da imagem na flecha
-        modal.find('.arrow').data('position', position);
-        // Atualiza a class active nos circulos
-        modal.find('.advance').removeClass('active');
-        modal.find('.advance[data-position=' + position + ']').addClass('active');
-
-        // Oculta a flecha next se estiver na ultima imagem
-        position == 6 ? modal.find('.next').hide() : modal.find('.next').show();
-        // Oculta a flecha prev se estiver na primeira imagem
-        position == 1 ? modal.find('.prev').hide() : modal.find('.prev').show();
-    });
-
     $('#form-client-config').validate({
         rules: {
             name: {
@@ -704,13 +650,6 @@ $(function() {
 
     $(document).on('click', '.page-admin .resume-infos', function () {
         $('.page-admin').find('.order').not($(this).parent()).find('.complete-infos').hide();
-
-        $(this).next().toggle();
-    });
-
-    // List stores when logged like superadmin
-    $(document).on('click', '.open-search-stores', function(e) {
-        e.preventDefault();
 
         $(this).next().toggle();
     });

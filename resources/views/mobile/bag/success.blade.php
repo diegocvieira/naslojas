@@ -1,11 +1,8 @@
-@php
-    $top_nav = true;
-    $body_class = 'bg-white';
-@endphp
-
-@extends('mobile.base')
+@extends('app', ['body_class' => 'bg-white'])
 
 @section('content')
+    @include ('mobile.inc.header')
+
     <div class="container page-bag-success">
         <span class="icon-check"></span>
 
@@ -28,4 +25,6 @@
 
         <a href="{{ route('home') }}" class="link">VOLTAR PARA O INÍCIO</a>
     </div>
+
+    @include ('mobile.inc.footer')
 @endsection

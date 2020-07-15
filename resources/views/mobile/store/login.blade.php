@@ -1,11 +1,8 @@
-<?php
-    $top_nav = true;
-    $header_title = 'Login da loja | naslojas.com';
-?>
-
-@extends('mobile.base')
+@extends('app', ['header_title' => 'Login da loja | naslojas.com'])
 
 @section('content')
+    @include ('mobile.inc.header')
+
     <div class="container page-login-register">
         <div class="top">
             <a href="{{ route('client-login-get') }}">CLIENTE</a>
@@ -35,4 +32,6 @@
             <p class="link">Não tem uma conta? <a href="{{ route('store-register-get') }}">Cadastrar</a></p>
         {!! Form::close() !!}
     </div>
+
+    @include ('mobile.inc.footer')
 @endsection

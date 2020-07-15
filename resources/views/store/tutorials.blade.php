@@ -1,11 +1,8 @@
-<?php
-    $top_nav_store = true;
-    $body_class = 'bg-white';
-?>
-
-@extends('base')
+@extends('app', ['body_class' => 'bg-white'])
 
 @section('content')
+    @include ('inc.header-store')
+
     <div class="container page-tutorials">
         <ul class="options">
             <li>
@@ -53,4 +50,6 @@
             @endif
         </div>
     </div>
+
+    @include ('inc.footer')
 @endsection

@@ -1,10 +1,8 @@
-<?php
-    $top_simple = true;
-?>
-
-@extends('base')
+@extends('app')
 
 @section('content')
+    @include ('inc.header-simple')
+
     <div class="container page-login-register">
         {!! Form::open(['method' => 'POST', 'route' => 'password-change']) !!}
             <h1>Recuperar acesso</h1>
@@ -21,4 +19,6 @@
             {!! Form::submit('ENVIAR') !!}
         {!! Form::close() !!}
     </div>
+
+    @include ('inc.footer')
 @endsection

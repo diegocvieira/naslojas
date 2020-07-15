@@ -23,8 +23,6 @@ class ProductController extends Controller
         $this->middleware(function ($request, $next) {
             if (Auth::guard('store')->check()) {
                 $this->store_id = Auth::guard('store')->user()->store_id;
-            } else if (Auth::guard('superadmin')->check()) {
-                $this->store_id = session('superadmin_store_id');
             }
 
             return $next($request);
@@ -135,7 +133,7 @@ class ProductController extends Controller
     public function formSearch(Request $request)
     {
         $city = Cookie::get('city_slug');
-        $state = Cookie::get('state_letter_lc');
+        $state = Cookie::get('state_letter');
         $request->keyword = urlencode($request->keyword);
 
         return redirect()->action('ProductController@search', [$city, $state, $request]);
@@ -809,13 +807,14 @@ class ProductController extends Controller
 
     public function getCreateEdit($id = null)
     {
+        $section = 'add';
+
         if ($id) {
             $product = Product::withoutGlobalScopes(['active', 'active-store'])->find($id);
-
             $header_title = 'Editar ' . $product->title . ' | naslojas.com';
         } else {
+            $product = null;
             $header_title = 'Cadastrar produto | naslojas.com';
-            $section = 'add';
         }
 
         return view('mobile.store.create-edit-product', compact('section', 'header_title', 'product'));

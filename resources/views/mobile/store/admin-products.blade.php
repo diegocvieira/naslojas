@@ -1,12 +1,8 @@
-<?php
-    $top_nav = true;
-    $body_class = 'page-admin-products';
-    $admin_search = true;
-?>
-
-@extends('mobile.base')
+@extends('app', ['body_class' => 'page-admin-products'])
 
 @section('content')
+    @include ('mobile.inc.header')
+
     <header class="product-manager">
         <button type='button' class='btn-back'></button>
 
@@ -66,4 +62,6 @@
 
         <a href="{{ route('get-create-edit-product') }}" class="btn-create-edit-product">+</a>
     </div>
+
+    @include ('mobile.inc.footer')
 @endsection

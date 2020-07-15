@@ -1,106 +1,133 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-    	<meta charset="UTF-8">
+<header>
+    <div class="container">
+        <a href="{{ route('home') }}" id="logo-naslojas">
+            <img src="{{ asset('images/logo-naslojas.png') }}" />
+        </a>
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <meta name="google-site-verification" content="iDxi3PlfFp-zPVdB0mjxWc4egmMyZxdCi8eU5zJzLS8" />
-
-    	<base href="{{ url('/') }}">
-
-    	<title>{{ $header_title ?? 'naslojas - Compre nas lojas da sua cidade e receba seu pedido em 24hs' }}</title>
-
-    	<link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
-
-    	<meta name="theme-color" content="#ff1744">
-
-    	<!-- SEO META TAGS -->
-    	<meta name="csrf-token" content="{!! csrf_token() !!}">
-
-    	@if (isset($header_keywords))
-    		<meta name="keywords" content="{{ $header_keywords }}" />
-    	@else
-    		<meta name="keywords" content="naslojas, lojas, físicas, cidade, produtos, comprar, vender, clientes, comparar, pesquisar, preço, valor" />
-    	@endif
-
-    	<link rel="canonical" href="{{ $header_canonical ?? url()->current() }}" />
-
-    	<meta name="description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas da sua cidade. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
-    	<meta itemprop="name" content="{{ $header_title ?? 'naslojas' }}" />
-    	<meta itemprop="description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas da sua cidade. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
-    	<meta itemprop="image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
-
-    	<meta name="twitter:card" content="summary_large_image" />
-    	<meta name="twitter:title" content="{{ $header_title ?? 'naslojas' }}" />
-    	<meta name="twitter:description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas da sua cidade. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
-    	<!-- imagens largas para o Twitter Summary Card precisam ter pelo menos 280x150px  -->
-    	<meta name="twitter:image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
-
-    	<meta property="og:title" content="{{ $header_title ?? 'naslojas' }}" />
-    	<meta property="og:type" content="website" />
-    	<meta property="og:url" content="{{ url()->current() }}" />
-    	<meta property="og:image" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
-        <meta property="og:image:secure_url" content="{{ $header_image ?? asset('images/social-naslojas.png') }}" />
-        <meta property="og:description" content="{{ $header_desc ?? 'Confira as ofertas das lojas físicas da sua cidade. Pague somente ao receber seu pedido. A melhor experiência de compras da internet.' }}" />
-    	<meta property="og:site_name" content="naslojas" />
-        <meta property="og:image:width" content="1200">
-        <meta property="og:image:height" content="630">
-        <meta property="fb:app_id" content="2156565304635391" />
-
-        <style>body{opacity:0;}</style>
-
-        @if ($app->environment('local'))
-            <link rel="stylesheet" href="{{ asset('offline-developer/bootstrap.min.css') }}">
-            <link rel="stylesheet" href="{{ asset('offline-developer/bootstrap-select.min.css') }}">
-
-            @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
-                <link rel="stylesheet" href="{{ asset('offline-developer/dropzone.min.css') }}">
-            @endif
+        @if (isset($store))
+            {!! Form::open(['method' => 'GET', 'route' => ['search-store-products', $store->slug], 'id' => 'form-search']) !!}
+                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que você procura na loja ' . $store->name]) !!}
         @else
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
-
-            @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css">
-            @endif
+            {!! Form::open(['method' => 'GET', 'route' => ['search-products', Cookie::get('city_slug'), Cookie::get('state_letter')], 'id' => 'form-search']) !!}
+                {!! Form::text('keyword', $keyword ?? '', ['placeholder' => 'Digite aqui o produto que você procura']) !!}
         @endif
+                {!! Form::hidden('order', $search_order ?? '', ['id' => 'search-order']) !!}
+                {!! Form::hidden('gender', $search_gender ?? '', ['id' => 'search-gender']) !!}
+                {!! Form::hidden('min_price', $search_min_price ?? '', ['id' => 'search-min-price']) !!}
+                {!! Form::hidden('max_price', $search_max_price ?? '', ['id' => 'search-max-price']) !!}
+                {!! Form::hidden('size', $search_size ?? '', ['id' => 'search-size']) !!}
+                {!! Form::hidden('off', $search_off ?? '', ['id' => 'search-off']) !!}
+                {!! Form::hidden('installment', $search_installment ?? '', ['id' => 'search-installment']) !!}
+                {!! Form::hidden('brand', $search_brand ?? '', ['id' => 'search-brand']) !!}
+                {!! Form::hidden('freight', $search_freight ?? '', ['id' => 'search-freight']) !!}
+                {!! Form::hidden('category', $search_category ?? '', ['id' => 'search-category']) !!}
+                {!! Form::hidden('color', $search_color ?? '', ['id' => 'search-color']) !!}
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+                {!! Form::submit('') !!}
+            {!! Form::close() !!}
 
-        <link rel="stylesheet" type="text/css" href="{{ mix('css/global.css') }}">
+        <div class="select-district-container">
+            <select class="selectpicker" id="select-district" title="Selecione seu bairro">
+                @foreach ($districts as $district)
+                    <option value="{{ $district->id }}" @if (session('client_district_id') == $district->id) selected @endif>{{ $district->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-        @if (Auth::guard('store')->check() || Auth::guard('superadmin')->check())
-            <link rel="stylesheet" type="text/css" href="{{ mix('css/global-store.css') }}">
-        @endif
+        <nav class="nav navbar-nav nav-menu">
+            <ul>
+                @if (Auth::guard('client')->check())
+                    <li>
+                        <a href="{{ route('bag-products') }}" class="open-bag bag-logged">{{ $count_bag }}</a>
+                    </li>
+                @endif
 
-        @if ($app->environment('production'))
-            <script>
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+                @if (Auth::guard('store')->check())
+                    <li>
+                        <a href="#" class="logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span>{{ Auth::guard('store')->check() ? Auth::guard('store')->user()->store->name : 'Admin' }}</span>
 
-                ga('create', 'UA-96847699-1', 'auto');
-                ga('send', 'pageview');
-            </script>
-        @endif
-    </head>
-    <body class="{{ $body_class ?? '' }}">
-        @if (session('session_flash_alert'))
-            @section('script')
-                <script>
-                    modalAlert("{!! session('session_flash_alert') !!}");
-                </script>
-            @endsection
-        @endif
+                            <img src="{{ asset('images/icon-profile.png') }}" alt="Foto de perfil de {{ Auth::guard('store')->check() ? Auth::guard('store')->user()->store->name : 'Admin' }}" />
+                        </a>
 
-        @if (session('session_flash_how_works'))
-            @section('script')
-                <script>
-                    $(function() {
-                        $('.open-how-works').trigger('click');
-                    });
-                </script>
-            @endsection
-        @endif
+                        <ul class="dropdown-menu dropdown-store">
+                            @if (Auth::guard('store')->check() && Auth::guard('store')->user()->store->status)
+                                <li>
+                                    <a href="{{ route('show-store', Auth::guard('store')->user()->store->slug) }}">Minha loja</a>
+                                </li>
+                            @endif
+
+                            <li>
+                                <a href="{{ route('product-images') }}">Adicionar produtos</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('edit-products') }}">Editar produtos</a>
+                            </li>
+
+                            @if (Auth::guard('store')->check())
+                                <li>
+                                    <a href="{{ route('list-store-orders') }}">Pedidos</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('list-store-messages') }}">Mensagens</a>
+                                </li>
+                            @endif
+
+                            <li>
+                                <a href="{{ route('get-store-config') }}">Configurações</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('tutorials', 'adicionar-produtos') }}">Tutoriais</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('logout') }}">Sair</a>
+                            </li>
+                        </ul>
+                    </li>
+                @elseif (Auth::guard('client')->check())
+                    <li>
+                        <a href="#" class="logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span>{{ Auth::guard('client')->user()->name }}</span>
+
+                            <img src="{{ asset('images/icon-profile.png') }}" alt="Foto de perfil de {{ Auth::guard('client')->user()->name }}" />
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ route('get-client-config') }}" class="icon-account show-client-config">Minha conta</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('list-client-orders') }}" class="icon-check">Meus pedidos</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('list-client-messages') }}" class="icon-messages">Mensagens</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('logout') }}" class="icon-logout">Sair</a>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ route('client-register-get') }}">Cadastrar</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('client-login-get') }}">Entrar</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('bag-products') }}" class="open-bag">{{ $count_bag }}</a>
+                    </li>
+                @endif
+            </ul>
+        </nav>
+    </div>
+</header>

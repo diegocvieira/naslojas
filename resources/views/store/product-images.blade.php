@@ -1,10 +1,8 @@
-<?php
-    $top_nav_store = true;
-?>
-
-@extends('base')
+@extends('app')
 
 @section('content')
+    @include ('inc.header-store')
+
     <div class="container page-product-images">
         <div class="top-images">
             <div class="container">
@@ -30,4 +28,6 @@
             </div>
         {!! Form::close() !!}
     </div>
+
+    @include('inc.footer')
 @endsection
