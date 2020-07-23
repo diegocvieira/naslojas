@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Cookie;
 
 class Store extends Model
 {
@@ -48,12 +49,11 @@ class Store extends Model
         return $query->where('status', true);
     }
 
-    public function scopeClientDistrict($query)
+    public function scopeFilterLocation($query)
     {
-        if (session('client_district_id')) {
-            return $query->whereHas('freights', function ($query) {
-                $query->where('district_id', session('client_district_id'));
+        return $query->where('city_id', Cookie::get('city_id'))
+            ->whereHas('freights', function ($query) {
+                $query->where('district_id', Cookie::get('district_id'));
             });
-        }
     }
 }

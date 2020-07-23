@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class District extends Model
 {
     protected $table = 'districts';
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'slug', 'city_id'];
     public $timestamps = false;
+
+    public function city()
+    {
+        return $this->belongsTo('App\City', 'city_id', 'id');
+    }
 
     public function preValue($id)
     {

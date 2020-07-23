@@ -27,11 +27,9 @@
             {!! Form::close() !!}
 
         <div class="select-district-container">
-            <select class="selectpicker" id="select-district" title="Selecione seu bairro">
-                @foreach ($districts as $district)
-                    <option value="{{ $district->id }}" @if (session('client_district_id') == $district->id) selected @endif>{{ $district->name }}</option>
-                @endforeach
-            </select>
+            @if (Cookie::get('city_id'))
+                <a href="{{ route('home') }}">{{ Cookie::get('city_name') }}/{{ Cookie::get('state_letter') }} - {{ Cookie::get('district_name') }}</a>
+            @endif
         </div>
 
         <nav class="nav navbar-nav nav-menu">

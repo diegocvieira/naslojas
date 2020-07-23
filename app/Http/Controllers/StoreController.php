@@ -17,11 +17,25 @@ use App\ProductSize;
 
 class StoreController extends Controller
 {
+    public function index()
+    {
+        $stores = Store::isActive()
+            ->filterLocation()
+            ->inRandomOrder()
+            ->get();
+
+        if (Agent::isDesktop()) {
+            return view('store.index', compact('stores'));
+        } else {
+            return view('mobile.store.index', compact('stores'));
+        }
+    }
+
     public function show($slug)
     {
         $store = Store::where('slug', $slug)
             ->isActive()
-            ->clientDistrict()
+            // ->clientDistrict()
             ->firstOrFail();
 
         // SEO
@@ -139,7 +153,7 @@ class StoreController extends Controller
     {
         $store = Store::where('slug', $store_slug)
             ->isActive()
-            ->clientDistrict()
+            // ->clientDistrict()
             ->firstOrFail();
 
         $search_gender = $request->gender ?? null;

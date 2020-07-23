@@ -13,7 +13,9 @@
 
 Route::post('post/download', 'PostController@create')->name('download-post');
 
-Route::get('/', 'GlobalController@home')->name('home');
+Route::get('/', 'LocationController@index')->name('home');
+
+Route::get('lojas', 'StoreController@index')->name('store.index');
 
 Route::group(['prefix' => 'site'], function () {
 	Route::post('newsletter/register', 'NewsletterController@register')->name('newsletter-register');
@@ -49,6 +51,7 @@ Route::get('busca/{city}/{state}', 'ProductController@search')->name('search-pro
 
 // Set a new city
 Route::get('cidade/set/{id}', 'GlobalController@setCity')->name('set-city');
+Route::get('location/set', 'LocationController@set')->name('location.set');
 
 // Store page
 Route::get('{slug}', 'StoreController@show')->name('show-store');
@@ -156,7 +159,7 @@ Route::group(['prefix' => 'loja'], function () {
 
 // Client
 Route::group(['prefix' => 'cliente'], function () {
-    Route::get('district/set/{districtId}', 'ClientController@districtSet')->name('client-district-set');
+    // Route::get('district/set/{districtId}', 'ClientController@districtSet')->name('client-district-set');
 
 	Route::get('login', function () {
 		if (Agent::isDesktop()) {

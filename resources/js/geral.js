@@ -164,6 +164,150 @@ $(function() {
         return false;
     });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $(document).on('keyup', '#form-location #search-city', function () {
+        const cities = JSON.parse($('#cities').val()),
+            keyword = $(this).val(),
+            listDiv = $('.list-location'),
+            minKeyword = 3;
+        let listCities = '';
+
+        if (keyword.length < minKeyword) {
+            return false;
+        }
+
+        listDiv.html('');
+
+        $(cities).each(function (index, element) {
+            if (element.title.toLowerCase().indexOf(keyword) >= 0) {
+                let cityName = element.title + ' - ' + element.state.letter;
+                const term = keyword.replace(/(\s+)/, '(<[^>]+>)*$1(<[^>]+>)*'),
+                    pattern = new RegExp('(' + term + ')', 'gi');
+
+                cityName = cityName.replace(pattern, '<span class="highlight">$1</span>')
+                                    .replace(/(<span>[^<>]*)((<[^>]+>)+)([^<>]*<\/span>)/, '$1</span>$2<span>$4');
+
+                listCities += '<button type="button" class="set-city" data-id="' + element.id + '">' + cityName + '</button>';
+            }
+        });
+
+        if (listCities.length) {
+            listDiv.append(listCities);
+        } else {
+            listDiv.append('<p>Nenhuma cidade encontrada...</p>');
+        }
+    });
+
+    $(document).on('keyup', '#form-location #search-district', function () {
+        const districts = JSON.parse($('#districts').val()),
+            keyword = $(this).val(),
+            listDiv = $('.list-location'),
+            minKeyword = 3,
+            cityId = $('#city-id').val();
+        let listDistricts = '';
+
+        if (keyword.length < minKeyword) {
+            return false;
+        }
+
+        listDiv.html('');
+
+        if (!cityId) {
+            listDiv.append('<div class=""><p>Selecione a sua cidade primeiro.</p></div>');
+            return false;
+        }
+
+        $(districts).each(function (index, element) {
+            if (element.city_id == cityId && element.name.toLowerCase().indexOf(keyword) >= 0) {
+                let districtName = element.name;
+                const term = keyword.replace(/(\s+)/, '(<[^>]+>)*$1(<[^>]+>)*'),
+                    pattern = new RegExp('(' + term + ')', 'gi');
+
+                districtName = districtName.replace(pattern, '<span class="highlight">$1</span>')
+                                    .replace(/(<span>[^<>]*)((<[^>]+>)+)([^<>]*<\/span>)/, '$1</span>$2<span>$4');
+
+                listDistricts += '<button type="button" class="set-district" data-id="' + element.id + '">' + districtName + '</button>';
+            }
+        });
+
+        if (listDistricts.length) {
+            listDiv.append(listDistricts);
+        } else {
+            listDiv.append('<p>Nenhum bairro encontrado...</p>');
+        }
+    });
+
+    $(document).on('click', '.set-city', function () {
+        $('#city-id').val($(this).data('id'));
+
+        $('#search-city').val($(this).text());
+
+        $('.list-location').html('');
+    });
+
+    $(document).on('click', '.set-district', function () {
+        $('#district-id').val($(this).data('id'));
+
+        $('#search-district').val($(this).text());
+
+        $('.list-location').html('');
+
+        $('#form-location').find('button').prop('disabled', false);
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // START FILTER PRODUCTS
     $(document).on('change', '.product-filter-orderby select', function() {
         var val = $(this).val();

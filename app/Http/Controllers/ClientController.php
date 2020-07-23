@@ -63,14 +63,4 @@ class ClientController extends Controller
 
         return json_encode($return);
     }
-
-    public function districtSet($districtId)
-    {
-        $district = District::findOrFail($districtId);
-
-        session(['client_district_id' => $district->id]);
-        session(['client_district_name' => $district->name]);
-
-        return redirect()->back();
-    }
 }

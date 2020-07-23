@@ -16,28 +16,10 @@ class GlobalController extends Controller
 {
     public function home()
     {
-        if (!Cookie::get('city_slug') || Cookie::get('city_slug') != 'pelotas') {
-            $city = City::whereHas('state', function ($query) {
-                    $query->where('letter', 'rs');
-                })
-                ->where('slug', 'pelotas')
-                ->select('id')
-                ->first();
-
-            $this->setCity($city->id);
-        }
-
-        // $stores = Cache::remember('stores' . session('client_district_id'), 24*60*60, function () {
-        $stores = Store::isActive()
-            ->clientDistrict()
-            ->inRandomOrder()
-            ->get();
-        // });
-
         if (Agent::isDesktop()) {
-            return view('home', compact('stores'));
+            return view('home');
         } else {
-            return view('mobile.home', compact('stores'));
+            return view('mobile.home');
         }
     }
 
