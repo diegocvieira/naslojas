@@ -13,9 +13,7 @@
 
 Route::post('post/download', 'PostController@create')->name('download-post');
 
-Route::get('/', 'LocationController@index')->name('home');
-
-Route::get('lojas', 'StoreController@index')->name('store.index');
+Route::get('/', 'GlobalController@home')->name('home');
 
 Route::group(['prefix' => 'site'], function () {
 	Route::post('newsletter/register', 'NewsletterController@register')->name('newsletter-register');
@@ -50,8 +48,8 @@ Route::get('produtos/busca', 'ProductController@formSearch')->name('form-search'
 Route::get('busca/{city}/{state}', 'ProductController@search')->name('search-products');
 
 // Set a new city
-Route::get('cidade/set/{id}', 'GlobalController@setCity')->name('set-city');
-Route::get('location/set', 'LocationController@set')->name('location.set');
+// Route::get('cidade/set/{id}', 'GlobalController@setCity')->name('set-city');
+Route::get('cidade/set', 'CityController@set')->name('city.set');
 
 // Store page
 Route::get('{slug}', 'StoreController@show')->name('show-store');
@@ -230,9 +228,5 @@ Route::group(['prefix' => 'sacola'], function () {
 });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-    Route::get('sindilojas', 'SindilojasController@loginIndex')->name('admin.sindilojas.login');
-    Route::post('sindilojas', 'SindilojasController@login')->name('admin.sindilojas.login');
 
-    Route::get('sindilojas/lojas/cadastro', 'SindilojasController@storeRegisterIndex')->name('admin.sindilojas.store.register');
-    Route::post('sindilojas/lojas/cadastro', 'SindilojasController@storeRegister')->name('admin.sindilojas.store.register');
 });

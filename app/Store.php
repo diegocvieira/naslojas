@@ -22,6 +22,7 @@ class Store extends Model
     public function freights()
     {
         return $this->hasMany('App\StoreFreight', 'store_id', 'id');
+        // return $this->belongsToMany('App\District', 'stores_freight', 'store_id', 'district_id')->withPivot('price');
     }
 
     /*public function operatings()
@@ -49,11 +50,8 @@ class Store extends Model
         return $query->where('status', true);
     }
 
-    public function scopeFilterLocation($query)
+    public function scopeFilterCity($query)
     {
-        return $query->where('city_id', Cookie::get('city_id'))
-            ->whereHas('freights', function ($query) {
-                $query->where('district_id', Cookie::get('district_id'));
-            });
+        return $query->where('city_id', Cookie::get('city_id'));
     }
 }

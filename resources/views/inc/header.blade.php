@@ -27,9 +27,13 @@
             {!! Form::close() !!}
 
         <div class="select-district-container">
-            @if (Cookie::get('city_id'))
-                <a href="{{ route('home') }}">{{ Cookie::get('city_name') }}/{{ Cookie::get('state_letter') }} - {{ Cookie::get('district_name') }}</a>
-            @endif
+            <form method="GET" action="{{ route('city.set') }}" id="form-city-set">
+                <select name="city_id" title="Selecione a sua cidade" class="selectpicker">
+                    @foreach ($cities as $city)
+                        <option value="{{ $city->id }}" @if (_cityIsSet() && Cookie::get('city_id') == $city->id) selected @endif>{{ $city->title }} / {{ $city->state->letter }}</option>
+                    @endforeach
+                </select>
+            </form>
         </div>
 
         <nav class="nav navbar-nav nav-menu">

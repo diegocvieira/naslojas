@@ -14,7 +14,7 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         // Using class based composers...
-        //view()->composer(['inc/footer'], 'App\Http\ViewComposers\CitiesComposer');
+        view()->composer(['inc/header'], 'App\Http\ViewComposers\CitiesComposer');
 
         view()->composer(['mobile.inc.header'], 'App\Http\ViewComposers\FiltersComposer');
 

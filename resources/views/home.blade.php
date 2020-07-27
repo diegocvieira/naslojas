@@ -29,33 +29,73 @@
                 </div>
             </div>
 
-            <div class="container">
-                @include('inc.know')
+            <div class="container-fluid">
+                <div class="container">
+                    @include('inc.know')
 
-                <section class="row stores">
-                    <form method="GET" action="{{ route('location.set') }}" id="form-location" class="col-xs-12">
-                        <input type="hidden" value="{{ $cities }}" id="cities" />
-                        <input type="hidden" value="{{ $districts }}" id="districts" />
-
-                        <input type="hidden" name="city_id" id="city-id" />
-                        <input type="hidden" name="district_id" id="district-id" />
-
-                        <div class="form-group">
-                            <input type="text" id="search-city" placeholder=" " />
-                            <label for="search-city">Busque sua cidade</label>
+                    <section class="row stores">
+                        <div class="col-xs-12">
+                            <h2 class="section-title">LOJAS</h2>
                         </div>
 
-                        <div class="form-group">
-                            <input type="text" id="search-district" placeholder=" " />
-                            <label for="search-district">Busque seu bairro</label>
+                        @forelse ($stores as $s)
+                            <div class="col-xs-4">
+                                <div class="item">
+                                    <a href="{{ route('show-store', $s->slug) }}" class="city-verify">
+                                        <img src="{{ asset($s->image_cover_desktop ? 'uploads/' . $s->id . '/' . $s->image_cover_desktop : 'images/image-cover-desktop.jpg') }}" alt="{{ $s->name }}"  />
+
+                                        <h3>{{ $s->name }}</h3>
+                                    </a>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="no-results">
+                                <p>Não foram encontradas lojas que entregam no seu bairro.</p>
+                            </div>
+                        @endforelse
+                    </section>
+
+                    <?php /*<section class="row newsletter text-center">
+                        <div class="col-xs-12">
+                            <h2>1 e-mail por semana</h2>
+                            <h3>Com as maiores ofertas, promoções e novidades das lojas da sua cidade</h3>
+                            <span>CANCELE QUANDO QUISER</span>
                         </div>
 
-                        <button type="submit" disabled>SELECIONAR</button>
-                    </form>
+                        <div class="col-xs-12">
+                            {!! Form::open(['method' => 'POST', 'route' => 'newsletter-register', 'id' => 'form-newsletter-register']) !!}
+                                {!! Form::email('email', null, ['placeholder' => 'Seu e-mail']) !!}
 
-                    <div class="list-location"></div>
-                </section>
+                                {!! Form::submit('ENVIAR') !!}
+                            {!! Form::close() !!}
+                        </div>
+                    </section>*/ ?>
+                </div>
             </div>
+
+            <?php /*<div class="app-mobile col-xs-12">
+                <div class="container">
+                    <div class="col-xs-4 text text-right">
+                        <span>app</span>
+                        <img src="{{ asset('images/logo-naslojas.png') }}" />
+                        <p>as ofertas da cidade<br>sempre com você</p>
+                    </div>
+
+                    <div class="col-xs-4 img">
+                        <img src="{{ asset('images/app.png') }}" />
+                    </div>
+
+                    <div class="col-xs-4 links text-left">
+                        <div class="col-xs-12">
+                            <a href="https://play.google.com/store/apps/details?id=app.naslojas" class="android" target="_blank">baixe para android</a>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <a href="https://apps.apple.com/br/app/naslojas/id1468999330" class="ios" target="_blank">baixe para iphone</a>
+                        </div>
+                    </div>
+                </div>
+            </div>*/ ?>
         </section>
     </div>
 

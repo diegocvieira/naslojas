@@ -1,29 +1,11 @@
 <?php
 
-function _generatePassword($encrypt = true)
+function _cityIsSet()
 {
-    $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    $password = substr(str_shuffle($chars), 0, 12);
-
-    if ($encrypt) {
-        $password = bcrypt($password);
-    }
-
-    return $password;
-}
-
-function _setCity($city, $force = false)
-{
-    if ($city != null && ($force == true || !Cookie::get('city_slug'))) {
-        Cookie::queue('city_id', $city->id, '525600');
-        Cookie::queue('city_title', $city->title, '525600');
-        Cookie::queue('city_slug', $city->slug, '525600');
-
-        //Cookie::queue('state_id', $city->state->id, '525600');
-        //Cookie::queue('state_title', $city->state->title, '525600');
-        //Cookie::queue('state_slug', $city->state->slug, '525600');
-        Cookie::queue('state_letter', strlower($city->state->letter), '525600');
-        // Cookie::queue('state_letter', $city->state->letter_lc, '525600');
+    if (Cookie::get('city_id')) {
+        return true;
+    } else {
+        return false;
     }
 }
 

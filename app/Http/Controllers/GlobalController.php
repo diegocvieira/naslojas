@@ -16,20 +16,19 @@ class GlobalController extends Controller
 {
     public function home()
     {
-        if (Agent::isDesktop()) {
-            return view('home');
-        } else {
-            return view('mobile.home');
+        // Cookie::queue(Cookie::forget('city_id'));
+
+        $stores = Store::isActive()->inRandomOrder();
+        if (_cityIsSet()) {
+            $stores = $stores->filterCity();
         }
-    }
+        $stores = $stores->get();
 
-    public function setCity($id)
-    {
-        $city = City::find($id);
-
-        _setCity($city, true);
-
-        return redirect()->route('home');
+        if (Agent::isDesktop()) {
+            return view('home', compact('stores'));
+        } else {
+            return view('mobile.home', compact('stores'));
+        }
     }
 
     public function logout()

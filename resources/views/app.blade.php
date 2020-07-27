@@ -89,6 +89,12 @@
         @endif
 
         <script>
+            @if (_cityIsSet())
+                var cityIsSet = true;
+            @else
+                var cityIsSet = false;
+            @endif
+
             @if (Auth::guard('client')->check())
                 var client_logged = true;
             @else

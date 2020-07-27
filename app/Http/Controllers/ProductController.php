@@ -35,7 +35,7 @@ class ProductController extends Controller
             ->has('images')
             ->whereHas('store', function ($query) use ($product) {
                 $query->where('city_id', $product->store->city->id)
-                    ->clientDistrict();
+                    ->filterCity();
             })
             ->where(function ($query) use ($product) {
                 $query->search($product->title);
@@ -59,10 +59,11 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = Product::where('slug', $slug)
+        $product = Product::with('store.freights')
+            ->where('slug', $slug)
             ->has('images')
             ->whereHas('store', function ($query) {
-                    $query->clientDistrict();
+                    $query->filterCity();
                 })
             ->firstOrFail();
 
@@ -157,7 +158,7 @@ class ProductController extends Controller
 
         $products = Product::has('images')
             ->whereHas('store', function ($query) {
-                    $query->clientDistrict();
+                    $query->filterCity();
                 })
             ->filterGender($search_gender)
             ->filterOrder($search_order)

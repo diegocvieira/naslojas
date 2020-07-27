@@ -98,7 +98,7 @@ class StoreController extends Controller
         $section = 'config';
         $header_title = 'Configurações | naslojas.com';
 
-        $user = User::find($this->user_id);
+        $user = User::with('store.freights')->find($this->user_id);
         $districts = District::orderBy('name', 'ASC')->get();
 
         $payments = [];
@@ -256,11 +256,11 @@ class StoreController extends Controller
                 return array('id' => $q, 'price' => $t);
             }, $request->district_id, $request->freight_price);
 
-            $store->freights()->delete();
+            $store->freights()->detach();
 
-            foreach ($freights as $freight) {
+            foreach ($freights as $key => $freight) {
                 if ($freight['price']) {
-                    $store->freights()->create([
+                    $store->freights()->attach($key, [
                         'price' => number_format(str_replace(array(".", ","), array("", "."), $freight['price']), 2, '.', ''),
                         'district_id' => $freight['id']
                     ]);

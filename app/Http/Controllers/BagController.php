@@ -27,11 +27,11 @@ class BagController extends Controller
     {
         $p = Product::find($request->product_id);
 
-        if (!$p->store->freights->where('district_id', session('client_district_id'))->first()) {
-            $data['success'] = false;
-            $data['message'] = 'Selecione o seu bairro antes de adicionar um produto.';
-            return response()->json($data);
-        }
+        // if (!$p->store->freights->where('district_id', session('client_district_id'))->first()) {
+        //     $data['success'] = false;
+        //     $data['message'] = 'Selecione o seu bairro antes de adicionar um produto.';
+        //     return response()->json($data);
+        // }
 
         $product_id = $p->id;
         $store_id = $p->store_id;

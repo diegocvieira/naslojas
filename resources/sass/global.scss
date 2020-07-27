@@ -437,53 +437,6 @@ a, a:hover, a:active, a:focus {
     }
 }
 
-#form-location {
-    display: flex;
-
-    .form-group {
-        margin-right: 20px;
-    }
-
-    input[type=text] {
-        background-color: #fff;
-        border-radius: 25px;
-        background-image: url('../images/icon-lupa.png');
-        background-position: right 20px center;
-        background-repeat: no-repeat;
-        background-size: 25px;
-    }
-
-    button {
-        height: 55px;
-        width: 300px;
-        border-radius: 25px;
-        background-color: #ff1744;
-        color: #fff;
-        border: 0;
-        font-weight: 700;
-        cursor: pointer;
-    }
-}
-
-.stores {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.list-location {
-    display: flex;
-    flex-wrap: wrap;
-
-    .set-city, .set-district {
-        background-color: transparent;
-        border: 0;
-
-        .highlight {
-            color: rgb(255, 23, 68);
-        }
-    }
-}
-
 @import 'top-nav';
 @import 'list-products.scss';
 @import 'footer.scss';
