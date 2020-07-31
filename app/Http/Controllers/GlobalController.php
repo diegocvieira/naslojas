@@ -18,6 +18,7 @@ class GlobalController extends Controller
     {
         if (!Cookie::get('city_id')) {
             app('App\Http\Controllers\CityController')->set(4913);
+            return redirect()->route('home');
         }
 
         $stores = Store::isActive()->inRandomOrder();
