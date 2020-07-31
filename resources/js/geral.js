@@ -179,13 +179,13 @@ $(function() {
 
 
 
-    $(document).on('submit', '#form-search', function () {
-        if (!cityIsSet) {
-            modalAlert('Selecione a sua cidade.');
+    // $(document).on('submit', '#form-search', function () {
+    //     if (!cityIsSet) {
+    //         modalAlert('Selecione a sua cidade.');
 
-            return false;
-        }
-    });
+    //         return false;
+    //     }
+    // });
 
     $(document).on('change', '#form-city-set select', function () {
         $('#form-city-set').submit();

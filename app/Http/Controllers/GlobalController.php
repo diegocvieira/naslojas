@@ -16,6 +16,10 @@ class GlobalController extends Controller
 {
     public function home()
     {
+        if (!Cookie::get('city_id')) {
+            app('App\Http\Controllers\CityController')->set(4913);
+        }
+
         $stores = Store::isActive()->inRandomOrder();
         if (_cityIsSet()) {
             $stores = $stores->filterCity();
