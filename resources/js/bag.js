@@ -26,7 +26,7 @@ $(function() {
                 method: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    $('header').find('.container').append(data.body);
+                    $('header').find('.bag-container').append(data.body);
                 }
             });
         }

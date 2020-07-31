@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header-store')
 
-    <div class="container page-product-edit {{ $section == 'add' ? 'page-add' : 'page-edit' }}">
+    <div class="container-fluid page-product-edit {{ $section == 'add' ? 'page-add' : 'page-edit' }}">
         @if ($products->count() > 0 || $products->count() == 0 && isset($keyword))
             @if ($products->count())
                 <div class="top-images">

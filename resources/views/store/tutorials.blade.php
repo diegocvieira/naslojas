@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header-store')
 
-    <div class="container page-tutorials">
+    <div class="container-fluid page-tutorials">
         <ul class="options">
             <li>
                 <a href="{{ route('tutorials', 'adicionar-produtos') }}" class="{{ $type == 'adicionar-produtos' ? 'active' : '' }}">Adicionar produtos</a>

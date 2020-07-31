@@ -163,10 +163,16 @@ a, a:hover, a:active, a:focus {
     background-color: #fdd !important;
 }
 
-.container {
-    width: 1400px;
+.container-fluid {
+    // width: 1400px;
     height: 100%;
     padding-top: 60px;
+}
+
+@media (min-width: 1405px) {
+    .container-fluid {
+        width: 1400px;
+    }
 }
 
 .page-error {

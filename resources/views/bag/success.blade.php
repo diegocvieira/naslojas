@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header')
 
-    <div class="container page-bag-success">
+    <div class="container-fluid page-bag-success">
         <div class="row">
             <div class="col-xs-12">
                 <span class="icon-check"></span>

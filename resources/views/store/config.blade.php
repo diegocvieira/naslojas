@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header-store')
 
-    <div class="container page-store-config">
+    <div class="container-fluid page-store-config">
         {!! Form::model($user->store, ['method' => 'POST', 'route' => 'set-store-config', 'id' => 'form-store-config', 'files' => true]) !!}
             <div class="row header-config">
                 <div class="col-xs-4">

@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header')
 
-    <div class="container page-login-register">
+    <div class="container-fluid page-login-register">
         <div class="top">
             <a href="{{ route('client-login-get') }}">CLIENTE</a>
 

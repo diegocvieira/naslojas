@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header')
 
-    <div class="container">
+    <div class="container-fluid">
         @include('inc.know')
 
         <?php /*<div class="row">

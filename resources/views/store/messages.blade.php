@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header-store')
 
-    <div class="container page-admin page-messages">
+    <div class="container-fluid page-admin page-messages">
         @if ($messages->count())
             <div class="page-header">
                 <h1>Mensagens</h1>

@@ -1,5 +1,5 @@
 <header>
-    <div class="container">
+    <div class="container-fluid">
         <a href="{{ route('home') }}" id="logo-naslojas">
             <img src="{{ asset('images/logo-naslojas.png') }}" />
         </a>
@@ -38,7 +38,14 @@
             <ul>
                 @if (Auth::guard('client')->check())
                     <li>
-                        <a href="{{ route('bag-products') }}" class="open-bag bag-logged">{{ $count_bag }}</a>
+                        <a href="{{ route('bag-products') }}" class="open-bag">
+                            Sacola
+
+                            <span class="bag-container">
+                                <img src="{{ asset('images/icon-bag.png') }}" alt="Sacola" />
+                                <span class="bag-count">{{ $count_bag }}</span>
+                            </span>
+                        </a>
                     </li>
                 @endif
 
@@ -124,7 +131,12 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('bag-products') }}" class="open-bag">{{ $count_bag }}</a>
+                        <a href="{{ route('bag-products') }}" class="open-bag">
+                            <span class="bag-container">
+                                <img src="{{ asset('images/icon-bag.png') }}" alt="Sacola" />
+                                <span class="bag-count">{{ $count_bag }}</span>
+                            </span>
+                        </a>
                     </li>
                 @endif
             </ul>

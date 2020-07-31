@@ -754,7 +754,6 @@ $(function() {
         }
 
         listDiv.html('');
-        $('#header-cities-container').addClass('search-active');
 
         $(cities).each(function (index, city) {
             if (city.title.toLowerCase().indexOf(keyword) >= 0) {
@@ -777,7 +776,8 @@ $(function() {
 
     $(document).click(function(event) {
         if (!$(event.target).closest('#header-cities-container').length) {
-            $('#header-cities-container').removeClass('search-active');
+            $('#header-list-cities').html('');
+            $('#header-search-city').val('');
         }
     });
 });

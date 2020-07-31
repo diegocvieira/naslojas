@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header-simple')
 
-    <div class="container page-terms">
+    <div class="container-fluid page-terms">
         <section>
             <h1>Regras para os anúncios</h1>
 

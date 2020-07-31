@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header-simple')
 
-    <div class="container page-login-register">
+    <div class="container-fluid page-login-register">
         {!! Form::open(['method' => 'POST', 'route' => 'password-change']) !!}
             <h1>Recuperar acesso</h1>
 

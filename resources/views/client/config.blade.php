@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header')
 
-    <div class="container page-client-config">
+    <div class="container-fluid page-client-config">
         {!! Form::model($client, ['method' => 'POST', 'route' => 'set-client-config', 'id' => 'form-client-config']) !!}
             <div class="row header-config">
                 <div class="col-xs-4">

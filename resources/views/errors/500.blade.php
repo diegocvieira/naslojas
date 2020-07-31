@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header-simple')
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="no-results">
             <img src="{{ asset('images/icon-box.png') }}" />
 

@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header-store')
 
-    <div class="container page-product-images">
+    <div class="container-fluid page-product-images">
         <div class="top-images">
             <div class="container">
                 <div class="row">

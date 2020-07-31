@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    <div class="container">
+    <div class="container-fluid">
         @include('inc.know')
 
         <div class="row">

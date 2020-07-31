@@ -3,7 +3,7 @@
 @section('content')
     @include ('inc.header')
 
-    <div class="container page-bag-products bag">
+    <div class="container-fluid page-bag-products bag">
         @if (isset($products))
             <div class="header-bag">
                 <h1>Itens na sacola</h1>

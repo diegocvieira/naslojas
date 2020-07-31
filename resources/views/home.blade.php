@@ -3,7 +3,7 @@
 @section('content')
     @include('inc.header')
 
-    <div class="container page-home">
+    <div class="container-fluid page-home">
         <section class="section-content bg-grey">
             <div class="banner-home">
                 <div class="slick-home">
@@ -30,43 +30,41 @@
             </div>
 
             <div class="container-fluid">
-                <div class="container">
-                    @include('inc.know')
+                @include('inc.know')
 
-                    <section class="row stores">
-                        <div class="col-xs-12">
-                            <h2 class="section-title">LOJAS</h2>
-                        </div>
+                <section class="row stores">
+                    <div class="col-xs-12">
+                        <h2 class="section-title">LOJAS</h2>
+                    </div>
 
-                        @foreach ($stores as $s)
-                            <div class="col-xs-4">
-                                <div class="item">
-                                    <a href="{{ route('show-store', $s->slug) }}" class="city-verify">
-                                        <img src="{{ asset($s->image_cover_desktop ? 'uploads/' . $s->id . '/' . $s->image_cover_desktop : 'images/image-cover-desktop.jpg') }}" alt="{{ $s->name }}"  />
+                    @foreach ($stores as $s)
+                        <div class="col-xs-4">
+                            <div class="item">
+                                <a href="{{ route('show-store', $s->slug) }}" class="city-verify">
+                                    <img src="{{ asset($s->image_cover_desktop ? 'uploads/' . $s->id . '/' . $s->image_cover_desktop : 'images/image-cover-desktop.jpg') }}" alt="{{ $s->name }}"  />
 
-                                        <h3>{{ $s->name }}</h3>
-                                    </a>
-                                </div>
+                                    <h3>{{ $s->name }}</h3>
+                                </a>
                             </div>
-                        @endforeach
-                    </section>
-
-                    <?php /*<section class="row newsletter text-center">
-                        <div class="col-xs-12">
-                            <h2>1 e-mail por semana</h2>
-                            <h3>Com as maiores ofertas, promoções e novidades das lojas da sua cidade</h3>
-                            <span>CANCELE QUANDO QUISER</span>
                         </div>
+                    @endforeach
+                </section>
 
-                        <div class="col-xs-12">
-                            {!! Form::open(['method' => 'POST', 'route' => 'newsletter-register', 'id' => 'form-newsletter-register']) !!}
-                                {!! Form::email('email', null, ['placeholder' => 'Seu e-mail']) !!}
+                <?php /*<section class="row newsletter text-center">
+                    <div class="col-xs-12">
+                        <h2>1 e-mail por semana</h2>
+                        <h3>Com as maiores ofertas, promoções e novidades das lojas da sua cidade</h3>
+                        <span>CANCELE QUANDO QUISER</span>
+                    </div>
 
-                                {!! Form::submit('ENVIAR') !!}
-                            {!! Form::close() !!}
-                        </div>
-                    </section>*/ ?>
-                </div>
+                    <div class="col-xs-12">
+                        {!! Form::open(['method' => 'POST', 'route' => 'newsletter-register', 'id' => 'form-newsletter-register']) !!}
+                            {!! Form::email('email', null, ['placeholder' => 'Seu e-mail']) !!}
+
+                            {!! Form::submit('ENVIAR') !!}
+                        {!! Form::close() !!}
+                    </div>
+                </section>*/ ?>
             </div>
 
             <?php /*<div class="app-mobile col-xs-12">
