@@ -12,13 +12,13 @@ use Cookie;
 
 class CityController extends Controller
 {
-    public function set(Request $request)
+    public function set($id)
     {
         $city = City::whereHas('stores', function ($query) {
                 $query->isActive();
             })
             ->with('state')
-            ->find($request->city_id);
+            ->find($id);
 
         if (!$city) {
             session()->flash('session_flash_alert', 'Desculpe, ainda não estamos trabalhando na sua cidade.');

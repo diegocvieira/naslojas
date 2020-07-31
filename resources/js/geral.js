@@ -359,6 +359,10 @@ $(function() {
                 minlength: 1,
                 maxlength: 100
             },
+            token: {
+                required: true,
+                minlength: 1
+            },
             password: {
                 required: true,
                 minlength: 8
@@ -737,6 +741,122 @@ $(function() {
             showOffTime($(this).attr('data-date'), $(this));
         });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $(document).on('keyup', '#header-search-city', function () {
+        const cities = JSON.parse($('#header-cities').val()),
+            keyword = $(this).val(),
+            listDiv = $('#header-list-cities'),
+            minKeyword = 3;
+        let listCities = '';
+
+        if (keyword.length < minKeyword) {
+            return false;
+        }
+
+        listDiv.html('');
+        $('#header-cities-container').addClass('search-active');
+
+        $(cities).each(function (index, city) {
+            if (city.title.toLowerCase().indexOf(keyword) >= 0) {
+                let cityName = city.title + ' - ' + city.state.letter;
+                const term = keyword.replace(/(\s+)/, '(<[^>]+>)*$1(<[^>]+>)*'),
+                    pattern = new RegExp('(' + term + ')', 'gi');
+
+                cityName = cityName.replace(pattern, '<span class="highlight">$1</span>')
+                                    .replace(/(<span>[^<>]*)((<[^>]+>)+)([^<>]*<\/span>)/, '$1</span>$2<span>$4');
+                listCities += '<a href="/cidade/set/' + city.id + '">' + cityName + '</button>';
+            }
+        });
+
+        if (listCities.length) {
+            listDiv.append(listCities);
+        } else {
+            listDiv.append('<p>Nenhuma cidade encontrada...</p>');
+        }
+    });
+
+    $(document).click(function(event) {
+        if (!$(event.target).closest('#header-cities-container').length) {
+            $('#header-cities-container').removeClass('search-active');
+            // $('#header-list-cities').html('');
+            console.log('ok');
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
 
 // CAPTURAR IP DO USUARIO

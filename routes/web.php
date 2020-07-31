@@ -49,7 +49,7 @@ Route::get('busca/{city}/{state}', 'ProductController@search')->name('search-pro
 
 // Set a new city
 // Route::get('cidade/set/{id}', 'GlobalController@setCity')->name('set-city');
-Route::get('cidade/set', 'CityController@set')->name('city.set');
+Route::get('cidade/set/{id}', 'CityController@set')->name('city.set');
 
 // Store page
 Route::get('{slug}', 'StoreController@show')->name('show-store');

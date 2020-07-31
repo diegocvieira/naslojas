@@ -8,12 +8,11 @@ use App\Product;
 use Auth;
 use App\User;
 use Validator;
-use Hash;
-use App\City;
 use Agent;
 use Mail;
-use App\District;
 use App\ProductSize;
+use App\Models\Token;
+use DB;
 
 class StoreController extends Controller
 {
@@ -319,25 +318,30 @@ class StoreController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make(
-            $request->all(),
-            [
+            $request->all(), [
                 'email' => 'required|email|max:100|unique:users',
                 'name' => 'required|max:200',
-                'password' => 'confirmed|min:8'
-            ],
-            app('App\Http\Controllers\GlobalController')->customMessages()
+                'password' => 'confirmed|min:8',
+                'token' => 'required|exists:tokens,token'
+            ]
         );
 
         if ($validator->fails()) {
-            $return['msg'] = $validator->errors()->first();
-            $return['status'] = false;
-        } else {
+            return response()->json([
+                'msg' => $validator->errors()->first(),
+                'status' => false
+            ]);
+        }
+
+        try {
+            DB::beginTransaction();
+
             $store = new Store;
             $store->name = $request->name;
             $store->slug = str_slug($store->name, '-');
 
             // check if slug already exists and add dash in the end
-            $NUM_OF_ATTEMPTS = 10;
+            $attemptsMax = 10;
             $attempts = 0;
 
             do {
@@ -354,7 +358,7 @@ class StoreController extends Controller
                 }
 
                 break;
-            } while ($attempts < $NUM_OF_ATTEMPTS);
+            } while ($attempts < $attemptsMax);
 
             $user = new User;
             $user->password = bcrypt($request->password);
@@ -362,18 +366,23 @@ class StoreController extends Controller
             $user->store_id = $store->id;
             $user->save();
 
-            // Create the folder if not exists (necessary to upload images)
-            // $path = public_path('uploads/' . $store->id . '/products');
-            // if (!file_exists($path)) {
-            //     mkdir($path, 0777, true);
-            // }
+            Token::where('token', $request->token)->first()->delete();
+
+            DB::commit();
+
+            $this->login($request);
 
             session()->flash('session_flash_alert', 'Cadastro realizado com sucesso! <br> Complete as informações e ative o perfil da loja.');
+            $return['status'] = true;
+            $return['url'] = route('get-store-config');
+        } catch (\Throwable $th) {
+            DB::rollBack();
 
-            return $this->login($request);
+            $return['status'] = false;
+            $return['msg'] = 'Ocorreu um erro inesperado. Tente novamente.';
         }
 
-        return json_encode($return);
+        return response()->json($return);
     }
 
     public function login(Request $request)

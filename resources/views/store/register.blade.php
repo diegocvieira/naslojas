@@ -34,6 +34,11 @@
                 {!! Form::label('', 'Repetir senha') !!}
             </div>
 
+            <div class="form-group">
+                <input type="text" name="token" placeholder=" " id="token" required />
+                <label for="token">Token</label>
+            </div>
+
             {!! Form::submit('CADASTRAR') !!}
 
             <p class="description">Confirmo que li e concordo com as <a href="{{ route('rules') }}" target="_blank">regras para os anúncios</a>, os <a href="{{ route('terms-use') }}" target="_blank">termos de uso</a> e a <a href="{{ route('privacy-policy') }}" target="_blank">política de privacidade</a> do naslojas</p>

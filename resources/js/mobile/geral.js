@@ -588,14 +588,23 @@ $(function() {
                 maxlength: 100,
                 email: true
             },
-            store_name: {
-                required: true
+            name: {
+                required: true,
+                minlength: 1,
+                maxlength: 100
             },
-            user_name: {
-                required: true
+            token: {
+                required: true,
+                minlength: 1
             },
-            phone: {
-                required: true
+            password: {
+                required: true,
+                minlength: 8
+            },
+            password_confirmation: {
+                required: true,
+                minlength: 8,
+                equalTo: "#password"
             }
         },
         highlight: function (element, errorClass, validClass) {
