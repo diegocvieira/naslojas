@@ -237,7 +237,7 @@ header {
     }
 }
 
-.select-district-container {
+#header-cities-container {
     position: fixed;
     height: 100%;
     width: 100%;
@@ -251,42 +251,61 @@ header {
     transition: .2s;
     opacity: 0;
     visibility: hidden;
+    // display: flex;
+    // flex-wrap: wrap;
+    padding-top: 70px;
 
     &.active {
         opacity: 1;
         visibility: visible;
     }
 
-    .close-select-district {
-        width: 30px;
-        height: 30px;
-        background-image: url('../../images/icon-remove.png');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        border: none;
-        background-color: transparent;
-        position: absolute;
-        right: 20px;
-        top: 70px;
+    .header-cities-top {
+        display: flex;
+        flex-wrap: wrap;
+
+        .close-header-cities {
+            height: 30px;
+            background-image: url('../../images/icon-remove.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            border: none;
+            background-color: transparent;
+            flex: 0 1 30px;
+            padding: 0 20px;
+        }
+
+        #header-search-city {
+            background-color: rgb(245, 245, 245);
+            height: 36px;
+            font-size: 12.5px;
+            border: 0;
+            border-radius: 25px;
+            padding-left: 20px;
+            flex: auto;
+        }
     }
 
-    .select-district-title {
-        font-size: 25px;
-        color: #000;
-        display: block;
-        margin: 25px 0 15px 0;
-        padding-left: 10px;
-    }
+    #header-list-cities {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
 
-    li {
-        display: block;
+        p {
+            color: #646464;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 30px;
+        }
 
         a {
-            font-size: 14.5px;
-            color: rgb(150, 150, 150);
-            padding: 10px;
-            display: block;
+            padding: 10px 10px 10px 20px;
+            color: #646464;
+
+            .highlight {
+                color: rgb(255, 23, 68);
+            }
         }
     }
 }

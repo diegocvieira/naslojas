@@ -33,7 +33,7 @@
         <section class="stores-home">
             <h2 class="section-title">LOJAS</h2>
 
-            @forelse ($stores as $s)
+            @foreach ($stores as $s)
                 <div class="item">
                     <a href="{{ route('show-store', $s->slug) }}">
                         <img src="{{ asset($s->image_cover_mobile ? 'uploads/' . $s->id . '/' . $s->image_cover_mobile : 'images/image-cover-mobile.jpg') }}" alt="Krause" />
@@ -41,11 +41,7 @@
                         <h3>{{ $s->name }}</h3>
                     </a>
                 </div>
-            @empty
-                <div class="no-results">
-                    <p>Não foram encontradas lojas<br>que entregam no seu bairro.</p>
-                </div>
-            @endforelse
+            @endforeach
         </section>
 
         <!-- <section class="newsletter text-center">

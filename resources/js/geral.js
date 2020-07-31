@@ -742,61 +742,6 @@ $(function() {
         });
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     $(document).on('keyup', '#header-search-city', function () {
         const cities = JSON.parse($('#header-cities').val()),
             keyword = $(this).val(),
@@ -833,30 +778,8 @@ $(function() {
     $(document).click(function(event) {
         if (!$(event.target).closest('#header-cities-container').length) {
             $('#header-cities-container').removeClass('search-active');
-            // $('#header-list-cities').html('');
-            console.log('ok');
         }
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
 
 // CAPTURAR IP DO USUARIO

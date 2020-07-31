@@ -16,8 +16,6 @@ class GlobalController extends Controller
 {
     public function home()
     {
-        // Cookie::queue(Cookie::forget('city_id'));
-
         $stores = Store::isActive()->inRandomOrder();
         if (_cityIsSet()) {
             $stores = $stores->filterCity();

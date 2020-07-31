@@ -14,15 +14,13 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         // Using class based composers...
-        view()->composer(['inc/header'], 'App\Http\ViewComposers\CitiesComposer');
+        view()->composer(['inc.header', 'mobile.inc.header'], 'App\Http\ViewComposers\CitiesComposer');
 
         view()->composer(['mobile.inc.header'], 'App\Http\ViewComposers\FiltersComposer');
 
         view()->composer(['store.list-product-edit', 'mobile.store.create-edit-product'], 'App\Http\ViewComposers\SelectsProductComposer');
 
         view()->composer(['inc.header', 'mobile.inc.header'], 'App\Http\ViewComposers\CountBagComposer');
-
-        view()->composer(['inc.header', 'mobile.inc.header'], 'App\Http\ViewComposers\DistrictsComposer');
     }
 
     /**

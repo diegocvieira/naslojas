@@ -12,7 +12,9 @@ class CitiesComposer
 	public function compose(View $view)
 	{
         $cities = Cache::rememberForever('cities', function () {
-            return City::with('state')
+            return City::with(['state' => function ($query) {
+                    $query->select('id', 'letter');
+                }])
                 ->select('id', 'title', 'state_id')
                 ->orderBy('title', 'ASC')
                 ->get();

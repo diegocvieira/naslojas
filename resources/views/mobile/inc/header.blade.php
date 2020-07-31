@@ -50,7 +50,7 @@
 
                     <ul class="dropdown-menu">
                         <li style="border-bottom: 1px solid #e6e6e6;">
-                            <a href="#" class="show-select-district">{{ session('client_district_name') ?? 'Selecione seu bairro' }}</a>
+                            <a href="#" class="show-header-cities">{{ _cityIsSet() ? Cookie::get('city_name') . '-' . Cookie::get('state_letter') : 'Selecione sua cidade' }}</a>
                         </li>
 
                         @if (Auth::guard('client')->check())
@@ -89,18 +89,16 @@
     @endif
 </header>
 
-<div class="select-district-container">
-    <button class="close-select-district"></button>
+<div id="header-cities-container">
+    <div class="header-cities-top">
+        <input type="hidden" value="{{ $cities }}" id="header-cities" />
 
-    <h4 class="select-district-title">Bairros</h4>
+        <input type="text" name="city_id" placeholder="Selecione a sua cidade" id="header-search-city" autocomplete="off" />
 
-    <ul>
-        @foreach ($districts as $district)
-            <li>
-                <a href="{{ route('client-district-set', $district->id) }}">{{ $district->name }}</a>
-            </li>
-        @endforeach
-    </ul>
+        <button class="close-header-cities"></button>
+    </div>
+
+    <div id="header-list-cities"></div>
 </div>
 
 @if (Auth::guard('store')->check())

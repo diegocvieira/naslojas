@@ -38,7 +38,7 @@
                             <h2 class="section-title">LOJAS</h2>
                         </div>
 
-                        @forelse ($stores as $s)
+                        @foreach ($stores as $s)
                             <div class="col-xs-4">
                                 <div class="item">
                                     <a href="{{ route('show-store', $s->slug) }}" class="city-verify">
@@ -48,11 +48,7 @@
                                     </a>
                                 </div>
                             </div>
-                        @empty
-                            <div class="no-results">
-                                <p>Não foram encontradas lojas que entregam no seu bairro.</p>
-                            </div>
-                        @endforelse
+                        @endforeach
                     </section>
 
                     <?php /*<section class="row newsletter text-center">
