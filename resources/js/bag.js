@@ -63,7 +63,7 @@ $(function() {
 
                     $('.open-bag').trigger('click');
 
-                    var bag = $('header').find('.open-bag');
+                    var bag = $('header').find('.bag-count');
                     bag.text(parseInt(bag.text() ? bag.text() : 0) + 1);
                 },
                 error: function (request, status, error) {

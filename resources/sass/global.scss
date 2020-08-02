@@ -164,8 +164,7 @@ a, a:hover, a:active, a:focus {
 }
 
 .container-fluid {
-    // width: 1400px;
-    height: 100%;
+    min-height: 100%;
     padding-top: 60px;
 }
 

@@ -10,7 +10,7 @@
                     <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $product->images->first()->image) }}" alt="Produto {{ $product->title }}" />
 
                     <div class="infos">
-                        <h3 class="title">{{ $product->title }} yasvydv ysdvyavs dvuyas vd asbdbasb duasb dobaso bdaosb dabs udb</h3>
+                        <h3 class="title">{{ $product->title }}</h3>
 
                         <span class="price" data-price="{{ $product->price }}">R$ {{ number_format($product->price, 2, ',', '.') }}</span>
 

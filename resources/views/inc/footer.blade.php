@@ -1,5 +1,5 @@
 <footer>
-    <div class="container">
+    <div class="container-fluid">
         <div class="col-xs-6 support">
             <?php /*<a href="http://www.pelotas.com.br/" target="_blank">
                 <img src="{{ asset('images/pelotas.png') }}" class="pelotas" />
