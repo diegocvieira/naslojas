@@ -11,6 +11,7 @@ use App\Product;
 use Agent;
 use App\Store;
 use Illuminate\Support\Facades\Cache;
+use App\Http\Controllers\BagController;
 
 class GlobalController extends Controller
 {

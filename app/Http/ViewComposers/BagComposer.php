@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Users\Repository as UserRepository;
 use Session;
 
-class CountBagComposer
+class BagComposer
 {
 	public function compose(View $view)
 	{

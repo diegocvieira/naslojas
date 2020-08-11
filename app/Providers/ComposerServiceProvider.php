@@ -20,7 +20,7 @@ class ComposerServiceProvider extends ServiceProvider
 
         view()->composer(['store.list-product-edit', 'mobile.store.create-edit-product'], 'App\Http\ViewComposers\SelectsProductComposer');
 
-        view()->composer(['inc.header', 'mobile.inc.header'], 'App\Http\ViewComposers\CountBagComposer');
+        view()->composer(['inc.header', 'mobile.inc.header'], 'App\Http\ViewComposers\BagComposer');
     }
 
     /**

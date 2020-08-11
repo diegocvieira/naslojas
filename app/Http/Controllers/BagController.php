@@ -154,63 +154,23 @@ class BagController extends Controller
 
     public function products()
     {
-        if (Session::has('bag')) {
-            foreach (session('bag')['stores'] as $store) {
-                foreach ($store['products'] as $product) {
-                    $ids[] = $product['id'];
-                }
-            }
-
-            $products = Product::find($ids);
-
-            $subtotal = 0;
-
-            foreach ($products as $key => $product) {
-                // VERIFICA SE O PRODUTO POSSUI ALGUM DESCONTO
-                if ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time)) {
-                    $product->price = _priceOff($product->price, $product->offtime->off);
-                }
-
-                foreach (session('bag')['stores'] as $bag_store) {
-                    foreach ($bag_store['products'] as $bag_product) {
-                        if ($bag_product['id'] == $product->id) {
-                            $product->setAttribute('product_qtd', $bag_product['qtd']);
-                            $product->setAttribute('size', $bag_product['size']);
-
-                            $subtotal += $bag_product['qtd'] * $product->price;
-                        }
-                    }
-                }
-
-                $qtd = [];
-                for ($i = 1; $i <= $product->store->max_product_unit; $i++) {
-                    $qtd[$i] = $i;
-                }
-
-                $product->setAttribute('store_qtd', $qtd);
-            }
-        } else {
-            $products = null;
-            $subtotal = null;
-        }
+        $cart = $this->getCartDetails();
 
         if (\Request::ajax()) {
             if (Agent::isDesktop()) {
                 return response()->json([
-                    'body' => view('bag.preview', compact('products', 'subtotal'))->render()
+                    'body' => view('bag.preview', compact('cart'))->render()
                 ]);
             } else {
                 return response()->json([
-                    'body' => view('mobile.bag.preview', compact('products', 'subtotal'))->render()
+                    'body' => view('mobile.bag.preview', compact('cart'))->render()
                 ]);
             }
         } else {
-            $header_title = 'Itens na sacola | naslojas.com';
-
             if (Agent::isDesktop()) {
-                return view('bag.products', compact('products', 'subtotal', 'header_title'));
+                return view('bag.products', compact('cart'));
             } else {
-                return view('mobile.bag.products', compact('products', 'subtotal', 'header_title'));
+                return view('mobile.bag.products', compact('cart'));
             }
         }
     }
@@ -221,64 +181,18 @@ class BagController extends Controller
             return redirect()->route('home');
         }
 
+        $cart = $this->getCartDetails();
+
         $client = Client::find(Auth::guard('client')->user()->id);
 
-        $districts = District::orderBy('name', 'ASC')->pluck('name', 'id');
-
-        $header_title = 'Dados do pedido | naslojas.com';
-
-        $payments = [];
-
-        foreach (session('bag')['stores'] as $store_key => $store) {
-            $bag_data[$store_key]['subtotal'] = 0;
-            $bag_data[$store_key]['free_freight'] = true;
-
-            foreach ($store['products'] as $p) {
-                $product = Product::find($p['id']);
-
-                // VERIFICA SE O PRODUTO POSSUI ALGUM DESCONTO
-                if ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time)) {
-                    $product->price = _priceOff($product->price, $product->offtime->off);
-                }
-
-                if (!$product->free_freight) {
-                    $bag_data[$store_key]['free_freight'] = false;
-                }
-
-                // $bag_data[$store_key]['freight'] = $client->district_id ? $product->store->freights->where('district_id', $client->district_id)->first()->price : null;
-                $bag_data[$store_key]['freight'] = $product->store->freights->where('district_id', session('client_district_id'))->first();
-                $bag_data[$store_key]['subtotal'] += $product->price * $p['qtd'];
-                $bag_data[$store_key]['min_parcel_price'] = $product->store->min_parcel_price;
-                $bag_data[$store_key]['max_parcel'] = $product->store->max_parcel;
-                $bag_data[$store_key]['store'] = $product->store->name;
-                $bag_data[$store_key]['city'] = $product->store->city->title;
-                $bag_data[$store_key]['state'] = $product->store->city->state->letter;
-                $bag_data[$store_key]['street'] = $product->store->street;
-                $bag_data[$store_key]['district'] = $product->store->district;
-                $bag_data[$store_key]['number'] = $product->store->number;
-                $bag_data[$store_key]['complement'] = $product->store->complement;
-
-                foreach ($product->store->payments as $payment) {
-                    $payments[] = $payment->method . '-' . $payment->payment;
-                }
-            }
-
-            if ($bag_data[$store_key]['free_freight']) {
-                $bag_data[$store_key]['freight'] = 0.00;
-            }
-        }
-
-        if (count(session('bag')['stores']) > 1) {
-            // Get only duplicate values
-            $payments = array_diff_assoc($payments, array_unique($payments));
-        }
-
-        array_push($payments, '1-0', '1-1', '2-0', '2-1');
+        $districts = District::where('city_id', $client->city_id)
+            ->orderBy('name', 'ASC')
+            ->pluck('name', 'id');
 
         if (Agent::isDesktop()) {
-            return view('bag.order-data', compact('bag_data', 'client', 'districts', 'payments', 'header_title'));
+            return view('bag.order-data', compact('cart', 'client', 'districts'));
         } else {
-            return view('mobile.bag.order-data', compact('bag_data', 'client', 'districts', 'payments', 'header_title'));
+            return view('mobile.bag.order-data', compact('cart', 'client', 'districts'));
         }
     }
 
@@ -418,5 +332,71 @@ class BagController extends Controller
         } else {
             return view('mobile.bag.success', compact('order', 'products', 'header_title'));
         }
+    }
+
+    public function getCartDetails()
+    {
+        if (!session('bag')) {
+            return false;
+        }
+
+        $cart['subtotal'] = 0;
+        $cart['payments'] = [];
+
+        foreach (session('bag')['stores'] as $keyStore => $cartStore) {
+            $store = Store::with('freights', 'payments')->find($cartStore['store_id']);
+
+            $cart['stores'][$keyStore]['subtotal'] = 0;
+            $cart['stores'][$keyStore]['name'] = $store->name;
+            $cart['stores'][$keyStore]['id'] = $store->id;
+            $cart['stores'][$keyStore]['slug'] = $store->slug;
+            $cart['stores'][$keyStore]['max_quantity'] = $store->max_product_unit;
+            $cart['stores'][$keyStore]['min_parcel_price'] = $store->min_parcel_price;
+            $cart['stores'][$keyStore]['max_parcel'] = $store->max_parcel;
+            $cart['stores'][$keyStore]['free_freight'] = true;
+            $cart['stores'][$keyStore]['freight'] = Auth::guard('client')->check() && Auth::guard('client')->user()->district_id ? $store->freights->where('district_id', Auth::guard('client')->user()->district_id)->first() : null;
+
+            foreach ($store->payments as $payment) {
+                $cart['payments'][] = $payment->method . '-' . $payment->payment;
+            }
+
+            foreach ($cartStore['products'] as $keyProduct => $cartProduct) {
+                $product = Product::with('sizes', 'images')->find($cartProduct['id']);
+
+                if (!$product) {
+                    continue;
+                }
+
+                if (!$product->free_freight) {
+                    $cart['stores'][$keyStore]['free_freight'] = false;
+                }
+
+                $cart['stores'][$keyStore]['products'][$keyProduct]['id'] = $product->id;
+                $cart['stores'][$keyStore]['products'][$keyProduct]['name'] = $product->title;
+                $cart['stores'][$keyStore]['products'][$keyProduct]['slug'] = $product->slug;
+                $cart['stores'][$keyStore]['products'][$keyProduct]['image'] = $product->images()->first() ? $product->images()->first()->image : null;
+                $cart['stores'][$keyStore]['products'][$keyProduct]['price'] = ($product->offtime && _checkDateOff($product->offtime->created_at, $product->offtime->time)) ? _priceOff($product->price, $product->offtime->off) : $product->price;
+                $cart['stores'][$keyStore]['products'][$keyProduct]['qtd'] = $cartProduct['qtd'];
+                $cart['stores'][$keyStore]['products'][$keyProduct]['size'] = $cartProduct['size'];
+                $cart['stores'][$keyStore]['products'][$keyProduct]['sizes'] = $product->sizes->pluck('size');
+
+                $cart['stores'][$keyStore]['subtotal'] += $product->price * $cartProduct['qtd'];
+            }
+
+            if ($cart['stores'][$keyStore]['free_freight'] || $store->free_freight_price && $cart['stores'][$keyStore]['subtotal'] >= $store->free_freight_price) {
+                $cart['stores'][$keyStore]['freight'] = 0.00;
+            }
+
+            $cart['subtotal'] += $cart['stores'][$keyStore]['subtotal'];
+        }
+
+        if (count(session('bag')['stores']) > 1) {
+            // Get only duplicate values
+            $cart['payments'] = array_diff_assoc($cart['payments'], array_unique($cart['payments']));
+        }
+
+        array_push($cart['payments'], '1-0', '1-1', '2-0', '2-1');
+
+        return json_decode(json_encode($cart), false);
     }
 }

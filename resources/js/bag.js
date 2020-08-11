@@ -2,7 +2,6 @@ $(function() {
     // CAPTURA O IP DE QUEM VAI FAZER A COMPRA
     if ($('.page-bag-order-data').length) {
         getIp(function (ip) {
-            console.log(ip);
             $("input[name='client_ip']").val(ip);
         });
     }
@@ -57,14 +56,14 @@ $(function() {
 
                     if (redirect) {
                         window.location = '/sacola/dados';
+                    } else {
+                        $('#modal-default').modal('hide');
+
+                        $('.open-bag').trigger('click');
+
+                        var bag = $('header').find('.bag-count');
+                        bag.text(parseInt(bag.text() ? bag.text() : 0) + 1);
                     }
-
-                    $('#modal-default').modal('hide');
-
-                    $('.open-bag').trigger('click');
-
-                    var bag = $('header').find('.bag-count');
-                    bag.text(parseInt(bag.text() ? bag.text() : 0) + 1);
                 },
                 error: function (request, status, error) {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');

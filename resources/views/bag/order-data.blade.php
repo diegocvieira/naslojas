@@ -1,4 +1,4 @@
-@extends('app', ['body_class' => 'bg-white'])
+@extends('app', ['header_title' => 'Dados do pedido | naslojas.com', 'body_class' => 'bg-white'])
 
 @section('content')
     @include ('inc.header')
@@ -84,7 +84,7 @@
                                 @foreach(_paymentMethods() as $payment_key => $payment)
                                     @foreach($payment as $payment_type_key => $payment_type)
                                         @foreach($payment_type as $payment_description_key => $payment_description)
-                                            @if (in_array($payment_key . '-' . $payment_description_key, $payments))
+                                            @if (in_array($payment_key . '-' . $payment_description_key, $cart->payments))
                                                 <option value="{{ $payment_key . '-' . $payment_description_key }}" data-method="{{ $payment_key }}">{{ $payment_description }}</option>
                                             @endif
                                         @endforeach
@@ -128,12 +128,12 @@
                 </div>
 
                 <div class="col-xs-6 orders">
-                    @foreach ($bag_data as $key => $data)
+                    @foreach ($cart->stores as $storeIndex => $store)
                         <div class="row order">
-                            <span class="order-number">Pedido {{ $key + 1 }}</span>
+                            <span class="order-number">Pedido {{ $storeIndex + 1 }}</span>
 
                             <div class="col-xs-6 text-left">
-                                <span class="item">{{ $data['store'] }}</span>
+                                <span class="item">{{ $store->name }}</span>
 
                                 <span class="item">Frete</span>
 
@@ -141,23 +141,23 @@
                             </div>
 
                             <div class="col-xs-6 text-right">
-                                <span class="item">R$ {{ number_format($data['subtotal'], 2, ',', '.') }}</span>
+                                <span class="item">R$ {{ number_format($store->subtotal, 2, ',', '.') }}</span>
 
-                                <span class="item update-freight" data-freefreight="{{ $data['free_freight'] }}">
-                                    @if (is_numeric($data['freight']) && $data['freight'] == 0)
+                                <span class="item update-freight" data-freefreight="{{ $store->free_freight }}">
+                                    @if (is_numeric($store->freight) && $store->freight == 0)
                                         grátis
-                                    @elseif (is_numeric($data['freight']) && $data['freight'] > 0)
-                                        {{ number_format($data['freight'], 2, ',', '.') }}
+                                    @elseif (is_numeric($store->freight) && $store->freight > 0)
+                                        {{ number_format($store->freight, 2, ',', '.') }}
                                     @else
                                         -----
                                     @endif
                                 </span>
 
-                                <span class="item update-subtotal" data-subtotal="{{ $data['subtotal'] }}">R$ {{ number_format($data['subtotal'] + $data['freight'], 2, ',', '.') }}</span>
+                                <span class="item update-subtotal" data-subtotal="{{ $store->subtotal }}">R$ {{ number_format($store->subtotal + $store->freight, 2, ',', '.') }}</span>
                             </div>
 
                             <div class="col-xs-12 text-right">
-                                <span class="parcels" data-minparcelprice="{{ $data['min_parcel_price'] }}" data-maxparcel="{{ $data['max_parcel'] }}"></span>
+                                <span class="parcels" data-minparcelprice="{{ $store->min_parcel_price }}" data-maxparcel="{{ $store->max_parcel }}"></span>
                             </div>
                         </div>
                     @endforeach

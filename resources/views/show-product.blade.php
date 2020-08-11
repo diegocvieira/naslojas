@@ -16,12 +16,12 @@
             <div class="col-xs-6 col-xs-offset-1">
                 <div id="images">
                     <div id="image-destaque">
-                        <img src="{{ asset('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)) }}" id="photo-zoom" />
+                        <img src="{{ asset('uploads/' . $product->store_id . '/products/' . _originalImage($product->images->first()->image)) }}" id="photo-zoom" alt="{{ $product->title }}" />
                     </div>
 
                     <div id="image-thumbs">
                         @foreach ($product->images as $image)
-                            <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $image->image) }}" class="image-thumb" />
+                            <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $image->image) }}" class="image-thumb" alt="{{ $product->title }}" />
                         @endforeach
                     </div>
                 </div>

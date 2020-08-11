@@ -1,10 +1,10 @@
-@extends('app', ['body_class' => 'bg-white'])
+@extends('app', ['header_title' => 'Itens na sacola | naslojas.com', 'body_class' => 'bg-white'])
 
 @section('content')
     @include ('inc.header')
 
     <div class="container-fluid page-bag-products bag">
-        @if (isset($products))
+        @if ($cart)
             <div class="header-bag">
                 <h1>Itens na sacola</h1>
 
@@ -14,43 +14,53 @@
             </div>
 
             <div class="products">
-                @foreach ($products as $product)
-                    <div class="product">
-                        <div class="col-xs-2">
-                            <img src="{{ asset('uploads/' . $product->store_id . '/products/' . $product->images->first()->image) }}" alt="Produto {{ $product->title }}" />
-                        </div>
-
-                        <div class="col-xs-6">
-                            <span class="sold-by">Produto vendido e entregue pela loja <a href="{{ route('show-store', $product->store->slug) }}">{{ $product->store->name }}</a></span>
-
-                            <h3 class="title">{{ $product->title }}</h3>
-
-                            <div class="size">
-                                <span class="label-select">Tamanho selecionado:</span>
-
-                                {!! Form::select('size', $product->sizes->pluck('size', 'size'), $product->size, ['class' => 'bag-change-size selectpicker', 'data-productid' => $product->id, 'autocomplete' => 'off']) !!}
+                @foreach ($cart->stores as $store)
+                    @foreach ($store->products as $product)
+                        <div class="product">
+                            <div class="col-xs-2">
+                                <img src="{{ asset('uploads/' . $store->id . '/products/' . $product->image) }}" alt="Produto {{ $product->name }}" />
                             </div>
 
-                            <a href="{{ route('bag-remove-product', $product->id) }}" class="bag-remove-product">Remover da sacola</a>
-                        </div>
+                            <div class="col-xs-6">
+                                <span class="sold-by">Produto vendido e entregue pela loja <a href="{{ route('show-store', $store->slug) }}">{{ $store->name }}</a></span>
 
-                        <div class="col-xs-2">
-                            <div class="qtd">
-                                {!! Form::select('qtd', $product->store_qtd, $product->product_qtd, ['class' => 'bag-change-qtd qtd selectpicker', 'data-productid' => $product->id, 'autocomplete' => 'off']) !!}
+                                <h3 class="title">{{ $product->name }}</h3>
 
-                                <span class="label-select">Quantidade:</span>
+                                <div class="size">
+                                    <span class="label-select">Tamanho selecionado:</span>
+
+                                    <select name="size" data-productid="{{ $product->id }}" class="bag-change-size selectpicker" autocomplete="off">
+                                        @foreach ($product->sizes as $size)
+                                            <option value="{{ $size }}" {{ $product->size == $size ? 'selected' : '' }}>{{ $size }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <a href="{{ route('bag-remove-product', $product->id) }}" class="bag-remove-product">Remover da sacola</a>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="qtd">
+                                    <select name="qtd" data-productid="{{ $product->id }}" class="bag-change-qtd qtd selectpicker" autocomplete="off">
+                                        @for ($quantity = 1; $quantity <= $store->max_quantity; $quantity++)
+                                            <option value="{{ $quantity }}" {{ $product->qtd == $quantity ? 'selected' : '' }}>{{ $quantity }}</option>
+                                        @endfor
+                                    </select>
+
+                                    <span class="label-select">Quantidade:</span>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <span class="price" data-price="{{ $product->price }}">R$ {{ number_format($product->price, 2, ',', '.') }}</span>
                             </div>
                         </div>
-
-                        <div class="col-xs-2">
-                            <span class="price" data-price="{{ $product->price }}">R$ {{ number_format($product->price, 2, ',', '.') }}</span>
-                        </div>
-                    </div>
+                    @endforeach
                 @endforeach
             </div>
 
             <div class="footer-bag">
-                <span class="subtotal">SUBTOTAL <span>R$ {{ number_format($subtotal, 2, ',', '.') }}</span></span>
+                <span class="subtotal">SUBTOTAL <span>R$ {{ number_format($cart->subtotal, 2, ',', '.') }}</span></span>
 
                 <a href="{{ route('bag-data') }}" class="close-order">FECHAR PEDIDO</a>
 
