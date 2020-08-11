@@ -14,7 +14,7 @@
     <div class="col-xs-3">
         <img src="{{ asset('images/know/truck.png') }}" class="img-truck" />
 
-        <span>Entrega na cidade<br>a partir de R$ 5,00</span>
+        <span>Entregas na cidade<br>a partir de R$ 5,00</span>
     </div>
 
     <div class="col-xs-3">
