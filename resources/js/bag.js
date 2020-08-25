@@ -12,64 +12,136 @@ $(function() {
         }
     });
 
-    $(document).on('click', '.open-bag', function(e) {
-        e.preventDefault();
+    // $(document).on('click', '.open-bag', function(e) {
+    //     e.preventDefault();
 
-        var bag = $('header').find('.bag');
+    //     var bag = $('header').find('.bag');
 
-        if (bag.is(':visible')) {
-            bag.remove();
-        } else {
-            $.ajax({
-                url: $(this).attr('href'),
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    $('header').find('.bag-container').append(data.body);
-                }
-            });
-        }
-    });
+    //     if (bag.is(':visible')) {
+    //         bag.remove();
+    //     } else {
+    //         $.ajax({
+    //             url: $(this).attr('href'),
+    //             method: 'GET',
+    //             dataType: 'json',
+    //             success: function (data) {
+    //                 $('header').find('.bag-container').append(data.body);
+    //             }
+    //         });
+    //     }
+    // });
 
     $(document).on('click', '.bag-add-product', function(e) {
         e.preventDefault();
 
-        if (!$('.size-container').find('input').is(':checked')) {
+        const redirect = $(this).hasClass('redirect') ? true : false,
+            image = $('#photo-zoom'),
+            cart = $('.cart-preview'),
+            qtd = $('.qtd-container').find('select.qtd').val(),
+            productId = $(this).data('productid'),
+            productPrice = $('.price').text(),
+            size = $('.size-container').find('input:checked').val(),
+            productCart = cart.find('.cart-preview-product[data-productId="' + productId + '"][data-productSize="' + size + '"]');
+
+        if (!size) {
             modalAlert('Selecione um tamanho antes de adicionar o produto ao carrinho.');
-        } else {
-            var redirect = $(this).hasClass('redirect') ? true : false;
+            return false;
+        }
+
+        $('body').append(
+            '<div class="cart-preview-product moving" data-productId="' + productId + '" data-productSize="' + size + '">' +
+                '<img src="' + image.attr('src') + '" class="cart-product-image" />' +
+                '<span class="cart-product-remove"></span>' +
+                '<span class="cart-product-qtd">' + qtd + '</span>' +
+                '<span class="cart-product-price">' + productPrice + '</span>' +
+                '<span class="cart-product-size">' + size + '</span>' +
+            '</div>'
+        );
+
+        var move = $('.moving').css({
+            'top': image.offset().top,
+            'left': image.offset().left,
+            'width': image.width(),
+            'height': image.height()
+        });
+
+        productCart.find('.cart-product-qtd').remove();
+
+        $('.cart-preview-finish').animate({ opacity: 1, visibility: 'visible' }, 300);
+
+        move.animate({
+            'top': productCart.length ? productCart.offset().top : cart.offset().top - 60,
+            'left': productCart.length ? productCart.offset().left : cart.offset().left,
+            'width': '60px',
+            'height': '60px',
+            'border-radius': '50%'
+        }, 1000, function() {
+            move.css({
+                'position': 'relative',
+                'transform': 'none',
+                'top': '0',
+                'left': '0'
+            });
+
+            if (productCart.length) {
+                productCart.before(move);
+                move.removeClass('moving');
+                productCart.remove();
+            } else {
+                cart.prepend(move).find('.moving').removeClass('moving');
+            }
+        });
+
+        $.ajax({
+            url: $(this).data('url'),
+            data: {
+                qtd : $('.qtd-container').find('select.qtd').val(),
+                size : $('.size-container').find('input:checked').val(),
+                product_id : $(this).data('productid')
+            },
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                if (!data.success) {
+                    modalAlert(data.message);
+                    return false;
+                }
+
+                if (redirect) {
+                    window.location = '/sacola/dados';
+                } else {
+                    $('#modal-default').modal('hide');
+                }
+            },
+            error: function (request, status, error) {
+                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+    });
+
+    $(document).on('click', '.cart-preview .cart-product-remove', function() {
+        const product = $(this).parents('.cart-preview-product');
+
+        product.fadeOut(300, function () {
+            $(this).remove();
+
+            if (!$('.cart-preview-product').length) {
+                // $('.cart-preview-finish').fadeOut(300);
+                $('.cart-preview-finish').animate({ opacity: 0, visibility: 'hidden' }, 300);
+            }
 
             $.ajax({
-                url: $(this).data('url'),
-                data: {
-                    qtd : $('.qtd-container').find('select.qtd').val(),
-                    size : $('.size-container').find('input:checked').val(),
-                    product_id : $(this).data('productid')
-                },
-                method: 'POST',
+                url: '/sacola/remove-product/' + product.attr('data-productId'),
+                method: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    if (!data.success) {
-                        modalAlert(data.message);
-                        return false;
-                    }
 
-                    if (redirect) {
-                        window.location = '/sacola/dados';
-                    } else {
-                        $('#modal-default').modal('hide');
-
-                        $('.open-bag').trigger('click');
-
-                        var bag = $('header').find('.bag-count');
-                        bag.text(parseInt(bag.text() ? bag.text() : 0) + 1);
-                    }
                 },
                 error: function (request, status, error) {
                     modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
                 }
             });
-        }
+        });
     });
 
     $(document).on('click', '.bag-remove-product', function(e) {

@@ -27,12 +27,6 @@ class BagController extends Controller
     {
         $p = Product::find($request->product_id);
 
-        // if (!$p->store->freights->where('district_id', session('client_district_id'))->first()) {
-        //     $data['success'] = false;
-        //     $data['message'] = 'Selecione o seu bairro antes de adicionar um produto.';
-        //     return response()->json($data);
-        // }
-
         $product_id = $p->id;
         $store_id = $p->store_id;
         $size = $request->size;
@@ -55,7 +49,7 @@ class BagController extends Controller
                 $store_key = $key;
 
                 foreach ($store['products'] as $key2 => $product) {
-                    if ($product['id'] == $product_id && $product['qtd']) {
+                    if ($product['id'] == $product_id && $product['size'] == $size && $product['qtd']) {
                         $product_exist = true;
                         $product_key = $key2;
                     }
@@ -70,7 +64,7 @@ class BagController extends Controller
                 array_push($bag['stores'], ['store_id' => $store_id, 'products' => [['id' => $product_id, 'qtd' => $qtd, 'size' => $size]]]);
             }
         } else {
-            $bag['stores'][$store_key]['products'][$product_key]['qtd'] = $qtd + (int)$bag['stores'][$store_key]['products'][$product_key]['qtd'];
+            $bag['stores'][$store_key]['products'][$product_key]['qtd'] = $qtd;
         }
 
         session(['bag' => $bag]);
