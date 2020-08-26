@@ -13,22 +13,22 @@ $(function() {
     });
 
     $(document).on('click', '.open-bag', function(e) {
-        e.preventDefault();
+        // e.preventDefault();
 
-        var bag = $('header').find('.bag');
+        // var bag = $('header').find('.bag');
 
-        if (bag.is(':visible')) {
-            bag.remove();
-        } else {
-            $.ajax({
-                url: $(this).attr('href'),
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    $('header').find('.bag-container').append(data.body);
-                }
-            });
-        }
+        // if (bag.is(':visible')) {
+        //     bag.remove();
+        // } else {
+        //     $.ajax({
+        //         url: $(this).attr('href'),
+        //         method: 'GET',
+        //         dataType: 'json',
+        //         success: function (data) {
+        //             $('header').find('.bag-container').append(data.body);
+        //         }
+        //     });
+        // }
     });
 
     $(document).on('click', '.bag-add-product', function(e) {
@@ -84,8 +84,10 @@ $(function() {
             success: function (data) {
                 product.remove();
 
-                var bag = $('header').find('.open-bag');
-                bag.text(parseInt(bag.text()) - 1);
+                var bag = $('header').find('.bag-count'),
+                    count = parseInt(bag.text());
+
+                bag.text(count > 1 ? count - 1 : '');
 
                 updateBagInfos();
             },

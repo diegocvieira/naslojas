@@ -143,7 +143,7 @@ class BagController extends Controller
             $store_ids[] = $store['store_id'];
         }
 
-        $stores = Store::find($store_ids);
+        $stores = Store::with('freights')->find($store_ids);
 
         foreach ($stores as $store) {
             $freights[] = $store->freights->where('district_id', $district_id)->first();
@@ -354,7 +354,7 @@ class BagController extends Controller
             $cart['stores'][$keyStore]['min_parcel_price'] = $store->min_parcel_price;
             $cart['stores'][$keyStore]['max_parcel'] = $store->max_parcel;
             $cart['stores'][$keyStore]['free_freight'] = true;
-            $cart['stores'][$keyStore]['freight'] = Auth::guard('client')->check() && Auth::guard('client')->user()->district_id ? $store->freights->where('district_id', Auth::guard('client')->user()->district_id)->first() : null;
+            $cart['stores'][$keyStore]['freight'] = Auth::guard('client')->check() && Auth::guard('client')->user()->district_id ? $store->freights->where('district_id', Auth::guard('client')->user()->district_id)->first()->price : null;
 
             foreach ($store->payments as $payment) {
                 $cart['payments'][] = $payment->method . '-' . $payment->payment;

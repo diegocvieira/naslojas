@@ -256,11 +256,11 @@ class StoreController extends Controller
                 return array('id' => $q, 'price' => $t);
             }, $request->district_id, $request->freight_price);
 
-            $store->freights()->detach();
+            $store->freights()->delete();
 
             foreach ($freights as $key => $freight) {
                 if ($freight['price']) {
-                    $store->freights()->attach($key, [
+                    $store->freights()->create([
                         'price' => number_format(str_replace(array(".", ","), array("", "."), $freight['price']), 2, '.', ''),
                         'district_id' => $freight['id']
                     ]);

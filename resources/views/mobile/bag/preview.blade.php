@@ -1,5 +1,5 @@
 <div class="bag-preview bag">
-    @if (isset($cart))
+    @if (isset($cart) && $cart)
         <h2 class="header-title">MINHA SACOLA</h2>
 
         <div class="products">
