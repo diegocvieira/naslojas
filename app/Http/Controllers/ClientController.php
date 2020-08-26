@@ -51,11 +51,11 @@ class ClientController extends Controller
     {
         if (Auth::guard('client')->attempt(['email' => $request->email, 'password' => $request->password], true)) {
             $return['status'] = true;
-            $districtId = Auth::guard('client')->user()->district_id;
+            // $districtId = Auth::guard('client')->user()->district_id;
 
-            if ($districtId) {
-                $this->districtSet($districtId);
-            }
+            // if ($districtId) {
+            //     $this->districtSet($districtId);
+            // }
         } else {
             $return['status'] = false;
             $return['msg'] = 'Não identificamos o e-mail e/ou a senha que você informou.';
