@@ -345,8 +345,9 @@ header {
         }
 
         &.hide-button {
-            opacity: 0;
-            visibility: hidden;
+            // opacity: 0;
+            // visibility: hidden;
+            display: none;
         }
     }
 }

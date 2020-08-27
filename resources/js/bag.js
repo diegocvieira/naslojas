@@ -67,7 +67,9 @@ $(function() {
 
         productCart.find('.cart-product-qtd').remove();
 
-        $('.cart-preview-finish').animate({ opacity: 1, visibility: 'visible' }, 300);
+        // $('.cart-preview-finish').animate({ opacity: 1, visibility: 'visible' }, 300);
+        // $('.cart-preview-finish').fadeIn(300);
+        $('.cart-preview-finish').removeClass('hide-button');
 
         move.animate({
             'top': productCart.length ? productCart.offset().top : cart.offset().top - 60,
@@ -127,7 +129,8 @@ $(function() {
 
             if (!$('.cart-preview-product').length) {
                 // $('.cart-preview-finish').fadeOut(300);
-                $('.cart-preview-finish').animate({ opacity: 0, visibility: 'hidden' }, 300);
+                // $('.cart-preview-finish').animate({ opacity: 0, visibility: 'hidden' }, 300);
+                $('.cart-preview-finish').addClass('hide-button');
             }
 
             $.ajax({
