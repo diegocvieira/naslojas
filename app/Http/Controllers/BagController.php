@@ -15,6 +15,7 @@ use Auth;
 use Validator;
 use Agent;
 use Mail;
+use Cookie;
 
 class BagController extends Controller
 {
@@ -185,7 +186,7 @@ class BagController extends Controller
 
         $client = Client::find(Auth::guard('client')->user()->id);
 
-        $districts = District::where('city_id', $client->city_id)
+        $districts = District::where('city_id', $client->city_id ?? Cookie::get('city_id'))
             ->orderBy('name', 'ASC')
             ->pluck('name', 'id');
 
