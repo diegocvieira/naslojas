@@ -59,7 +59,7 @@ class GenerateTokens extends Command
     public function generate()
     {
         $charsStart = 0;
-        $charsLength = 16;
+        $charsLength = 6;
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
         $token = substr(str_shuffle($chars), $charsStart, $charsLength);
