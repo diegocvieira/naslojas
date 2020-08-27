@@ -39,7 +39,7 @@ $(function() {
             cart = $('.cart-preview'),
             qtd = $('.qtd-container').find('select.qtd').val(),
             productId = $(this).data('productid'),
-            productPrice = $('.price').text(),
+            productPrice = $('.price-container').find('.price').text(),
             size = $('.size-container').find('input:checked').val(),
             productCart = cart.find('.cart-preview-product[data-productId="' + productId + '"][data-productSize="' + size + '"]');
 
