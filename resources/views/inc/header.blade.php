@@ -84,6 +84,16 @@
                     </li>
                 @elseif (Auth::guard('client')->check())
                     <li>
+                        <a href="{{ route('bag-products') }}" class="open-bag">
+                            Sacola
+
+                            <span class="bag-container {{ session('bag') ? 'cart-has-products' : '' }}">
+                                <img src="{{ asset('images/icon-bag.png') }}" alt="Sacola" />
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="#" class="logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span>{{ Auth::guard('client')->user()->name }}</span>
 
@@ -116,26 +126,16 @@
                     <li>
                         <a href="{{ route('client-login-get') }}">Entrar</a>
                     </li>
+
+                    <li>
+                        <a href="{{ route('bag-products') }}" class="open-bag">
+                            <span class="bag-container {{ session('bag') ? 'cart-has-products' : '' }}">
+                                <img src="{{ asset('images/icon-bag.png') }}" alt="Sacola" />
+                            </span>
+                        </a>
+                    </li>
                 @endif
             </ul>
         </nav>
     </div>
 </header>
-
-<div class="cart-preview">
-    @if ($cartPreview)
-        @foreach ($cartPreview->stores as $store)
-            @foreach ($store->products as $product)
-                <div class="cart-preview-product" data-productId="{{ $product->id }}" data-productSize="{{ $product->size }}">
-                    <img src="{{ asset('uploads/' . $store->id . '/products/' . $product->image) }}" class="cart-product-image" />
-                    <span class="cart-product-remove"></span>
-                    <span class="cart-product-qtd">{{ $product->qtd }}</span>
-                    <span class="cart-product-price">R${{ number_format($product->price, 2, ',', '.') }}</span>
-                    <span class="cart-product-size">{{ $product->size }}</span>
-                </div>
-            @endforeach
-        @endforeach
-    @endif
-
-    <a href="{{ route('bag-products') }}" class="cart-preview-finish {{ !$cartPreview ? 'hide-button' : '' }}">SACOLA</a>
-</div>

@@ -72,29 +72,29 @@ class BagController extends Controller
         return json_encode(['success' => true]);
     }
 
-    public function remove($product_id)
+    public function remove($productId)
     {
-        $bag = session('bag');
+        $cart = session('bag');
 
-        foreach ($bag['stores'] as $key => $store) {
-            foreach ($store['products'] as $key2 => $product) {
-                if ($product['id'] == $product_id) {
-                    unset($bag['stores'][$key]['products'][$key2]);
+        foreach ($cart['stores'] as $storeIndex => $store) {
+            foreach ($store['products'] as $productIndex => $product) {
+                if ($product['id'] == $productId) {
+                    unset($cart['stores'][$storeIndex]['products'][$productIndex]);
 
-                    if (!count($bag['stores'][$key]['products'])) {
-                        unset($bag['stores'][$key]);
+                    if (!count($cart['stores'][$storeIndex]['products'])) {
+                        unset($cart['stores'][$storeIndex]);
                     }
                 }
             }
         }
 
-        session(['bag' => $bag]);
+        session(['bag' => $cart]);
 
-        if (!count($bag['stores'])) {
+        if (!count($cart['stores'])) {
             Session::pull('bag');
         }
 
-        return json_encode(true);
+        return json_encode(['success' => true]);
     }
 
     public function changeQtd($product_id, $qtd)
@@ -348,7 +348,7 @@ class BagController extends Controller
             $cart['stores'][$keyStore]['min_parcel_price'] = $store->min_parcel_price;
             $cart['stores'][$keyStore]['max_parcel'] = $store->max_parcel;
             $cart['stores'][$keyStore]['free_freight'] = true;
-            $cart['stores'][$keyStore]['freight'] = Auth::guard('client')->check() && Auth::guard('client')->user()->district_id ? $store->freights->where('district_id', Auth::guard('client')->user()->district_id)->first() : null;
+            $cart['stores'][$keyStore]['freight'] = Auth::guard('client')->check() && Auth::guard('client')->user()->district_id ? $store->freights->where('district_id', Auth::guard('client')->user()->district_id)->first()->price : null;
 
             foreach ($store->payments as $payment) {
                 $cart['payments'][] = $payment->method . '-' . $payment->payment;

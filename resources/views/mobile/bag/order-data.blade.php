@@ -1,7 +1,7 @@
 @extends('app', ['body_class' => 'bg-white'])
 
 @section('content')
-    @include ('mobile.inc.header')
+    @include ('mobile.inc.header-simple')
 
     <div class="container page-bag-order-data">
         <div class="header-bag">

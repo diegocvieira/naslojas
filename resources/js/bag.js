@@ -6,57 +6,21 @@ $(function() {
         });
     }
 
-    $(document).click(function(event) {
-        if (!$(event.target).closest('header').find('.bag').length && $('header').find('.bag').is(':visible')) {
-            $('header').find('.bag').remove();
-        }
-    });
-
-    // $(document).on('click', '.open-bag', function(e) {
-    //     e.preventDefault();
-
-    //     var bag = $('header').find('.bag');
-
-    //     if (bag.is(':visible')) {
-    //         bag.remove();
-    //     } else {
-    //         $.ajax({
-    //             url: $(this).attr('href'),
-    //             method: 'GET',
-    //             dataType: 'json',
-    //             success: function (data) {
-    //                 $('header').find('.bag-container').append(data.body);
-    //             }
-    //         });
-    //     }
-    // });
-
     $(document).on('click', '.bag-add-product', function(e) {
         e.preventDefault();
 
         const redirect = $(this).hasClass('redirect') ? true : false,
             image = $('#photo-zoom'),
-            cart = $('.cart-preview'),
+            cartContainer = $('.bag-container'),
             qtd = $('.qtd-container').find('select.qtd').val(),
-            productId = $(this).data('productid'),
-            productPrice = $('.price-container').find('.price').text(),
-            size = $('.size-container').find('input:checked').val(),
-            productCart = cart.find('.cart-preview-product[data-productId="' + productId + '"][data-productSize="' + size + '"]');
+            size = $('.size-container').find('input:checked').val();
 
         if (!size) {
             modalAlert('Selecione um tamanho antes de adicionar o produto ao carrinho.');
             return false;
         }
 
-        $('body').append(
-            '<div class="cart-preview-product moving" data-productId="' + productId + '" data-productSize="' + size + '">' +
-                '<img src="' + image.attr('src') + '" class="cart-product-image" />' +
-                '<span class="cart-product-remove"></span>' +
-                '<span class="cart-product-qtd">' + qtd + '</span>' +
-                '<span class="cart-product-price">' + productPrice + '</span>' +
-                '<span class="cart-product-size">' + size + '</span>' +
-            '</div>'
-        );
+        $('body').append('<img src="' + image.attr('src') + '" class="moving cart-product-image" />');
 
         var move = $('.moving').css({
             'top': image.offset().top,
@@ -65,40 +29,22 @@ $(function() {
             'height': image.height()
         });
 
-        productCart.find('.cart-product-qtd').remove();
-
-        // $('.cart-preview-finish').animate({ opacity: 1, visibility: 'visible' }, 300);
-        // $('.cart-preview-finish').fadeIn(300);
-        $('.cart-preview-finish').removeClass('hide-button');
-
         move.animate({
-            'top': productCart.length ? productCart.offset().top : cart.offset().top - 60,
-            'left': productCart.length ? productCart.offset().left : cart.offset().left,
-            'width': '60px',
-            'height': '60px',
-            'border-radius': '50%'
+            'top': cartContainer.offset().top + cartContainer.height() / 2,
+            'left': cartContainer.offset().left + cartContainer.width() / 2,
+            'width': '0',
+            'height': '0'
         }, 1000, function() {
-            move.css({
-                'position': 'relative',
-                'transform': 'none',
-                'top': '0',
-                'left': '0'
-            });
+            cartContainer.addClass('cart-has-products');
 
-            if (productCart.length) {
-                productCart.before(move);
-                move.removeClass('moving');
-                productCart.remove();
-            } else {
-                cart.prepend(move).find('.moving').removeClass('moving');
-            }
+            move.remove();
         });
 
         $.ajax({
             url: $(this).data('url'),
             data: {
-                qtd : $('.qtd-container').find('select.qtd').val(),
-                size : $('.size-container').find('input:checked').val(),
+                qtd : qtd,
+                size : size,
                 product_id : $(this).data('productid')
             },
             method: 'POST',
@@ -116,56 +62,42 @@ $(function() {
                 }
             },
             error: function (request, status, error) {
-                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                modalAlert(defaultErrorMessage());
             }
-        });
-    });
-
-    $(document).on('click', '.cart-preview .cart-product-remove', function() {
-        const product = $(this).parents('.cart-preview-product');
-
-        product.fadeOut(300, function () {
-            $(this).remove();
-
-            if (!$('.cart-preview-product').length) {
-                // $('.cart-preview-finish').fadeOut(300);
-                // $('.cart-preview-finish').animate({ opacity: 0, visibility: 'hidden' }, 300);
-                $('.cart-preview-finish').addClass('hide-button');
-            }
-
-            $.ajax({
-                url: '/sacola/remove-product/' + product.attr('data-productId'),
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-
-                },
-                error: function (request, status, error) {
-                    modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
-                }
-            });
         });
     });
 
     $(document).on('click', '.bag-remove-product', function(e) {
         e.preventDefault();
 
-        var product = $(this).parents('.product');
+        const product = $(this).parents('.product'),
+            button = $(this);
+
+        button.text('Removendo');
 
         $.ajax({
             url: $(this).attr('href'),
             method: 'GET',
             dataType: 'json',
             success: function (data) {
-                product.remove();
+                if (data.success) {
+                    if ($('.product').length > 1) {
+                        product.fadeOut(300, function () {
+                            $(this).remove();
+                        });
 
-                var bag = $('header').find('.open-bag');
-                bag.text(parseInt(bag.text()) - 1);
+                        updateBagInfos();
+                    } else {
+                        window.location.reload(true);
+                    }
+                } else {
+                    button.text('Remover da sacola');
 
-                updateBagInfos();
+                    modalAlert(defaultErrorMessage());
+                }
             },
             error: function (request, status, error) {
-                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                modalAlert(defaultErrorMessage());
             }
         });
     });

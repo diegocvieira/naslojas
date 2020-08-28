@@ -39,7 +39,7 @@
             </ul>
         </nav>
     @else
-        <button class="open-bag" data-url="{{ route('bag-products') }}">{{ $count_bag }}</button>
+        <a href="{{ route('bag-products') }}" class="open-bag {{ session('bag') ? 'cart-has-products' : '' }}"></a>
 
         <nav class="nav navbar-nav nav-menu">
             <ul>
