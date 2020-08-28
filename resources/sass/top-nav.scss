@@ -316,6 +316,10 @@ header {
     transition: bottom .5s;
     padding: 20px 0;
 
+    .container {
+        max-width: 850px;
+    }
+
     p {
         color: #fff;
         font-size: 14px;
