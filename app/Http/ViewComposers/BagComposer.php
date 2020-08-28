@@ -5,6 +5,7 @@ namespace App\Http\ViewComposers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Users\Repository as UserRepository;
 use Session;
+use App\Http\Controllers\BagController;
 
 class BagComposer
 {
@@ -20,6 +21,10 @@ class BagComposer
             $count = null;
         }
 
-        $view->with('count_bag', $count);
+        $cart = new BagController;
+        $cartPreview = $cart->getCartDetails();
+
+        $view->with('cartPreview', $cartPreview)
+            ->with('count_bag', $count);
 	}
 }

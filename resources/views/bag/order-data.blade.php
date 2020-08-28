@@ -1,7 +1,7 @@
 @extends('app', ['header_title' => 'Dados do pedido | naslojas.com', 'body_class' => 'bg-white'])
 
 @section('content')
-    @include ('inc.header')
+    @include ('inc.header-simple')
 
     <div class="container-fluid page-bag-order-data">
         <div class="row">

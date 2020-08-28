@@ -874,3 +874,7 @@ function modalAlert(body, btn = 'OK') {
 
     $('.modal-backdrop:last').css('z-index', '1080');
 }
+
+function defaultErrorMessage() {
+    return 'Ocorreu um erro inesperado. Atualize a página e tente novamente.';
+}

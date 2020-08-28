@@ -36,19 +36,6 @@
 
         <nav class="nav navbar-nav nav-menu">
             <ul>
-                @if (Auth::guard('client')->check())
-                    <li>
-                        <a href="{{ route('bag-products') }}" class="open-bag">
-                            Sacola
-
-                            <span class="bag-container">
-                                <img src="{{ asset('images/icon-bag.png') }}" alt="Sacola" />
-                                <span class="bag-count">{{ $count_bag }}</span>
-                            </span>
-                        </a>
-                    </li>
-                @endif
-
                 @if (Auth::guard('store')->check())
                     <li>
                         <a href="#" class="logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -97,6 +84,16 @@
                     </li>
                 @elseif (Auth::guard('client')->check())
                     <li>
+                        <a href="{{ route('bag-products') }}" class="open-bag">
+                            Sacola
+
+                            <span class="bag-container {{ session('bag') ? 'cart-has-products' : '' }}">
+                                <img src="{{ asset('images/icon-bag.png') }}" alt="Sacola" />
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="#" class="logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span>{{ Auth::guard('client')->user()->name }}</span>
 
@@ -132,9 +129,8 @@
 
                     <li>
                         <a href="{{ route('bag-products') }}" class="open-bag">
-                            <span class="bag-container">
+                            <span class="bag-container {{ session('bag') ? 'cart-has-products' : '' }}">
                                 <img src="{{ asset('images/icon-bag.png') }}" alt="Sacola" />
-                                <span class="bag-count">{{ $count_bag }}</span>
                             </span>
                         </a>
                     </li>

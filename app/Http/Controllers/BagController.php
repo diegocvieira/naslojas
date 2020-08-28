@@ -28,12 +28,6 @@ class BagController extends Controller
     {
         $p = Product::find($request->product_id);
 
-        // if (!$p->store->freights->where('district_id', session('client_district_id'))->first()) {
-        //     $data['success'] = false;
-        //     $data['message'] = 'Selecione o seu bairro antes de adicionar um produto.';
-        //     return response()->json($data);
-        // }
-
         $product_id = $p->id;
         $store_id = $p->store_id;
         $size = $request->size;
@@ -56,7 +50,7 @@ class BagController extends Controller
                 $store_key = $key;
 
                 foreach ($store['products'] as $key2 => $product) {
-                    if ($product['id'] == $product_id && $product['qtd']) {
+                    if ($product['id'] == $product_id && $product['size'] == $size && $product['qtd']) {
                         $product_exist = true;
                         $product_key = $key2;
                     }
@@ -71,7 +65,7 @@ class BagController extends Controller
                 array_push($bag['stores'], ['store_id' => $store_id, 'products' => [['id' => $product_id, 'qtd' => $qtd, 'size' => $size]]]);
             }
         } else {
-            $bag['stores'][$store_key]['products'][$product_key]['qtd'] = $qtd + (int)$bag['stores'][$store_key]['products'][$product_key]['qtd'];
+            $bag['stores'][$store_key]['products'][$product_key]['qtd'] = $qtd;
         }
 
         session(['bag' => $bag]);
@@ -79,29 +73,29 @@ class BagController extends Controller
         return json_encode(['success' => true]);
     }
 
-    public function remove($product_id)
+    public function remove($productId)
     {
-        $bag = session('bag');
+        $cart = session('bag');
 
-        foreach ($bag['stores'] as $key => $store) {
-            foreach ($store['products'] as $key2 => $product) {
-                if ($product['id'] == $product_id) {
-                    unset($bag['stores'][$key]['products'][$key2]);
+        foreach ($cart['stores'] as $storeIndex => $store) {
+            foreach ($store['products'] as $productIndex => $product) {
+                if ($product['id'] == $productId) {
+                    unset($cart['stores'][$storeIndex]['products'][$productIndex]);
 
-                    if (!count($bag['stores'][$key]['products'])) {
-                        unset($bag['stores'][$key]);
+                    if (!count($cart['stores'][$storeIndex]['products'])) {
+                        unset($cart['stores'][$storeIndex]);
                     }
                 }
             }
         }
 
-        session(['bag' => $bag]);
+        session(['bag' => $cart]);
 
-        if (!count($bag['stores'])) {
+        if (!count($cart['stores'])) {
             Session::pull('bag');
         }
 
-        return json_encode(true);
+        return json_encode(['success' => true]);
     }
 
     public function changeQtd($product_id, $qtd)

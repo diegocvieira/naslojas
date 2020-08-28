@@ -77,6 +77,19 @@ header {
         border: none;
         line-height: 3.8;
         margin-left: 10px;
+        position: relative;
+
+        &.cart-has-products::after {
+            content: '';
+            background-color: #ff1744;
+            width: 5px;
+            height: 5px;
+            position: absolute;
+            border-radius: 50%;
+            top: 25px;
+            left: 18px;
+            transition: .5s;
+        }
     }
 
     nav {
@@ -308,4 +321,15 @@ header {
             }
         }
     }
+}
+
+.cart-product-image {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.moving {
+    position: absolute;
+    z-index: 9999;
 }

@@ -1,10 +1,10 @@
 @extends('app', ['body_class' => 'bg-white'])
 
 @section('content')
-    @include ('mobile.inc.header')
+    @include ('mobile.inc.header-simple')
 
     <div class="container page-bag-products bag">
-        @if (isset($cart))
+        @if ($cart)
             <div class="header-bag">
                 <h1>Itens na sacola</h1>
 

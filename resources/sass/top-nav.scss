@@ -168,21 +168,20 @@ header {
                     position: relative;
                     margin-left: 7px;
 
-                    img {
-                        width: 20px;
+                    &.cart-has-products::after {
+                        content: '';
+                        background-color: #ff1744;
+                        width: 5px;
+                        height: 5px;
+                        position: absolute;
+                        border-radius: 50%;
+                        top: 11px;
+                        left: 8px;
+                        transition: .5s;
                     }
 
-                    .bag-count {
-                        color: rgb(255, 23, 68);
-                        font-size: 12.5px;
-                        position: absolute;
-                        left: 0;
-                        top: 2px;
-                        width: 100%;
-                        height: 100%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
+                    img {
+                        width: 20px;
                     }
                 }
             }
@@ -304,4 +303,15 @@ header {
             }
         }
     }
+}
+
+.cart-product-image {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.moving {
+    position: absolute;
+    z-index: 9999;
 }
