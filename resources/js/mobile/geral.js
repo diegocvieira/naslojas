@@ -1,6 +1,15 @@
 $(function() {
     $('body').css('opacity', '1');
 
+    if (localStorage.getItem('warning-cookies') === null) {
+        $('#warning-cookies').css('bottom', '0');
+    }
+    $('.confirm-warning-cookies').on('click', function() {
+        localStorage.setItem('warning-cookies', 'true');
+
+        $('#warning-cookies').css('bottom', '-100%');
+    });
+
     $(document).on('click', '.show-header-cities', function(event) {
         event.preventDefault();
 
@@ -56,7 +65,7 @@ $(function() {
         autoplay: true
     });
 
-    $('.slick-know, .slick-home-prices').slick({
+    $('.slick-know').slick({
         slidesToShow: 1,
         variableWidth: true,
         infinite: false,
@@ -64,80 +73,80 @@ $(function() {
         slidesToScroll: 1
     });
 
-    $('.slick-home-products').slick({
-        slidesToShow: 1,
-        variableWidth: true,
-        infinite: true,
-        arrows: false,
-        slidesToScroll: 1
-    });
+    // $('.slick-home-products').slick({
+    //     slidesToShow: 1,
+    //     variableWidth: true,
+    //     infinite: true,
+    //     arrows: false,
+    //     slidesToScroll: 1
+    // });
 
-    $('.slick-home-stores').slick({
-        slidesToShow: 1,
-        variableWidth: true,
-        infinite: true,
-        arrows: false,
-        slidesToScroll: 1,
-        initialSlide: Math.floor(Math.random() * $('.slick-home-stores a').length)
-    });
+    // $('.slick-home-stores').slick({
+    //     slidesToShow: 1,
+    //     variableWidth: true,
+    //     infinite: true,
+    //     arrows: false,
+    //     slidesToScroll: 1,
+    //     initialSlide: Math.floor(Math.random() * $('.slick-home-stores a').length)
+    // });
 
-    $('.slick-home-brands').slick({
-        infinite: true,
-        arrows: false,
-        slidesPerRow: 2,
-        rows: 2
-    });
+    // $('.slick-home-brands').slick({
+    //     infinite: true,
+    //     arrows: false,
+    //     slidesPerRow: 2,
+    //     rows: 2
+    // });
 
-    $('.slick-trending-words').slick({
-        slidesToShow: 1,
-        variableWidth: true,
-        infinite: true,
-        arrows: false,
-        slidesToScroll: 1,
-        slidesPerRow: 3,
-        rows: 3
-    });
+    // $('.slick-trending-words').slick({
+    //     slidesToShow: 1,
+    //     variableWidth: true,
+    //     infinite: true,
+    //     arrows: false,
+    //     slidesToScroll: 1,
+    //     slidesPerRow: 3,
+    //     rows: 3
+    // });
 
     // Newsletter register
-    $(document).on('submit', '#form-newsletter-register', function () {
-        var form = $(this);
+    // $(document).on('submit', '#form-newsletter-register', function () {
+    //     var form = $(this);
 
-        form.find('input[type=submit]').val('ENVIANDO').attr('disabled', true);
+    //     form.find('input[type=submit]').val('ENVIANDO').attr('disabled', true);
 
-        $.ajax({
-            url: form.attr('action'),
-            method: 'POST',
-            dataType: 'json',
-            data: form.serialize(),
-            success: function (data) {
-                form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
-                form.find('input[type=email]').val('');
+    //     $.ajax({
+    //         url: form.attr('action'),
+    //         method: 'POST',
+    //         dataType: 'json',
+    //         data: form.serialize(),
+    //         success: function (data) {
+    //             form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
+    //             form.find('input[type=email]').val('');
 
-                modalAlert('E-mail enviado com sucesso!');
-            },
-            error: function (request, status, error) {
-                form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
+    //             modalAlert('E-mail enviado com sucesso!');
+    //         },
+    //         error: function (request, status, error) {
+    //             form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
 
-                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
-            }
-        });
+    //             modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+    //         }
+    //     });
 
-        return false;
-    });
+    //     return false;
+    // });
 
     // Disabled stores
-    $(document).on('click', '.store-disabled', function(e) {
-        e.preventDefault();
+    // $(document).on('click', '.store-disabled', function(e) {
+    //     e.preventDefault();
 
-        modalAlert('Em breve!');
-    });
+    //     modalAlert('Em breve!');
+    // });
 
     // City
-    $(document).on('click', '.show-city-modal', function(e) {
-        e.preventDefault();
+    // $(document).on('click', '.show-city-modal', function(e) {
+    //     e.preventDefault();
 
-        modalAlert('Em breve você poderá ver os produtos das lojas de outras cidades.');
-    });
+    //     modalAlert('Em breve você poderá ver os produtos das lojas de outras cidades.');
+    // });
 
     // Add overlay and close menu
     $(document).on('click', 'nav .open-menu', function() {

@@ -30,6 +30,15 @@ $(function() {
         }
     });
 
+    if (localStorage.getItem('warning-cookies') === null) {
+        $('#warning-cookies').css('bottom', '0');
+    }
+    $('.confirm-warning-cookies').on('click', function() {
+        localStorage.setItem('warning-cookies', 'true');
+
+        $('#warning-cookies').css('bottom', '-100%');
+    });
+
     $(document).on('change', '#select-district', function() {
         window.location.href = '/cliente/district/set/' + $(this).val();
     });
@@ -43,31 +52,31 @@ $(function() {
         autoplaySpeed: 4000
     });
 
-    $('.slick-stores').slick({
-        slidesToShow: 4,
-        infinite: true,
-        arrows: false,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 4000,
-        initialSlide: Math.floor(Math.random() * $('.slick-stores a').length)
-    });
+    // $('.slick-stores').slick({
+    //     slidesToShow: 4,
+    //     infinite: true,
+    //     arrows: false,
+    //     slidesToScroll: 1,
+    //     autoplay: true,
+    //     autoplaySpeed: 4000,
+    //     initialSlide: Math.floor(Math.random() * $('.slick-stores a').length)
+    // });
 
-    $('.slick-products').slick({
-        slidesToShow: 5,
-        slidesToScroll: 1,
-        infinite: true,
-        arrows: true,
-        autoplay: false,
-        autoplaySpeed: 4000,
-    });
+    // $('.slick-products').slick({
+    //     slidesToShow: 5,
+    //     slidesToScroll: 1,
+    //     infinite: true,
+    //     arrows: true,
+    //     autoplay: false,
+    //     autoplaySpeed: 4000,
+    // });
 
     // Disabled stores
-    $(document).on('click', '.store-disabled', function(e) {
-        e.preventDefault();
+    // $(document).on('click', '.store-disabled', function(e) {
+    //     e.preventDefault();
 
-        modalAlert('Em breve!');
-    });
+    //     modalAlert('Em breve!');
+    // });
 
     // Share product url
     $(document).on('click', '.link-share', function() {
@@ -131,38 +140,38 @@ $(function() {
     });
 
     // City
-    $(document).on('click', '.show-city-modal', function(e) {
-        e.preventDefault();
+    // $(document).on('click', '.show-city-modal', function(e) {
+    //     e.preventDefault();
 
-        modalAlert('Em breve você poderá ver os produtos das lojas de outras cidades.');
-    });
+    //     modalAlert('Em breve você poderá ver os produtos das lojas de outras cidades.');
+    // });
 
     // Newsletter register
-    $(document).on('submit', '#form-newsletter-register', function () {
-        var form = $(this);
+    // $(document).on('submit', '#form-newsletter-register', function () {
+    //     var form = $(this);
 
-        form.find('input[type=submit]').val('ENVIANDO').attr('disabled', true);
+    //     form.find('input[type=submit]').val('ENVIANDO').attr('disabled', true);
 
-        $.ajax({
-            url: form.attr('action'),
-            method: 'POST',
-            dataType: 'json',
-            data: form.serialize(),
-            success: function (data) {
-                form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
-                form.find('input[type=email]').val('');
+    //     $.ajax({
+    //         url: form.attr('action'),
+    //         method: 'POST',
+    //         dataType: 'json',
+    //         data: form.serialize(),
+    //         success: function (data) {
+    //             form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
+    //             form.find('input[type=email]').val('');
 
-                modalAlert('E-mail enviado com sucesso!');
-            },
-            error: function (request, status, error) {
-                form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
+    //             modalAlert('E-mail enviado com sucesso!');
+    //         },
+    //         error: function (request, status, error) {
+    //             form.find('input[type=submit]').val('ENVIAR').attr('disabled', false);
 
-                modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
-            }
-        });
+    //             modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+    //         }
+    //     });
 
-        return false;
-    });
+    //     return false;
+    // });
 
 
 

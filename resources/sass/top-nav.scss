@@ -305,13 +305,35 @@ header {
     }
 }
 
-.cart-product-image {
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-}
+#warning-cookies {
+    position: fixed;
+    left: 0;
+    bottom: -100%;
+    z-index: 10;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.83);
+    text-align: right;
+    transition: bottom .5s;
+    padding: 20px 0;
 
-.moving {
-    position: absolute;
-    z-index: 9999;
+    p {
+        color: #fff;
+        font-size: 14px;
+        text-align: justify;
+
+        a {
+            color: #ff1744;
+        }
+    }
+
+    button {
+        min-width: 100px;
+        height: 40px;
+        border: 0;
+        font-size: 14.5px;
+        color: #FFF;
+        border-radius: 25px;
+        font-weight: 700;
+        background-color: rgb(255, 23, 68);
+    }
 }

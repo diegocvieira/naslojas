@@ -139,3 +139,13 @@
         </nav>
     </div>
 </header>
+
+<div id="warning-cookies">
+    <div class="container">
+        <p>
+            Utilizamos cookies para aprimorar a sua experiência de navegação. Se permanecer no nosso site, você estará concordando com a nossa Política de Cookies, <a href="{{ route('privacy-policy') }}">Política de Privacidade</a> e <a href="{{ route('terms-use') }}">Termos de uso</a>.
+        </p>
+
+        <button type="button" class="confirm-warning-cookies">OK</button>
+    </div>
+</div>

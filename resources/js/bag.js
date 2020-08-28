@@ -20,13 +20,16 @@ $(function() {
             return false;
         }
 
-        $('body').append('<img src="' + image.attr('src') + '" class="moving cart-product-image" />');
+        $('body').append('<img src="' + image.attr('src') + '" class="moving-product-cart" />');
 
-        var move = $('.moving').css({
+        var move = $('.moving-product-cart').css({
             'top': image.offset().top,
             'left': image.offset().left,
             'width': image.width(),
-            'height': image.height()
+            'height': image.height(),
+            'position': 'absolute',
+            'z-index': '9999',
+            'border-radius': '50%'
         });
 
         move.animate({
