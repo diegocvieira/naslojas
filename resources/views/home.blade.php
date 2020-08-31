@@ -8,10 +8,6 @@
             <div class="banner-home">
                 <div class="slick-home">
                     <div class="item">
-                        <img src="{{ asset('images/banner-desktop/6.jpg') }}" alt="Banner" />
-                    </div>
-
-                    <div class="item">
                         <img src="{{ asset('images/banner-desktop/1.jpg') }}" alt="Banner" />
                     </div>
 
@@ -29,10 +25,6 @@
 
                     <div class="item">
                         <img src="{{ asset('images/banner-desktop/4.jpg') }}" alt="Banner" />
-                    </div>
-
-                    <div class="item">
-                        <img src="{{ asset('images/banner-desktop/6.jpg') }}" alt="Banner" />
                     </div>
 
                     <div class="item">
